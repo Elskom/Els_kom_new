@@ -1,7 +1,7 @@
 Option Strict Off
 Option Explicit On
 Friend Class Form2
-	Inherits System.Windows.Forms.Form
+	Inherits Form
 	Private Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (ByVal hwnd As Integer, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Integer) As Integer
 
 	Public Function OpenBrowser(ByVal URL As String) As Boolean

@@ -1,9 +1,9 @@
 Option Strict Off
 Option Explicit On
 Friend Class Form1
-	Inherits System.Windows.Forms.Form
+	Inherits Form
 
-	Private Sub Form1_Load(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles MyBase.Load
+	Private Sub Form1_Load(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles MyBase.Load
 		If FileExists(My.Application.Info.DirectoryPath & "\voidels.exe") Then
 			Shell(My.Application.Info.DirectoryPath & "\voidels.exe", AppWinStyle.NormalFocus)
 			Me.Close()
