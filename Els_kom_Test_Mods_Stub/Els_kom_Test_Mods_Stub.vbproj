@@ -114,12 +114,6 @@
     <Compile Include="Forms\Form1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\INIread.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Modules\Module1.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
@@ -143,6 +137,13 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Els_kom_Core\Els_kom_Core.vbproj">
+      <Project>{8588ae1c-cd41-4a96-8c9a-cd48b311bb6e}</Project>
+      <Name>Els_kom_Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

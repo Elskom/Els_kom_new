@@ -253,7 +253,7 @@
 		Me.Name = "Form1"
 		Me.RightToLeft = System.Windows.Forms.RightToLeft.No
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-		Me.Text = "Els_kom v1.4.9.1"
+		Me.Text = "Els_kom v1.4.9.2"
 		Me.Frame1.ResumeLayout(False)
 		Me.ContextMenuStrip1.ResumeLayout(False)
 		Me.ResumeLayout(False)

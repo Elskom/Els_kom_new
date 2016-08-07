@@ -4,11 +4,11 @@ Friend Class Form1
 	Inherits Form
 
 	Private Sub Form1_Load(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles MyBase.Load
-		If FileExists(My.Application.Info.DirectoryPath & "\voidels.exe") Then
+		If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\voidels.exe") Then
 			Shell(My.Application.Info.DirectoryPath & "\voidels.exe", AppWinStyle.NormalFocus)
 			Me.Close()
 		Else
-			If FileExists(My.Application.Info.DirectoryPath & "\elsword.exe") Then
+			If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\elsword.exe") Then
 				Shell(My.Application.Info.DirectoryPath & "\elsword.exe", AppWinStyle.NormalFocus)
 				Me.Close()
 			Else

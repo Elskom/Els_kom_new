@@ -1,4 +1,17 @@
-                          Whats new in v1.4.9.1
+                          Whats new in v1.4.9.2
+=============================================================================
+	+Added a Core DLL.
+	+Moved All Modules to a Core DLL.
+	+Version change as well forgot to change the physical label on the 
+		binaries last time.
+	+Changed some labels not being reset when the Test Mods and the 
+		Launcher buttons are pressed.
+	+Fixed bug where the packing and unpacking timers was not disabled
+		after use. (Causes a Conflict when Packing / Unpacking multiple
+		times)
+
+=============================================================================
+                             Els_kom v1.4.9.1
 =============================================================================
 	+Fixed some things with the Launcher and Test Mods button flashing 
 		uncontrolably.

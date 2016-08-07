@@ -18,10 +18,10 @@ Friend Class Form2
 	End Sub
 
 	Private Sub Form2_Load(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles MyBase.Load
-		Me.Icon = My.Resources.els_kom_icon
-		picIcon.Image = My.Resources.els_kom
-		Picture1.Image = My.Resources.bmp100
-		Picture2.Image = My.Resources.bmp101
+		Me.Icon = Els_kom_Core.My.Resources.els_kom_icon
+		picIcon.Image = Els_kom_Core.My.Resources.els_kom
+		Picture1.Image = Els_kom_Core.My.Resources.bmp100
+		Picture2.Image = Els_kom_Core.My.Resources.bmp101
 	End Sub
 
 	Private Sub Form2_MouseMove(ByVal eventSender As Object, ByVal eventArgs As MouseEventArgs) Handles MyBase.MouseMove

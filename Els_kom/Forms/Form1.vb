@@ -4,8 +4,8 @@ Friend Class Form1
 	Inherits Form
 
 	Private Sub Command1_Click(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles Command1.Click
-		Timer2.Enabled = True
-		If FileExists(My.Application.Info.DirectoryPath & "\pack2.bat") Then
+		If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\pack2.bat") Then
+			Timer2.Enabled = True
 			Shell(My.Application.Info.DirectoryPath & "\pack2.bat", AppWinStyle.Hide)
 		Else
 			MsgBox("Can't find 'pack2.bat' and maybe also 'pack.bat'.", MsgBoxStyle.Critical, "Error!")
@@ -17,8 +17,8 @@ Friend Class Form1
 	End Sub
 
 	Private Sub Command2_Click(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles Command2.Click
-		Timer1.Enabled = True
-		If FileExists(My.Application.Info.DirectoryPath & "\unpack2.bat") Then
+		If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\unpack2.bat") Then
+			Timer1.Enabled = True
 			Shell(My.Application.Info.DirectoryPath & "\unpack2.bat", AppWinStyle.Hide)
 		Else
 			MsgBox("Can't find 'unpack2.bat' and maybe also 'unpack.bat'.", MsgBoxStyle.Critical, "Error!")
@@ -38,13 +38,14 @@ Friend Class Form1
 	End Sub
 
 	Private Sub Command4_Click(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles Command4.Click
-		If FileExists(My.Application.Info.DirectoryPath & "\Test_Mods.exe") Then
+		If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\Test_Mods.exe") Then
 			If Me.WindowState = FormWindowState.Normal Then
 				Me.WindowState = FormWindowState.Minimized
 			End If
 			If Me.ShowInTaskbar = True Then
 				Me.ShowInTaskbar = False
 			End If
+			Label1.Text = ""
 			Shell(My.Application.Info.DirectoryPath & "\Test_Mods.exe")
 		Else
 			MsgBox("Can't find 'Test_Mods.exe'.", MsgBoxStyle.Critical, "Error!")
@@ -56,13 +57,14 @@ Friend Class Form1
 	End Sub
 
 	Private Sub Command5_Click(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles Command5.Click
-		If FileExists(My.Application.Info.DirectoryPath & "\Launcher.exe") Then
+		If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\Launcher.exe") Then
 			If Me.WindowState = FormWindowState.Normal Then
 				Me.WindowState = FormWindowState.Minimized
 			End If
 			If Me.ShowInTaskbar = True Then
 				Me.ShowInTaskbar = False
 			End If
+			Label1.Text = ""
 			Shell(My.Application.Info.DirectoryPath & "\Launcher.exe")
 		Else
 			MsgBox("Can't find 'Launcher.exe'.", MsgBoxStyle.Critical, "Error!")
@@ -74,7 +76,8 @@ Friend Class Form1
 	End Sub
 
 	Private Sub Form1_Load(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles MyBase.Load
-		NotifyIcon1.Icon = My.Resources.els_kom_icon
+		Me.Icon = Els_kom_Core.My.Resources.els_kom_icon
+		NotifyIcon1.Icon = Me.Icon
 		NotifyIcon1.Text = Me.Text
 	End Sub
 
@@ -89,7 +92,7 @@ Friend Class Form1
 	End Sub
 
 	Private Sub Timer1_Tick(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles Timer1.Tick
-		If FileExists(My.Application.Info.DirectoryPath & "\unpacking.unpack") Then
+		If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\unpacking.unpack") Then
 			Timer6.Enabled = False
 			Command1.Enabled = False
 			Command2.Enabled = False
@@ -102,6 +105,7 @@ Friend Class Form1
 			Label2.Text = "Unpacking..."
 			NotifyIcon1.Text = Label2.Text
 		Else
+			Timer1.Enabled = False
 			Timer6.Enabled = True
 			Command1.Enabled = True
 			Command2.Enabled = True
@@ -117,7 +121,7 @@ Friend Class Form1
 	End Sub
 
 	Private Sub Timer2_Tick(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles Timer2.Tick
-		If FileExists(My.Application.Info.DirectoryPath & "\packing.pack") Then
+		If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\packing.pack") Then
 			Timer6.Enabled = False
 			Command1.Enabled = False
 			Command2.Enabled = False
@@ -130,6 +134,7 @@ Friend Class Form1
 			Label2.Text = "Packing..."
 			NotifyIcon1.Text = Label2.Text
 		Else
+			Timer2.Enabled = False
 			Timer6.Enabled = True
 			Command1.Enabled = True
 			Command2.Enabled = True
@@ -159,7 +164,7 @@ Friend Class Form1
 			checkiftestmodsstubexists = True
 		End If
 		If checkiflauncherstubexists = True Then
-			If FileExists(My.Application.Info.DirectoryPath & "\Launcher.exe") Then
+			If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\Launcher.exe") Then
 				LauncherToolStripMenuItem.Enabled = True
 				Command5.Enabled = True
 				checkiflauncherstubexists = False
@@ -170,7 +175,7 @@ Friend Class Form1
 			End If
 		End If
 		If checkiftestmodsstubexists = True Then
-			If FileExists(My.Application.Info.DirectoryPath & "\Test_Mods.exe") Then
+			If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\Test_Mods.exe") Then
 				TestModsToolStripMenuItem.Enabled = True
 				Command4.Enabled = True
 				checkiftestmodsstubexists = False
@@ -183,16 +188,22 @@ Friend Class Form1
 	End Sub
 
 	Private Sub NotifyIcon1_MouseClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon1.MouseClick
-		If e.Button = MouseButtons.Left Then
-			If Me.WindowState = FormWindowState.Minimized Then
-				If Me.ShowInTaskbar = False Then
-					Me.ShowInTaskbar = True
-				End If
-				Me.WindowState = FormWindowState.Normal
+		Try
+			If Form2.ActiveForm.WindowState = FormWindowState.Normal Then
+				'I have to Sadly disable left button on the Notify Icon to prevent a bug with Form2 Randomly Unloading or not reshowing.
+			End If
+		Catch ex As Exception
+			If e.Button = MouseButtons.Left Then
+				If Me.WindowState = FormWindowState.Minimized Then
+					If Me.ShowInTaskbar = False Then
+						Me.ShowInTaskbar = True
+					End If
+					Me.WindowState = FormWindowState.Normal
 				Else
 					Me.WindowState = FormWindowState.Minimized
+				End If
 			End If
-		End If
+		End Try
 	End Sub
 
 	Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
@@ -204,7 +215,7 @@ Friend Class Form1
 	End Sub
 
 	Private Sub LauncherToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LauncherToolStripMenuItem.Click
-		If FileExists(My.Application.Info.DirectoryPath & "\Launcher.exe") Then
+		If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\Launcher.exe") Then
 			If Me.WindowState = FormWindowState.Normal Then
 				Me.WindowState = FormWindowState.Minimized
 			End If
@@ -213,13 +224,14 @@ Friend Class Form1
 			End If
 			Shell(My.Application.Info.DirectoryPath & "\Launcher.exe")
 		Else
+			Label1.Text = ""
 			MsgBox("Can't find 'Launcher.exe'.", MsgBoxStyle.Critical, "Error!")
 		End If
 	End Sub
 
 	Private Sub UnpackToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UnpackToolStripMenuItem.Click
-		Timer1.Enabled = True
-		If FileExists(My.Application.Info.DirectoryPath & "\unpack2.bat") Then
+		If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\unpack2.bat") Then
+			Timer1.Enabled = True
 			Shell(My.Application.Info.DirectoryPath & "\unpack2.bat", AppWinStyle.Hide)
 		Else
 			MsgBox("Can't find 'unpack2.bat' and maybe also 'unpack.bat'.", MsgBoxStyle.Critical, "Error!")
@@ -227,7 +239,7 @@ Friend Class Form1
 	End Sub
 
 	Private Sub TestModsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestModsToolStripMenuItem.Click
-		If FileExists(My.Application.Info.DirectoryPath & "\Test_Mods.exe") Then
+		If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\Test_Mods.exe") Then
 			If Me.WindowState = FormWindowState.Normal Then
 				Me.WindowState = FormWindowState.Minimized
 			End If
@@ -236,13 +248,14 @@ Friend Class Form1
 			End If
 			Shell(My.Application.Info.DirectoryPath & "\Test_Mods.exe")
 		Else
+			Label1.Text = ""
 			MsgBox("Can't find 'Test_Mods.exe'.", MsgBoxStyle.Critical, "Error!")
 		End If
 	End Sub
 
 	Private Sub PackToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PackToolStripMenuItem.Click
-		Timer2.Enabled = True
-		If FileExists(My.Application.Info.DirectoryPath & "\pack2.bat") Then
+		If Els_kom_Core.Module1.FileExists(My.Application.Info.DirectoryPath & "\pack2.bat") Then
+			Timer2.Enabled = True
 			Shell(My.Application.Info.DirectoryPath & "\pack2.bat", AppWinStyle.Hide)
 		Else
 			MsgBox("Can't find 'pack2.bat' and maybe also 'pack.bat'.", MsgBoxStyle.Critical, "Error!")

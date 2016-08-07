@@ -116,8 +116,6 @@
     <Compile Include="Forms\LineShapeArray.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Modules\Module1.vb" />
-    <Compile Include="Modules\Module2.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
@@ -134,7 +132,7 @@
       <DependentUpon>Form2.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
@@ -142,10 +140,8 @@
   <ItemGroup>
     <None Include="AssemblyData\app.config" />
     <None Include="My Project\app.manifest" />
-    <None Include="Resources\els_kom.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\els_kom.ico" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -157,6 +153,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Els_kom_Core\Els_kom_Core.vbproj">
+      <Project>{8588ae1c-cd41-4a96-8c9a-cd48b311bb6e}</Project>
+      <Name>Els_kom_Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\els_kom.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
