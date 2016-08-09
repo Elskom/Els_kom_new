@@ -38,7 +38,7 @@ Friend Class Form2
 	Private Sub Picture2_Click(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles Picture2.Click
 		Picture1.Visible = True
 		Picture2.Visible = False
-		OpenBrowser("www.elsword.to/forum/index.php?/topic/51000-updated-els-kom-v1492-working-as-of-8-7-16/")
+		OpenBrowser("www.elsword.to/forum/index.php?/topic/51000-updated-els-kom-v1493-working-as-of-8-8-16/")
 	End Sub
 
 	Private Sub lblDisclaimer_MouseMove(sender As Object, e As MouseEventArgs) Handles lblDisclaimer.MouseMove
