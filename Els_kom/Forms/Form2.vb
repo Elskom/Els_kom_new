@@ -18,6 +18,7 @@ Friend Class Form2
 	End Sub
 
 	Private Sub Form2_Load(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles MyBase.Load
+		Label1.Text = "1"
 		Me.Icon = Els_kom_Core.My.Resources.els_kom_icon
 		picIcon.Image = Els_kom_Core.My.Resources.els_kom
 		Picture1.Image = Els_kom_Core.My.Resources.bmp100
@@ -43,5 +44,9 @@ Friend Class Form2
 	Private Sub lblDisclaimer_MouseMove(sender As Object, e As MouseEventArgs) Handles lblDisclaimer.MouseMove
 		Picture1.Visible = True
 		Picture2.Visible = False
+	End Sub
+
+	Private Sub Form2_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+		Label1.Text = "0"
 	End Sub
 End Class

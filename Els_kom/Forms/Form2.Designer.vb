@@ -16,7 +16,6 @@
 	End Sub
 	'Required by the Windows Form Designer
 	Private components As System.ComponentModel.IContainer
-	Public ToolTip1 As System.Windows.Forms.ToolTip
 	Public WithEvents Text1 As System.Windows.Forms.TextBox
 	Public WithEvents cmdOK As System.Windows.Forms.Button
 	Public WithEvents picIcon As System.Windows.Forms.PictureBox
@@ -31,9 +30,7 @@
 	'It can be modified using the Windows Form Designer.
 	'Do not modify it using the code editor.
 	<System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-		Me.components = New System.ComponentModel.Container()
 		Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form2))
-		Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
 		Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
 		Me._Line3_2 = New Microsoft.VisualBasic.PowerPacks.LineShape()
 		Me._Line4_3 = New Microsoft.VisualBasic.PowerPacks.LineShape()
@@ -45,6 +42,7 @@
 		Me.lblDisclaimer = New System.Windows.Forms.Label()
 		Me.lblTitle = New System.Windows.Forms.Label()
 		Me.lblDescription = New System.Windows.Forms.Label()
+		Me.Label1 = New System.Windows.Forms.Label()
 		CType(Me.picIcon, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.Picture1, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.Picture2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -176,7 +174,7 @@
 		Me.lblTitle.RightToLeft = System.Windows.Forms.RightToLeft.No
 		Me.lblTitle.Size = New System.Drawing.Size(259, 16)
 		Me.lblTitle.TabIndex = 5
-		Me.lblTitle.Text = "Els_kom v1.4.9.2"
+		Me.lblTitle.Text = "Els_kom v1.4.9.3"
 		'
 		'lblDescription
 		'
@@ -192,6 +190,16 @@
 		Me.lblDescription.Text = "This tool allows you to Edit koms freely. Also this is a tool that replaces gPatc" &
 	"her but with some limitations. l0l"
 		'
+		'Label1
+		'
+		Me.Label1.AutoSize = True
+		Me.Label1.Location = New System.Drawing.Point(137, 201)
+		Me.Label1.Name = "Label1"
+		Me.Label1.Size = New System.Drawing.Size(13, 14)
+		Me.Label1.TabIndex = 12
+		Me.Label1.Text = "0"
+		Me.Label1.Visible = False
+		'
 		'Form2
 		'
 		Me.AcceptButton = Me.cmdOK
@@ -200,6 +208,7 @@
 		Me.BackColor = System.Drawing.SystemColors.Control
 		Me.CancelButton = Me.cmdOK
 		Me.ClientSize = New System.Drawing.Size(382, 227)
+		Me.Controls.Add(Me.Label1)
 		Me.Controls.Add(Me.Text1)
 		Me.Controls.Add(Me.cmdOK)
 		Me.Controls.Add(Me.picIcon)
@@ -231,5 +240,6 @@
 	Private WithEvents _Line3_2 As PowerPacks.LineShape
 	Private WithEvents _Line4_3 As PowerPacks.LineShape
 	Private WithEvents ShapeContainer1 As PowerPacks.ShapeContainer
+	Friend WithEvents Label1 As Label
 #End Region
 End Class

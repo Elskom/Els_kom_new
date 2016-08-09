@@ -49,6 +49,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <OutputPath>..\bin\x86\Debug\</OutputPath>
     <UseVSHostingProcess>true</UseVSHostingProcess>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -57,6 +58,7 @@
     <DebugType>None</DebugType>
     <Optimize>true</Optimize>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
@@ -142,7 +144,6 @@
     <ProjectReference Include="..\Els_kom_Core\Els_kom_Core.vbproj">
       <Project>{8588ae1c-cd41-4a96-8c9a-cd48b311bb6e}</Project>
       <Name>Els_kom_Core</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />

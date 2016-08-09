@@ -45,11 +45,11 @@ Imports Microsoft.VisualBasic.PowerPacks
 
 	Public Shadows Sub Load(ByVal Index As Short)
 		MyBase.Load(Index)
-		CType(Item(0).Parent, ShapeContainer).Shapes.Add(Item(Index))
+		Item(0).Parent.Shapes.Add(Item(Index))
 	End Sub
 
 	Public Shadows Sub Unload(ByVal Index As Short)
-		CType(Item(0).Parent, ShapeContainer).Shapes.Remove(Item(Index))
+		Item(0).Parent.Shapes.Remove(Item(Index))
 		MyBase.Unload(Index)
 	End Sub
 

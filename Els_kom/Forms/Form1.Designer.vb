@@ -16,7 +16,6 @@
 	End Sub
 	'Required by the Windows Form Designer
 	Private components As System.ComponentModel.IContainer
-	Public ToolTip1 As System.Windows.Forms.ToolTip
 	Public WithEvents Command5 As System.Windows.Forms.Button
 	Public WithEvents Timer6 As System.Windows.Forms.Timer
 	Public WithEvents Command4 As System.Windows.Forms.Button
@@ -33,8 +32,6 @@
 	'Do not modify it using the code editor.
 	<System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
 		Me.components = New System.ComponentModel.Container()
-		Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-		Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
 		Me.Command5 = New System.Windows.Forms.Button()
 		Me.Timer6 = New System.Windows.Forms.Timer(Me.components)
 		Me.Command4 = New System.Windows.Forms.Button()
@@ -55,6 +52,8 @@
 		Me.LauncherToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
 		Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
+		Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.Frame1.SuspendLayout()
 		Me.ContextMenuStrip1.SuspendLayout()
 		Me.SuspendLayout()
@@ -187,49 +186,60 @@
 		'
 		'ContextMenuStrip1
 		'
-		Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PackToolStripMenuItem, Me.UnpackToolStripMenuItem, Me.ToolStripMenuItem1, Me.TestModsToolStripMenuItem, Me.LauncherToolStripMenuItem, Me.ToolStripMenuItem2, Me.ExitToolStripMenuItem})
+		Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PackToolStripMenuItem, Me.UnpackToolStripMenuItem, Me.ToolStripMenuItem3, Me.SettingsToolStripMenuItem, Me.ToolStripMenuItem1, Me.TestModsToolStripMenuItem, Me.LauncherToolStripMenuItem, Me.ToolStripMenuItem2, Me.ExitToolStripMenuItem})
 		Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-		Me.ContextMenuStrip1.Size = New System.Drawing.Size(130, 126)
+		Me.ContextMenuStrip1.Size = New System.Drawing.Size(153, 176)
 		'
 		'PackToolStripMenuItem
 		'
 		Me.PackToolStripMenuItem.Name = "PackToolStripMenuItem"
-		Me.PackToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+		Me.PackToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
 		Me.PackToolStripMenuItem.Text = "Pack"
 		'
 		'UnpackToolStripMenuItem
 		'
 		Me.UnpackToolStripMenuItem.Name = "UnpackToolStripMenuItem"
-		Me.UnpackToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+		Me.UnpackToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
 		Me.UnpackToolStripMenuItem.Text = "Unpack"
 		'
 		'ToolStripMenuItem1
 		'
 		Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-		Me.ToolStripMenuItem1.Size = New System.Drawing.Size(126, 6)
+		Me.ToolStripMenuItem1.Size = New System.Drawing.Size(149, 6)
 		'
 		'TestModsToolStripMenuItem
 		'
 		Me.TestModsToolStripMenuItem.Name = "TestModsToolStripMenuItem"
-		Me.TestModsToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+		Me.TestModsToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
 		Me.TestModsToolStripMenuItem.Text = "Test Mods"
 		'
 		'LauncherToolStripMenuItem
 		'
 		Me.LauncherToolStripMenuItem.Name = "LauncherToolStripMenuItem"
-		Me.LauncherToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+		Me.LauncherToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
 		Me.LauncherToolStripMenuItem.Text = "Launcher"
 		'
 		'ToolStripMenuItem2
 		'
 		Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-		Me.ToolStripMenuItem2.Size = New System.Drawing.Size(126, 6)
+		Me.ToolStripMenuItem2.Size = New System.Drawing.Size(149, 6)
 		'
 		'ExitToolStripMenuItem
 		'
 		Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-		Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+		Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
 		Me.ExitToolStripMenuItem.Text = "Exit"
+		'
+		'ToolStripMenuItem3
+		'
+		Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+		Me.ToolStripMenuItem3.Size = New System.Drawing.Size(149, 6)
+		'
+		'SettingsToolStripMenuItem
+		'
+		Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
+		Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+		Me.SettingsToolStripMenuItem.Text = "Settings"
 		'
 		'Form1
 		'
@@ -247,13 +257,12 @@
 		Me.Cursor = System.Windows.Forms.Cursors.Default
 		Me.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-		Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
 		Me.Location = New System.Drawing.Point(3, 23)
 		Me.MaximizeBox = False
 		Me.Name = "Form1"
 		Me.RightToLeft = System.Windows.Forms.RightToLeft.No
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-		Me.Text = "Els_kom v1.4.9.2"
+		Me.Text = "Els_kom v1.4.9.3"
 		Me.Frame1.ResumeLayout(False)
 		Me.ContextMenuStrip1.ResumeLayout(False)
 		Me.ResumeLayout(False)
@@ -269,5 +278,7 @@
 	Friend WithEvents LauncherToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
 	Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents ToolStripMenuItem3 As ToolStripSeparator
+	Friend WithEvents SettingsToolStripMenuItem As ToolStripMenuItem
 #End Region
 End Class

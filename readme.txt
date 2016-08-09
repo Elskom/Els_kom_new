@@ -1,4 +1,20 @@
-                          Whats new in v1.4.9.2
+                          Whats new in v1.4.9.3
+=============================================================================
+	+Replaced module1's FileExists with System.IO.File.Exists.
+	+Removed 2 bat files. (Not Needed anymore because System.IO.File.Create 
+		is better)
+	+Changed the way x2.exe is executed. (Your mods would have to be in the 
+		folder of x2.exe)
+	+2 bat file still Exists which allows fully customized kom 
+		unpacking/packing.
+	+Added a INI Writer to the Core.
+	+Added a Config Dialog for setting the Elsword Directory.
+	+Made Stubs Aware and Use the Settings for Running the Launcher / 
+		Testing Mods to not require Els_kom in the folder of elsword.exe
+		or voidels.exe
+
+=============================================================================
+                             Els_kom v1.4.9.2
 =============================================================================
 	+Added a Core DLL.
 	+Moved All Modules to a Core DLL.
