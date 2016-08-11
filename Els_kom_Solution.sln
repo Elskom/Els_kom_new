@@ -15,6 +15,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Els_kom_Test_Mods_Stub", "E
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Els_kom_Core", "Els_kom_Core\Els_kom_Core.vbproj", "{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Els_kom_CryptoPP_Wrapper", "Els_kom_CryptoPP_Wrapper\Els_kom_CryptoPP_Wrapper.vcxproj", "{DA554EB5-3610-4784-8ED3-34FB88F0409E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,12 @@ Global
 		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|Any CPU.ActiveCfg = Release|x86
 		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|x86.ActiveCfg = Release|x86
 		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|x86.Build.0 = Release|x86
+		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Debug|x86.ActiveCfg = Debug|Win32
+		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Debug|x86.Build.0 = Debug|Win32
+		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Release|Any CPU.ActiveCfg = Release|Win32
+		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Release|x86.ActiveCfg = Release|Win32
+		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
