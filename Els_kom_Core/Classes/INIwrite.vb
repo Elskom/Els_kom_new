@@ -2,8 +2,14 @@ Option Strict Off
 Option Explicit On
 
 Partial Class Classes
+	''' <summary>
+	''' Class that Holds the ability to Write to INI files in Els_kom.
+	''' </summary>
 	Public Class INIwrite
 
+		''' <summary>
+		''' Function that allows the Writing to Els_kom for it's Settings dialog (Form).
+		''' </summary>
 		Public Shared Function WriteIniValue(ByRef INIpath As String, ByRef PutKey As String, ByRef PutVariable As String, ByRef PutValue As String) As Object
 			Dim temp As String
 			Dim LcaseTemp As String

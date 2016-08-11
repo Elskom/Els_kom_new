@@ -24,16 +24,11 @@
 	Public WithEvents lblDisclaimer As System.Windows.Forms.Label
 	Public WithEvents lblTitle As System.Windows.Forms.Label
 	Public WithEvents lblDescription As System.Windows.Forms.Label
-	Public WithEvents Line3 As LineShapeArray
-	Public WithEvents Line4 As LineShapeArray
 	'NOTE: The following procedure is required by the Windows Form Designer
 	'It can be modified using the Windows Form Designer.
 	'Do not modify it using the code editor.
 	<System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
 		Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form2))
-		Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
-		Me._Line3_2 = New Microsoft.VisualBasic.PowerPacks.LineShape()
-		Me._Line4_3 = New Microsoft.VisualBasic.PowerPacks.LineShape()
 		Me.Text1 = New System.Windows.Forms.TextBox()
 		Me.cmdOK = New System.Windows.Forms.Button()
 		Me.picIcon = New System.Windows.Forms.PictureBox()
@@ -47,34 +42,6 @@
 		CType(Me.Picture1, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.Picture2, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
-		'
-		'ShapeContainer1
-		'
-		Me.ShapeContainer1.Location = New System.Drawing.Point(0, 0)
-		Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
-		Me.ShapeContainer1.Name = "ShapeContainer1"
-		Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me._Line3_2, Me._Line4_3})
-		Me.ShapeContainer1.Size = New System.Drawing.Size(382, 227)
-		Me.ShapeContainer1.TabIndex = 11
-		Me.ShapeContainer1.TabStop = False
-		'
-		'_Line3_2
-		'
-		Me._Line3_2.BorderColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-		Me._Line3_2.Name = "_Line3_2"
-		Me._Line3_2.X1 = -4
-		Me._Line3_2.X2 = 382
-		Me._Line3_2.Y1 = 151
-		Me._Line3_2.Y2 = 151
-		'
-		'_Line4_3
-		'
-		Me._Line4_3.BorderColor = System.Drawing.Color.White
-		Me._Line4_3.Name = "_Line4_3"
-		Me._Line4_3.X1 = -4
-		Me._Line4_3.X2 = 382
-		Me._Line4_3.Y1 = 152
-		Me._Line4_3.Y2 = 152
 		'
 		'Text1
 		'
@@ -174,7 +141,7 @@
 		Me.lblTitle.RightToLeft = System.Windows.Forms.RightToLeft.No
 		Me.lblTitle.Size = New System.Drawing.Size(259, 16)
 		Me.lblTitle.TabIndex = 5
-		Me.lblTitle.Text = "Els_kom v1.4.9.3"
+		Me.lblTitle.Text = "Els_kom v1.4.9.4"
 		'
 		'lblDescription
 		'
@@ -217,7 +184,6 @@
 		Me.Controls.Add(Me.lblDisclaimer)
 		Me.Controls.Add(Me.lblTitle)
 		Me.Controls.Add(Me.lblDescription)
-		Me.Controls.Add(Me.ShapeContainer1)
 		Me.Cursor = System.Windows.Forms.Cursors.Default
 		Me.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -237,9 +203,6 @@
 
 	End Sub
 
-	Private WithEvents _Line3_2 As PowerPacks.LineShape
-	Private WithEvents _Line4_3 As PowerPacks.LineShape
-	Private WithEvents ShapeContainer1 As PowerPacks.ShapeContainer
 	Friend WithEvents Label1 As Label
 #End Region
 End Class

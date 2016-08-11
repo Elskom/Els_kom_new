@@ -1,9 +1,18 @@
 Option Strict Off
 Option Explicit On
 
+''' <summary>
+''' Class that Holds Classes that Allows the Core of Els_kom to do certain things.
+''' </summary>
 Public Class Classes
+	''' <summary>
+	''' Class in the Core that allows Reading of INI Files.
+	''' </summary>
 	Public Class INIread
 
+		''' <summary>
+		''' Function in the Core that does the Reading of INI Files.
+		''' </summary>
 		Public Shared Function ReadIniValue(ByRef INIpath As String, ByRef KEY As String, ByRef Variable As String) As String
 			Dim NF As Short
 			Dim Temp As String

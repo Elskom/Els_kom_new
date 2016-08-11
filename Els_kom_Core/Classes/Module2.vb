@@ -2,6 +2,9 @@ Option Strict Off
 Option Explicit On
 
 Partial Class Classes
+	''' <summary>
+	''' Allows Terminating Processes. right now it does not seem to be used and for the looks of it it might crash Els_kom if used. Terminating Processes have no use to be as it is a unsafe practice.
+	''' </summary>
 	Public Class Module2
 
 		Private Const MAX_PATH As Integer = 260

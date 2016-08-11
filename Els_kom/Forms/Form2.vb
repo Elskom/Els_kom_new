@@ -38,7 +38,7 @@ Friend Class Form2
 	Private Sub Picture2_Click(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles Picture2.Click
 		Picture1.Visible = True
 		Picture2.Visible = False
-		OpenBrowser("www.elsword.to/forum/index.php?/topic/51000-updated-els-kom-v1493-working-as-of-8-8-16/")
+		OpenBrowser("www.elsword.to/forum/index.php?/topic/51000-updated-els-kom-v1494-working-as-of-8-10-16/")
 	End Sub
 
 	Private Sub lblDisclaimer_MouseMove(sender As Object, e As MouseEventArgs) Handles lblDisclaimer.MouseMove
@@ -48,5 +48,10 @@ Friend Class Form2
 
 	Private Sub Form2_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
 		Label1.Text = "0"
+	End Sub
+
+	Private Sub Form2_Paint(sender As Object, e As PaintEventArgs) Handles MyBase.Paint
+		e.Graphics.DrawLine(Pens.Gray, 0, 151, Me.Width, 151)
+		e.Graphics.DrawLine(Pens.White, 0, 152, Me.Width, 152)
 	End Sub
 End Class

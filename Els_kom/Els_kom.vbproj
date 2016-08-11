@@ -66,11 +66,6 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualBasic.Compatibility" />
-    <Reference Include="Microsoft.VisualBasic.PowerPacks.VS">
-      <Name>Microsoft.VisualBasic.PowerPacks.VS</Name>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -89,7 +84,6 @@
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
-    <Import Include="Microsoft.VisualBasic.Compatibility" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Data" />
@@ -118,9 +112,6 @@
     </Compile>
     <Compile Include="Forms\Form3.vb">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\LineShapeArray.vb">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

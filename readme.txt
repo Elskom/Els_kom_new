@@ -1,4 +1,15 @@
-                          Whats new in v1.4.9.3
+                          Whats new in v1.4.9.4
+=============================================================================
+	+Removed Reference and use of Microsoft.VisualBasic.Compatibility in 
+		Els_kom Project (to the Els_kom.exe file).
+	+Remvoed Reference and Use of Microsoft.VisualBasic.PowerPacks.VS in 
+		Els_kom Project (to the Els_kom.exe file) as well.
+	-Will Replace the WindowFind Class in the core with something much 
+		more Accurate and can find stuff even if it has no Window by 
+		it's Image name (AKA x2.exe). (Will come before v1.5.0.0)
+
+=============================================================================
+                             Els_kom v1.4.9.3
 =============================================================================
 	+Replaced module1's FileExists with System.IO.File.Exists.
 	+Removed 2 bat files. (Not Needed anymore because System.IO.File.Create 
