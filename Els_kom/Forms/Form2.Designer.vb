@@ -141,7 +141,7 @@
 		Me.lblTitle.RightToLeft = System.Windows.Forms.RightToLeft.No
 		Me.lblTitle.Size = New System.Drawing.Size(259, 16)
 		Me.lblTitle.TabIndex = 5
-		Me.lblTitle.Text = "Els_kom v1.4.9.4"
+		Me.lblTitle.Text = "Els_kom v1.4.9.5"
 		'
 		'lblDescription
 		'

@@ -3,7 +3,9 @@ Option Explicit On
 Friend Class Form1
 	Inherits Form
 
-	Private ElsDir as String
+	Private ElsDir As String
+	Private Only1InstanceError As Boolean
+
 	Private Sub Command1_Click(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles Command1.Click
 		If IO.File.Exists(My.Application.Info.DirectoryPath & "\pack.bat") Then
 			IO.File.Create(My.Application.Info.DirectoryPath & "\packing.pack").Close()
@@ -79,9 +81,16 @@ Friend Class Form1
 	End Sub
 
 	Private Sub Form1_Load(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles MyBase.Load
+		Dim previnstance As Boolean
 		Me.Icon = Els_kom_Core.My.Resources.els_kom_icon
 		NotifyIcon1.Icon = Me.Icon
 		NotifyIcon1.Text = Me.Text
+		previnstance = Els_kom_Core.Classes.Process.IsElsKomRunning()
+		If previnstance = True Then
+			Only1InstanceError = True
+			MsgBox("Sorry, Only 1 Instance is allowed at a time.", MsgBoxStyle.Critical, "Error!")
+			Me.Close()
+		End If
 		If IO.File.Exists(My.Application.Info.DirectoryPath & "\Settings.ini") Then
 			ElsDir = Els_kom_Core.Classes.INIread.ReadIniValue(My.Application.Info.DirectoryPath & "\Settings.ini", "Settings.ini", "ElsDir")
 			If ElsDir.Length > 0 Then
@@ -107,7 +116,7 @@ Friend Class Form1
 	End Sub
 
 	Private Sub Timer1_Tick(ByVal eventSender As Object, ByVal eventArgs As EventArgs) Handles Timer1.Tick
-		If IO.File.Exists(My.Application.Info.DirectoryPath & "\unpacking.unpack") Then
+		If IO.File.Exists(My.Application.Info.DirectoryPath & " \ unpacking.unpack") Then
 			Timer6.Enabled = False
 			Command1.Enabled = False
 			Command2.Enabled = False
@@ -203,17 +212,21 @@ Friend Class Form1
 	End Sub
 
 	Private Sub NotifyIcon1_MouseClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon1.MouseClick
-		If Form2.Label1.Text = 1 Then
-			'I have to Sadly disable left button on the Notify Icon to prevent a bug with Form2 Randomly Unloading or not reshowing.
+		If Only1InstanceError = True Then
+			'The shell "Tray" Icon should do nothing.
 		Else
-			If e.Button = MouseButtons.Left Then
-				If Me.WindowState = FormWindowState.Minimized Then
-					If Me.ShowInTaskbar = False Then
-						Me.ShowInTaskbar = True
+			If Form2.Label1.Text = 1 Then
+				'I have to Sadly disable left button on the Notify Icon to prevent a bug with Form2 Randomly Unloading or not reshowing.
+			Else
+				If e.Button = MouseButtons.Left Then
+					If Me.WindowState = FormWindowState.Minimized Then
+						If Me.ShowInTaskbar = False Then
+							Me.ShowInTaskbar = True
+						End If
+						Me.WindowState = FormWindowState.Normal
+					Else
+						Me.WindowState = FormWindowState.Minimized
 					End If
-					Me.WindowState = FormWindowState.Normal
-				Else
-					Me.WindowState = FormWindowState.Minimized
 				End If
 			End If
 		End If
@@ -239,7 +252,7 @@ Friend Class Form1
 		Else
 			Label1.Text = ""
 			MsgBox("Can't find 'Launcher.exe'.", MsgBoxStyle.Critical, "Error!")
-		End If
+			End If
 	End Sub
 
 	Private Sub UnpackToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UnpackToolStripMenuItem.Click
