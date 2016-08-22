@@ -39,7 +39,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="pyc.ico">
+    <Image Include="favicon.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
