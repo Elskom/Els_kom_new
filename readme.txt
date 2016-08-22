@@ -1,8 +1,15 @@
-                          Whats new in v1.4.9.4
+                          Whats new in v1.4.9.5
+=============================================================================
+	+Add Detection for x2.exe when Test Mods option is pressed until closed.
+	+Add Detection for launcher & x2.exe when running when Launcher 
+		Option is pressed until closed.
+
+=============================================================================
+                             Els_kom v1.4.9.4
 =============================================================================
 	+Removed Reference and use of Microsoft.VisualBasic.Compatibility in 
 		Els_kom Project (to the Els_kom.exe file).
-	+Remvoed Reference and Use of Microsoft.VisualBasic.PowerPacks.VS in 
+	+Removed Reference and Use of Microsoft.VisualBasic.PowerPacks.VS in 
 		Els_kom Project (to the Els_kom.exe file) as well.
 	-Will Replace the WindowFind Class in the core with something much 
 		more Accurate and can find stuff even if it has no Window by 
