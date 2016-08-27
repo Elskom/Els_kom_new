@@ -7,17 +7,18 @@ extern "C" {
 #endif
 
 #include <Windows.h>
+#include <string>
 //TODO: Add zlib to this.
 //#include <zlib.h>
 
-int Alg0_Unpacker(LPCSTR FileName, byte FileData, LPCSTR DestPath) {
+unsigned char* Alg0_Unpacker(std::string FileName, unsigned char* FileData, std::string DestPath) {
 	//TODO: Add Actual Unpacking here.
-	return 0;
+	return NULL;
 }
 
-int Alg0_Packer(LPCSTR FileName, byte FileData, LPCSTR DestPath) {
+unsigned char* Alg0_Packer(unsigned char* FileData) {
 	//TODO: Add Actual Packing here.
-	return 0;
+	return NULL;
 }
 
 #ifdef __CPLUSPLUS

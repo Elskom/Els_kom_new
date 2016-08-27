@@ -13,23 +13,56 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\CColors">
+      <UniqueIdentifier>{41b201fa-7605-425b-a4c9-9e80e4163d77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CColors">
+      <UniqueIdentifier>{1c3a60d4-24fd-4da6-940d-1f07c0887919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\RXML">
+      <UniqueIdentifier>{9907bcab-0dbc-4aff-a09f-8adf4ae7f2c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CColors\advconsole.h">
+      <Filter>Header Files\CColors</Filter>
+    </ClInclude>
+    <ClInclude Include="RXML\rapidxml.hpp">
+      <Filter>Header Files\RXML</Filter>
+    </ClInclude>
+    <ClInclude Include="RXML\rapidxml_iterators.hpp">
+      <Filter>Header Files\RXML</Filter>
+    </ClInclude>
+    <ClInclude Include="RXML\rapidxml_print.hpp">
+      <Filter>Header Files\RXML</Filter>
+    </ClInclude>
+    <ClInclude Include="RXML\rapidxml_utils.hpp">
+      <Filter>Header Files\RXML</Filter>
+    </ClInclude>
+    <ClInclude Include="kompact_new.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="packerconsole.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="kompact_new.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="kompact_new.cpp">
+    <ClCompile Include="CColors\advconsole.cpp">
+      <Filter>Source Files\CColors</Filter>
+    </ClCompile>
+    <ClCompile Include="CColors\advconsole.win32.cpp">
+      <Filter>Source Files\CColors</Filter>
+    </ClCompile>
+    <ClCompile Include="CColors\colorex.cpp">
+      <Filter>Source Files\CColors</Filter>
+    </ClCompile>
+    <ClCompile Include="packerconsole.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

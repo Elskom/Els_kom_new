@@ -7,16 +7,21 @@ extern "C" {
 #endif
 
 #include <Windows.h>
+#include <string>
 //TODO: Add Crypto++ to this.
 
-int Alg3_Unpacker(LPCSTR FileName, byte FileData, LPCSTR DestPath) {
+unsigned char* Alg3_Unpacker(std::string FileName, unsigned char* FileData, std::string DestPath) {
 	//TODO: Add Actual Unpacking here with Crypto++.
-	return 0;
+	return NULL;
 }
 
-int Alg3_Packer(LPCSTR FileName, byte FileData, LPCSTR DestPath) {
+unsigned char* Alg3_Packer(unsigned char* FileData) {
 	//TODO: Add Actual Packing here with Crypto++.
-	return 0;
+	return NULL;
+}
+
+unsigned char* Alg3_Packer_s(unsigned char* FileData) {
+	return FileData;
 }
 
 #ifdef __CPLUSPLUS

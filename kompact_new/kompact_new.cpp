@@ -1,25 +1,55 @@
-// kompact_new.cpp : Defines the entry point for the console application.
-//
+/*
+	kompact_new.cpp
+*/
 
-#include "stdafx.h"
+#include "kompact_new.h"
 
 
 int main(int argc, char* argv[])
 {
-	//Well for this I could Iterate through all files in a folder that is specified to pack and then.
-	//Force certain files with certain extentions to certain Algorithms that would be known to be specific Algorithms.
-	// TODO: Make a list of Known file Extensions in KOM files and their Algorithms.
-	/*
-		|	File Extension	|	Algorithm	|
-		|	*.txt			|	3			|
-		|	*.tga			|	0			|
-		|	*.lua			|	3			|
-		|	*.dds			|	0			|
-		|	*.x				|	0			|
-		|	*.y				|	0			|
-		|	*.xet			|	0			|
-	*/
-	
-    return 0;
+	if(argc < 2)
+	{
+		WhenStartedDirectly();
+	}
+	else
+	{
+		for(int i=1;i<argc;i++)
+		{
+			if (argc == 2)
+			{
+				if (!strcmp(argv[i], "--help"))
+				{
+					print << "Usage:\n" << CONCOLBLUE << "kompact_new.exe --in <Folder Name> --out <KOM File Name>" << CONCOLDEFAULT << "\n<Folder Name> = Folder to feed into the packer.\n<KOM File Name> = KOM File to create from the files in <Folder Name>.\nNote: <Folder Name> and <KOM File Name> must not have 0 length." << nl;
+				}
+			}
+			else
+			{
+				if (!strcmp(argv[i], "--in"))
+				{
+					size_t DirArgLegth = strlen(argv[i + 1]);
+					if(!strcmp(argv[i + 2], "--out"))
+					{
+						size_t DestFileLength = strlen(argv[i + 3]);
+						if (DirArgLegth != NULL)
+						{
+							std::string path = argv[i + 1];
+							if (DestFileLength != NULL)
+							{
+								FolderIterator(path, argv[i + 3]);
+							}
+							else
+							{
+								print << CONCOLRED << "A kom file name must be specified." << CONCOLDEFAULT << nl;
+							}
+						}
+						else
+						{
+							print << CONCOLRED  << "A Folder with the files you want to pack into a kom file must be specified." << CONCOLDEFAULT << nl;
+						}
+					}
+				}
+			}
+		}
+	}
+	return 0;
 }
-
