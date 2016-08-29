@@ -18,10 +18,10 @@ int TempKOMFileWriter(unsigned char* data)
 	FILE *fp2 = fopen("data.tmp", "wb");
 	if (fp2 != NULL)
 	{
-		fseek(fp2, 0, SEEK_END); // GO TO END OF FILE
+		fseek(fp2, 0, SEEK_END);
 		size_t size = ftell(fp2);
-		fseek(fp2, 0, SEEK_SET); // GO BACK TO START
-		fseek(fp2, 0, SEEK_END); // GO BACK TO END OF FILE
+		fseek(fp2, 0, SEEK_SET);
+		fseek(fp2, 0, SEEK_END);
 		data3 = new unsigned char[size];
 		size_t file_data = fread(data3, 1, size, fp2);
 		fwrite(data3, 1, size, fp2);
@@ -30,12 +30,16 @@ int TempKOMFileWriter(unsigned char* data)
 	return 0;
 }
 
+int CRCFileWriter()
+{
+	// TODO: Write Code that Creates the CRC XML data.
+	return 0;
+}
+
 void FolderIterator(std::string path, std::string FileName)
 {
 	UnsupportedAlg = false;
 	UnsupportedExt = false;
-	print << CONCOLGREEN << "Writing CRC.XML..." << CONCOLDEFAULT << nl;
-	// TODO: Actually Write crc.xml. for use in the Packer on this iterator.
 	for (auto p = directory_iterator(path); p != directory_iterator(); p++)
 	{
 		if (!is_directory(p->path()))
@@ -43,23 +47,20 @@ void FolderIterator(std::string path, std::string FileName)
 			unsigned char* data;
 			std::string desfile = p->path().filename().string();
 			unsigned char* tmpdata;
-			//unsigned char* data2;
+			// From Lines 51-63 it seems that the Data Obtained from the files is nothing...
+			unsigned char* data2;
 			std::string fileopeninfo = p->path().string();
-			//Commented out due to data being 0 bytes long for some reason.
-			//FILE *fp = fopen(fileopeninfo.c_str(), "rb");
-			//if (fp != NULL)
-			//{
-				//fseek(fp, 0, SEEK_END); // GO TO END OF FILE
-				//size_t size = ftell(fp);
-				//print << size << nl;
-				//fseek(fp, 0, SEEK_SET); // GO BACK TO START
-				//data2 = new unsigned char[size];
-				//size_t file_data = fread(data2, 1, size, fp);
-				//print << sizeof(data2) << nl;
-				//tmpdata = data2;
-				//fclose(fp);
-			//}
-			tmpdata = NULL;
+			FILE *fp = fopen(fileopeninfo.c_str(), "rb");
+			if (fp != NULL)
+			{
+				fseek(fp, 0, SEEK_END);
+				size_t size = ftell(fp);
+				fseek(fp, 0, SEEK_SET);
+				data2 = new unsigned char[size];
+				size_t file_data = fread(data2, 1, size, fp);
+				tmpdata = data2;
+				fclose(fp);
+			}
 			//This Below is for Packing.
 			if (EndsWith(desfile, ".txt"))
 			{
@@ -87,6 +88,8 @@ void FolderIterator(std::string path, std::string FileName)
 					UnsupportedAlg = true;
 				}
 			}
+			/*
+				More Problems than Good to Support these .___ files from the Python Version. This means Algorithm 3 Support is now Critical.
 			else if (EndsWith(desfile, ".___"))
 			{
 				data = Pack_KOM_Generic(tmpdata, 4);
@@ -100,6 +103,7 @@ void FolderIterator(std::string path, std::string FileName)
 					UnsupportedAlg = true;
 				}
 			}
+			*/
 			else if (EndsWith(desfile, ".tga"))
 			{
 				data = Pack_KOM_Generic(tmpdata, 0);
@@ -241,6 +245,7 @@ void FolderIterator(std::string path, std::string FileName)
 	else
 	{
 		print << CONCOLGREEN << "File Created." << CONCOLDEFAULT << nl;
+		// TODO: Delete Temp Files here.
 	}
 }
 
@@ -258,11 +263,10 @@ int WhenStartedDirectly()
 		}
 		else if (!strcmp(buffer.c_str(), "--exit"))
 		{
-			break;  //Breaks this loop which makes this program able to exit.
+			break;
 		}
 		else if (!strcmp(buffer.c_str(), ""))
 		{
-			//This is to bypass the Invalid Command. message when the user presses enter when they did not type anything.
 		}
 		else
 		{

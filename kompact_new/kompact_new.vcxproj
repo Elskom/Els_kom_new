@@ -72,18 +72,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\x86\$(Configuration)\</OutDir>
+    <IntDir>.\obj\x86\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>.\obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\x86\$(Configuration)\</OutDir>
+    <IntDir>.\obj\x86\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>.\obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -92,12 +96,28 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <BrowseInformationFile>$(IntDir)</BrowseInformationFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(RemoteDebuggerWorkingDirectory)Generic_Unpacker\x86\Debug\Els_kom.GenericUnpacker.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ManifestFile>$(IntDir)$(TargetName)$(TargetExt).intermediate.manifest</ManifestFile>
     </Link>
+    <Manifest>
+      <OutputManifestFile>$(IntDir)$(TargetName)$(TargetExt).embed.manifest</OutputManifestFile>
+    </Manifest>
+    <ManifestResourceCompile>
+      <ResourceOutputFileName>$(IntDir)$(TargetName)$(TargetExt).embed.manifest.res</ResourceOutputFileName>
+    </ManifestResourceCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName>$(IntDir)$(ProjectName).res</ResourceOutputFileName>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -174,7 +194,7 @@
     <ResourceCompile Include="kompact_new.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="favicon.ico" />
+    <Image Include="WS.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

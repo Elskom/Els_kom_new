@@ -72,24 +72,26 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\bin\x86\Debug\</OutDir>
-    <IntDir>.\Debug\</IntDir>
+    <IntDir>.\obj\x86\Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <TargetName>Els_kom.GenericUnpacker</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>.\obj\x64\Debug\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <LinkIncremental>true</LinkIncremental>
     <TargetName>Els_kom.GenericUnpacker</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\bin\x86\Release\</OutDir>
-    <IntDir>.\Release\</IntDir>
-    <LinkIncremental>false</LinkIncremental>
+    <IntDir>.\obj\x86\Release\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
     <TargetName>Els_kom.GenericUnpacker</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
+    <IntDir>.\obj\x64\Release\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <LinkIncremental>true</LinkIncremental>
     <TargetName>Els_kom.GenericUnpacker</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -103,16 +105,16 @@
       <MinimalRebuild>true</MinimalRebuild>
       <DebugInformationFormat>None</DebugInformationFormat>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ELS_KOM_CRYPTOPP_WRAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
-      <PrecompiledHeaderOutputFile>.\Debug\Els_kom_Generic_Unpacker.pch</PrecompiledHeaderOutputFile>
-      <ObjectFileName>.\Debug\</ObjectFileName>
-      <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
+      <AssemblerListingLocation>.\obj\x86\Debug\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\obj\x86\Debug\Els_kom.GenericUnpacker.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>.\obj\x86\Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\obj\x86\Debug\</ProgramDataBaseFileName>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TypeLibraryName>.\Debug\Els_kom_Generic_Unpacker.tlb</TypeLibraryName>
+      <TypeLibraryName>.\obj\x86\Debug\Els_kom.GenericUnpacker.tlb</TypeLibraryName>
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
     </Midl>
@@ -122,7 +124,7 @@
     </ResourceCompile>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>.\Debug\Els_kom_Generic_Unpacker.bsc</OutputFile>
+      <OutputFile>.\obj\x86\Debug\Els_kom.GenericUnpacker.bsc</OutputFile>
     </Bscmake>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -130,7 +132,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OutputFile>..\bin\x86\Debug\Els_kom.GenericUnpacker.dll</OutputFile>
-      <ImportLibrary>.\Debug\Els_kom.GenericUnpacker.lib</ImportLibrary>
+      <ImportLibrary>.\obj\x86\Debug\Els_kom.GenericUnpacker.lib</ImportLibrary>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -144,16 +146,16 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ELS_KOM_CRYPTOPP_WRAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
-      <PrecompiledHeaderOutputFile>.\Debug\Els_kom_Generic_Unpacker.pch</PrecompiledHeaderOutputFile>
-      <ObjectFileName>.\Debug\</ObjectFileName>
-      <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
+      <AssemblerListingLocation>.\obj\x64\Debug\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\obj\x64\Debug\Els_kom.GenericUnpacker.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>.\obj\x64\Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\obj\x64\Debug\</ProgramDataBaseFileName>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TypeLibraryName>.\Debug\Els_kom_Generic_Unpacker.tlb</TypeLibraryName>
+      <TypeLibraryName>.\obj\x64\Debug\Els_kom.GenericUnpacker.tlb</TypeLibraryName>
       <MkTypLibCompatible>true</MkTypLibCompatible>
     </Midl>
     <ResourceCompile>
@@ -162,7 +164,7 @@
     </ResourceCompile>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>.\Debug\Els_kom_Generic_Unpacker.bsc</OutputFile>
+      <OutputFile>.\obj\x64\Debug\Els_kom.GenericUnpacker.bsc</OutputFile>
     </Bscmake>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -184,16 +186,16 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ELS_KOM_CRYPTOPP_WRAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
-      <PrecompiledHeaderOutputFile>.\Release\Els_kom_Generic_Unpacker.pch</PrecompiledHeaderOutputFile>
-      <ObjectFileName>.\Release\</ObjectFileName>
-      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+      <AssemblerListingLocation>.\obj\x86\Release\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\obj\x86\Release\Els_kom.GenericUnpacker.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>.\obj\x86\Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\obj\x86\Release\</ProgramDataBaseFileName>
       <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TypeLibraryName>.\Release\Els_kom_Generic_Unpacker.tlb</TypeLibraryName>
+      <TypeLibraryName>.\obj\x86\Release\Els_kom.GenericUnpacker.tlb</TypeLibraryName>
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
     </Midl>
@@ -203,14 +205,14 @@
     </ResourceCompile>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>.\Release\Els_kom_Generic_Unpacker.bsc</OutputFile>
+      <OutputFile>.\obj\x86\Release\Els_kom.GenericUnpacker.bsc</OutputFile>
     </Bscmake>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <LinkDLL>true</LinkDLL>
       <SubSystem>Windows</SubSystem>
       <OutputFile>..\bin\x86\Release\Els_kom.GenericUnpacker.dll</OutputFile>
-      <ImportLibrary>.\Release\Els_kom.GenericUnpacker.lib</ImportLibrary>
+      <ImportLibrary>.\obj\x86\Release\Els_kom.GenericUnpacker.lib</ImportLibrary>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ProgramDatabaseFile />
@@ -226,16 +228,16 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ELS_KOM_CRYPTOPP_WRAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
-      <PrecompiledHeaderOutputFile>.\Release\Els_kom_Generic_Unpacker.pch</PrecompiledHeaderOutputFile>
-      <ObjectFileName>.\Release\</ObjectFileName>
-      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+      <AssemblerListingLocation>.\obj\x64\Release\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\obj\x64\Release\Els_kom.GenericUnpacker.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>.\obj\x64\Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\obj\x64\Release\</ProgramDataBaseFileName>
       <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TypeLibraryName>.\Release\Els_kom_Generic_Unpacker.tlb</TypeLibraryName>
+      <TypeLibraryName>.\obj\x64\Release\Els_kom.GenericUnpacker.tlb</TypeLibraryName>
       <MkTypLibCompatible>true</MkTypLibCompatible>
     </Midl>
     <ResourceCompile>
@@ -244,14 +246,14 @@
     </ResourceCompile>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>.\Release\Els_kom_Generic_Unpacker.bsc</OutputFile>
+      <OutputFile>.\obj\x64\Release\Els_kom.GenericUnpacker.bsc</OutputFile>
     </Bscmake>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <LinkDLL>true</LinkDLL>
       <SubSystem>Windows</SubSystem>
       <OutputFile>..\bin\x64\Release\Els_kom.GenericUnpacker.dll</OutputFile>
-      <ImportLibrary>.\x64\Release\Els_kom.GenericUnpacker.lib</ImportLibrary>
+      <ImportLibrary>.\obj\x64\Release\Els_kom.GenericUnpacker.lib</ImportLibrary>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>

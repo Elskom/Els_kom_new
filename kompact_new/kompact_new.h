@@ -5,6 +5,12 @@
 		the Platform variables. Nothing more.
 */
 
+/*
+	Disable Some Security Warnings.
+*/
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 
 /*
 	All Known Includes here.
