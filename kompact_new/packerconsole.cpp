@@ -223,7 +223,7 @@ void FolderIterator(std::string path, std::string FileName)
 			}
 			else
 			{
-				print << CONCOLRED << desfile << " has a unsupported extension." << CONCOLDEFAULT << nl;
+				print << CONCOLYELLOW << desfile << " has a unsupported extension." << CONCOLDEFAULT << nl;
 				UnsupportedExt = true;
 			}
 		}
