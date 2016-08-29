@@ -236,11 +236,11 @@ void FolderIterator(std::string path, std::string FileName)
 	// TODO: Delete Temp Files when packing is complete.
 	if (UnsupportedAlg != false)
 	{
-		print << CONCOLRED << "File Could not be created due to Unsupported Algorithm(s)." << CONCOLDEFAULT << nl;
+		print << CONCOLRED << "File Could not be created due to a Unsupported Algorithm(s)." << CONCOLDEFAULT << nl;
 	}
 	if (UnsupportedAlg != false)
 	{
-		print << CONCOLRED << "File Could not be created due to Unsupported File Extensions(s)." << CONCOLDEFAULT << nl;
+		print << CONCOLRED << "File Could not be created due to a Unsupported File Extension(s)." << CONCOLDEFAULT << nl;
 	}
 	else
 	{
