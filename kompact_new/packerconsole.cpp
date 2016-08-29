@@ -238,7 +238,7 @@ void FolderIterator(std::string path, std::string FileName)
 	{
 		print << CONCOLRED << "File Could not be created due to Unsupported Algorithm(s)." << CONCOLDEFAULT << nl;
 	}
-	else if (UnsupportedAlg != false)
+	if (UnsupportedAlg != false)
 	{
 		print << CONCOLRED << "File Could not be created due to Unsupported File Extensions(s)." << CONCOLDEFAULT << nl;
 	}
