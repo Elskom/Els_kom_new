@@ -6,9 +6,9 @@
 extern "C" {
 #endif
 
-unsigned char* Alg3_Unpacker(std::string FileName, unsigned char* FileData, std::string DestPath);
-unsigned char* Alg3_Packer(unsigned char* FileData);
-unsigned char* Alg3_Packer_s(unsigned char* FileData);
+char* Alg3_Unpacker(std::string FileName, char* FileData, std::string DestPath);
+char* Alg3_Packer(char* FileData);
+char* Alg3_Packer_s(char* FileData);
 
 #ifdef __CPLUSPLUS
 }

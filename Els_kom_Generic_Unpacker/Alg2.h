@@ -6,8 +6,8 @@
 extern "C" {
 #endif
 
-unsigned char* Alg2_Unpacker(std::string FileName, unsigned char* FileData, std::string DestPath);
-unsigned char* Alg2_Packer(unsigned char* FileData);
+char* Alg2_Unpacker(std::string FileName, char* FileData, std::string DestPath);
+char* Alg2_Packer(char* FileData);
 
 #ifdef __CPLUSPLUS
 }

@@ -8,8 +8,11 @@
 // 		`g++ colorex.cpp advconsole.cpp advconsole.<os>.cpp -o colorex`
 // Usage:       `./colorex`
 
+#include <iostream>
+#include "advconsole.h"
+using std::cout; using std::endl;
+using namespace AdvancedConsole;
 
-/*
 int main()
 {
 	cout << "Normal text" << endl;
@@ -18,4 +21,3 @@ int main()
 		Color(AC_DEFAULT, AC_BACKGROUND) << endl;	// Needed to reset bg color
 	cout << Color(AC_GREEN, AC_BOLD) << "Bold" << Color() << " text" << endl;
 }
-*/

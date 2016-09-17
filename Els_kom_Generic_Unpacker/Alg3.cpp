@@ -10,17 +10,17 @@ extern "C" {
 #include <string>
 //TODO: Add Crypto++ to this.
 
-unsigned char* Alg3_Unpacker(std::string FileName, unsigned char* FileData, std::string DestPath) {
+char* Alg3_Unpacker(std::string FileName, char* FileData, std::string DestPath) {
 	//TODO: Add Actual Unpacking here with Crypto++.
 	return NULL;
 }
 
-unsigned char* Alg3_Packer(unsigned char* FileData) {
+char* Alg3_Packer(char* FileData) {
 	//TODO: Add Actual Packing here with Crypto++.
 	return NULL;
 }
 
-unsigned char* Alg3_Packer_s(unsigned char* FileData) {
+char* Alg3_Packer_s(char* FileData) {
 	return FileData;
 }
 

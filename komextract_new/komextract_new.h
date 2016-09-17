@@ -1,5 +1,5 @@
 /*
-	kompact_new.h
+	komextract_new.h
 	==========================================================================================
 		This Header File is for Including all the headings and other things and defining like
 		the Platform variables. Nothing more.
@@ -29,7 +29,7 @@
 #include <cstdint>
 #include "..\\Els_kom_Generic_Unpacker\\Els_kom_Generic_Unpacker.h"
 #include "CColors\\advconsole.h"
-#include "packerconsole.h"
+#include "extractorconsole.h"
 
 // TODO: Finish the list of Known file Extensions in KOM files and their Algorithms.
 /*

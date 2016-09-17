@@ -9,7 +9,7 @@ Partial Class Classes
 		''' <summary>
 		''' Overload for Shell() Function that Allows Overloading of the Working directory Variable. It must be a String but can be variables that returns strings.
 		''' </summary>
-		''' <returns>Process ID</returns>
+		''' <returns>0</returns>
 		Public Shared Function Shell(FileName As String, Arguments As String, RedirectStandardOutput As Boolean, UseShellExecute As Boolean, CreateNoWindow As Boolean, WindowStyle As ProcessWindowStyle, WorkingDirectory As String)
 			Dim proc As New Diagnostics.Process
 			proc.StartInfo.FileName = FileName
@@ -20,7 +20,8 @@ Partial Class Classes
 			proc.StartInfo.WindowStyle = WindowStyle
 			proc.StartInfo.WorkingDirectory = WorkingDirectory
 			proc.Start()
-			Return proc.Id
+			proc.WaitForExit()  ' Required to have Detection on the process runnign to work right.
+			Return 0
 		End Function
 
 		''' <summary>
@@ -28,7 +29,7 @@ Partial Class Classes
 		''' </summary>
 		''' <returns>Boolean</returns>
 		Public Shared Function IsX2Running() As Boolean
-			Dim x2exe As Diagnostics.Process() = Diagnostics.Process.GetProcessesByName("x2")
+			Dim x2exe As Diagnostics.Process() = Diagnostics.Process.GetProcessesByName("Test_Mods")  ' Only Way for Detection to Work Right sadly.
 			If x2exe.Count > 0 Then
 				Return True
 			Else

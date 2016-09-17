@@ -54,6 +54,8 @@
 		Me.LauncherToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
 		Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.Timer3 = New System.Windows.Forms.Timer(Me.components)
+		Me.Timer4 = New System.Windows.Forms.Timer(Me.components)
 		Me.Frame1.SuspendLayout()
 		Me.ContextMenuStrip1.SuspendLayout()
 		Me.SuspendLayout()
@@ -241,6 +243,14 @@
 		Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
 		Me.ExitToolStripMenuItem.Text = "Exit"
 		'
+		'Timer3
+		'
+		Me.Timer3.Interval = 1
+		'
+		'Timer4
+		'
+		Me.Timer4.Interval = 1
+		'
 		'Form1
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
@@ -280,5 +290,7 @@
 	Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents ToolStripMenuItem3 As ToolStripSeparator
 	Friend WithEvents SettingsToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents Timer3 As Timer
+	Friend WithEvents Timer4 As Timer
 #End Region
 End Class

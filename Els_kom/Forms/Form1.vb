@@ -51,7 +51,7 @@ Friend Class Form1
 				Me.ShowInTaskbar = False
 			End If
 			Label1.Text = ""
-			Shell(My.Application.Info.DirectoryPath & "\Test_Mods.exe")
+			Timer3.Enabled = True
 		Else
 			MsgBox("Can't find '" & My.Application.Info.DirectoryPath & "\Test_Mods.exe'.", MsgBoxStyle.Critical, "Error!")
 		End If
@@ -273,7 +273,7 @@ Friend Class Form1
 			If Me.ShowInTaskbar = True Then
 				Me.ShowInTaskbar = False
 			End If
-			Shell(My.Application.Info.DirectoryPath & "\Test_Mods.exe")
+			Timer3.Enabled = True
 		Else
 			Label1.Text = ""
 			MsgBox("Can't find '" & My.Application.Info.DirectoryPath & "\Test_Mods.exe'.", MsgBoxStyle.Critical, "Error!")
@@ -292,5 +292,43 @@ Friend Class Form1
 
 	Private Sub SettingsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SettingsToolStripMenuItem.Click
 		Form3.ShowDialog()
+	End Sub
+
+	Private Sub Timer3_Tick(sender As Object, e As EventArgs) Handles Timer3.Tick
+		Timer6.Enabled = False
+		Timer3.Enabled = False
+		Command1.Enabled = False
+		Command2.Enabled = False
+		Command4.Enabled = False
+		Command5.Enabled = False
+		PackToolStripMenuItem.Enabled = False
+		UnpackToolStripMenuItem.Enabled = False
+		TestModsToolStripMenuItem.Enabled = False
+		LauncherToolStripMenuItem.Enabled = False
+		' TODO: Copy All KOM Files on this part.
+		Shell(My.Application.Info.DirectoryPath & "\Test_Mods.exe")
+		Timer4.Interval = 1
+		Timer4.Enabled = True
+	End Sub
+
+	Private Sub Timer4_Tick(sender As Object, e As EventArgs) Handles Timer4.Tick
+		Dim x2bool As Boolean
+		x2bool = Els_kom_Core.Classes.Process.IsX2Running()
+		If (x2bool = True) Then
+			Timer4.Interval = 1
+			Label2.Text = "Testing Mods..."
+		Else
+			Command1.Enabled = True
+			Command2.Enabled = True
+			Command4.Enabled = True
+			Command5.Enabled = True
+			PackToolStripMenuItem.Enabled = True
+			UnpackToolStripMenuItem.Enabled = True
+			TestModsToolStripMenuItem.Enabled = True
+			LauncherToolStripMenuItem.Enabled = True
+			Label2.Text = ""
+			Timer6.Enabled = True
+			Timer4.Enabled = False
+		End If
 	End Sub
 End Class

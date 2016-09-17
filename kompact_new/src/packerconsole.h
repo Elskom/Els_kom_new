@@ -1,0 +1,5 @@
+/*
+	packerconsole.h
+*/
+
+int WhenStartedDirectly();

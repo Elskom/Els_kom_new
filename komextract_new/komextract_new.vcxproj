@@ -72,22 +72,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\x86\$(Configuration)\</OutDir>
-    <IntDir>.\obj\x86\$(Configuration)\</IntDir>
+    <IntDir>..\obj\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>.\obj\x64\Debug\</IntDir>
+    <IntDir>..\obj\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\x86\$(Configuration)\</OutDir>
-    <IntDir>.\obj\x86\$(Configuration)\</IntDir>
+    <IntDir>..\obj\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>.\obj\x64\$(Configuration)\</IntDir>
+    <IntDir>..\obj\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -97,25 +97,25 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AssemblerListingLocation>.\obj\x86\$(Configuration)\</AssemblerListingLocation>
-      <ObjectFileName>.\obj\x86\$(Configuration)\</ObjectFileName>
-      <ProgramDataBaseFileName>.\obj\x86\$(Configuration)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <BrowseInformationFile>.\obj\x86\$(Configuration)\</BrowseInformationFile>
-      <PrecompiledHeaderOutputFile>.\obj\x86\$(Configuration)\$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <BrowseInformationFile>$(IntDir)</BrowseInformationFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ManifestFile>.\obj\x86\$(Configuration)\$(TargetName)$(TargetExt).intermediate.manifest</ManifestFile>
+      <ManifestFile>$(IntDir)$(TargetName)$(TargetExt).intermediate.manifest</ManifestFile>
     </Link>
     <Manifest>
-      <OutputManifestFile>.\obj\x86\$(Configuration)\$(TargetName)$(TargetExt).embed.manifest</OutputManifestFile>
+      <OutputManifestFile>$(IntDir)$(TargetName)$(TargetExt).embed.manifest</OutputManifestFile>
     </Manifest>
     <ManifestResourceCompile>
-      <ResourceOutputFileName>.\obj\x86\$(Configuration)\$(TargetName)$(TargetExt).embed.manifest.res</ResourceOutputFileName>
+      <ResourceOutputFileName>$(IntDir)$(TargetName)$(TargetExt).embed.manifest.res</ResourceOutputFileName>
     </ManifestResourceCompile>
     <ResourceCompile>
-      <ResourceOutputFileName>.\obj\x86\$(Configuration)\%(Filename).res</ResourceOutputFileName>
+      <ResourceOutputFileName>$(IntDir)%(Filename).res</ResourceOutputFileName>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -125,27 +125,27 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <PrecompiledHeaderOutputFile>.\obj\x64\Debug\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\obj\x64\Debug\</AssemblerListingLocation>
-      <ObjectFileName>.\obj\x64\Debug\</ObjectFileName>
-      <XMLDocumentationFileName>.\obj\x64\Debug\</XMLDocumentationFileName>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
       <MinimalRebuild>true</MinimalRebuild>
-      <ProgramDataBaseFileName>.\obj\x64\Debug\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <BrowseInformationFile>.\obj\x64\Debug\</BrowseInformationFile>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <BrowseInformationFile>$(IntDir)</BrowseInformationFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ManifestFile>.\obj\x64\Debug\$(TargetName)$(TargetExt).intermediate.manifest</ManifestFile>
+      <ManifestFile>$(IntDir)$(TargetName)$(TargetExt).intermediate.manifest</ManifestFile>
     </Link>
     <Manifest>
-      <OutputManifestFile>.\obj\x64\Debug\$(TargetName)$(TargetExt).embed.manifest</OutputManifestFile>
+      <OutputManifestFile>$(IntDir)$(TargetName)$(TargetExt).embed.manifest</OutputManifestFile>
     </Manifest>
     <ManifestResourceCompile>
-      <ResourceOutputFileName>.\obj\x64\Debug\$(TargetName)$(TargetExt).embed.manifest.res</ResourceOutputFileName>
+      <ResourceOutputFileName>$(IntDir)$(TargetName)$(TargetExt).embed.manifest.res</ResourceOutputFileName>
     </ManifestResourceCompile>
     <ResourceCompile>
-      <ResourceOutputFileName>.\obj\x64\Debug\%(Filename).res</ResourceOutputFileName>
+      <ResourceOutputFileName>$(IntDir)%(Filename).res</ResourceOutputFileName>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -158,11 +158,11 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <DebugInformationFormat>None</DebugInformationFormat>
-      <PrecompiledHeaderOutputFile>.\obj\x86\$(Configuration)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\obj\x86\$(Configuration)\</AssemblerListingLocation>
-      <ObjectFileName>.\obj\x86\$(Configuration)\</ObjectFileName>
-      <ProgramDataBaseFileName>.\obj\x86\$(Configuration)\vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <XMLDocumentationFileName>.\obj\x86\$(Configuration)\</XMLDocumentationFileName>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -182,11 +182,11 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <DebugInformationFormat>None</DebugInformationFormat>
-      <AssemblerListingLocation>.\obj\x64\Release\</AssemblerListingLocation>
-      <ObjectFileName>.\obj\x64\Release\</ObjectFileName>
-      <XMLDocumentationFileName>.\obj\x64\Release\</XMLDocumentationFileName>
-      <PrecompiledHeaderOutputFile>.\obj\x64\Release\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <BrowseInformationFile>.\obj\x64\Release\</BrowseInformationFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <BrowseInformationFile>$(IntDir)</BrowseInformationFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -194,16 +194,26 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ProgramDatabaseFile />
-      <ManifestFile>.\obj\x64\Release\$(TargetName)$(TargetExt).intermediate.manifest</ManifestFile>
+      <ManifestFile>$(IntDir)$(TargetName)$(TargetExt).intermediate.manifest</ManifestFile>
     </Link>
     <ResourceCompile>
-      <ResourceOutputFileName>.\obj\x64\Release\%(Filename).res</ResourceOutputFileName>
+      <ResourceOutputFileName>$(IntDir)%(Filename).res</ResourceOutputFileName>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CColors\advconsole.h" />
+    <ClInclude Include="extractorconsole.h" />
+    <ClInclude Include="komextract_new.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="RXML\rapidxml.hpp" />
+    <ClInclude Include="RXML\rapidxml_iterators.hpp" />
+    <ClInclude Include="RXML\rapidxml_print.hpp" />
+    <ClInclude Include="RXML\rapidxml_utils.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CColors\advconsole.cpp" />
+    <ClCompile Include="CColors\advconsole.win32.cpp" />
+    <ClCompile Include="extractorconsole.cpp" />
     <ClCompile Include="komextract_new.cpp" />
   </ItemGroup>
   <ItemGroup>

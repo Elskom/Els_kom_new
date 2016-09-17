@@ -20,9 +20,9 @@ extern "C" {
 
 static HINSTANCE Els_kom_Wrapper_inst;
 
-unsigned char* Unpack_Alg0(std::string FileName, unsigned char* FileData, std::string DestPath)
+char* Unpack_Alg0(std::string FileName, char* FileData, std::string DestPath)
 {
-	unsigned char* data;
+	char* data;
 	if (FileData != NULL)
 	{
 		data = Alg0_Unpacker(FileName, FileData, DestPath);
@@ -42,9 +42,9 @@ unsigned char* Unpack_Alg0(std::string FileName, unsigned char* FileData, std::s
 	return NULL;
 }
 
-unsigned char* Unpack_Alg1(std::string FileName, unsigned char* FileData, std::string DestPath)
+char* Unpack_Alg1(std::string FileName, char* FileData, std::string DestPath)
 {
-	unsigned char* data;
+	char* data;
 	if (FileData != NULL)
 	{
 		data = Alg1_Unpacker(FileName, FileData, DestPath);
@@ -64,9 +64,9 @@ unsigned char* Unpack_Alg1(std::string FileName, unsigned char* FileData, std::s
 	return NULL;
 }
 
-unsigned char* Unpack_Alg2(std::string FileName, unsigned char* FileData, std::string DestPath)
+char* Unpack_Alg2(std::string FileName, char* FileData, std::string DestPath)
 {
-	unsigned char* data;
+	char* data;
 	if (FileData != NULL)
 	{
 		data = Alg2_Unpacker(FileName, FileData, DestPath);
@@ -86,9 +86,9 @@ unsigned char* Unpack_Alg2(std::string FileName, unsigned char* FileData, std::s
 	return NULL;
 }
 
-unsigned char* Unpack_Alg3(std::string FileName, unsigned char* FileData, std::string DestPath)
+char* Unpack_Alg3(std::string FileName, char* FileData, std::string DestPath)
 {
-	unsigned char* data;
+	char* data;
 	if (FileData != NULL)
 	{
 		data = Alg3_Unpacker(FileName, FileData, DestPath);
@@ -108,9 +108,9 @@ unsigned char* Unpack_Alg3(std::string FileName, unsigned char* FileData, std::s
 	return NULL;
 }
 
-unsigned char* Pack_Alg0(unsigned char* FileData)
+char* Pack_Alg0(char* FileData)
 {
-	unsigned char* data;
+	char* data;
 	if (FileData != NULL)
 	{
 		data = Alg0_Packer(FileData);
@@ -130,9 +130,9 @@ unsigned char* Pack_Alg0(unsigned char* FileData)
 	return NULL;
 }
 
-unsigned char* Pack_Alg1(unsigned char* FileData)
+char* Pack_Alg1(char* FileData)
 {
-	unsigned char* data;
+	char* data;
 	if (FileData != NULL)
 	{
 		data = Alg1_Packer(FileData);
@@ -152,9 +152,9 @@ unsigned char* Pack_Alg1(unsigned char* FileData)
 	return NULL;
 }
 
-unsigned char* Pack_Alg2(unsigned char* FileData)
+char* Pack_Alg2(char* FileData)
 {
-	unsigned char* data;
+	char* data;
 	if (FileData != NULL)
 	{
 		data = Alg2_Packer(FileData);
@@ -174,9 +174,9 @@ unsigned char* Pack_Alg2(unsigned char* FileData)
 	return NULL;
 }
 
-unsigned char* Pack_Alg3(unsigned char* FileData)
+char* Pack_Alg3(char* FileData)
 {
-	unsigned char* data;
+	char* data;
 	if (sizeof(FileData) == 1)
 	{
 		return NULL;
@@ -201,9 +201,9 @@ unsigned char* Pack_Alg3(unsigned char* FileData)
 }
 
 // Special Algorithm 3 Packing Function (This is Easy to Complete).
-unsigned char* Pack_Alg3_s(unsigned char* FileData)
+char* Pack_Alg3_s(char* FileData)
 {
-	unsigned char* data;
+	char* data;
 	if (FileData != NULL)
 	{
 		data = Alg3_Packer_s(FileData);
@@ -223,9 +223,9 @@ unsigned char* Pack_Alg3_s(unsigned char* FileData)
 	return NULL;
 }
 
-Els_kom_Wrapper_Extern unsigned char* __cdecl Unpack_KOM_Generic(std::string FileName, unsigned char* FileData, std::string DestPath, int Alg)
+Els_kom_Wrapper_Extern char* __cdecl Unpack_KOM_Generic(std::string FileName, char* FileData, std::string DestPath, int Alg)
 {
-	unsigned char* data;
+	char* data;
 	/*
 		This Function is simply a Good way of Calling the Actual Unpackers so that way I can just Export 2 functions in total.
 	*/
@@ -281,9 +281,9 @@ Els_kom_Wrapper_Extern unsigned char* __cdecl Unpack_KOM_Generic(std::string Fil
 	return NULL;
 }
 
-Els_kom_Wrapper_Extern unsigned char* __cdecl Pack_KOM_Generic(unsigned char* FileData, int Alg)
+Els_kom_Wrapper_Extern char* __cdecl Pack_KOM_Generic(char* FileData, int Alg)
 {
-	unsigned char* data;
+	char* data;
 	/*
 		This Function is simply a Good way of Calling the Actual Packers so that way I can just Export 2 functions in total.
 	*/

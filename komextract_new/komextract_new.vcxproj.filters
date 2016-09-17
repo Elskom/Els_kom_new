@@ -13,15 +13,54 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\CColors">
+      <UniqueIdentifier>{9f8857ec-226d-4803-a2c5-f0d1e743abf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CColors">
+      <UniqueIdentifier>{988ba4ef-8a07-4351-a2a6-8c4839c5e1fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\RXML">
+      <UniqueIdentifier>{ef1a418d-fb47-4337-a4bc-a4992258a515}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="extractorconsole.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="komextract_new.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CColors\advconsole.h">
+      <Filter>Header Files\CColors</Filter>
+    </ClInclude>
+    <ClInclude Include="RXML\rapidxml.hpp">
+      <Filter>Header Files\RXML</Filter>
+    </ClInclude>
+    <ClInclude Include="RXML\rapidxml_iterators.hpp">
+      <Filter>Header Files\RXML</Filter>
+    </ClInclude>
+    <ClInclude Include="RXML\rapidxml_print.hpp">
+      <Filter>Header Files\RXML</Filter>
+    </ClInclude>
+    <ClInclude Include="RXML\rapidxml_utils.hpp">
+      <Filter>Header Files\RXML</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="komextract_new.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="extractorconsole.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CColors\advconsole.cpp">
+      <Filter>Source Files\CColors</Filter>
+    </ClCompile>
+    <ClCompile Include="CColors\advconsole.win32.cpp">
+      <Filter>Source Files\CColors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

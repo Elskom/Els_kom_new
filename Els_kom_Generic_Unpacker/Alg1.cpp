@@ -12,12 +12,12 @@ extern "C" {
 #include <Windows.h>
 #include <string>
 
-unsigned char* Alg1_Unpacker(std::string FileName, unsigned char* FileData, std::string DestPath) {
+char* Alg1_Unpacker(std::string FileName, char* FileData, std::string DestPath) {
 	//This seems to not be Used.
 	return NULL;
 }
 
-unsigned char* Alg1_Packer(unsigned char* FileData) {
+char* Alg1_Packer(char* FileData) {
 	//This seems to not be Used.
 	return NULL;
 }

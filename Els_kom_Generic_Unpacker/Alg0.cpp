@@ -11,12 +11,12 @@ extern "C" {
 //TODO: Add zlib to this.
 //#include <zlib.h>
 
-unsigned char* Alg0_Unpacker(std::string FileName, unsigned char* FileData, std::string DestPath) {
+char* Alg0_Unpacker(std::string FileName, char* FileData, std::string DestPath) {
 	//TODO: Add Actual Unpacking here.
 	return NULL;
 }
 
-unsigned char* Alg0_Packer(unsigned char* FileData) {
+char* Alg0_Packer(char* FileData) {
 	//TODO: Add Actual Packing here.
 	return NULL;
 }
