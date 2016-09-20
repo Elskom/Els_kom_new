@@ -13,12 +13,14 @@ extern "C" {
 
 char* Alg0_Unpacker(std::string FileName, char* FileData, std::string DestPath) {
 	//TODO: Add Actual Unpacking here.
-	return NULL;
+	//For Now lets return the pointer.
+	return FileData;
 }
 
 char* Alg0_Packer(char* FileData) {
 	//TODO: Add Actual Packing here.
-	return NULL;
+	//For Now lets return the pointer.
+	return FileData;
 }
 
 #ifdef __CPLUSPLUS

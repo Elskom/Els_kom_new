@@ -13,13 +13,13 @@ extern "C" {
 #include <string>
 
 char* Alg1_Unpacker(std::string FileName, char* FileData, std::string DestPath) {
-	//This seems to not be Used.
-	return NULL;
+	//This Cannot be Used. So, lets Return the Pointer Instead.
+	return FileData;
 }
 
 char* Alg1_Packer(char* FileData) {
-	//This seems to not be Used.
-	return NULL;
+	//This Cannot be Used. So, lets Return the Pointer Instead.
+	return FileData;
 }
 
 #ifdef __CPLUSPLUS

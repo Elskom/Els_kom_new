@@ -53,7 +53,15 @@ def main(argv):
                     #if file_name_new.lower().endswith('.txt'):
                         # Packing lua's and txt files back to Algorithm 3 Not supported yet. Need Crypto++ C++ DLL wrapper for this.
                     #    raise NotImplementedError('Packing txt files back to Algorithm 3 is not Supported yet, Sorry.')
-                    if file_name_new.endswith('.___'):
+                    if file_name_new.endswith('.3'):
+                        file_name_new, ext = os.path.splitext(file_name_new)
+                        file_name_new, ext = os.path.splitext(file_name_new)
+                        algorithm = int(ext[1:])
+                        file_name_new, ext = os.path.splitext(file_name_new)
+                        file_size = int(ext[1:])
+                        compressed_file_data = file_data
+                        compressed_size = len(compressed_file_data)
+                    elif file_name_new.endswith('.2'):
                         file_name_new, ext = os.path.splitext(file_name_new)
                         file_name_new, ext = os.path.splitext(file_name_new)
                         algorithm = int(ext[1:])

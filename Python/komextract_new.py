@@ -102,7 +102,7 @@ def main(argv):
                 # Unpacking Algorithm 3 Not supported yet. Need Crypto++ C++ DLL wrapper for this.
             #    raise NotImplementedError('Unpacking Algorithm 3 data Not Supported yet, Sorry.')
             else:
-                file_object = open(out_path+'/'+entry.name + '.' + str(entry.uncompressed_size) + '.' + str(entry.algorithm) + ".___", 'wb')
+                file_object = open(out_path+'/'+entry.name + '.' + str(entry.uncompressed_size) + '.' + str(entry.algorithm), 'wb')
             if file_object is not None:
                 file_object.write(entry_file_data)
 #                    os.utime(entry.name, (access_time, long(entry.file_time)))

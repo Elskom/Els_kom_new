@@ -8,7 +8,6 @@ extern "C" {
 
 char* Alg3_Unpacker(std::string FileName, char* FileData, std::string DestPath);
 char* Alg3_Packer(char* FileData);
-char* Alg3_Packer_s(char* FileData);
 
 #ifdef __CPLUSPLUS
 }

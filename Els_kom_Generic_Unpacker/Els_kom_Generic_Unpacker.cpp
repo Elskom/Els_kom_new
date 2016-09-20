@@ -6,6 +6,10 @@
 	Note: This is a work in Progress it does not work with Algorithm 3 yet.
 */
 
+/*
+	TODO: Use zlib for CRC32 Calculating here. Will also be used for Calculating the Checksum and FileTimes datas in a CRC XML file.
+*/
+
 #ifdef __CPLUSPLUS
 extern "C" {
 #endif
@@ -200,29 +204,6 @@ char* Pack_Alg3(char* FileData)
 	return NULL;
 }
 
-// Special Algorithm 3 Packing Function (This is Easy to Complete).
-char* Pack_Alg3_s(char* FileData)
-{
-	char* data;
-	if (FileData != NULL)
-	{
-		data = Alg3_Packer_s(FileData);
-		if (data != NULL)
-		{
-			return data;
-		}
-		else
-		{
-			return NULL;
-		}
-	}
-	else
-	{
-		return NULL;
-	}
-	return NULL;
-}
-
 Els_kom_Wrapper_Extern char* __cdecl Unpack_KOM_Generic(std::string FileName, char* FileData, std::string DestPath, int Alg)
 {
 	char* data;
@@ -327,18 +308,6 @@ Els_kom_Wrapper_Extern char* __cdecl Pack_KOM_Generic(char* FileData, int Alg)
 	if (Alg == 3)
 	{
 		data = Pack_Alg3(FileData);
-		if (data != NULL)
-		{
-			return data;
-		}
-		else
-		{
-			return NULL;
-		}
-	}
-	if (Alg == 4)  // Special algorithm 3 Packer. Basically this is for when files have the .___ extension.
-	{
-		data = Pack_Alg3_s(FileData);
 		if (data != NULL)
 		{
 			return data;

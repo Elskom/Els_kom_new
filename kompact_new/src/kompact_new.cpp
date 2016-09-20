@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 			{
 				if (!strcmp(argv[i], "--help"))
 				{
-					print << "Usage:\n" << CONCOLBLUE << "kompact_new.exe --in <Folder Name> --out <KOM File Name>" << CONCOLDEFAULT << "\n<Folder Name> = Folder to feed into the packer.\n<KOM File Name> = KOM File to create from the files in <Folder Name>.\nNote: <Folder Name> and <KOM File Name> must not have 0 length." << nl;
+					std::cout << CONCOLRED << "Usage:\n" << CONCOLBLUE << "kompact_new.exe --in <Folder Name> --out <KOM File Name>" << CONCOLYELLOW << "\n<Folder Name> = Folder to feed into the packer.\n<KOM File Name> = KOM File to create from the files in <Folder Name>.\nNote: <Folder Name> and <KOM File Name> must not have 0 length.\nType \"--exit\" to close this console.\n" << CONCOLCYAN << "Note: The \"--in\" and the \"--out\" commands do not work in this console instance (can only be used directly in the command line in a batch file or executed with the commands directly from Command Prompt)." << CONCOLDEFAULT << nl;
 				}
 			}
 			else
@@ -39,12 +39,12 @@ int main(int argc, char* argv[])
 							}
 							else
 							{
-								print << CONCOLRED << "A kom file name must be specified." << CONCOLDEFAULT << nl;
+								print("A kom file name must be specified.", true, false, false);
 							}
 						}
 						else
 						{
-							print << CONCOLRED  << "A Folder with the files you want to pack into a kom file must be specified." << CONCOLDEFAULT << nl;
+							print("A Folder with the files you want to pack into a kom file must be specified.", true, false, false);
 						}
 					}
 				}

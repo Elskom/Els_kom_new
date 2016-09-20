@@ -31,15 +31,6 @@ IF EXIST "%SystemDrive%\Program Files\MSBuild\14.0\Bin\msbuild.exe" (
 )
 goto :choice4
 
-:build_x64_release
-IF EXIST "%SystemDrive%\Program Files (x86)\MSBuild\14.0\Bin\msbuild.exe" (
-"%SystemDrive%\Program Files (x86)\MSBuild\14.0\Bin\msbuild" "%~dp0Els_kom_Solution.sln" /nologo /verbosity:minimal /clp:Summary /p:Configuration=%conf% /p:Platform=%platf2%
-)
-IF EXIST "%SystemDrive%\Program Files\MSBuild\14.0\Bin\msbuild.exe" (
-"%SystemDrive%\Program Files\MSBuild\14.0\Bin\msbuild" "%~dp0Els_kom_Solution.sln" /nologo /verbosity:minimal /clp:Summary /p:Configuration=%conf% /p:Platform=%platf2%
-)
-goto :eof
-
 :choice
 echo Do you want to Build 32 Bit Debug? [Y/N]
 set /P c=
@@ -68,5 +59,14 @@ if /I "%c%" EQU "Y" goto :build_x64_release
 if /I "%c%" EQU "N" goto :eof
 goto :choice4
 
-:eof
+:build_x64_release
+IF EXIST "%SystemDrive%\Program Files (x86)\MSBuild\14.0\Bin\msbuild.exe" (
+"%SystemDrive%\Program Files (x86)\MSBuild\14.0\Bin\msbuild" "%~dp0Els_kom_Solution.sln" /nologo /verbosity:minimal /clp:Summary /p:Configuration=%conf% /p:Platform=%platf2%
+)
+IF EXIST "%SystemDrive%\Program Files\MSBuild\14.0\Bin\msbuild.exe" (
+"%SystemDrive%\Program Files\MSBuild\14.0\Bin\msbuild" "%~dp0Els_kom_Solution.sln" /nologo /verbosity:minimal /clp:Summary /p:Configuration=%conf% /p:Platform=%platf2%
+)
 pause
+
+:eof
+

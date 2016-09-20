@@ -3,37 +3,91 @@
 */
 
 #include "kompact_new.h"
-bool _XMLWRITER_NOT_DONE = true;
+bool _XMLWRITER_NOT_DONE = false;
+bool _DEBUG_XML = true;
 
 
-int XML_WriteHeader()
+int XMLWriter::WriteHeader()
 {
-	std::string xmlheader = "<?xml version=\"1.0\"?><Files>";
 	if (_XMLWRITER_NOT_DONE == true)
 	{
-		print << CONCOLRED << "Error: The XML Writer is not completed yet." << nl;
+		print("Error: The XML Writer is not completed yet.", true, false, false);
+	}
+	else
+	{
+		std::string xmlheader = "<?xml version=\"1.0\"?><Files>";
+		std::string filename = "crc.xml";
+		std::ofstream fout(filename.c_str(), std::ios::out | std::ios::app);
+		if (!fout)
+		{
+			print("Error: open file for output failed!", true, false, false);
+			abort();
+		}
+		fout << xmlheader;
+		fout.close();
 	}
 	return 0;
 }
 
 // Looks like Checksum and FileTime are always the same.
-int XML_AppendFile(std::string Name, int Size, int CompressedSize, std::string Checksum, std::string FileTime, int alg)
+int XMLWriter::AppendFile(std::string Name, int Size, int CompressedSize, std::string Checksum, std::string FileTime, int alg)
 {
-	//this line right below has to be commented out till it is fixed RIP.
-	//std::string new_node = "<File Name=" Name " Size=" Size " CompressedSize=" CompressedSize " Checksum=" Checksum " FileTime=" FileTime " Algorithm=" alg " />";
+	if (_DEBUG_XML == true)
+	{
+		print("XMLWriter::AppendFile called", false, false, false);
+	}
+	std::string new_node;
 	if (_XMLWRITER_NOT_DONE == true)
 	{
-		print << CONCOLRED << "Error: The XML Writer is not completed yet." << nl;
+		print("Error: The XML Writer is not completed yet.", true, false, false);
+	}
+	else
+	{
+		new_node = "<File Name=\"";
+		new_node += Name;
+		new_node += "\" Size=\"";
+		new_node += std::to_string(Size);
+		new_node += "\" CompressedSize=\"";
+		new_node += std::to_string(CompressedSize);
+		new_node += "\" Checksum=\"";
+		new_node += Checksum;
+		new_node += "\" FileTime=\"";
+		new_node += FileTime;
+		new_node += "\" Algorithm=\"";
+		new_node += std::to_string(alg);
+		new_node += "\" />";
+		
+		std::string filename = "crc.xml";
+		std::ofstream fout(filename.c_str(), std::ios::out | std::ios::app);
+		if (!fout)
+		{
+			print("Error: open file for output failed!", true, false, false);
+			abort();
+		}
+		fout << new_node;
+		fout.close();
 	}
 	return 0;
 }
 
-int XML_WriteEnding()
+int XMLWriter::WriteEnding()
 {
-	std::string ending = "</Files>";
 	if (_XMLWRITER_NOT_DONE == true)
 	{
-		print << CONCOLRED << "Error: The XML Writer is not completed yet." << nl;
+		print("Error: The XML Writer is not completed yet.", true, false, false);
+	}
+	else
+	{
+		std::string ending = "</Files>";
+		std::string filename = "crc.xml";
+		std::ofstream fout(filename.c_str(), std::ios::out | std::ios::app);
+		if (!fout)
+		{
+			print("Error: open file for output failed!", true, false, false);
+			abort();
+		}
+		fout << ending;
+		fout.close();
 	}
 	return 0;
 }

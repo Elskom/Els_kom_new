@@ -15,7 +15,7 @@ Els_kom_Wrapper_Extern char* __cdecl Pack_KOM_Generic(char* FileData, int Alg);
 //# endif
 #else
 #define Els_kom_Wrapper_Extern extern "C" __declspec(dllimport)
-Els_kom_Wrapper_Extern char* Unpack_KOM_Generic(std::string FileName, char* FileData, std::string DestPath, int Alg);
+Els_kom_Wrapper_Extern char* Unpack_KOM_Generic(std::string FileName, char FileData, std::string DestPath, int Alg);
 Els_kom_Wrapper_Extern char* Pack_KOM_Generic(char* FileData, int Alg);
 #endif
 

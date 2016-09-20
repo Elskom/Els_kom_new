@@ -12,15 +12,13 @@ extern "C" {
 
 char* Alg3_Unpacker(std::string FileName, char* FileData, std::string DestPath) {
 	//TODO: Add Actual Unpacking here with Crypto++.
-	return NULL;
+	//For Now lets return the pointer.
+	return FileData;
 }
 
 char* Alg3_Packer(char* FileData) {
 	//TODO: Add Actual Packing here with Crypto++.
-	return NULL;
-}
-
-char* Alg3_Packer_s(char* FileData) {
+	//For Now lets return the pointer.
 	return FileData;
 }
 
