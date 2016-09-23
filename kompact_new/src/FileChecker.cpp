@@ -6,6 +6,13 @@
 bool UnsupportedAlg;
 bool UnsupportedExt;
 
+long GetFileSize(std::string path)
+{
+    struct stat buffer;
+    int result = stat(path.c_str(), &buffer);
+    return result == 0 ? buffer.st_size : 0;
+}
+
 size_t strlen_s(char *str)
 {
 	size_t value;
@@ -32,69 +39,44 @@ void FileIterator(std::string path, std::string FileName)
 	{
 		if (!is_directory(p->path()))
 		{
-			char* data;
+			long filesize;
+			long compressedfilesize;
 			std::string desfile = p->path().filename().string();
-			char* tmpdata;
 			std::string fileopeninfo = p->path().string();
-			FILE *fp = fopen(fileopeninfo.c_str(), "rb");
-			if (fp != NULL)
-			{
-				fseek(fp, 0, SEEK_END);
-				long size = ftell(fp);
-				rewind(fp);
-				char * buffer = (char*)malloc(sizeof(char)*size);
-				size_t file_data = fread(buffer, 1, size, fp);
-				tmpdata = buffer;
-				fclose(fp);
-				free(buffer);
-			}
-			else
-			{
-				tmpdata = NULL;
-			}
+			filesize = GetFileSize(fileopeninfo);
 			//This Below is for Packing.
 			if (EndsWith(desfile, ".txt"))
 			{
 				Algorithm = 3;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 3 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 3 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".lua"))
 			{
 				Algorithm = 3;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 3 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 3 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			/*
@@ -103,22 +85,18 @@ void FileIterator(std::string path, std::string FileName)
 			else if (EndsWith(desfile, ".3"))
 			{
 				Algorithm = 3;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 3 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
 				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
-				}
 				else
 				{
-					print("Packing to Algorithm 3 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			/*
@@ -127,308 +105,239 @@ void FileIterator(std::string path, std::string FileName)
 			else if (EndsWith(desfile, ".2"))
 			{
 				Algorithm = 2;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 2 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
 				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
-				}
 				else
 				{
-					print("Packing to Algorithm 2 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".tga"))
 			{
 				Algorithm = 2;  // Ever Since Void v1.8 and probably in all Official servers all tga's are alg 2 as I seen so far. I need more investigation.
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 2 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 2 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".dds"))
 			{
 				Algorithm = 0;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".x"))
 			{
 				Algorithm = 0;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".y"))
 			{
 				Algorithm = 0;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".xet"))
 			{
 				Algorithm = 0;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".X"))
 			{
 				Algorithm = 0;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".Y"))
 			{
 				Algorithm = 0;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".XET"))
 			{
 				Algorithm = 0;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".XEt"))
 			{
 				Algorithm = 0;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".xml"))
 			{
 				Algorithm = 0;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".font"))
 			{
 				Algorithm = 0;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".ini"))
 			{
 				Algorithm = 0;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else if (EndsWith(desfile, ".ess"))
 			{
 				Algorithm = 0;
-				data = Pack_KOM_Generic(tmpdata, Algorithm);
-				if (my_strlen(tmpdata) == my_strlen(data) & my_strlen(data) != 0)  // My hack of a Secured version of strlen returns the size_t of 0 if a NULL pointer is provided.
+				Pack_KOM_Generic(fileopeninfo, Algorithm);
+				compressedfilesize = GetFileSize(fileopeninfo);
+				if (filesize == compressedfilesize)
 				{
 					filecount2++;
 					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
 					UnsupportedAlg = true;
-				}
-				else if (data != NULL)
-				{
-					xml.AppendFile(desfile,  my_strlen(tmpdata), my_strlen(data), "NULL", "NULL", Algorithm);
-					TempKOMFileWriter(data, my_strlen(data));
 				}
 				else
 				{
-					filecount2++;
-					print("Packing to Algorithm 0 is not implemented yet.", false, true, false);
-					UnsupportedAlg = true;
+					xml.AppendFile(desfile,  filesize, compressedfilesize, "NULL", "NULL", Algorithm);
+					TempKOMFileWriter(fileopeninfo, compressedfilesize);
 				}
 			}
 			else

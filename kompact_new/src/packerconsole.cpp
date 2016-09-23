@@ -36,10 +36,10 @@ int print(std::string data, bool Error, bool warn, bool input)
 
 int WhenStartedDirectly()
 {
-	SetConsoleTitleA("kompact_new v0.0.1a2");
+	SetConsoleTitleA("kompact_new v" KOMPACT_VERSION);
 	WHY = true;
 	WHY_NOT = true;
-	std::cout << CONCOLGREEN << "kompact_new v0.0.1a2 (" << __DATE__ << ", " << __TIME__;
+	std::cout << CONCOLGREEN << "kompact_new v" << KOMPACT_VERSION << " (" << __DATE__ << ", " << __TIME__;
 	std::cout << ") [MSC v." << _MSC_VER << " " << ARCH << " bit (" << ARCH_NAME << ")] on win32" << CONCOLDEFAULT << nl;
 	std::cout << CONCOLCYAN << "Type \"--help\" for more information." << CONCOLDEFAULT << nl;
 	for(;;)

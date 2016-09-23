@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include <cstdint>
-#include "..\\Els_kom_Generic_Unpacker\\Els_kom_Generic_Unpacker.h"
+#include "..\\..\\Els_kom_Generic_Unpacker\\src\\Els_kom_Generic_Unpacker.h"
 #include "CColors\\advconsole.h"
 #include "extractorconsole.h"
 

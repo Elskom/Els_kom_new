@@ -5,5 +5,5 @@
 #include <string>
 
 bool EndsWith(const std::string& a, const std::string& b);
-void TempKOMFileWriter(char* data, int SizeOfData);
+void TempKOMFileWriter(std::string FileName, int SizeOfData);
 int FolderIterator(std::string path, std::string FileName);

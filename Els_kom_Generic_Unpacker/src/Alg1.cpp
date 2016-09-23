@@ -12,14 +12,13 @@ extern "C" {
 #include <Windows.h>
 #include <string>
 
-char* Alg1_Unpacker(std::string FileName, char* FileData, std::string DestPath) {
+int Alg1_Unpacker(std::string FileName) {
 	//This Cannot be Used. So, lets Return the Pointer Instead.
-	return FileData;
+	return 0;
 }
 
-char* Alg1_Packer(char* FileData) {
-	//This Cannot be Used. So, lets Return the Pointer Instead.
-	return FileData;
+int Alg1_Packer(std::string FileName) {
+	return 0;
 }
 
 #ifdef __CPLUSPLUS

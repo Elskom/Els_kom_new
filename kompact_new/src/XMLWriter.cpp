@@ -4,7 +4,7 @@
 
 #include "kompact_new.h"
 bool _XMLWRITER_NOT_DONE = false;
-bool _DEBUG_XML = true;
+bool _DEBUG_XML = false;
 
 
 int XMLWriter::WriteHeader()

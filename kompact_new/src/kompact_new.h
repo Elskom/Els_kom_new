@@ -39,9 +39,10 @@
 #include <fstream>
 #include <cstdlib>
 #include <cstdint>
+#include <sys\stat.h>
 #pragma once
 #ifdef _CONSOLE
-#include "..\\..\\Els_kom_Generic_Unpacker\\Els_kom_Generic_Unpacker.h"
+#include "..\\..\\Els_kom_Generic_Unpacker\\src\\Els_kom_Generic_Unpacker.h"
 #include "XMLWriter.h"
 #include "FileChecker.h"
 #include "CColors\\advconsole.h"
@@ -50,6 +51,8 @@
 #else
 #error "This has somehow been changed from a console Application to something else. Please Change it back."
 #endif
+
+#define KOMPACT_VERSION "0.0.1a2"
 
 // TODO: Finish the list of Known file Extensions in KOM files and their Algorithms.
 /*

@@ -1,5 +1,5 @@
 /*
-	Alg0.cpp
+	Alg2.cpp
 */
 
 #ifdef __CPLUSPLUS
@@ -11,16 +11,15 @@ extern "C" {
 //TODO: Add zlib to this.
 //#include <zlib.h>
 
-char* Alg0_Unpacker(std::string FileName, char* FileData, std::string DestPath) {
+int Alg2_Unpacker(std::string FileName) {
 	//TODO: Add Actual Unpacking here.
 	//For Now lets return the pointer.
-	return FileData;
+	return 0;
 }
 
-char* Alg0_Packer(char* FileData) {
+int Alg2_Packer(std::string FileName) {
 	//TODO: Add Actual Packing here.
-	//For Now lets return the pointer.
-	return FileData;
+	return 0;
 }
 
 #ifdef __CPLUSPLUS

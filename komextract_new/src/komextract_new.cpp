@@ -6,19 +6,7 @@
 
 int main(int argc, char* argv[])
 {
-	if(argc==1)
-	{
-		print << "Usage:\nkomextract_new.exe --in <KOM File Name> --out <Folder Name>\n<Folder Name> = Folder to feed files from <KOM File Name> into." << nl;
-	}
-	else if(argc==2)
-	{
-		print << "Usage:\nkomextract_new.exe --in <KOM File Name> --out <Folder Name>\n<Folder Name> = Folder to feed files from <KOM File Name> into." << nl;
-	}
-	else if(argc==3)
-	{
-		print << "Usage:\nkomextract_new.exe --in <KOM File Name> --out <Folder Name>\n<Folder Name> = Folder to feed files from <KOM File Name> into." << nl;
-	}
-	else if(argc==4)
+	if(argc >=1)
 	{
 		print << "Usage:\nkomextract_new.exe --in <KOM File Name> --out <Folder Name>\n<Folder Name> = Folder to feed files from <KOM File Name> into." << nl;
 	}
