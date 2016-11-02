@@ -58,13 +58,17 @@
 /*
 	|	File Extension	|	Algorithm	|
 	|	*.txt			|	3			|
-	|	*.tga			|	0			|
+	|	*.tga			|	2			|
 	|	*.lua			|	3			|
-	|	*.dds			|	0			|
+	|	*.dds			|	2			|
 	|	*.x				|	0			|
 	|	*.y				|	0			|
+	|	*.X				|	0			|
+	|	*.Y				|	0			|
 	|	*.xet			|	0			|
-	|	*.xml			|	0			|
+	|	*.XET			|	0			|
+	|	*.XEt			|	0			|
+	|	*.xml			|	3			|
 	|	*.font			|	0			|
 	|	*.ini			|	0			|
 	|	*.ess			|	0			|
