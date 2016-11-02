@@ -1,4 +1,13 @@
-                          Whats new in v1.4.9.5
+                          Whats new in v1.4.9.6
+=============================================================================
+	+Modified settings dialog to Set minimize options.
+	+Converted Project Files to C#. Future Code Will be in C# and C++ only.
+	+Implimented Settings into Main Dialog for the program to minimize to the
+		Taskbar, Tray, or to both.
+	-Had To change Everything to work in C# natively and well.
+
+=============================================================================
+                             Els_kom v1.4.9.5
 =============================================================================
 	+Add Detection for x2.exe when Test Mods option is pressed until closed.
 	+Add Detection for launcher & x2.exe when running when Launcher 

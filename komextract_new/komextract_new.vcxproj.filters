@@ -30,6 +30,9 @@
     <ClInclude Include="src\extractorconsole.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\KOMReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\komextract_new.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -61,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="src\CColors\advconsole.win32.cpp">
       <Filter>Source Files\CColors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\KOMReader.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

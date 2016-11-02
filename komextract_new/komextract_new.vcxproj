@@ -205,6 +205,7 @@
     <ClInclude Include="src\extractorconsole.h" />
     <ClInclude Include="src\komextract_new.h" />
     <ClInclude Include="src\resource.h" />
+    <ClInclude Include="src\KOMReader.h" />
     <ClInclude Include="src\RXML\rapidxml.hpp" />
     <ClInclude Include="src\RXML\rapidxml_iterators.hpp" />
     <ClInclude Include="src\RXML\rapidxml_print.hpp" />
@@ -213,6 +214,7 @@
   <ItemGroup>
     <ClCompile Include="src\CColors\advconsole.cpp" />
     <ClCompile Include="src\CColors\advconsole.win32.cpp" />
+    <ClCompile Include="src\KOMReader.cpp" />
     <ClCompile Include="src\extractorconsole.cpp" />
     <ClCompile Include="src\komextract_new.cpp" />
   </ItemGroup>

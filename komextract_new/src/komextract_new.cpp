@@ -6,9 +6,9 @@
 
 int main(int argc, char* argv[])
 {
-	if(argc >=1)
+	if(argc < 2)
 	{
-		print << "Usage:\nkomextract_new.exe --in <KOM File Name> --out <Folder Name>\n<Folder Name> = Folder to feed files from <KOM File Name> into." << nl;
+		WhenStartedDirectly();
 	}
 	else
 	{
@@ -16,27 +16,14 @@ int main(int argc, char* argv[])
 		{
 			if(!strcmp(argv[i], "--in"))
 			{
-				//Open if block for now. I want this block to be required.
-				//lets print out the number to know what place it should always be at as a constant to look for.
-				std::stringstream inCount;
-				inCount << "--in is the " << i + 1 << "nd arg.";
-				print << inCount.str() << nl;
-			}
-			else if(!strcmp(argv[i], "--out"))
-			{
-				//Open if block for now. I want this block to be required.
-				//lets print out the number to know what place it should always be at as a constant to look for.
-				std::stringstream outCount;
-				outCount << "--out is the " << i + 1 << "th arg.";
-				print << outCount.str() << nl;
-			}
-			else
-			{
-				//everything else here.
-				print << argv[i] << nl;
+				std::string KOMFileName = argv[i+1];
+				if(!strcmp(argv[i+2], "--out"))
+				{
+					std::string DestPath = argv[i+3];
+					KOMFileReader(KOMFileName, DestPath);
+				}
 			}
 		}
 	}
 	return 0;
 }
-

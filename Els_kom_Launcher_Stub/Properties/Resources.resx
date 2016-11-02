@@ -117,11 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Text1.Text" xml:space="preserve">
-    <value>This Version of Els_kom uses a Stubs that does Testing of Mods and to update the game when a maintenance happens.
-Stub: Test_Mods.exe
-Copyright of the tool: Copyright © 2015
-Stub: Launcher.exe
-Copyright of the tool: Copyright © 2015</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ShK" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShK.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

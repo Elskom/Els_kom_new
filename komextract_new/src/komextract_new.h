@@ -28,8 +28,11 @@
 #include <fstream>
 #include <cstdint>
 #include "..\\..\\Els_kom_Generic_Unpacker\\src\\Els_kom_Generic_Unpacker.h"
+#include "KOMReader.h"
 #include "CColors\\advconsole.h"
 #include "extractorconsole.h"
+
+#define KOMEXTRACT_VERSION "0.0.1a2"
 
 // TODO: Finish the list of Known file Extensions in KOM files and their Algorithms.
 /*
@@ -41,13 +44,11 @@
 	|	*.x				|	0			|
 	|	*.y				|	0			|
 	|	*.xet			|	0			|
-
-	Some Files within data036.kom.
-
 	|	*.xml			|	0			|
 	|	*.font			|	0			|
 	|	*.ini			|	0			|
 	|	*.ess			|	0			|
+	|	*.kim			|	3			|
 */
 
 #ifndef _M_X64
@@ -77,5 +78,5 @@ using namespace AdvancedConsole;
 /*
 	Defines the print here to be std::cout
 */
-#define print std::cout
+#define printerr std::cerr
 #define nl std::endl

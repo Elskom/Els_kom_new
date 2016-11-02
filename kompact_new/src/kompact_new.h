@@ -58,24 +58,17 @@
 /*
 	|	File Extension	|	Algorithm	|
 	|	*.txt			|	3			|
-	|	*.tga			|	2			|
+	|	*.tga			|	0			|
 	|	*.lua			|	3			|
 	|	*.dds			|	0			|
 	|	*.x				|	0			|
 	|	*.y				|	0			|
 	|	*.xet			|	0			|
-	|	*.X				|	0			|
-	|	*.Y				|	0			|
-	|	*.XET			|	0			|
-	|	*.XEt			|	0			|
-
-
-	Some Files within data036.kom.
-
 	|	*.xml			|	0			|
 	|	*.font			|	0			|
 	|	*.ini			|	0			|
 	|	*.ess			|	0			|
+	|	*.kim			|	3			|
 */
 
 #ifndef _M_X64
