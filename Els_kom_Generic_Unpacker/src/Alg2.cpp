@@ -8,17 +8,18 @@ extern "C" {
 
 #include <Windows.h>
 #include <string>
-//TODO: Add zlib to this.
-//#include <zlib.h>
+#include "EManager.h"  //Impliments Crypto++ Class for use with Encryption/Decryption.
+#include "ZManager.h"  //Impliments zlib class for Compression and Decompression.
 
 int Alg2_Unpacker(std::string FileName) {
-	//TODO: Add Actual Unpacking here.
-	//For Now lets return the pointer.
+	DecompressFile(FileName);
+	Decrypt_File(FileName);
 	return 0;
 }
 
 int Alg2_Packer(std::string FileName) {
-	//TODO: Add Actual Packing here.
+	Encrypt_File(FileName);
+	CompressFile(FileName);
 	return 0;
 }
 
