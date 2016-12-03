@@ -15,7 +15,7 @@ namespace Els_kom_Test_Mods_Stub
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Els_kom_Core.Forms.Test_Mods_Stub.Form1());
         }
     }
 }

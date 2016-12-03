@@ -4,12 +4,12 @@
 	This form Integrates a Settings Interface to Els_kom that is also read into the Stubs.
 
 	Note: A Few settings still needs implimented into the main form of Els_kom itself and will be fully functional in v1.4.9.6 Release.
-	
+
 	Also a few people might be Wondering "Why did you change from VB.Net to C#?" The answer is the end lines of Code. I get so used to the ";"'s in C++ that I would forget VB's syntax.
 		In that case C# is the solution for that.
 */
 
-namespace Els_kom
+namespace Els_kom_Core.Forms.Els_kom_main
 {
 	public partial class Form3 : Form
 	{
@@ -22,16 +22,16 @@ namespace Els_kom
 		string curvalue2;
 		string curvalue3;
 
-		private void Button1_Click(object sender, System.EventArgs e)
+		void Button1_Click(object sender, System.EventArgs e)
 		{
 			FolderBrowserDialog1.ShowDialog();
 			Timer1.Enabled = true;
 		}
 
-		private void Form3_FormClosing(object sender, FormClosingEventArgs e)
+		void Form3_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			Els_kom_Core.Classes.INIObject settingsini = new Els_kom_Core.Classes.INIObject(Application.StartupPath + "\\Settings.ini");
-			if (!object.ReferenceEquals(TextBox1.Text, curvalue3))
+			Classes.INIObject settingsini = new Classes.INIObject(Application.StartupPath + "\\Settings.ini");
+			if (!ReferenceEquals(TextBox1.Text, curvalue3))
 			{
 				if (TextBox1.Text.Length > 0)
 				{
@@ -42,7 +42,7 @@ namespace Els_kom
 					MessageBox.Show("You Should Set a Working Elsword Directory.", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
 			}
-			if (!object.ReferenceEquals(Label4.Text, curvalue))
+			if (!ReferenceEquals(Label4.Text, curvalue))
 			{
 				if (Label5.Text == "...")
 				{
@@ -53,7 +53,7 @@ namespace Els_kom
 					settingsini.Write("Settings.ini", "IconWhileElsNotRunning", Label4.Text);
 				}
 			}
-			if (!object.ReferenceEquals(Label5.Text, curvalue2))
+			if (!ReferenceEquals(Label5.Text, curvalue2))
 			{
 				if (Label5.Text == "...")
 				{
@@ -66,12 +66,12 @@ namespace Els_kom
 			}
 		}
 
-		private void Form3_Load(object sender, System.EventArgs e)
+		void Form3_Load(object sender, System.EventArgs e)
 		{
-			this.Icon = Els_kom_Core.Properties.Resources.els_kom_icon;
+			this.Icon = Properties.Resources.els_kom_icon;
 			if (System.IO.File.Exists(Application.StartupPath + "\\Settings.ini"))
 			{
-				Els_kom_Core.Classes.INIObject settingsini = new Els_kom_Core.Classes.INIObject(Application.StartupPath + "\\Settings.ini");
+				Classes.INIObject settingsini = new Els_kom_Core.Classes.INIObject(Application.StartupPath + "\\Settings.ini");
 				curvalue3 = settingsini.Read("Settings.ini", "ElsDir");
 				curvalue = settingsini.Read("Settings.ini", "IconWhileElsNotRunning");
 				curvalue2 = settingsini.Read("Settings.ini", "IconWhileElsRunning");
@@ -114,12 +114,12 @@ namespace Els_kom
 			}
 		}
 
-		private void Button2_Click(object sender, System.EventArgs e)
+		void Button2_Click(object sender, System.EventArgs e)
 		{
 			this.Close();
 		}
 
-		private void Timer1_Tick(object sender, System.EventArgs e)
+		void Timer1_Tick(object sender, System.EventArgs e)
 		{
 			if (FolderBrowserDialog1.SelectedPath.Length > 0)
 			{
@@ -128,103 +128,103 @@ namespace Els_kom
 			}
 		}
 
-		private void RadioButton1_CheckedChanged(object sender, System.EventArgs e)
+		void RadioButton1_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if (RadioButton1.Checked == true)
+			if (RadioButton1.Checked)
 			{
 				Label4.Text = "0";
-				if (RadioButton2.Checked == true)
+				if (RadioButton2.Checked)
 				{
 					RadioButton2.Checked = false;
 				}
-				if (RadioButton3.Checked == true)
+				if (RadioButton3.Checked)
 				{
 					RadioButton3.Checked = false;
 				}
 			}
 		}
 
-		private void RadioButton2_CheckedChanged(object sender, System.EventArgs e)
+		void RadioButton2_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if (RadioButton2.Checked == true)
+			if (RadioButton2.Checked)
 			{
 				Label4.Text = "1";
-				if (RadioButton1.Checked == true)
+				if (RadioButton1.Checked)
 				{
 					RadioButton1.Checked = false;
 				}
-				if (RadioButton3.Checked == true)
+				if (RadioButton3.Checked)
 				{
 					RadioButton3.Checked = false;
 				}
 			}
 		}
 
-		private void RadioButton3_CheckedChanged(object sender, System.EventArgs e)
+		void RadioButton3_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if (RadioButton3.Checked == true)
+			if (RadioButton3.Checked)
 			{
 				Label4.Text = "2";
-				if (RadioButton1.Checked == true)
+				if (RadioButton1.Checked)
 				{
 					RadioButton1.Checked = false;
 				}
-				if (RadioButton2.Checked == true)
+				if (RadioButton2.Checked)
 				{
 					RadioButton2.Checked = false;
 				}
 			}
 		}
 
-		private void RadioButton4_CheckedChanged(object sender, System.EventArgs e)
+		void RadioButton4_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if (RadioButton4.Checked == true)
+			if (RadioButton4.Checked)
 			{
 				Label5.Text = "0";
-				if (RadioButton5.Checked == true)
+				if (RadioButton5.Checked)
 				{
 					RadioButton5.Checked = false;
 				}
-				if (RadioButton6.Checked == true)
+				if (RadioButton6.Checked)
 				{
 					RadioButton6.Checked = false;
 				}
 			}
 		}
 
-		private void RadioButton5_CheckedChanged(object sender, System.EventArgs e)
+		void RadioButton5_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if (RadioButton5.Checked == true)
+			if (RadioButton5.Checked)
 			{
 				Label5.Text = "1";
-				if (RadioButton4.Checked == true)
+				if (RadioButton4.Checked)
 				{
 					RadioButton4.Checked = false;
 				}
-				if (RadioButton6.Checked == true)
+				if (RadioButton6.Checked)
 				{
 					RadioButton6.Checked = false;
 				}
 			}
 		}
 
-		private void RadioButton6_CheckedChanged(object sender, System.EventArgs e)
+		void RadioButton6_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if (RadioButton6.Checked == true)
+			if (RadioButton6.Checked)
 			{
 				Label5.Text = "2";
-				if (RadioButton4.Checked == true)
+				if (RadioButton4.Checked)
 				{
 					RadioButton4.Checked = false;
 				}
-				if (RadioButton5.Checked == true)
+				if (RadioButton5.Checked)
 				{
 					RadioButton5.Checked = false;
 				}
 			}
 		}
 
-		private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
+		void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			if (TreeView1.SelectedNode.Index == 0)
 			{

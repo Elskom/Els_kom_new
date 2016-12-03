@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace Els_kom
+namespace Els_kom_Core.Forms.Els_kom_main
 {
 	public partial class Form2 : Form
 	{
@@ -45,51 +45,51 @@ namespace Els_kom
 			return (res > 32);
 		}
 
-		private void cmdOK_Click(object sender, EventArgs e)
+		void cmdOK_Click(object sender, EventArgs e)
 		{
 			this.Close();
 		}
 
-		private void Form2_Load(object sender, EventArgs e)
+		void Form2_Load(object sender, EventArgs e)
 		{
 			Label1.Text = "1";
-			this.Icon = Els_kom_Core.Properties.Resources.els_kom_icon;
-			picIcon.Image = Els_kom_Core.Properties.Resources.els_kom;
-			Picture1.Image = Els_kom_Core.Properties.Resources.bmp100;
-			Picture2.Image = Els_kom_Core.Properties.Resources.bmp101;
+			this.Icon = Properties.Resources.els_kom_icon;
+			picIcon.Image = Properties.Resources.els_kom;
+			Picture1.Image = Properties.Resources.bmp100;
+			Picture2.Image = Properties.Resources.bmp101;
 		}
 
-		private void Form2_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		void Form2_MouseMove(object sender, MouseEventArgs e)
 		{
 			Picture1.Visible = true;
 			Picture2.Visible = false;
 		}
 
-		private void Picture1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		void Picture1_MouseMove(object sender, MouseEventArgs e)
 		{
 			Picture1.Visible = false;
 			Picture2.Visible = true;
 		}
 
-		private void Picture2_Click(object sender, EventArgs e)
+		void Picture2_Click(object sender, EventArgs e)
 		{
 			Picture1.Visible = true;
 			Picture2.Visible = false;
 			OpenBrowser("www.elsword.to/forum/index.php?/topic/51000-updated-els-kom-v1494-working-as-of-8-10-16/");
 		}
 
-		private void lblDisclaimer_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		void lblDisclaimer_MouseMove(object sender, MouseEventArgs e)
 		{
 			Picture1.Visible = true;
 			Picture2.Visible = false;
 		}
 
-		private void Form2_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
+		void Form2_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			Label1.Text = "0";
 		}
 
-		private void Form2_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+		void Form2_Paint(object sender, PaintEventArgs e)
 		{
 			e.Graphics.DrawLine(Pens.Gray, 0, 151, this.Width, 151);
 			e.Graphics.DrawLine(Pens.White, 0, 152, this.Width, 152);

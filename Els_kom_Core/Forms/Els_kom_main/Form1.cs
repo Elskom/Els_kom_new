@@ -1,32 +1,34 @@
 using System;
 using System.Windows.Forms;
 
-namespace Els_kom
+namespace Els_kom_Core.Forms.Els_kom_main
 {
 	public partial class Form1 : Form
 	{
 		public Form1()
 		{
 			InitializeComponent();
+			this.SizeChanged += new EventHandler(Form1_SizeEventHandler);
 		}
 
 		string ElsDir;
 
+		public bool bypasswindowbug;
 		public Form aboutfrm;
 		public Form settingsfrm;
 		public string showintaskbar_value;
-		public Els_kom_Core.Classes.INIObject settingsini;
+		public Classes.INIObject settingsini;
 		public bool x2bool;
 		public string showintaskbar_value2;
 		public string showintaskbar_tempvalue;
 		public string showintaskbar_tempvalue2;
 
-		void Command1_Click(object sender, System.EventArgs e)
+		void Command1_Click(object sender, EventArgs e)
 		{
 			if (System.IO.File.Exists(Application.StartupPath + "\\pack.bat"))
 			{
 				System.IO.File.Create(Application.StartupPath + "\\packing.pack").Close();
-				Els_kom_Core.Classes.Process.Shell(Application.StartupPath + "\\pack.bat", null, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, false);
+				Classes.Process.Shell(Application.StartupPath + "\\pack.bat", null, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, false);
 				Timer2.Enabled = true;
 			}
 			else
@@ -35,17 +37,17 @@ namespace Els_kom
 			}
 		}
 
-		void Command1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		void Command1_MouseMove(object sender, MouseEventArgs e)
 		{
 			Label1.Text = "This uses kompact_new.exe to Pack koms.";
 		}
 
-		void Command2_Click(object sender, System.EventArgs e)
+		void Command2_Click(object sender, EventArgs e)
 		{
 			if (System.IO.File.Exists(Application.StartupPath + "\\unpack.bat"))
 			{
 				System.IO.File.Create(Application.StartupPath + "\\unpacking.unpack").Close();
-				Els_kom_Core.Classes.Process.Shell(Application.StartupPath + "\\unpack.bat", null, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, false);
+				Classes.Process.Shell(Application.StartupPath + "\\unpack.bat", null, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, false);
 				Timer1.Enabled = true;
 			}
 			else
@@ -54,99 +56,28 @@ namespace Els_kom
 			}
 		}
 
-		void Command2_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		void Command2_MouseMove(object sender, MouseEventArgs e)
 		{
 			Label1.Text = "This uses komextract_new.exe to Unpack koms.";
 		}
 
-		void Command3_Click(object sender, System.EventArgs e)
+		void Command3_Click(object sender, EventArgs e)
 		{
 			aboutfrm = new Form2();
 			aboutfrm.ShowDialog();
 		}
 
-		void Command3_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		void Command3_MouseMove(object sender, MouseEventArgs e)
 		{
 			Label1.Text = "Shows the About Window. Here you will see things like the version as well as a link to go to the topic to update Els_kom if needed.";
 		}
 
-		void Command4_Click(object sender, System.EventArgs e)
+		void Command4_Click(object sender, EventArgs e)
 		{
 			if (System.IO.File.Exists(Application.StartupPath + "\\Test_Mods.exe"))
 			{
 				Label1.Text = "";
-				if (!x2bool)
-				{
-					if (showintaskbar_value == "0") // Taskbar only!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-					if (showintaskbar_value == "1") // Tray only!!!
-					{
-						if (this.Visible == false)
-						{
-							this.Visible = true;
-						}
-						else
-						{
-							this.Visible = false;
-						}
-					}
-					if (showintaskbar_value == "2") // Both!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-				}
-				else
-				{
-					if (showintaskbar_value2 == "0") // Taskbar only!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-					if (showintaskbar_value2 == "1") // Tray only!!!
-					{
-						if (this.Visible == false)
-						{
-							this.Visible = true;
-						}
-						else
-						{
-							this.Visible = false;
-						}
-					}
-					if (showintaskbar_value2 == "2") // Both!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-				}
+				this.WindowState = FormWindowState.Minimized;
 				Timer3.Enabled = true;
 			}
 			else
@@ -155,88 +86,17 @@ namespace Els_kom
 			}
 		}
 
-		void Command4_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		void Command4_MouseMove(object sender, MouseEventArgs e)
 		{
 			Label1.Text = "Test the mods you made.";
 		}
 
-		void Command5_Click(object sender, System.EventArgs e)
+		void Command5_Click(object sender, EventArgs e)
 		{
 			if (System.IO.File.Exists(Application.StartupPath + "\\Launcher.exe"))
 			{
 				Label1.Text = "";
-				if (!x2bool)
-				{
-					if (showintaskbar_value == "0") // Taskbar only!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-					if (showintaskbar_value == "1") // Tray only!!!
-					{
-						if (this.Visible == false)
-						{
-							this.Visible = true;
-						}
-						else
-						{
-							this.Visible = false;
-						}
-					}
-					if (showintaskbar_value == "2") // Both!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-				}
-				else
-				{
-					if (showintaskbar_value2 == "0") // Taskbar only!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-					if (showintaskbar_value2 == "1") // Tray only!!!
-					{
-						if (this.Visible == false)
-						{
-							this.Visible = true;
-						}
-						else
-						{
-							this.Visible = false;
-						}
-					}
-					if (showintaskbar_value2 == "2") // Both!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-				}
+				this.WindowState = FormWindowState.Minimized;
 				Els_kom_Core.Classes.Process.Shell(Application.StartupPath + "\\Launcher.exe", null, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, Application.StartupPath, false);
 			}
 			else
@@ -245,20 +105,20 @@ namespace Els_kom
 			}
 		}
 
-		void Command5_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		void Command5_MouseMove(object sender, MouseEventArgs e)
 		{
 			Label1.Text = "Run the Launcher to Elsword to Update the client for when a server Maintenance happens. (you might have to remake some mods for some files)";
 		}
 
-		void Form1_Load(object sender, System.EventArgs e)
+		void Form1_Load(object sender, EventArgs e)
 		{
 			NotifyIcon1.Visible = false;
 			this.ShowInTaskbar = false;
 			bool previnstance;
-			this.Icon = Els_kom_Core.Properties.Resources.els_kom_icon;
+			this.Icon = Properties.Resources.els_kom_icon;
 			NotifyIcon1.Icon = this.Icon;
 			NotifyIcon1.Text = this.Text;
-			previnstance = Els_kom_Core.Classes.Process.IsElsKomRunning();
+			previnstance = Classes.Process.IsElsKomRunning();
 			if (previnstance == true)
 			{
 				MessageBox.Show("Sorry, Only 1 Instance is allowed at a time.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -268,7 +128,7 @@ namespace Els_kom
 			{
 				if (System.IO.File.Exists(Application.StartupPath + "\\Settings.ini"))
 				{
-					settingsini = new Els_kom_Core.Classes.INIObject(Application.StartupPath + "\\Settings.ini");
+					settingsini = new Classes.INIObject(Application.StartupPath + "\\Settings.ini");
 					ElsDir = settingsini.Read("Settings.ini", "ElsDir");
 					if (ElsDir.Length > 0)
 					{
@@ -291,7 +151,7 @@ namespace Els_kom
 			}
 		}
 
-		void Form1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		void Form1_MouseMove(object sender, MouseEventArgs e)
 		{
 			Label1.Text = "";
 		}
@@ -303,7 +163,7 @@ namespace Els_kom
 			e.Cancel = Cancel;
 		}
 
-		void Timer1_Tick(object sender, System.EventArgs e)
+		void Timer1_Tick(object sender, EventArgs e)
 		{
 			if (System.IO.File.Exists(Application.StartupPath + " \\ unpacking.unpack"))
 			{
@@ -336,7 +196,7 @@ namespace Els_kom
 			}
 		}
 
-		void Timer2_Tick(object sender, System.EventArgs e)
+		void Timer2_Tick(object sender, EventArgs e)
 		{
 			if (System.IO.File.Exists(Application.StartupPath + "\\packing.pack"))
 			{
@@ -369,7 +229,7 @@ namespace Els_kom
 			}
 		}
 
-		void Timer6_Tick(object sender, System.EventArgs e)
+		void Timer6_Tick(object sender, EventArgs e)
 		{
 			bool checkiflauncherstubexists = false;
 			bool checkiftestmodsstubexists = false;
@@ -438,33 +298,38 @@ namespace Els_kom
 					{
 						if (!x2bool)
 						{
-							if (showintaskbar_value == "0") // Taskbar only!!!
+							if (showintaskbar_value == "0")
 							{
 								if (this.WindowState == FormWindowState.Minimized)
 								{
 									this.WindowState = FormWindowState.Normal;
+									this.Activate();
 								}
 								else
 								{
 									this.WindowState = FormWindowState.Minimized;
 								}
 							}
-							if (showintaskbar_value == "1") // Tray only!!!
-							{
-								if (this.Visible == false)
-								{
-									this.Visible = true;
-								}
-								else
-								{
-									this.Visible = false;
-								}
-							}
-							if (showintaskbar_value == "2") // Both!!!
+							else if (showintaskbar_value == "1")
 							{
 								if (this.WindowState == FormWindowState.Minimized)
 								{
 									this.WindowState = FormWindowState.Normal;
+									this.Show();
+								}
+								else
+								{
+									this.Hide();
+									bypasswindowbug = true;
+									this.WindowState = FormWindowState.Minimized;
+								}
+							}
+							else if (showintaskbar_value == "2")
+							{
+								if (this.WindowState == FormWindowState.Minimized)
+								{
+									this.WindowState = FormWindowState.Normal;
+									this.Activate();
 								}
 								else
 								{
@@ -474,33 +339,38 @@ namespace Els_kom
 						}
 						else
 						{
-							if (showintaskbar_value2 == "0") // Taskbar only!!!
+							if (showintaskbar_value2 == "0")
 							{
 								if (this.WindowState == FormWindowState.Minimized)
 								{
 									this.WindowState = FormWindowState.Normal;
+									this.Activate();
 								}
 								else
 								{
 									this.WindowState = FormWindowState.Minimized;
 								}
 							}
-							if (showintaskbar_value2 == "1") // Tray only!!!
-							{
-								if (this.Visible == false)
-								{
-									this.Visible = true;
-								}
-								else
-								{
-									this.Visible = false;
-								}
-							}
-							if (showintaskbar_value2 == "2") // Both!!!
+							else if (showintaskbar_value2 == "1")
 							{
 								if (this.WindowState == FormWindowState.Minimized)
 								{
 									this.WindowState = FormWindowState.Normal;
+									this.Show();
+								}
+								else
+								{
+									this.Hide();
+									bypasswindowbug = true;
+									this.WindowState = FormWindowState.Minimized;
+								}
+							}
+							else if (showintaskbar_value2 == "2")
+							{
+								if (this.WindowState == FormWindowState.Minimized)
+								{
+									this.WindowState = FormWindowState.Normal;
+									this.Activate();
 								}
 								else
 								{
@@ -517,33 +387,38 @@ namespace Els_kom
 				{
 					if (!x2bool)
 					{
-						if (showintaskbar_value == "0") // Taskbar only!!!
+						if (showintaskbar_value == "0")
 						{
 							if (this.WindowState == FormWindowState.Minimized)
 							{
 								this.WindowState = FormWindowState.Normal;
+								this.Activate();
 							}
 							else
 							{
 								this.WindowState = FormWindowState.Minimized;
 							}
 						}
-						if (showintaskbar_value == "1") // Tray only!!!
-						{
-							if (this.Visible == false)
-							{
-								this.Visible = true;
-							}
-							else
-							{
-								this.Visible = false;
-							}
-						}
-						if (showintaskbar_value == "2") // Both!!!
+						else if (showintaskbar_value == "1")
 						{
 							if (this.WindowState == FormWindowState.Minimized)
 							{
 								this.WindowState = FormWindowState.Normal;
+								this.Show();
+							}
+							else
+							{
+								this.Hide();
+								bypasswindowbug = true;
+								this.WindowState = FormWindowState.Minimized;
+							}
+						}
+						else if (showintaskbar_value == "2")
+						{
+							if (this.WindowState == FormWindowState.Minimized)
+							{
+								this.WindowState = FormWindowState.Normal;
+								this.Activate();
 							}
 							else
 							{
@@ -553,33 +428,38 @@ namespace Els_kom
 					}
 					else
 					{
-						if (showintaskbar_value2 == "0") // Taskbar only!!!
+						if (showintaskbar_value2 == "0")
 						{
 							if (this.WindowState == FormWindowState.Minimized)
 							{
 								this.WindowState = FormWindowState.Normal;
+								this.Activate();
 							}
 							else
 							{
 								this.WindowState = FormWindowState.Minimized;
 							}
 						}
-						if (showintaskbar_value2 == "1") // Tray only!!!
-						{
-							if (this.Visible == false)
-							{
-								this.Visible = true;
-							}
-							else
-							{
-								this.Visible = false;
-							}
-						}
-						if (showintaskbar_value2 == "2") // Both!!!
+						else if (showintaskbar_value2 == "1")
 						{
 							if (this.WindowState == FormWindowState.Minimized)
 							{
 								this.WindowState = FormWindowState.Normal;
+								this.Show();
+							}
+							else
+							{
+								this.Hide();
+								bypasswindowbug = true;
+								this.WindowState = FormWindowState.Minimized;
+							}
+						}
+						else if (showintaskbar_value2 == "2")
+						{
+							if (this.WindowState == FormWindowState.Minimized)
+							{
+								this.WindowState = FormWindowState.Normal;
+								this.Activate();
 							}
 							else
 							{
@@ -621,79 +501,8 @@ namespace Els_kom
 			Label1.Text = "";
 			if (System.IO.File.Exists(Application.StartupPath + "\\Launcher.exe"))
 			{
-				if (!x2bool)
-				{
-					if (showintaskbar_value == "0") // Taskbar only!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-					if (showintaskbar_value == "1") // Tray only!!!
-					{
-						if (this.Visible == false)
-						{
-							this.Visible = true;
-						}
-						else
-						{
-							this.Visible = false;
-						}
-					}
-					if (showintaskbar_value == "2") // Both!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-				}
-				else
-				{
-					if (showintaskbar_value2 == "0") // Taskbar only!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-					if (showintaskbar_value2 == "1") // Tray only!!!
-					{
-						if (this.Visible == false)
-						{
-							this.Visible = true;
-						}
-						else
-						{
-							this.Visible = false;
-						}
-					}
-					if (showintaskbar_value2 == "2") // Both!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-				}
-				Els_kom_Core.Classes.Process.Shell(Application.StartupPath + "\\Launcher.exe", null, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, Application.StartupPath, false);
+				this.WindowState = FormWindowState.Minimized;
+				Classes.Process.Shell(Application.StartupPath + "\\Launcher.exe", null, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, Application.StartupPath, false);
 			}
 			else
 			{
@@ -706,7 +515,7 @@ namespace Els_kom
 			if (System.IO.File.Exists(Application.StartupPath + "\\unpack.bat"))
 			{
 				System.IO.File.Create(Application.StartupPath + "\\unpacking.unpack").Close();
-				Els_kom_Core.Classes.Process.Shell(Application.StartupPath + "\\unpack.bat", null, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, false);
+				Classes.Process.Shell(Application.StartupPath + "\\unpack.bat", null, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, false);
 				Timer1.Enabled = true;
 			}
 			else
@@ -720,78 +529,7 @@ namespace Els_kom
 			Label1.Text = "";
 			if (System.IO.File.Exists(Application.StartupPath + "\\Test_Mods.exe"))
 			{
-				if (!x2bool)
-				{
-					if (showintaskbar_value == "0") // Taskbar only!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-					if (showintaskbar_value == "1") // Tray only!!!
-					{
-						if (this.Visible == false)
-						{
-							this.Visible = true;
-						}
-						else
-						{
-							this.Visible = false;
-						}
-					}
-					if (showintaskbar_value == "2") // Both!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-				}
-				else
-				{
-					if (showintaskbar_value2 == "0") // Taskbar only!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-					if (showintaskbar_value2 == "1") // Tray only!!!
-					{
-						if (this.Visible == false)
-						{
-							this.Visible = true;
-						}
-						else
-						{
-							this.Visible = false;
-						}
-					}
-					if (showintaskbar_value2 == "2") // Both!!!
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.WindowState = FormWindowState.Normal;
-						}
-						else
-						{
-							this.WindowState = FormWindowState.Minimized;
-						}
-					}
-				}
+				this.WindowState = FormWindowState.Minimized;
 				Timer3.Enabled = true;
 			}
 			else
@@ -805,7 +543,7 @@ namespace Els_kom
 			if (System.IO.File.Exists(Application.StartupPath + "\\pack.bat"))
 			{
 				System.IO.File.Create(Application.StartupPath + "\\packing.pack").Close();
-				Els_kom_Core.Classes.Process.Shell(Application.StartupPath + "\\pack.bat", null, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, false);
+				Classes.Process.Shell(Application.StartupPath + "\\pack.bat", null, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, false);
 				Timer2.Enabled = true;
 			}
 			else
@@ -833,14 +571,15 @@ namespace Els_kom
 			TestModsToolStripMenuItem.Enabled = false;
 			LauncherToolStripMenuItem.Enabled = false;
 			// TODO: Copy All KOM Files on this part.
-			Els_kom_Core.Classes.Process.Shell(Application.StartupPath + "\\Test_Mods.exe", null, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, Application.StartupPath, false);
+			Classes.Process.Shell(Application.StartupPath + "\\Test_Mods.exe", null, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, Application.StartupPath, false);
 			Timer4.Interval = 1;
 			Timer4.Enabled = true;
 		}
 
 		void Timer4_Tick(object sender, EventArgs e)
 		{
-			if ((x2bool == true))
+			x2bool = Classes.Process.IsX2Running();
+			if (x2bool)
 			{
 				Label2.Text = "Testing Mods...";
 			}
@@ -875,12 +614,12 @@ namespace Els_kom
 			What this should do is make it actually work and read in a timely manner using global variables to compare the 2 values if not the same change
 			the used global variable and set it accordingly.
 		*/
-		private void timer5_Tick(object sender, EventArgs e)
+		void timer5_Tick(object sender, EventArgs e)
 		{
 			showintaskbar_tempvalue = settingsini.Read("Settings.ini", "IconWhileElsNotRunning");
 			showintaskbar_tempvalue2 = settingsini.Read("Settings.ini", "IconWhileElsRunning");
-			x2bool = Els_kom_Core.Classes.Process.IsX2Running();
-			//STFU Visual Studio you dont know what the fuck you are saying.
+			x2bool = Classes.Process.IsX2Running();
+			//STFU Visual Studio you don't know what the fuck you are saying.
 #pragma warning disable S1066
 #pragma warning disable S3440
 			if (!x2bool)
@@ -888,6 +627,10 @@ namespace Els_kom
 				if (showintaskbar_value != showintaskbar_tempvalue)
 				{
 					showintaskbar_value = showintaskbar_tempvalue;
+				}
+				if (showintaskbar_value2 != showintaskbar_tempvalue2)
+				{
+					showintaskbar_value2 = showintaskbar_tempvalue2;
 				}
 				if (showintaskbar_value == "0") // Taskbar only!!!
 				{
@@ -907,6 +650,10 @@ namespace Els_kom
 			}
 			else
 			{
+				if (showintaskbar_value != showintaskbar_tempvalue)
+				{
+					showintaskbar_value = showintaskbar_tempvalue;
+				}
 				if (showintaskbar_value2 != showintaskbar_tempvalue2)
 				{
 					showintaskbar_value2 = showintaskbar_tempvalue2;
@@ -929,6 +676,52 @@ namespace Els_kom
 			}
 #pragma warning restore S3440
 #pragma warning restore S1066
+		}
+
+		void Form1_SizeEventHandler(object sender, EventArgs e)
+		{
+			if (!x2bool)
+			{
+				if (!bypasswindowbug)
+				{
+					if (showintaskbar_value == "1")
+					{
+						if (this.WindowState == FormWindowState.Minimized)
+						{
+							this.Hide();
+						}
+						if (this.WindowState == FormWindowState.Normal)
+						{
+							this.Show();
+						}
+					}
+				}
+				else
+				{
+					bypasswindowbug = false;
+				}
+			}
+			else
+			{
+				if (!bypasswindowbug)
+				{
+					if (showintaskbar_value2 == "1")
+					{
+						if (this.WindowState == FormWindowState.Minimized)
+						{
+							this.Hide();
+						}
+						if (this.WindowState == FormWindowState.Normal)
+						{
+							this.Show();
+						}
+					}
+				}
+				else
+				{
+					bypasswindowbug = false;
+				}
+			}
 		}
 	}
 }

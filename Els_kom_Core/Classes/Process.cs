@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Els_kom_Core
 {
-	public partial class Classes
+	namespace Classes
 	{
 		/// <summary>
 		/// Hosts a method that Overloads the Shell() Function. This is for Overloading the WorkingDirectory Method that bypasses some issues in x2.exe when shelling it. It Also Holds means of Detecting if the Launcher or x2.exe is currently Running.

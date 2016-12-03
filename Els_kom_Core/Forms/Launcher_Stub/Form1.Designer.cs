@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace Els_kom_Test_Mods_Stub
+namespace Els_kom_Core.Forms.Launcher_Stub
 {
 	partial class Form1
 	{
@@ -37,9 +37,9 @@ namespace Els_kom_Test_Mods_Stub
 		private void InitializeComponent()
 		{
 			this.SuspendLayout();
-			// 
+			//
 			// Form1
-			// 
+			//
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;

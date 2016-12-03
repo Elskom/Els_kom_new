@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace Els_kom
+namespace Els_kom_Core.Forms.Els_kom_main
 {
 	partial class Form2
 	{

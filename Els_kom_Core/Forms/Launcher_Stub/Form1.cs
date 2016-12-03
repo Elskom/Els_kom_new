@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace Els_kom_Launcher_Stub
+namespace Els_kom_Core.Forms.Launcher_Stub
 {
 	public partial class Form1 : Form
 	{
@@ -8,27 +8,27 @@ namespace Els_kom_Launcher_Stub
 		{
 			InitializeComponent();
 		}
-		
-		private string ElsDir;
-		
-		private void Form1_Load(object sender, System.EventArgs e)
+
+		public string ElsDir;
+
+		void Form1_Load(object sender, System.EventArgs e)
 		{
 			if (System.IO.File.Exists(Application.StartupPath + "\\Settings.ini"))
 			{
-				Els_kom_Core.Classes.INIObject settingsini = new Els_kom_Core.Classes.INIObject(Application.StartupPath + "\\Settings.ini");
+				Classes.INIObject settingsini = new Classes.INIObject(Application.StartupPath + "\\Settings.ini");
 				ElsDir = settingsini.Read("Settings.ini", "ElsDir");
 				if (ElsDir.Length > 0)
 				{
 					if (System.IO.File.Exists(ElsDir + "\\voidels.exe"))
 					{
-						Els_kom_Core.Classes.Process.Shell(ElsDir + "\\voidels.exe", "", false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir, true);
+						Classes.Process.Shell(ElsDir + "\\voidels.exe", "", false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir, true);
 						this.Close();
 					}
 					else
 					{
 						if (System.IO.File.Exists(ElsDir + "\\elsword.exe"))
 						{
-							Els_kom_Core.Classes.Process.Shell(ElsDir + "\\elsword.exe", "", false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir, true);
+							Classes.Process.Shell(ElsDir + "\\elsword.exe", "", false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir, true);
 							this.Close();
 						}
 						else

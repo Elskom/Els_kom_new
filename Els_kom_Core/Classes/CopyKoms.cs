@@ -1,7 +1,7 @@
 
 namespace Els_kom_Core
 {
-	public partial class Classes
+	namespace Classes
 	{
 		/// <summary>
 		/// Holds Methods of Coping KOM Files to the Directory to Elsword that Els_kom was set to

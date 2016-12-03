@@ -4,9 +4,9 @@ using System.Text;
 namespace Els_kom_Core
 {
 	/// <summary>
-	/// Class that Holds Classes that Allows the Core of Els_kom to do certain things.
+	/// Namespace that Holds Classes that Allows the Core of Els_kom to do certain things.
 	/// </summary>
-	public static partial class Classes
+	namespace Classes
 	{
 		/// <summary>
 		/// Class in the Core that allows Reading and Writing of INI Files (Don't Forget to Initialize it with the INI's file name 1st before trying to Read / write).
