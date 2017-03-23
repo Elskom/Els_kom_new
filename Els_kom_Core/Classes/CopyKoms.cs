@@ -27,7 +27,7 @@ namespace Els_kom_Core
 			/// <summary>
 			/// Backs up Original KOM files to a sub folder in the Elsword Directory that was Set in the Settings Dialog in Els_kom. Requires: File Name, Original Directory the File is in, And Destination Directory. USED INSIDE OF CopyKomFiles SO, USE THAT FUNCTION INSTEAD.
 			/// </summary>
-			public static object MoveOriginalKomFiles(string FileName, string OrigFileDir, string DestFileDir)
+			private static object MoveOriginalKomFiles(string FileName, string OrigFileDir, string DestFileDir)
 			{
 				if (System.IO.File.Exists(FileName)) {
 					if ((!System.IO.Directory.Exists(DestFileDir))) {

@@ -18,127 +18,109 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Alg0.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alg1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alg2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alg3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Els_kom_Generic_Unpacker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ZManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\zlib\adler32.c">
+    <ClCompile Include="..\externals\zlib\adler32.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\compress.c">
+    <ClCompile Include="..\externals\zlib\compress.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\crc32.c">
+    <ClCompile Include="..\externals\zlib\crc32.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\deflate.c">
+    <ClCompile Include="..\externals\zlib\deflate.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\gzclose.c">
+    <ClCompile Include="..\externals\zlib\gzclose.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\gzlib.c">
+    <ClCompile Include="..\externals\zlib\gzlib.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\gzread.c">
+    <ClCompile Include="..\externals\zlib\gzread.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\gzwrite.c">
+    <ClCompile Include="..\externals\zlib\gzwrite.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\infback.c">
+    <ClCompile Include="..\externals\zlib\infback.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\inffast.c">
+    <ClCompile Include="..\externals\zlib\inffast.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\inflate.c">
+    <ClCompile Include="..\externals\zlib\inflate.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\inftrees.c">
+    <ClCompile Include="..\externals\zlib\inftrees.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\trees.c">
+    <ClCompile Include="..\externals\zlib\trees.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\uncompr.c">
+    <ClCompile Include="..\externals\zlib\uncompr.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="src\zlib\zutil.c">
+    <ClCompile Include="..\externals\zlib\zutil.c">
       <Filter>Source Files\zlib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Els_kom_Generic_Unpacker.h">
+    <ClInclude Include="..\externals\zlib\crc32.h">
+      <Filter>Header Files\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\zlib\deflate.h">
+      <Filter>Header Files\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\zlib\gzguts.h">
+      <Filter>Header Files\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\zlib\inffast.h">
+      <Filter>Header Files\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\zlib\inffixed.h">
+      <Filter>Header Files\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\zlib\inflate.h">
+      <Filter>Header Files\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\zlib\inftrees.h">
+      <Filter>Header Files\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\zlib\trees.h">
+      <Filter>Header Files\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\zlib\zconf.h">
+      <Filter>Header Files\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\zlib\zlib.h">
+      <Filter>Header Files\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\zlib\zutil.h">
+      <Filter>Header Files\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alg0.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Alg0.h">
+    <ClInclude Include="src\Alg1.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Alg1.h">
+    <ClInclude Include="src\Alg2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Alg2.h">
+    <ClInclude Include="src\Alg3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Alg3.h">
+    <ClInclude Include="src\Els_kom_Generic_Unpacker.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\EManager.h">
+    <ClInclude Include="src\EManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ZManager.h">
+    <ClInclude Include="src\ZManager.hpp">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\zlib\crc32.h">
-      <Filter>Header Files\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\zlib\deflate.h">
-      <Filter>Header Files\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\zlib\gzguts.h">
-      <Filter>Header Files\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\zlib\inffast.h">
-      <Filter>Header Files\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\zlib\inffixed.h">
-      <Filter>Header Files\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\zlib\inflate.h">
-      <Filter>Header Files\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\zlib\inftrees.h">
-      <Filter>Header Files\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\zlib\trees.h">
-      <Filter>Header Files\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\zlib\zconf.h">
-      <Filter>Header Files\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\zlib\zlib.h">
-      <Filter>Header Files\zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\zlib\zutil.h">
-      <Filter>Header Files\zlib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

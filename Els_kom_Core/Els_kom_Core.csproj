@@ -144,35 +144,35 @@
     <Compile Include="Classes\CopyKoms.cs" />
     <Compile Include="Classes\INIObject.cs" />
     <Compile Include="Classes\Process.cs" />
-    <Compile Include="Forms\Els_kom_main\Form1.cs">
+    <Compile Include="Forms\Els_kom_Main_MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Els_kom_main\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\Els_kom_Main_MainForm.Designer.cs">
+      <DependentUpon>Els_kom_Main_MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Els_kom_main\Form2.cs">
+    <Compile Include="Forms\Els_kom_Main_AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Els_kom_main\Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <Compile Include="Forms\Els_kom_Main_AboutForm.Designer.cs">
+      <DependentUpon>Els_kom_Main_AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Els_kom_main\Form3.cs">
+    <Compile Include="Forms\Els_kom_Main_SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Els_kom_main\Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <Compile Include="Forms\Els_kom_Main_SettingsForm.Designer.cs">
+      <DependentUpon>Els_kom_Main_SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Launcher_Stub\Form1.cs">
+    <Compile Include="Forms\Launcher_Stub_MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Launcher_Stub\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\Launcher_Stub_MainForm.Designer.cs">
+      <DependentUpon>Launcher_Stub_MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Test_Mods_Stub\Form1.cs">
+    <Compile Include="Forms\Test_Mods_Stub_MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Test_Mods_Stub\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\Test_Mods_Stub_MainForm.Designer.cs">
+      <DependentUpon>Test_Mods_Stub_MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -203,20 +203,20 @@
     <None Include="Resources\els_kom_icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\Els_kom_main\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Els_kom_Main_MainForm.resx">
+      <DependentUpon>Els_kom_Main_MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Els_kom_main\Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Els_kom_Main_AboutForm.resx">
+      <DependentUpon>Els_kom_Main_AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Els_kom_main\Form3.resx">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Els_kom_Main_SettingsForm.resx">
+      <DependentUpon>Els_kom_Main_SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Launcher_Stub\Form1.resX">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Launcher_Stub_MainForm.resX">
+      <DependentUpon>Launcher_Stub_MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Test_Mods_Stub\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Test_Mods_Stub_MainForm.resx">
+      <DependentUpon>Test_Mods_Stub_MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

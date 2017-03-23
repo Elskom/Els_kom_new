@@ -24,49 +24,46 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\extractorconsole.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\KOMReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\komextract_new.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CColors\advconsole.h">
+    <ClInclude Include="..\externals\CColors\advconsole.h">
       <Filter>Header Files\CColors</Filter>
     </ClInclude>
-    <ClInclude Include="src\RXML\rapidxml.hpp">
+    <ClInclude Include="..\externals\RXML\rapidxml.hpp">
       <Filter>Header Files\RXML</Filter>
     </ClInclude>
-    <ClInclude Include="src\RXML\rapidxml_iterators.hpp">
+    <ClInclude Include="..\externals\RXML\rapidxml_iterators.hpp">
       <Filter>Header Files\RXML</Filter>
     </ClInclude>
-    <ClInclude Include="src\RXML\rapidxml_print.hpp">
+    <ClInclude Include="..\externals\RXML\rapidxml_print.hpp">
       <Filter>Header Files\RXML</Filter>
     </ClInclude>
-    <ClInclude Include="src\RXML\rapidxml_utils.hpp">
+    <ClInclude Include="..\externals\RXML\rapidxml_utils.hpp">
       <Filter>Header Files\RXML</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extractorconsole.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\komextract_new.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\KOMReader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\constants.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\komextract_new.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\extractorconsole.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CColors\advconsole.cpp">
+    <ClCompile Include="..\externals\CColors\advconsole.cpp">
       <Filter>Source Files\CColors</Filter>
     </ClCompile>
-    <ClCompile Include="src\CColors\advconsole.win32.cpp">
+    <ClCompile Include="..\externals\CColors\advconsole.win32.cpp">
       <Filter>Source Files\CColors</Filter>
-    </ClCompile>
-    <ClCompile Include="src\KOMReader.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

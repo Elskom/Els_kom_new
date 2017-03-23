@@ -16,60 +16,61 @@ extern "C" {
 
 #include <Windows.h>
 #include <string>
-#include "Alg0.h"
-#include "Alg1.h"
-#include "Alg2.h"
-#include "Alg3.h"
-#include "Els_kom_Generic_Unpacker.h"
-#include "ZManager.h"
+#include "EManager.hpp"  //Implements Crypto++ namespace for use with Encryption/Decryption.
+#include "ZManager.hpp"  //Implements zlib namespace for Compression and Decompression.
+#include "Alg0.hpp"
+#include "Alg1.hpp"
+#include "Alg2.hpp"
+#include "Alg3.hpp"
+#include "Els_kom_Generic_Unpacker.hpp"
 
 static HINSTANCE Els_kom_Wrapper_inst;
 
 int Unpack_Alg0(std::string FileName)
 {
-	Alg0_Unpacker(FileName);
+	Alg0::Unpacker(FileName);
 	return 0;
 }
 
 int Unpack_Alg1(std::string FileName)
 {
-	Alg1_Unpacker(FileName);
+	Alg1::Unpacker(FileName);
 	return 0;
 }
 
 int Unpack_Alg2(std::string FileName)
 {
-	Alg2_Unpacker(FileName);
+	Alg2::Unpacker(FileName);
 	return 0;
 }
 
 int Unpack_Alg3(std::string FileName)
 {
-	Alg3_Unpacker(FileName);
+	Alg3::Unpacker(FileName);
 	return 0;
 }
 
 int Pack_Alg0(std::string FileName)
 {
-	Alg0_Packer(FileName);
+	Alg0::Packer(FileName);
 	return 0;
 }
 
 int Pack_Alg1(std::string FileName)
 {
-	Alg1_Packer(FileName);
+	Alg1::Packer(FileName);
 	return 0;
 }
 
 int Pack_Alg2(std::string FileName)
 {
-	Alg2_Packer(FileName);
+	Alg2::Packer(FileName);
 	return 0;
 }
 
 int Pack_Alg3(std::string FileName)
 {
-	Alg3_Packer(FileName);
+	Alg3::Packer(FileName);
 	return 0;
 }
 
@@ -130,7 +131,7 @@ Els_kom_Wrapper_Extern int __cdecl Pack_KOM_Generic(std::string FileName, int Al
 Els_kom_Wrapper_Extern int __cdecl GetCRC32FromFile(std::string FileName)
 {
 	int value;
-	value = CalculateCRC32(FileName);
+	value = ZManager::CalculateCRC32(FileName);
 	return value;
 }
 

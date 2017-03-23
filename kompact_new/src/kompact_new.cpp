@@ -2,7 +2,7 @@
 	kompact_new.cpp
 */
 
-#include "kompact_new.h"
+#include "kompact_new.hpp"
 
 
 int main(int argc, char* argv[])
@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
-		for(int i=1;i<argc;i++)
+		for(int i = 1; i < argc; i++)
 		{
 			if (argc == 2)
 			{

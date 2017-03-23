@@ -15,7 +15,7 @@ namespace Els_kom
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Els_kom_Core.Forms.Els_kom_main.Form1());
+            Application.Run(new Els_kom_Core.Forms.Els_kom_Main.MainForm());
         }
     }
 }
