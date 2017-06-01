@@ -19,9 +19,12 @@ public:
 	Compresses the data fed into this
 	function to memory and returns it.
 	
-	Note: It is recommended to feed and assume everything is of the 'unsigned char' or 'unsigned wchar_t' type to be safe than sorry later.
+	Note: It is recommended to feed and assume everything is 
+        of the 'unsigned char' or 'unsigned wchar_t' type to
+        be safe than sorry later.
 	
-	Function returns the same data for now until it is fully implemented.
+	Function returns the same data for now until it is fully
+    implemented.
 	*/
 	template<typename T>
 	T compress(T data) {
@@ -31,9 +34,12 @@ public:
 	Decompresses the data fed into this
 	function to memory and returns it.
 	
-	Note: It is recommended to feed and assume everything is of the 'unsigned char' or 'unsigned wchar_t' type to be safe than sorry later.
+	Note: It is recommended to feed and assume everything is
+        of the 'unsigned char' or 'unsigned wchar_t' type to
+        be safe than sorry later.
 	
-	Function returns the same data for now until it is fully implemented.
+	Function returns the same data for now until it is fully
+    implemented.
 	*/
 	template<typename T>
 	T decompress(T data) {
