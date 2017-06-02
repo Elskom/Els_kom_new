@@ -1,7 +1,6 @@
 /*
 Header and Implementation to the Zlib class.
 */
-
 /*
 This is an attempt to pring python's simple to the
 core zlib module to C++. This is because in
@@ -12,37 +11,41 @@ this class is needed to help users use zlib
 like they do in Python with minimal hardships
 trying to figure out why it wont work.
 */
+#include "../../externals/zlib/zlib.h"
+
 
 class Zlib {
 public:
 	/*
 	Compresses the data fed into this
 	function to memory and returns it.
-	
-	Note: It is recommended to feed and assume everything is 
-        of the 'unsigned char' or 'unsigned wchar_t' type to
-        be safe than sorry later.
-	
-	Function returns the same data for now until it is fully
-    implemented.
+
+	Note: Function returns the same data for now until it is fully implemented.
 	*/
-	template<typename T>
-	T compress(T data) {
+	unsigned char *compress(unsigned char *data) {
 		return data;
 	}
 	/*
 	Decompresses the data fed into this
 	function to memory and returns it.
-	
-	Note: It is recommended to feed and assume everything is
-        of the 'unsigned char' or 'unsigned wchar_t' type to
-        be safe than sorry later.
-	
-	Function returns the same data for now until it is fully
-    implemented.
+	Note: Function returns the same data for now until it is fully implemented.
 	*/
-	template<typename T>
-	T decompress(T data) {
+	unsigned char *decompress(unsigned char *data) {
 		return data;
 	}
+	/*
+	alculates the CRC32 of the data.
+	Note: Function returns the same data value for now until it is fully implemented.
+	*/
+	unsigned int CRC32(unsigned int will_be_fixed_later) {
+		return will_be_fixed_later;
+	}
+	/*
+	alculates the adler32 of the data.
+	Note: Function returns the same data value for now until it is fully implemented.
+	*/
+	unsigned int adler32(unsigned int will_be_fixed_later) {
+		return will_be_fixed_later;
+	}
 };
+

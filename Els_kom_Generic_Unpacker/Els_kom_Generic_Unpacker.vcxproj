@@ -276,6 +276,7 @@
     <ClInclude Include="..\externals\zlib\zconf.h" />
     <ClInclude Include="..\externals\zlib\zlib.h" />
     <ClInclude Include="..\externals\zlib\zutil.h" />
+    <ClInclude Include="src\Zlib.hpp" />
     <ClInclude Include="src\ZManager.hpp" />
   </ItemGroup>
   <ItemGroup>

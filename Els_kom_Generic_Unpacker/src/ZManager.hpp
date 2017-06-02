@@ -12,7 +12,7 @@
 
 //TODO: Figure out how to use all of zlib for this.
 
-#include "../../externals/zlib/zlib.h"
+#include "Zlib.hpp"
 #include <string>
 
 namespace ZManager

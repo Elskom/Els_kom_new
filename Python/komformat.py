@@ -74,11 +74,11 @@ def unpacker_main(argv):
     with open(in_path, 'rb') as file_object:
         file_data = file_object.read()
     offset = 0
-    # version = struct.unpack_from(b'<26s26x', file_data, offset)[0]
+    version = struct.unpack_from(b'<26s26x', file_data, offset)[0]
     offset += 52
     entry_count = struct.unpack_from(b'<I4x', file_data, offset)[0]
     offset += 12
-    # file_timer = struct.unpack_from(b'<I', file_data, offset)[0]
+    file_timer = struct.unpack_from(b'<I', file_data, offset)[0]
     offset += 4
     xml_size_file = struct.unpack_from(b'<I', file_data, offset)[0]
     offset += 4
