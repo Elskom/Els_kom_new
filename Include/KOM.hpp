@@ -4,22 +4,11 @@
 /*
 	file that holds the internal data structures of the kom file format.
 */
+/*
+	TODO: Convert the python version of the
+		proper struct for this format.
+*/
 
-struct KOMFormat {
-	//TODO: Populate this.
-}
-
-struct XMLData {
-	//Hopefully this will work correctly.
-	// This means that <vector> must be included.
-	std::vector<FileEntry> files;
-}
-
-struct FileEntry {
-	std::string Name;
-	int Size;
-	int CompressedSize;
-	auto Checksum;  //unknown type currently. (could be float or int idk)
-	auto FileTime;  //unknown type currently. (could be float or int idk)
-	int Algorithm;  // Could be 0, 1, 2, or 3. (1 is unused normally)
-}
+struct _KOMFormat {
+	// not implemented. converting python version required.
+} KOMFormat;
