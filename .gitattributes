@@ -1,3 +1,4 @@
 externals/zlib/* linguist-vendored
 externals/RXML/* linguist-vendored
 externals/CColors/* linguist-vendored
+Python/* linguist-vendored
