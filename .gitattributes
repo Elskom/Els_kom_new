@@ -1,3 +1,4 @@
 externals/zlib/* linguist-vendored
 Python/* linguist-vendored
 build.bat linguist-vendored
+etc/* linguist-vendored
