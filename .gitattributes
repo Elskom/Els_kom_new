@@ -1,4 +1,6 @@
 externals/zlib/* linguist-vendored
+externals/zlib/inffixed.h linguist-language=C
+externals/zlib/trees.h linguist-language=C
 Python/* linguist-vendored
 build.bat linguist-vendored
 etc/* linguist-vendored
