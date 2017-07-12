@@ -8,7 +8,7 @@ import os
 import struct
 import sys
 import zlib
-from xml.dom.minidom import parse
+from xml.dom.minidom import parse, Document
 
 
 class EntryVer3(object):
@@ -64,21 +64,22 @@ def unpacker_main(argv):
     for option, argument in options:
         if option in ('i', '--in'):
             in_path = argument
-        elif option in ('o', '--out'):
+        if option in ('o', '--out'):
             out_path = argument
     if(not in_path or not out_path or not os.path.isfile(in_path) or (os.path.exists(out_path) and not
        os.path.isdir(out_path))):
+        print("Usage:\nkomextract_new --in <KOM file name> --out <Folder name>")
         sys.exit(2)
     else:
         os.makedirs(out_path)
     with open(in_path, 'rb') as file_object:
         file_data = file_object.read()
     offset = 0
-    version = struct.unpack_from(b'<26s26x', file_data, offset)[0]
+    # version = struct.unpack_from(b'<26s26x', file_data, offset)[0]
     offset += 52
     entry_count = struct.unpack_from(b'<I4x', file_data, offset)[0]
     offset += 12
-    file_timer = struct.unpack_from(b'<I', file_data, offset)[0]
+    # file_timer = struct.unpack_from(b'<I', file_data, offset)[0]
     offset += 4
     xml_size_file = struct.unpack_from(b'<I', file_data, offset)[0]
     offset += 4
@@ -95,6 +96,7 @@ def unpacker_main(argv):
         entry_file_data = (file_data[theunpack_offset + entry.relative_offset:theunpack_offset +
                            entry.relative_offset +
                            entry.compressed_size])
+        print("Unpacking %s." % entry.name)
         if entry.algorithm == 0:
             entry_file_data = zlib.decompress(entry_file_data)
             file_path = os.path.join(out_path, entry.name)
@@ -123,9 +125,11 @@ def packer_main(argv):
             in_path = argument
         elif option in ('o', '--out'):
             out_path = argument
-    if in_path is None or out_path is None:
+    if not in_path or not out_path:
+        print("Usage:\nkompact_new --in <Folder name> --out <KOM file name>")
         sys.exit(2)
     if not os.path.isdir(in_path):
+        print("Usage:\nkompact_new --in <Folder name> --out <KOM file name>")
         sys.exit(2)
     crc = Document()
     crc_file_info = crc.createElement("Files")
@@ -151,18 +155,19 @@ def packer_main(argv):
                 try:
                     if file_name_new.endswith('.3'):
                         file_name_new, ext = os.path.splitext(file_name_new)
-                        file_name_new, ext = os.path.splitext(file_name_new)
+                        file_name_new, file_size = os.path.splitext(file_name_new)
                         algorithm = int(ext[1:])
-                        file_name_new, ext = os.path.splitext(file_name_new)
-                        file_size = int(ext[1:])
+                        print(file_name_new)
+                        file_size = int(file_size[1:])
                         compressed_file_data = file_data
                         compressed_size = len(compressed_file_data)
+                        print("Unpacking %s." % entry.name)
                     elif file_name_new.endswith('.2'):
                         file_name_new, ext = os.path.splitext(file_name_new)
-                        file_name_new, ext = os.path.splitext(file_name_new)
+                        file_name_new, file_size = os.path.splitext(file_name_new)
                         algorithm = int(ext[1:])
-                        file_name_new, ext = os.path.splitext(file_name_new)
-                        file_size = int(ext[1:])
+                        print(file_name_new)
+                        file_size = int(file_size[1:])
                         compressed_file_data = file_data
                         compressed_size = len(compressed_file_data)
                     else:

@@ -118,6 +118,14 @@
     <ResourceCompile>
       <ResourceOutputFileName>$(IntDir)$(ProjectName).res</ResourceOutputFileName>
     </ResourceCompile>
+    <PostBuildEvent>
+      <Command>echo F|xcopy /Y /c $(SolutionDir)etc\pack.bat $(OutDir)pack.bat
+echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
+echo F|xcopy /Y /c $(SolutionDir)etc\python36.zip $(OutDir)python36.zip
+echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
+echo F|xcopy /Y /c $(SolutionDir)etc\unpack.bat $(OutDir)unpack.bat
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -132,6 +140,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>..\obj\$(Platform)\$(Configuration)\Els_kom_Generic_Unpacker\Els_kom.GenericUnpacker.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>echo F|xcopy /Y /c $(SolutionDir)etc\pack.bat $(OutDir)pack.bat
+echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
+echo F|xcopy /Y /c $(SolutionDir)etc\python36.zip $(OutDir)python36.zip
+echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
+echo F|xcopy /Y /c $(SolutionDir)etc\unpack.bat $(OutDir)unpack.bat
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -150,8 +166,18 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ProgramDatabaseFile />
-      <AdditionalDependencies>..\obj\$(Platform)\$(Configuration)\Els_kom_Generic_Unpacker\Els_kom.GenericUnpacker.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>E:\Python360\libs\python36.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <FixedBaseAddress>true</FixedBaseAddress>
     </Link>
+    <PostBuildEvent>
+      <Command>echo F|xcopy /Y /c $(SolutionDir)etc\pack.bat $(OutDir)pack.bat
+echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
+echo F|xcopy /Y /c $(SolutionDir)etc\python36.zip $(OutDir)python36.zip
+echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
+echo F|xcopy /Y /c $(SolutionDir)etc\unpack.bat $(OutDir)unpack.bat
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -170,33 +196,33 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ProgramDatabaseFile />
-      <AdditionalDependencies>..\obj\$(Platform)\$(Configuration)\Els_kom_Generic_Unpacker\Els_kom.GenericUnpacker.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>E:\Python361x64\libs\python36.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <FixedBaseAddress>true</FixedBaseAddress>
     </Link>
+    <PostBuildEvent>
+      <Command>echo F|xcopy /Y /c $(SolutionDir)etc\pack.bat $(OutDir)pack.bat
+echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
+echo F|xcopy /Y /c $(SolutionDir)etc\python36.zip $(OutDir)python36.zip
+echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
+echo F|xcopy /Y /c $(SolutionDir)etc\unpack.bat $(OutDir)unpack.bat
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\externals\CColors\advconsole.h" />
-    <ClInclude Include="src\constants.hpp" />
-    <ClInclude Include="src\FileChecker.hpp" />
-    <ClInclude Include="src\kompact_new.hpp" />
-    <ClInclude Include="src\packerconsole.hpp" />
-    <ClInclude Include="src\packerhandler.hpp" />
-    <ClInclude Include="src\resource.hpp" />
-    <ClInclude Include="..\externals\RXML\rapidxml.hpp" />
-    <ClInclude Include="..\externals\RXML\rapidxml_iterators.hpp" />
-    <ClInclude Include="..\externals\RXML\rapidxml_print.hpp" />
-    <ClInclude Include="..\externals\RXML\rapidxml_utils.hpp" />
-    <ClInclude Include="src\XMLWriter.hpp" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\externals\CColors\advconsole.cpp" />
-    <ClCompile Include="..\externals\CColors\advconsole.win32.cpp" />
-    <ClCompile Include="src\kompact_new.cpp" />
+    <ClCompile Include="kompact_new.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Python361x64\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="src\kompact_new.rc" />
+    <ResourceCompile Include="kompact_new.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="src\WS.ico" />
+    <Image Include="WS.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -170,6 +170,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ProgramDatabaseFile />
+      <AdditionalDependencies>E:\Python360\libs\python36.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <FixedBaseAddress>true</FixedBaseAddress>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -195,33 +198,28 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ProgramDatabaseFile />
       <ManifestFile>$(IntDir)$(TargetName)$(TargetExt).intermediate.manifest</ManifestFile>
+      <AdditionalDependencies>E:\Python361x64\libs\python36.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <FixedBaseAddress>true</FixedBaseAddress>
     </Link>
     <ResourceCompile>
       <ResourceOutputFileName>$(IntDir)%(Filename).res</ResourceOutputFileName>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\externals\CColors\advconsole.h" />
-    <ClInclude Include="src\constants.hpp" />
-    <ClInclude Include="src\extractorconsole.hpp" />
-    <ClInclude Include="src\komextract_new.hpp" />
-    <ClInclude Include="src\KOMReader.hpp" />
-    <ClInclude Include="src\resource.hpp" />
-    <ClInclude Include="..\externals\RXML\rapidxml.hpp" />
-    <ClInclude Include="..\externals\RXML\rapidxml_iterators.hpp" />
-    <ClInclude Include="..\externals\RXML\rapidxml_print.hpp" />
-    <ClInclude Include="..\externals\RXML\rapidxml_utils.hpp" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\externals\CColors\advconsole.cpp" />
-    <ClCompile Include="..\externals\CColors\advconsole.win32.cpp" />
-    <ClCompile Include="src\komextract_new.cpp" />
+    <ClCompile Include="komextract_new.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Python361x64\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="src\komextract_new.rc" />
+    <ResourceCompile Include="komextract_new.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="src\VP.ico" />
+    <Image Include="VP.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

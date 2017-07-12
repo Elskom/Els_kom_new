@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Els_kom_Generic_Unpacker", "Els_kom_Generic_Unpacker\Els_kom_Generic_Unpacker.vcxproj", "{DA554EB5-3610-4784-8ED3-34FB88F0409E}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "komextract_new", "komextract_new\komextract_new.vcxproj", "{FF7816A6-820B-418A-B9A6-0005C3C746FF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kompact_new", "kompact_new\kompact_new.vcxproj", "{1E0DA3A0-E7EC-4ABD-B09F-D35000001D16}"
@@ -27,17 +25,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Debug|x64.ActiveCfg = Debug|x64
-		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Debug|x64.Build.0 = Debug|x64
-		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Debug|x86.ActiveCfg = Debug|Win32
-		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Debug|x86.Build.0 = Debug|Win32
-		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Release|Any CPU.ActiveCfg = Release|Win32
-		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Release|x64.ActiveCfg = Release|x64
-		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Release|x64.Build.0 = Release|x64
-		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Release|x86.ActiveCfg = Release|Win32
-		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Release|x86.Build.0 = Release|Win32
-		{DA554EB5-3610-4784-8ED3-34FB88F0409E}.Release|x86.Deploy.0 = Release|Win32
 		{FF7816A6-820B-418A-B9A6-0005C3C746FF}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{FF7816A6-820B-418A-B9A6-0005C3C746FF}.Debug|x64.ActiveCfg = Debug|x64
 		{FF7816A6-820B-418A-B9A6-0005C3C746FF}.Debug|x64.Build.0 = Debug|x64

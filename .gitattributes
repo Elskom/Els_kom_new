@@ -1,6 +1,3 @@
 externals/zlib/* linguist-vendored
-externals/RXML/* linguist-vendored
-externals/CColors/* linguist-vendored
-Els_kom_Generic_Unpacker/src/zlibmodule.c linguist-vendored
 Python/* linguist-vendored
 build.bat linguist-vendored
