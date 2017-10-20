@@ -37,9 +37,9 @@ namespace Els_kom_Core.Forms.Launcher_Stub
 		private void InitializeComponent()
 		{
 			this.SuspendLayout();
-			//
+			// 
 			// MainForm
-			//
+			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;

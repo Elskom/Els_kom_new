@@ -112,6 +112,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 
 		void MainForm_Load(object sender, EventArgs e)
 		{
+            this.Hide();
 			NotifyIcon1.Visible = false;
 			this.ShowInTaskbar = false;
 			bool previnstance;
@@ -148,6 +149,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 					settingsfrm.ShowDialog();
 				}
 				timer5.Enabled = true;
+                this.Show();
 			}
 		}
 

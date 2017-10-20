@@ -54,6 +54,7 @@ def unpacker_main(argv):
     :return: Nothing.
     """
     if len(argv) < 1:
+        print("Usage:\nkomextract_new --in <KOM file name> --out <Folder name>")
         sys.exit(2)
     try:
         options, arguments = getopt.getopt(argv, 'i:o:', ['in=', 'out='])
@@ -106,6 +107,7 @@ def unpacker_main(argv):
             file_object.write(entry_file_data)
     print("Extraction Complete.")
 
+
 def packer_main(argv):
     """
     Main Packer Program Function.
@@ -113,6 +115,7 @@ def packer_main(argv):
     :return: Nothing.
     """
     if len(argv) < 2:
+        print("Usage:\nkompact_new --in <Folder name> --out <KOM file name>")
         sys.exit(2)
     try:
         options, arguments = getopt.getopt(argv, 'i:o:', ['in=', 'out='])

@@ -232,7 +232,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 				Panel2.Visible = false;
 				TreeView1.Focus();
 			}
-			else
+			else if (TreeView1.SelectedNode.Index == 1)
 			{
 				Panel1.Visible = false;
 				Panel2.Visible = true;

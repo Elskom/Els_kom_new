@@ -1,4 +1,11 @@
-                          Whats new in v1.4.9.6
+                          Whats new in v1.4.9.7
+=============================================================================
+	+Fixed multiple instance error message icon.
+	+Fixed issue where Els_kom main window shows under the
+		multiple instance error message.
+
+=============================================================================
+                             Els_kom v1.4.9.6
 =============================================================================
 	+Modified settings dialog to Set minimize options.
 	+Converted Project Files to C#. Future Code Will be in C# and C++ only.
