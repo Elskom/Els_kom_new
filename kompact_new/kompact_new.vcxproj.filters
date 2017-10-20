@@ -66,7 +66,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="kompact_new.c">
+    <ClCompile Include="..\PC\kompact_new.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Python\memory.c">

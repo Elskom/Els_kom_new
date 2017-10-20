@@ -63,7 +63,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="komextract_new.c">
+    <ClCompile Include="..\PC\komextract_new.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Python\memory.c">

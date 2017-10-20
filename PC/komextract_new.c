@@ -1,8 +1,8 @@
 /*
- * kompact_new.c
+ * komextract_new.c
  *
  * Entrypoint of the embeded python interpreter for
- * running code to pack to kom files.
+ * running code to extract from kom files.
  *
  * Note: This code is for WIN32/WIN64 only.
  */
@@ -29,7 +29,7 @@
 #ifdef WITH_MEMORY
 #include "../Python/memory.h"
 #endif
-#include "../PC/resource.h"
+#include "resource.h"
 
 #ifdef WITH_MEMORY
 wchar_t dirname[_MAX_PATH];

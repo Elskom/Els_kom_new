@@ -267,7 +267,7 @@ echo F|xcopy /Y /c $(SolutionDir)etc\unpack.bat $(OutDir)unpack.bat
     <ClCompile Include="..\Python\pyeimporter.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include</AdditionalIncludeDirectories>
     </ClCompile>
-    <ClCompile Include="kompact_new.c">
+    <ClCompile Include="..\PC\kompact_new.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Python361x64\include</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include</AdditionalIncludeDirectories>
       <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Sync</ExceptionHandling>
