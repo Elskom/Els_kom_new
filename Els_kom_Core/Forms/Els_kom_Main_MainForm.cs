@@ -22,11 +22,9 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 		public string showintaskbar_value2;
 		public string showintaskbar_tempvalue;
 		public string showintaskbar_tempvalue2;
-
-		//Thread tr1 = new Thread(UnpackKoms);
-		//tr1.Start();
-		//Thread tr2 = new Thread(PackKoms);
-		//tr2.Start();
+		/* required to see if we are packing or unpacking. Default to false. */
+		public bool is_packing = false;
+		public bool is_unpacking = false;
 
 		void UnpackKoms()
 		{
@@ -36,15 +34,10 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 				string _kom_file = fi.Name;
 				// remove ".kom" on end of string.
 				string _kom_data_folder = _kom_file.Remove(_kom_file.IndexOf("."));
-				MessageBox.Show("KOM File:" + _kom_file + "\nFolder:" + _kom_data_folder, "Debug!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				MessageBox.Show("Command Line:" + "--in \"" + Application.StartupPath + "\\koms\\" + _kom_file + "\"--out \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"", "Debug!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				//Classes.Process.Shell(
-				//	Application.StartupPath + "\\komextract_new", "--in \"" + Application.StartupPath +
-				//	"\\koms\\" + _kom_file + "\"--out \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"",
-				//	false, false, true,
-				//	System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, true);
+				Classes.Process.Shell(Application.StartupPath + "\\komextract_new.exe", "--in \"" + Application.StartupPath + "\\koms\\" + _kom_file + "\" --out \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"", false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, true);
+				fi.Delete();
 			}
-			System.IO.File.Delete(Application.StartupPath + "\\unpacking.unpack");
+			is_unpacking = false;
 		}
 
 		void PackKoms()
@@ -54,23 +47,23 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 			{
 				string _kom_data_folder = dri.Name;
 				string _kom_file = _kom_data_folder + ".kom";
-				Classes.Process.Shell(Application.StartupPath + "\\komextract_new", "--in \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"--out \"" + Application.StartupPath + "\\koms\\" + _kom_file + "\"", false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, true);
+				Classes.Process.Shell(Application.StartupPath + "\\kompact_new.exe", "--in \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\" --out \"" + Application.StartupPath + "\\koms\\" + _kom_file + "\"", false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, true);
+				foreach (var fi in dri.GetFiles()) {
+					fi.Delete();
+				}
+				dri.Delete();
 			}
-			System.IO.File.Delete(Application.StartupPath + "\\packing.pack");
+			is_packing = false;
 		}
 
 		void Command1_Click(object sender, EventArgs e)
 		{
-			if (System.IO.File.Exists(Application.StartupPath + "\\pack.bat"))
-			{
-				System.IO.File.Create(Application.StartupPath + "\\packing.pack").Close();
-				Classes.Process.Shell(Application.StartupPath + "\\pack.bat", null, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, false);
-				Timer2.Enabled = true;
+			if (!is_packing) {
+				is_packing = true;
 			}
-			else
-			{
-				MessageBox.Show("Can't find 'pack.bat'.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			}
+			System.Threading.Thread tr2 = new System.Threading.Thread(PackKoms);
+			tr2.Start();
+			Timer2.Enabled = true;
 		}
 
 		void Command1_MouseMove(object sender, MouseEventArgs e)
@@ -80,16 +73,12 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 
 		void Command2_Click(object sender, EventArgs e)
 		{
-			if (System.IO.File.Exists(Application.StartupPath + "\\unpack.bat"))
-			{
-				System.IO.File.Create(Application.StartupPath + "\\unpacking.unpack").Close();
-				Classes.Process.Shell(Application.StartupPath + "\\unpack.bat", null, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, false);
-				Timer1.Enabled = true;
+			if (!is_unpacking) {
+				is_unpacking = true;
 			}
-			else
-			{
-				MessageBox.Show("Can't find 'unpack.bat'.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			}
+			System.Threading.Thread tr1 = new System.Threading.Thread(UnpackKoms);
+			tr1.Start();
+			Timer1.Enabled = true;
 		}
 
 		void Command2_MouseMove(object sender, MouseEventArgs e)
@@ -203,7 +192,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 
 		void Timer1_Tick(object sender, EventArgs e)
 		{
-			if (System.IO.File.Exists(Application.StartupPath + "\\unpacking.unpack"))
+			if (is_unpacking)
 			{
 				Timer6.Enabled = false;
 				Command1.Enabled = false;
@@ -236,7 +225,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 
 		void Timer2_Tick(object sender, EventArgs e)
 		{
-			if (System.IO.File.Exists(Application.StartupPath + "\\packing.pack"))
+			if (is_packing)
 			{
 				Timer6.Enabled = false;
 				Command1.Enabled = false;
@@ -550,16 +539,12 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 
 		void UnpackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (System.IO.File.Exists(Application.StartupPath + "\\unpack.bat"))
-			{
-				System.IO.File.Create(Application.StartupPath + "\\unpacking.unpack").Close();
-				Classes.Process.Shell(Application.StartupPath + "\\unpack.bat", null, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, false);
-				Timer1.Enabled = true;
+			if (!is_unpacking) {
+				is_unpacking = true;
 			}
-			else
-			{
-				MessageBox.Show("Can't find 'unpack.bat'.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			}
+			System.Threading.Thread tr1 = new System.Threading.Thread(UnpackKoms);
+			tr1.Start();
+			Timer1.Enabled = true;
 		}
 
 		void TestModsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -578,16 +563,12 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 
 		void PackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (System.IO.File.Exists(Application.StartupPath + "\\pack.bat"))
-			{
-				System.IO.File.Create(Application.StartupPath + "\\packing.pack").Close();
-				Classes.Process.Shell(Application.StartupPath + "\\pack.bat", null, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, false);
-				Timer2.Enabled = true;
+			if (!is_packing) {
+				is_packing = true;
 			}
-			else
-			{
-				MessageBox.Show("Can't find 'pack.bat'.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			}
+			System.Threading.Thread tr2 = new System.Threading.Thread(PackKoms);
+			tr2.Start();
+			Timer2.Enabled = true;
 		}
 
 		void SettingsToolStripMenuItem_Click(object sender, EventArgs e)

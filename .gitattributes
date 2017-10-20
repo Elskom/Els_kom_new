@@ -1,6 +1,5 @@
 externals/Crypto/* linguist-vendored
 Python/* linguist-vendored
 PC/* linguist-vendored
-build.bat linguist-vendored
 get_externals.bat linguist-vendored
 etc/* linguist-vendored

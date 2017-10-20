@@ -175,11 +175,9 @@ echo F|xcopy /Y /c $(SolutionDir)etc\unpack.bat $(OutDir)unpack.bat
       <AdditionalLibraryDirectories>E:\Python360\libs\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>echo F|xcopy /Y /c $(SolutionDir)etc\pack.bat $(OutDir)pack.bat
-echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
+      <Command>echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
 echo F|xcopy /Y /c $(SolutionDir)etc\python36.zip $(OutDir)python36.zip
 echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
-echo F|xcopy /Y /c $(SolutionDir)etc\unpack.bat $(OutDir)unpack.bat
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

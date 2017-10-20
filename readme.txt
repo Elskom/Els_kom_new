@@ -3,6 +3,9 @@
 	+Fixed multiple instance error message icon.
 	+Fixed issue where Els_kom main window shows under the
 		multiple instance error message.
+	+Removed pack.bat and unpack.bat. They been replaced with
+		something much more manageable and goes out of
+		date far fewer times.
 
 =============================================================================
                              Els_kom v1.4.9.6
