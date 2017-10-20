@@ -23,42 +23,42 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 		public string showintaskbar_tempvalue;
 		public string showintaskbar_tempvalue2;
 
-        //Thread tr1 = new Thread(UnpackKoms);
-        //tr1.Start();
-        //Thread tr2 = new Thread(PackKoms);
-        //tr2.Start();
+		//Thread tr1 = new Thread(UnpackKoms);
+		//tr1.Start();
+		//Thread tr2 = new Thread(PackKoms);
+		//tr2.Start();
 
-        void UnpackKoms()
-        {
-            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.StartupPath + "\\koms");
-            foreach (var fi in di.GetFiles("*.kom"))
-            {
-                string _kom_file = fi.Name;
-                string _kom_data_folder = _kom_file.Replace(".kom", String.Empty);
-                MessageBox.Show("KOM File:" + _kom_file + "\nFolder:" + _kom_data_folder, "Debug!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                MessageBox.Show("Command Line:" + "--in \"" + Application.StartupPath + "\\koms\\" + _kom_file + "\"--out \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"", "Debug!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //Classes.Process.Shell(
-                //    Application.StartupPath + "\\komextract_new", "--in \"" + Application.StartupPath +
-                //    "\\koms\\" + _kom_file + "\"--out \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"",
-                //    false, false, true,
-                //    System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, true);
-            }
-            System.IO.File.Delete(Application.StartupPath + "\\unpacking.unpack");
-        }
+		void UnpackKoms()
+		{
+			System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.StartupPath + "\\koms");
+			foreach (var fi in di.GetFiles("*.kom"))
+			{
+				string _kom_file = fi.Name;
+				string _kom_data_folder = _kom_file.Replace(".kom", String.Empty);
+				MessageBox.Show("KOM File:" + _kom_file + "\nFolder:" + _kom_data_folder, "Debug!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show("Command Line:" + "--in \"" + Application.StartupPath + "\\koms\\" + _kom_file + "\"--out \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"", "Debug!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				//Classes.Process.Shell(
+				//	Application.StartupPath + "\\komextract_new", "--in \"" + Application.StartupPath +
+				//	"\\koms\\" + _kom_file + "\"--out \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"",
+				//	false, false, true,
+				//	System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, true);
+			}
+			System.IO.File.Delete(Application.StartupPath + "\\unpacking.unpack");
+		}
 
-        void PackKoms()
-        {
-            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.StartupPath + "\\koms");
-            foreach (var dri in di.GetDirectories())
-            {
-                string _kom_data_folder = dri.Name;
-                string _kom_file = _kom_data_folder + ".kom";
-                Classes.Process.Shell(Application.StartupPath + "\\komextract_new", "--in \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"--out \"" + Application.StartupPath + "\\koms\\" + _kom_file + "\"", false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, true);
-            }
-            System.IO.File.Delete(Application.StartupPath + "\\packing.pack");
-        }
+		void PackKoms()
+		{
+			System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.StartupPath + "\\koms");
+			foreach (var dri in di.GetDirectories())
+			{
+				string _kom_data_folder = dri.Name;
+				string _kom_file = _kom_data_folder + ".kom";
+				Classes.Process.Shell(Application.StartupPath + "\\komextract_new", "--in \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"--out \"" + Application.StartupPath + "\\koms\\" + _kom_file + "\"", false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, true);
+			}
+			System.IO.File.Delete(Application.StartupPath + "\\packing.pack");
+		}
 
-        void Command1_Click(object sender, EventArgs e)
+		void Command1_Click(object sender, EventArgs e)
 		{
 			if (System.IO.File.Exists(Application.StartupPath + "\\pack.bat"))
 			{
@@ -147,7 +147,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 
 		void MainForm_Load(object sender, EventArgs e)
 		{
-            this.Hide();
+			this.Hide();
 			NotifyIcon1.Visible = false;
 			this.ShowInTaskbar = false;
 			bool previnstance;
@@ -184,7 +184,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 					settingsfrm.ShowDialog();
 				}
 				timer5.Enabled = true;
-                this.Show();
+				this.Show();
 			}
 		}
 

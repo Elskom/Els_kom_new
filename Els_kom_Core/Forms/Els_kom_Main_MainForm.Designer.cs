@@ -222,15 +222,15 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 			// ContextMenuStrip1
 			// 
 			this.ContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.PackToolStripMenuItem,
-            this.UnpackToolStripMenuItem,
-            this.ToolStripMenuItem3,
-            this.SettingsToolStripMenuItem,
-            this.ToolStripMenuItem1,
-            this.TestModsToolStripMenuItem,
-            this.LauncherToolStripMenuItem,
-            this.ToolStripMenuItem2,
-            this.ExitToolStripMenuItem});
+			this.PackToolStripMenuItem,
+			this.UnpackToolStripMenuItem,
+			this.ToolStripMenuItem3,
+			this.SettingsToolStripMenuItem,
+			this.ToolStripMenuItem1,
+			this.TestModsToolStripMenuItem,
+			this.LauncherToolStripMenuItem,
+			this.ToolStripMenuItem2,
+			this.ExitToolStripMenuItem});
 			this.ContextMenuStrip1.Name = "ContextMenuStrip1";
 			this.ContextMenuStrip1.Size = new System.Drawing.Size(130, 154);
 			// 

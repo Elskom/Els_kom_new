@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Text1.Text" xml:space="preserve">
-    <value>This Version of Els_kom uses a Stubs that does Testing of Mods and to update the game when a maintenance happens.
+    <value>This Version of Els_kom uses Stubs that does Testing of Mods and to update the game when a maintenance happens.
 Stub: Test_Mods.exe
 Copyright of the tool: Copyright © 2015
 Stub: Launcher.exe
