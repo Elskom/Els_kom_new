@@ -304,7 +304,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 			// timer5
 			// 
 			this.timer5.Interval = 1;
-			this.timer5.Tick += new System.EventHandler(this.timer5_Tick);
+			this.timer5.Tick += new System.EventHandler(this.Timer5_Tick);
 			// 
 			// MainForm
 			// 

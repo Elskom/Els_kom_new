@@ -97,7 +97,7 @@ def unpacker_main(argv):
         entry_file_data = (file_data[theunpack_offset + entry.relative_offset:theunpack_offset +
                            entry.relative_offset +
                            entry.compressed_size])
-        print("Unpacking %s." % entry.name)
+        # print("Unpacking %s." % entry.name)
         if entry.algorithm == 0:
             entry_file_data = zlib.decompress(entry_file_data)
             file_path = os.path.join(out_path, entry.name)
@@ -160,16 +160,15 @@ def packer_main(argv):
                         file_name_new, ext = os.path.splitext(file_name_new)
                         file_name_new, file_size = os.path.splitext(file_name_new)
                         algorithm = int(ext[1:])
-                        print(file_name_new)
+                        # print(file_name_new)
                         file_size = int(file_size[1:])
                         compressed_file_data = file_data
                         compressed_size = len(compressed_file_data)
-                        print("Unpacking %s." % entry.name)
                     elif file_name_new.endswith('.2'):
                         file_name_new, ext = os.path.splitext(file_name_new)
                         file_name_new, file_size = os.path.splitext(file_name_new)
                         algorithm = int(ext[1:])
-                        print(file_name_new)
+                        # print(file_name_new)
                         file_size = int(file_size[1:])
                         compressed_file_data = file_data
                         compressed_size = len(compressed_file_data)

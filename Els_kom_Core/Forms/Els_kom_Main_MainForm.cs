@@ -23,7 +23,42 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 		public string showintaskbar_tempvalue;
 		public string showintaskbar_tempvalue2;
 
-		void Command1_Click(object sender, EventArgs e)
+        //Thread tr1 = new Thread(UnpackKoms);
+        //tr1.Start();
+        //Thread tr2 = new Thread(PackKoms);
+        //tr2.Start();
+
+        void UnpackKoms()
+        {
+            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.StartupPath + "\\koms");
+            foreach (var fi in di.GetFiles("*.kom"))
+            {
+                string _kom_file = fi.Name;
+                string _kom_data_folder = _kom_file.Replace(".kom", String.Empty);
+                MessageBox.Show("KOM File:" + _kom_file + "\nFolder:" + _kom_data_folder, "Debug!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Command Line:" + "--in \"" + Application.StartupPath + "\\koms\\" + _kom_file + "\"--out \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"", "Debug!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //Classes.Process.Shell(
+                //    Application.StartupPath + "\\komextract_new", "--in \"" + Application.StartupPath +
+                //    "\\koms\\" + _kom_file + "\"--out \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"",
+                //    false, false, true,
+                //    System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, true);
+            }
+            System.IO.File.Delete(Application.StartupPath + "\\unpacking.unpack");
+        }
+
+        void PackKoms()
+        {
+            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.StartupPath + "\\koms");
+            foreach (var dri in di.GetDirectories())
+            {
+                string _kom_data_folder = dri.Name;
+                string _kom_file = _kom_data_folder + ".kom";
+                Classes.Process.Shell(Application.StartupPath + "\\komextract_new", "--in \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"--out \"" + Application.StartupPath + "\\koms\\" + _kom_file + "\"", false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, true);
+            }
+            System.IO.File.Delete(Application.StartupPath + "\\packing.pack");
+        }
+
+        void Command1_Click(object sender, EventArgs e)
 		{
 			if (System.IO.File.Exists(Application.StartupPath + "\\pack.bat"))
 			{
@@ -122,7 +157,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 			previnstance = Classes.Process.IsElsKomRunning();
 			if (previnstance == true)
 			{
-				MessageBox.Show("Sorry, Only 1 Instance is allowed at a time.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("Sorry, Only 1 Instance is allowed at a time.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				this.Close();
 			}
 			else
@@ -167,7 +202,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 
 		void Timer1_Tick(object sender, EventArgs e)
 		{
-			if (System.IO.File.Exists(Application.StartupPath + " \\ unpacking.unpack"))
+			if (System.IO.File.Exists(Application.StartupPath + "\\unpacking.unpack"))
 			{
 				Timer6.Enabled = false;
 				Command1.Enabled = false;
@@ -616,7 +651,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 			What this should do is make it actually work and read in a timely manner using global variables to compare the 2 values if not the same change
 			the used global variable and set it accordingly.
 		*/
-		void timer5_Tick(object sender, EventArgs e)
+		void Timer5_Tick(object sender, EventArgs e)
 		{
 			showintaskbar_tempvalue = settingsini.Read("Settings.ini", "IconWhileElsNotRunning");
 			showintaskbar_tempvalue2 = settingsini.Read("Settings.ini", "IconWhileElsRunning");
