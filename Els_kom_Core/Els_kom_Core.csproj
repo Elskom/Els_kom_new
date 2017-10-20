@@ -124,6 +124,7 @@
   <ItemGroup>
     <Compile Include="Classes\CopyKoms.cs" />
     <Compile Include="Classes\INIObject.cs" />
+    <Compile Include="Classes\KOMManager.cs" />
     <Compile Include="Classes\Process.cs" />
     <Compile Include="Forms\Els_kom_Main_MainForm.cs">
       <SubType>Form</SubType>

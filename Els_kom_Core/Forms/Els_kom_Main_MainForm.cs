@@ -8,12 +8,10 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 		public MainForm()
 		{
 			InitializeComponent();
-			this.SizeChanged += new EventHandler(MainForm_SizeEventHandler);
 		}
 
 		string ElsDir;
 
-		public bool bypasswindowbug;
 		public Form aboutfrm;
 		public Form settingsfrm;
 		public string showintaskbar_value;
@@ -23,6 +21,39 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 		public string showintaskbar_tempvalue;
 		public string showintaskbar_tempvalue2;
 
+		[System.ComponentModel.Browsable(true)]
+		[System.ComponentModel.Category("Behavior")]
+		[System.ComponentModel.Description("Specifies whether to allow the window to minimize when the minimize button and command are enabled.")]
+		[System.ComponentModel.DefaultValue(true)]
+		public bool AllowMinimize
+		{
+			get;
+			set;
+		}
+
+		private const int WM_SYSCOMMAND = 0x0112;
+		private const int SC_MAXIMIZE = 0xf030;
+		private const int SC_MINIMIZE = 0xf020;
+		private const int SC_RESTORE = 0xf120;
+
+		protected override void WndProc(ref Message m)
+		{
+			if (!AllowMinimize && m.Msg == WM_SYSCOMMAND)
+			{
+				if (m.WParam.ToInt32() == SC_MINIMIZE)
+				{
+					this.Hide();
+				}
+				else if (m.WParam.ToInt32() == SC_MAXIMIZE)
+				{
+					this.Show();
+					this.Activate();
+				}
+				m.Result = IntPtr.Zero;
+				return;
+			}
+			base.WndProc(ref m);
+		}
 
 		void Command1_Click(object sender, EventArgs e)
 		{
@@ -309,7 +340,6 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 								else
 								{
 									this.Hide();
-									bypasswindowbug = true;
 									this.WindowState = FormWindowState.Minimized;
 								}
 							}
@@ -350,7 +380,6 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 								else
 								{
 									this.Hide();
-									bypasswindowbug = true;
 									this.WindowState = FormWindowState.Minimized;
 								}
 							}
@@ -398,7 +427,6 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 							else
 							{
 								this.Hide();
-								bypasswindowbug = true;
 								this.WindowState = FormWindowState.Minimized;
 							}
 						}
@@ -439,7 +467,6 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 							else
 							{
 								this.Hide();
-								bypasswindowbug = true;
 								this.WindowState = FormWindowState.Minimized;
 							}
 						}
@@ -649,54 +676,13 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 					this.ShowInTaskbar = true;
 				}
 			}
+			if (this.ShowInTaskbar) {
+				AllowMinimize = true;
+			} else {
+				AllowMinimize = false;
+			}
 #pragma warning restore S3440
 #pragma warning restore S1066
-		}
-
-		void MainForm_SizeEventHandler(object sender, EventArgs e)
-		{
-			if (!x2bool)
-			{
-				if (!bypasswindowbug)
-				{
-					if (showintaskbar_value == "1")
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.Hide();
-						}
-						if (this.WindowState == FormWindowState.Normal)
-						{
-							this.Show();
-						}
-					}
-				}
-				else
-				{
-					bypasswindowbug = false;
-				}
-			}
-			else
-			{
-				if (!bypasswindowbug)
-				{
-					if (showintaskbar_value2 == "1")
-					{
-						if (this.WindowState == FormWindowState.Minimized)
-						{
-							this.Hide();
-						}
-						if (this.WindowState == FormWindowState.Normal)
-						{
-							this.Show();
-						}
-					}
-				}
-				else
-				{
-					bypasswindowbug = false;
-				}
-			}
 		}
 	}
 }

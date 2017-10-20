@@ -6,6 +6,7 @@
 	+Removed pack.bat and unpack.bat. They been replaced with
 		something much more manageable and goes out of
 		date far fewer times.
+	+Fixed Minimize/Maximize bug.
 
 =============================================================================
                              Els_kom v1.4.9.6
