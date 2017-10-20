@@ -1,5 +1,8 @@
 externals/Crypto/* linguist-vendored
 Python/* linguist-vendored
+Python/encryption.h linguist-language=c
+Python/memimp_setup.h linguist-language=c
+Python/memory.h linguist-language=c
 build.bat linguist-vendored
 get_externals.bat linguist-vendored
 etc/* linguist-vendored
