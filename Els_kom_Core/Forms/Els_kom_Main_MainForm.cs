@@ -22,46 +22,11 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 		public string showintaskbar_value2;
 		public string showintaskbar_tempvalue;
 		public string showintaskbar_tempvalue2;
-		/* required to see if we are packing or unpacking. Default to false. */
-		public bool is_packing = false;
-		public bool is_unpacking = false;
 
-		void UnpackKoms()
-		{
-			System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.StartupPath + "\\koms");
-			foreach (var fi in di.GetFiles("*.kom"))
-			{
-				string _kom_file = fi.Name;
-				// remove ".kom" on end of string.
-				string _kom_data_folder = _kom_file.Remove(_kom_file.IndexOf("."));
-				Classes.Process.Shell(Application.StartupPath + "\\komextract_new.exe", "--in \"" + Application.StartupPath + "\\koms\\" + _kom_file + "\" --out \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"", false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, true);
-				fi.Delete();
-			}
-			is_unpacking = false;
-		}
-
-		void PackKoms()
-		{
-			System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Application.StartupPath + "\\koms");
-			foreach (var dri in di.GetDirectories())
-			{
-				string _kom_data_folder = dri.Name;
-				string _kom_file = _kom_data_folder + ".kom";
-				Classes.Process.Shell(Application.StartupPath + "\\kompact_new.exe", "--in \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\" --out \"" + Application.StartupPath + "\\koms\\" + _kom_file + "\"", false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, Application.StartupPath, true);
-				foreach (var fi in dri.GetFiles()) {
-					fi.Delete();
-				}
-				dri.Delete();
-			}
-			is_packing = false;
-		}
 
 		void Command1_Click(object sender, EventArgs e)
 		{
-			if (!is_packing) {
-				is_packing = true;
-			}
-			System.Threading.Thread tr2 = new System.Threading.Thread(PackKoms);
+			System.Threading.Thread tr2 = new System.Threading.Thread(Classes.KOMManager.PackKoms);
 			tr2.Start();
 			Timer2.Enabled = true;
 		}
@@ -73,10 +38,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 
 		void Command2_Click(object sender, EventArgs e)
 		{
-			if (!is_unpacking) {
-				is_unpacking = true;
-			}
-			System.Threading.Thread tr1 = new System.Threading.Thread(UnpackKoms);
+			System.Threading.Thread tr1 = new System.Threading.Thread(Classes.KOMManager.UnpackKoms);
 			tr1.Start();
 			Timer1.Enabled = true;
 		}
@@ -192,7 +154,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 
 		void Timer1_Tick(object sender, EventArgs e)
 		{
-			if (is_unpacking)
+			if (Classes.KOMManager.is_unpacking)
 			{
 				Timer6.Enabled = false;
 				Command1.Enabled = false;
@@ -225,7 +187,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 
 		void Timer2_Tick(object sender, EventArgs e)
 		{
-			if (is_packing)
+			if (Classes.KOMManager.is_packing)
 			{
 				Timer6.Enabled = false;
 				Command1.Enabled = false;
@@ -539,10 +501,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 
 		void UnpackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!is_unpacking) {
-				is_unpacking = true;
-			}
-			System.Threading.Thread tr1 = new System.Threading.Thread(UnpackKoms);
+			System.Threading.Thread tr1 = new System.Threading.Thread(Classes.KOMManager.UnpackKoms);
 			tr1.Start();
 			Timer1.Enabled = true;
 		}
@@ -563,10 +522,7 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 
 		void PackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!is_packing) {
-				is_packing = true;
-			}
-			System.Threading.Thread tr2 = new System.Threading.Thread(PackKoms);
+			System.Threading.Thread tr2 = new System.Threading.Thread(Classes.KOMManager.PackKoms);
 			tr2.Start();
 			Timer2.Enabled = true;
 		}
