@@ -34,7 +34,8 @@ namespace Els_kom_Core.Forms.Els_kom_Main
 			foreach (var fi in di.GetFiles("*.kom"))
 			{
 				string _kom_file = fi.Name;
-				string _kom_data_folder = _kom_file.Replace(".kom", String.Empty);
+				// remove ".kom" on end of string.
+				string _kom_data_folder = _kom_file.Remove(_kom_file.IndexOf("."));
 				MessageBox.Show("KOM File:" + _kom_file + "\nFolder:" + _kom_data_folder, "Debug!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				MessageBox.Show("Command Line:" + "--in \"" + Application.StartupPath + "\\koms\\" + _kom_file + "\"--out \"" + Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"", "Debug!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				//Classes.Process.Shell(
