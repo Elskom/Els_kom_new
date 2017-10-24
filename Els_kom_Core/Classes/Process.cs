@@ -33,10 +33,7 @@ namespace Els_kom_Core
 				return 0;
 			}
 
-			/// <summary>
-			/// Gets if x2.exe is Running or Not.
-			/// </summary>
-			/// <returns>Boolean</returns>
+            [System.Obsolete("This function is deprecated and will be removed in a future release.")]
 			public static bool IsX2Running()
 			{
 				System.Diagnostics.Process[] x2exe = System.Diagnostics.Process.GetProcessesByName("Test_Mods");
@@ -44,11 +41,8 @@ namespace Els_kom_Core
 				return x2exe.Any();
 			}
 
-			/// <summary>
-			/// Gets if elsword.exe or voidels.exe is Running or Not.
-			/// </summary>
-			/// <returns>Boolean</returns>
-			public static bool IsLauncherRunning()
+            [System.Obsolete("This function is deprecated and will be removed in a future release.")]
+            public static bool IsLauncherRunning()
 			{
 				System.Diagnostics.Process[] elswordexe = System.Diagnostics.Process.GetProcessesByName("elsword");
 				System.Diagnostics.Process[] voidelsexe = System.Diagnostics.Process.GetProcessesByName("voidels");

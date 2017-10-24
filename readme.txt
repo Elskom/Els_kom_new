@@ -7,6 +7,12 @@
 		something much more manageable and goes out of
 		date far fewer times.
 	+Fixed Minimize/Maximize bug.
+	+Moved Forms back to exe's.
+	+Deprecated the stubs and will be removed on 1.4.9.8.
+	+Moved most of the form Controls to custom ones to size the forms
+		down considerably by designer and code.
+	-This means the Core would have to be built before the forms
+		controls can display properly in Visual Studio.
 
 =============================================================================
                              Els_kom v1.4.9.6

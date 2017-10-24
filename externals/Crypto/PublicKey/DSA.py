@@ -22,98 +22,30 @@
 # SOFTWARE.
 # ===================================================================
 
-"""DSA public-key signature algorithm.
-
-DSA_ is a widespread public-key signature algorithm. Its security is
-based on the discrete logarithm problem (DLP_). Given a cyclic
-group, a generator *g*, and an element *h*, it is hard
-to find an integer *x* such that *g^x = h*. The problem is believed
-to be difficult, and it has been proved such (and therefore secure) for
-more than 30 years.
-
-The group is actually a sub-group over the integers modulo *p*, with *p* prime.
-The sub-group order is *q*, which is prime too; it always holds that *(p-1)* is a multiple of *q*.
-The cryptographic strength is linked to the magnitude of *p* and *q*.
-The signer holds a value *x* (*0<x<q-1*) as private key, and its public
-key (*y* where *y=g^x mod p*) is distributed.
-
-In 2012, a sufficient size is deemed to be 2048 bits for *p* and 256 bits for *q*.
-For more information, see the most recent ECRYPT_ report.
-
-DSA is reasonably secure for new designs.
-
-The algorithm can only be used for authentication (digital signature).
-DSA cannot be used for confidentiality (encryption).
-
-The values *(p,q,g)* are called *domain parameters*;
-they are not sensitive but must be shared by both parties (the signer and the verifier).
-Different signers can share the same domain parameters with no security
-concerns.
-
-The DSA signature is twice as big as the size of *q* (64 bytes if *q* is 256 bit
-long).
-
-This module provides facilities for generating new DSA keys and for constructing
-them from known components. DSA keys allows you to perform basic signing and
-verification.
-
-    >>> from Crypto.Random import random
-    >>> from Crypto.PublicKey import DSA
-    >>> from Crypto.Hash import SHA256
-    >>>
-    >>> message = "Hello"
-    >>> key = DSA.generate(2048)
-    >>> f = open("public_key.pem", "w")
-    >>> f.write(key.publickey().exportKey(key))
-    >>> h = SHA256.new(message).digest()
-    >>> k = random.StrongRandom().randint(1,key.q-1)
-    >>> sig = key.sign(h,k)
-    >>> ...
-    >>> ...
-    >>> f = open("public_key.pem", "r")
-    >>> h = SHA256.new(message).digest()
-    >>> key = DSA.importKey(f.read())
-    >>> if key.verify(h,sig):
-    >>>     print "OK"
-    >>> else:
-    >>>     print "Incorrect signature"
-
-.. _DSA: http://en.wikipedia.org/wiki/Digital_Signature_Algorithm
-.. _DLP: http://www.cosic.esat.kuleuven.be/publications/talk-78.pdf
-.. _ECRYPT: http://www.ecrypt.eu.org/documents/D.SPA.17.pdf
-"""
-
-__revision__ = "$Id$"
-
-__all__ = ['generate', 'construct', 'error', 'DSAImplementation',
-           '_DSAobj', 'importKey']
+__all__ = ['generate', 'construct', 'DsaKey', 'import_key' ]
 
 import binascii
 import struct
+import itertools
 
-import sys
-if sys.version_info[0] == 2 and sys.version_info[1] == 1:
-    from Crypto.Util.py21compat import *
 from Crypto.Util.py3compat import *
 
 from Crypto import Random
 from Crypto.IO import PKCS8, PEM
-from Crypto.Util.number import bytes_to_long, long_to_bytes, getRandomRange
-from Crypto.PublicKey import _DSA, _slowmath, pubkey
-from Crypto.Util.asn1 import DerObject, DerSequence,\
-        DerInteger, DerObjectId, DerBitString, newDerSequence, newDerBitString
+from Crypto.Hash import SHA256
+from Crypto.Util.asn1 import (
+                DerObject, DerSequence,
+                DerInteger, DerObjectId,
+                DerBitString,
+                )
 
-try:
-    from Crypto.PublicKey import _fastmath
-except ImportError:
-    _fastmath = None
+from Crypto.Math.Numbers import Integer
+from Crypto.Math.Primality import (test_probable_prime, COMPOSITE,
+                                   PROBABLY_PRIME)
 
-def decode_der(obj_class, binstr):
-    """Instantiate a DER object class, decode a DER binary string in it,
-    and return the object."""
-    der = obj_class()
-    der.decode(binstr)
-    return der
+from Crypto.PublicKey import (_expand_subject_public_key_info,
+                              _create_subject_public_key_info,
+                              _extract_subject_public_key_info)
 
 #   ; The following ASN.1 types are relevant for DSA
 #
@@ -143,201 +75,185 @@ def decode_der(obj_class, binstr):
 #   }
 #
 
-class _DSAobj(pubkey.pubkey):
-    """Class defining an actual DSA key.
+class DsaKey(object):
+    r"""Class defining an actual DSA key.
+    Do not instantiate directly.
+    Use :func:`generate`, :func:`construct` or :func:`import_key` instead.
 
-    :undocumented: __getstate__, __setstate__, __repr__, __getattr__
+    :ivar p: DSA modulus
+    :vartype p: integer
+
+    :ivar q: Order of the subgroup
+    :vartype q: integer
+
+    :ivar g: Generator
+    :vartype g: integer
+
+    :ivar y: Public key
+    :vartype y: integer
+
+    :ivar x: Private key
+    :vartype x: integer
     """
-    #: Dictionary of DSA parameters.
-    #:
-    #: A public key will only have the following entries:
-    #:
-    #:  - **y**, the public key.
-    #:  - **g**, the generator.
-    #:  - **p**, the modulus.
-    #:  - **q**, the order of the sub-group.
-    #:
-    #: A private key will also have:
-    #:
-    #:  - **x**, the private key.
-    keydata = ['y', 'g', 'p', 'q', 'x']
 
-    def __init__(self, implementation, key, randfunc=None):
-        self.implementation = implementation
-        self.key = key
-        if randfunc is None:
-            randfunc = Random.new().read
-        self._randfunc = randfunc
+    _keydata = ['y', 'g', 'p', 'q', 'x']
 
-    def __getattr__(self, attrname):
-        if attrname in self.keydata:
-            # For backward compatibility, allow the user to get (not set) the
-            # DSA key parameters directly from this object.
-            return getattr(self.key, attrname)
-        else:
-            raise AttributeError("%s object has no %r attribute" % (self.__class__.__name__, attrname,))
-
-    def sign(self, M, K):
-        """Sign a piece of data with DSA.
-
-        :Parameter M: The piece of data to sign with DSA. It may
-         not be longer in bit size than the sub-group order (*q*).
-        :Type M: byte string or long
-
-        :Parameter K: A secret number, chosen randomly in the closed
-         range *[1,q-1]*.
-        :Type K: long (recommended) or byte string (not recommended)
-
-        :attention: selection of *K* is crucial for security. Generating a
-         random number larger than *q* and taking the modulus by *q* is
-         **not** secure, since smaller values will occur more frequently.
-         Generating a random number systematically smaller than *q-1*
-         (e.g. *floor((q-1)/8)* random bytes) is also **not** secure. In general,
-         it shall not be possible for an attacker to know the value of `any
-         bit of K`__.
-
-        :attention: The number *K* shall not be reused for any other
-         operation and shall be discarded immediately.
-
-        :attention: M must be a digest cryptographic hash, otherwise
-         an attacker may mount an existential forgery attack.
-
-        :Return: A tuple with 2 longs.
-
-        .. __: http://www.di.ens.fr/~pnguyen/pub_NgSh00.htm
-        """
-        return pubkey.pubkey.sign(self, M, K)
-
-    def verify(self, M, signature):
-        """Verify the validity of a DSA signature.
-
-        :Parameter M: The expected message.
-        :Type M: byte string or long
-
-        :Parameter signature: The DSA signature to verify.
-        :Type signature: A tuple with 2 longs as return by `sign`
-
-        :Return: True if the signature is correct, False otherwise.
-        """
-        return pubkey.pubkey.verify(self, M, signature)
-
-    def _encrypt(self, c, K):
-        raise TypeError("DSA cannot encrypt")
-
-    def _decrypt(self, c):
-        raise TypeError("DSA cannot decrypt")
-
-    def _blind(self, m, r):
-        raise TypeError("DSA cannot blind")
-
-    def _unblind(self, m, r):
-        raise TypeError("DSA cannot unblind")
+    def __init__(self, key_dict):
+        input_set = set(key_dict.keys())
+        public_set = set(('y' , 'g', 'p', 'q'))
+        if not public_set.issubset(input_set):
+            raise ValueError("Some DSA components are missing = %s" %
+                             str(public_set - input_set))
+        extra_set = input_set - public_set
+        if extra_set and extra_set != set(('x',)):
+            raise ValueError("Unknown DSA components = %s" %
+                             str(extra_set - set(('x',))))
+        self._key = dict(key_dict)
 
     def _sign(self, m, k):
-        blind_factor = getRandomRange(1, self.key.q, self._randfunc)
-        return self.key._sign(m, k, blind_factor)
+        if not self.has_private():
+            raise TypeError("DSA public key cannot be used for signing")
+        if not (1 < k < self.q):
+            raise ValueError("k is not between 2 and q-1")
+
+        x, q, p, g = [self._key[comp] for comp in ['x', 'q', 'p', 'g']]
+
+        blind_factor = Integer.random_range(min_inclusive=1,
+                                           max_exclusive=q)
+        inv_blind_k = (blind_factor * k).inverse(q)
+        blind_x = x * blind_factor
+
+        r = pow(g, k, p) % q  # r = (g**k mod p) mod q
+        s = (inv_blind_k * (blind_factor * m + blind_x * r)) % q
+        return list(map(int, (r, s)))
 
     def _verify(self, m, sig):
-        (r, s) = sig
-        return self.key._verify(m, r, s)
+        r, s = sig
+        y, q, p, g = [self._key[comp] for comp in ['y', 'q', 'p', 'g']]
+        if not (0 < r < q) or not (0 < s < q):
+            return False
+        w = Integer(s).inverse(q)
+        u1 = (w * m) % q
+        u2 = (w * r) % q
+        v = (pow(g, u1, p) * pow(y, u2, p) % p) % q
+        return v == r
 
     def has_private(self):
-        return self.key.has_private()
+        """Whether this is a DSA private key"""
 
-    def size(self):
-        return self.key.size()
+        return 'x' in self._key
 
-    def can_blind(self):
+    def can_encrypt(self):  # legacy
         return False
 
-    def can_encrypt(self):
-        return False
-
-    def can_sign(self):
+    def can_sign(self):     # legacy
         return True
 
     def publickey(self):
-        return self.implementation.construct((self.key.y, self.key.g, self.key.p, self.key.q))
+        """A matching DSA public key.
+
+        Returns:
+            a new :class:`DsaKey` object
+        """
+
+        public_components = dict((k, self._key[k]) for k in ('y', 'g', 'p', 'q'))
+        return DsaKey(public_components)
+
+    def __eq__(self, other):
+        if bool(self.has_private()) != bool(other.has_private()):
+            return False
+
+        result = True
+        for comp in self._keydata:
+            result = result and (getattr(self._key, comp, None) ==
+                                 getattr(other._key, comp, None))
+        return result
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
     def __getstate__(self):
-        d = {}
-        for k in self.keydata:
-            try:
-                d[k] = getattr(self.key, k)
-            except AttributeError:
-                pass
-        return d
+        # DSA key is not pickable
+        from pickle import PicklingError
+        raise PicklingError
 
-    def __setstate__(self, d):
-        if not hasattr(self, 'implementation'):
-            self.implementation = DSAImplementation()
-        if not hasattr(self, '_randfunc'):
-            self._randfunc = Random.new().read
-        t = []
-        for k in self.keydata:
-            if k not in d:
-                break
-            t.append(d[k])
-        self.key = self.implementation._math.dsa_construct(*tuple(t))
+    def domain(self):
+        """The DSA domain parameters.
+
+        Returns
+            tuple : (p,q,g)
+        """
+
+        return list(map(int, [self._key[comp] for comp in ('p', 'q', 'g')]))
 
     def __repr__(self):
         attrs = []
-        for k in self.keydata:
+        for k in self._keydata:
             if k == 'p':
                 attrs.append("p(%d)" % (self.size()+1,))
-            elif hasattr(self.key, k):
+            elif hasattr(self, k):
                 attrs.append(k)
         if self.has_private():
             attrs.append("private")
         # PY3K: This is meant to be text, do not change to bytes (data)
         return "<%s @0x%x %s>" % (self.__class__.__name__, id(self), ",".join(attrs))
 
+    def __getattr__(self, item):
+        try:
+            return int(self._key[item])
+        except KeyError:
+            raise AttributeError(item)
+
     def exportKey(self, format='PEM', pkcs8=None, passphrase=None,
-                  protection=None):
+                  protection=None, randfunc=None):
         """Export this DSA key.
 
-        :Parameters:
-          format : string
-            The format to use for wrapping the key:
+        Args:
+          format (string):
+            The encoding for the output:
 
-            - *'DER'*. Binary encoding.
-            - *'PEM'*. Textual encoding, done according to `RFC1421`_/
-              `RFC1423`_ (default).
-            - *'OpenSSH'*. Textual encoding, one line of text, see `RFC4253`_.
-              Only suitable for public keys, not private keys.
+            - *'PEM'* (default). ASCII as per `RFC1421`_/ `RFC1423`_.
+            - *'DER'*. Binary ASN.1 encoding.
+            - *'OpenSSH'*. ASCII one-liner as per `RFC4253`_.
+              Only suitable for public keys, not for private keys.
 
-          passphrase : string
-            For private keys only. The pass phrase to use for deriving
-            the encryption key.
+          passphrase (string):
+            *Private keys only*. The pass phrase to protect the output.
 
-          pkcs8 : boolean
-            For private keys only. If ``True`` (default), the key is arranged
-            according to `PKCS#8`_ and if `False`, according to the custom
-            OpenSSL/OpenSSH encoding.
+          pkcs8 (boolean):
+            *Private keys only*. If ``True`` (default), the key is encoded
+            with `PKCS#8`_. If ``False``, it is encoded in the custom
+            OpenSSL/OpenSSH container.
 
-          protection : string
-            The encryption scheme to use for protecting the private key.
-            It is only meaningful when a pass phrase is present too.
+          protection (string):
+            *Only in combination with a pass phrase*.
+            The encryption scheme to use to protect the output.
 
-            If ``pkcs8`` takes value ``True``, ``protection`` is the PKCS#8
+            If :data:`pkcs8` takes value ``True``, this is the PKCS#8
             algorithm to use for deriving the secret and encrypting
             the private DSA key.
-            For a complete list of algorithms, see `Crypto.IO.PKCS8`.
+            For a complete list of algorithms, see :mod:`Crypto.IO.PKCS8`.
             The default is *PBKDF2WithHMAC-SHA1AndDES-EDE3-CBC*.
 
-            If ``pkcs8`` is ``False``, the obsolete PEM encryption scheme is
+            If :data:`pkcs8` is ``False``, the obsolete PEM encryption scheme is
             used. It is based on MD5 for key derivation, and Triple DES for
-            encryption. Parameter ``protection`` is ignored.
+            encryption. Parameter :data:`protection` is then ignored.
 
             The combination ``format='DER'`` and ``pkcs8=False`` is not allowed
             if a passphrase is present.
 
-        :Return: A byte string with the encoded public or private half
-          of the key.
-        :Raise ValueError:
-            When the format is unknown or when you try to encrypt a private
+          randfunc (callable):
+            A function that returns random bytes.
+            By default it is :func:`Crypto.Random.get_random_bytes`.
+
+        Returns:
+          byte string : the encoded key
+
+        Raises:
+          ValueError : when the format is unknown or when you try to encrypt a private
             key with *DER* format and OpenSSL/OpenSSH.
-        :attention:
+
+        .. warning::
             If you don't provide a pass phrase, the private key will be
             exported in the clear!
 
@@ -346,10 +262,15 @@ class _DSAobj(pubkey.pubkey):
         .. _RFC4253:    http://www.ietf.org/rfc/rfc4253.txt
         .. _`PKCS#8`:   http://www.ietf.org/rfc/rfc5208.txt
         """
+
         if passphrase is not None:
             passphrase = tobytes(passphrase)
+
+        if randfunc is None:
+            randfunc = Random.get_random_bytes
+
         if format == 'OpenSSH':
-            tup1 = [long_to_bytes(x) for x in (self.p, self.q, self.g, self.y)]
+            tup1 = [self._key[x].to_bytes() for x in ('p', 'q', 'g', 'y')]
 
             def func(x):
                 if (bord(x[0]) & 0x80):
@@ -366,7 +287,7 @@ class _DSAobj(pubkey.pubkey):
 
         # DER format is always used, even in case of PEM, which simply
         # encodes it into BASE64.
-        params = newDerSequence(self.p, self.q, self.g)
+        params = DerSequence([self.p, self.q, self.g])
         if self.has_private():
             if pkcs8 is None:
                 pkcs8 = True
@@ -377,7 +298,7 @@ class _DSAobj(pubkey.pubkey):
                 binary_key = PKCS8.wrap(
                                 private_key, oid, passphrase,
                                 protection, key_params=params,
-                                randfunc=self._randfunc
+                                randfunc=randfunc
                                 )
                 if passphrase:
                     key_type = 'ENCRYPTED PRIVATE'
@@ -388,283 +309,363 @@ class _DSAobj(pubkey.pubkey):
                 if format != 'PEM' and passphrase:
                     raise ValueError("DSA private key cannot be encrypted")
                 ints = [0, self.p, self.q, self.g, self.y, self.x]
-                binary_key = newDerSequence(*ints).encode()
+                binary_key = DerSequence(ints).encode()
                 key_type = "DSA PRIVATE"
         else:
             if pkcs8:
                 raise ValueError("PKCS#8 is only meaningful for private keys")
-            binary_key = newDerSequence(
-                            newDerSequence(DerObjectId(oid), params),
-                            newDerBitString(DerInteger(self.y))
-                            ).encode()
-            key_type = "DSA PUBLIC"
+
+            binary_key = _create_subject_public_key_info(oid,
+                                DerInteger(self.y), params)
+            key_type = "PUBLIC"
 
         if format == 'DER':
             return binary_key
         if format == 'PEM':
             pem_str = PEM.encode(
                                 binary_key, key_type + " KEY",
-                                passphrase, self._randfunc
+                                passphrase, randfunc
                             )
             return tobytes(pem_str)
         raise ValueError("Unknown key format '%s'. Cannot export the DSA key." % format)
 
+    # Methods defined in PyCrypto that we don't support anymore
 
-class DSAImplementation(object):
+    def sign(self, M, K):
+        raise NotImplementedError("Use module Crypto.Signature.DSS instead")
+
+    def verify(self, M, signature):
+        raise NotImplementedError("Use module Crypto.Signature.DSS instead")
+
+    def encrypt(self, plaintext, K):
+        raise NotImplementedError
+
+    def decrypt(self, ciphertext):
+        raise NotImplementedError
+
+    def blind(self, M, B):
+        raise NotImplementedError
+
+    def unblind(self, M, B):
+        raise NotImplementedError
+
+    def size(self):
+        raise NotImplementedError
+
+
+def _generate_domain(L, randfunc):
+    """Generate a new set of DSA domain parameters"""
+
+    N = { 1024:160, 2048:224, 3072:256 }.get(L)
+    if N is None:
+        raise ValueError("Invalid modulus length (%d)" % L)
+
+    outlen = SHA256.digest_size * 8
+    n = (L + outlen - 1) // outlen - 1  # ceil(L/outlen) -1
+    b_ = L - 1 - (n * outlen)
+
+    # Generate q (A.1.1.2)
+    q = Integer(4)
+    upper_bit = 1 << (N - 1)
+    while test_probable_prime(q, randfunc) != PROBABLY_PRIME:
+        seed = randfunc(64)
+        U = Integer.from_bytes(SHA256.new(seed).digest()) & (upper_bit - 1)
+        q = U | upper_bit | 1
+
+    assert(q.size_in_bits() == N)
+
+    # Generate p (A.1.1.2)
+    offset = 1
+    upper_bit = 1 << (L - 1)
+    while True:
+        V = [ SHA256.new(seed + Integer(offset + j).to_bytes()).digest()
+              for j in range(n + 1) ]
+        V = [ Integer.from_bytes(v) for v in V ]
+        W = sum([V[i] * (1 << (i * outlen)) for i in range(n)],
+                (V[n] & (1 << b_ - 1)) * (1 << (n * outlen)))
+
+        X = Integer(W + upper_bit) # 2^{L-1} < X < 2^{L}
+        assert(X.size_in_bits() == L)
+
+        c = X % (q * 2)
+        p = X - (c - 1)  # 2q divides (p-1)
+        if p.size_in_bits() == L and \
+           test_probable_prime(p, randfunc) == PROBABLY_PRIME:
+               break
+        offset += n + 1
+
+    # Generate g (A.2.3, index=1)
+    e = (p - 1) // q
+    for count in itertools.count(1):
+        U = seed + b("ggen") + bchr(1) + Integer(count).to_bytes()
+        W = Integer.from_bytes(SHA256.new(U).digest())
+        g = pow(W, e, p)
+        if g != 1:
+            break
+
+    return (p, q, g, seed)
+
+
+def generate(bits, randfunc=None, domain=None):
+    """Generate a new DSA key pair.
+
+    The algorithm follows Appendix A.1/A.2 and B.1 of `FIPS 186-4`_,
+    respectively for domain generation and key pair generation.
+
+    Args:
+      bits (integer):
+        Key length, or size (in bits) of the DSA modulus *p*.
+        It must be 1024, 2048 or 3072.
+
+      randfunc (callable):
+        Random number generation function; it accepts a single integer N
+        and return a string of random data N bytes long.
+        If not specified, :func:`Crypto.Random.get_random_bytes` is used.
+
+      domain (tuple):
+        The DSA domain parameters *p*, *q* and *g* as a list of 3
+        integers. Size of *p* and *q* must comply to `FIPS 186-4`_.
+        If not specified, the parameters are created anew.
+
+    Returns:
+      :class:`DsaKey` : a new DSA key object
+
+    Raises:
+      ValueError : when **bits** is too little, too big, or not a multiple of 64.
+
+    .. _FIPS 186-4: http://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf
     """
-    A DSA key factory.
 
-    This class is only internally used to implement the methods of the
-    `Crypto.PublicKey.DSA` module.
+    if randfunc is None:
+        randfunc = Random.get_random_bytes
+
+    if domain:
+        p, q, g = list(map(Integer, domain))
+
+        ## Perform consistency check on domain parameters
+        # P and Q must be prime
+        fmt_error = test_probable_prime(p) == COMPOSITE
+        fmt_error = test_probable_prime(q) == COMPOSITE
+        # Verify Lagrange's theorem for sub-group
+        fmt_error |= ((p - 1) % q) != 0
+        fmt_error |= g <= 1 or g >= p
+        fmt_error |= pow(g, q, p) != 1
+        if fmt_error:
+            raise ValueError("Invalid DSA domain parameters")
+    else:
+        p, q, g, _ = _generate_domain(bits, randfunc)
+
+    L = p.size_in_bits()
+    N = q.size_in_bits()
+
+    if L != bits:
+        raise ValueError("Mismatch between size of modulus (%d)"
+                         " and 'bits' parameter (%d)" % (L, bits))
+
+    if (L, N) not in [(1024, 160), (2048, 224),
+                      (2048, 256), (3072, 256)]:
+        raise ValueError("Lengths of p and q (%d, %d) are not compatible"
+                         "to FIPS 186-3" % (L, N))
+
+    if not 1 < g < p:
+        raise ValueError("Incorrent DSA generator")
+
+    # B.1.1
+    c = Integer.random(exact_bits=N + 64)
+    x = c % (q - 1) + 1 # 1 <= x <= q-1
+    y = pow(g, x, p)
+
+    key_dict = { 'y':y, 'g':g, 'p':p, 'q':q, 'x':x }
+    return DsaKey(key_dict)
+
+
+def construct(tup, consistency_check=True):
+    """Construct a DSA key from a tuple of valid DSA components.
+
+    Args:
+      tup (tuple):
+        A tuple of long integers, with 4 or 5 items
+        in the following order:
+
+            1. Public key (*y*).
+            2. Sub-group generator (*g*).
+            3. Modulus, finite field order (*p*).
+            4. Sub-group order (*q*).
+            5. Private key (*x*). Optional.
+
+      consistency_check (boolean):
+        If ``True``, the library will verify that the provided components
+        fulfil the main DSA properties.
+
+    Raises:
+      ValueError: when the key being imported fails the most basic DSA validity checks.
+
+    Returns:
+      :class:`DsaKey` : a DSA key object
     """
 
-    def __init__(self, **kwargs):
-        """Create a new DSA key factory.
+    key_dict = dict(list(zip(('y', 'g', 'p', 'q', 'x'), list(map(Integer, tup)))))
+    key = DsaKey(key_dict)
 
-        :Keywords:
-         use_fast_math : bool
-                                Specify which mathematic library to use:
+    fmt_error = False
+    if consistency_check:
+        # P and Q must be prime
+        fmt_error = test_probable_prime(key.p) == COMPOSITE
+        fmt_error = test_probable_prime(key.q) == COMPOSITE
+        # Verify Lagrange's theorem for sub-group
+        fmt_error |= ((key.p - 1) % key.q) != 0
+        fmt_error |= key.g <= 1 or key.g >= key.p
+        fmt_error |= pow(key.g, key.q, key.p) != 1
+        # Public key
+        fmt_error |= key.y <= 0 or key.y >= key.p
+        if hasattr(key, 'x'):
+            fmt_error |= key.x <= 0 or key.x >= key.q
+            fmt_error |= pow(key.g, key.x, key.p) != key.y
 
-                                - *None* (default). Use fastest math available.
-                                - *True* . Use fast math.
-                                - *False* . Use slow math.
-         default_randfunc : callable
-                                Specify how to collect random data:
+    if fmt_error:
+        raise ValueError("Invalid DSA key components")
 
-                                - *None* (default). Use Random.new().read().
-                                - not *None* . Use the specified function directly.
-        :Raise RuntimeError:
-            When **use_fast_math** =True but fast math is not available.
-        """
-        use_fast_math = kwargs.get('use_fast_math', None)
-        if use_fast_math is None:   # Automatic
-            if _fastmath is not None:
-                self._math = _fastmath
-            else:
-                self._math = _slowmath
+    return key
 
-        elif use_fast_math:     # Explicitly select fast math
-            if _fastmath is not None:
-                self._math = _fastmath
-            else:
-                raise RuntimeError("fast math module not available")
 
-        else:   # Explicitly select slow math
-            self._math = _slowmath
+# Dss-Parms  ::=  SEQUENCE  {
+#       p       OCTET STRING,
+#       q       OCTET STRING,
+#       g       OCTET STRING
+# }
+# DSAPublicKey ::= INTEGER --  public key, y
 
-        self.error = self._math.error
+def _import_openssl_private(encoded, passphrase, params):
+    if params:
+        raise ValueError("DSA private key already comes with parameters")
+    der = DerSequence().decode(encoded, nr_elements=6, only_ints_expected=True)
+    if der[0] != 0:
+        raise ValueError("No version found")
+    tup = [der[comp] for comp in (4, 3, 1, 2, 5)]
+    return construct(tup)
 
-        # 'default_randfunc' parameter:
-        #   None (default) - use Random.new().read
-        #   not None       - use the specified function
-        self._default_randfunc = kwargs.get('default_randfunc', None)
-        self._current_randfunc = None
 
-    def _get_randfunc(self, randfunc):
-        if randfunc is not None:
-            return randfunc
-        elif self._current_randfunc is None:
-            self._current_randfunc = Random.new().read
-        return self._current_randfunc
+def _import_subjectPublicKeyInfo(encoded, passphrase, params):
 
-    def generate(self, bits, randfunc=None, progress_func=None):
-        """Randomly generate a fresh, new DSA key.
+    algoid, encoded_key, emb_params =  _expand_subject_public_key_info(encoded)
+    if algoid != oid:
+        raise ValueError("No DSA subjectPublicKeyInfo")
+    if params and emb_params:
+        raise ValueError("Too many DSA parameters")
 
-        :Parameters:
-         bits : int
-                            Key length, or size (in bits) of the DSA modulus
-                            *p*.
-                            It must be a multiple of 64, in the closed
-                            interval [512,1024].
-         randfunc : callable
-                            Random number generation function; it should accept
-                            a single integer N and return a string of random data
-                            N bytes long.
-                            If not specified, a new one will be instantiated
-                            from ``Crypto.Random``.
-         progress_func : callable
-                            Optional function that will be called with a short string
-                            containing the key parameter currently being generated;
-                            it's useful for interactive applications where a user is
-                            waiting for a key to be generated.
+    y = DerInteger().decode(encoded_key).value
+    p, q, g = list(DerSequence().decode(params or emb_params))
+    tup = (y, g, p, q)
+    return construct(tup)
 
-        :attention: You should always use a cryptographically secure random number generator,
-            such as the one defined in the ``Crypto.Random`` module; **don't** just use the
-            current time and the ``random`` module.
 
-        :Return: A DSA key object (`_DSAobj`).
+def _import_x509_cert(encoded, passphrase, params):
 
-        :Raise ValueError:
-            When **bits** is too little, too big, or not a multiple of 64.
-        """
+    sp_info = _extract_subject_public_key_info(encoded)
+    return _import_subjectPublicKeyInfo(sp_info, None, params)
 
-        # Check against FIPS 186-2, which says that the size of the prime p
-        # must be a multiple of 64 bits between 512 and 1024
-        for i in (0, 1, 2, 3, 4, 5, 6, 7, 8):
-            if bits == 512 + 64*i:
-                return self._generate(bits, randfunc, progress_func)
 
-        # The March 2006 draft of FIPS 186-3 also allows 2048 and 3072-bit
-        # primes, but only with longer q values.  Since the current DSA
-        # implementation only supports a 160-bit q, we don't support larger
-        # values.
-        raise ValueError("Number of bits in p must be a multiple of 64 between 512 and 1024, not %d bits" % (bits,))
+def _import_pkcs8(encoded, passphrase, params):
+    if params:
+        raise ValueError("PKCS#8 already includes parameters")
+    k = PKCS8.unwrap(encoded, passphrase)
+    if k[0] != oid:
+        raise ValueError("No PKCS#8 encoded DSA key")
+    x = DerInteger().decode(k[1]).value
+    p, q, g = list(DerSequence().decode(k[2]))
+    tup = (pow(g, x, p), g, p, q, x)
+    return construct(tup)
 
-    def _generate(self, bits, randfunc=None, progress_func=None):
-        rf = self._get_randfunc(randfunc)
-        obj = _DSA.generate_py(bits, rf, progress_func)    # TODO: Don't use legacy _DSA module
-        key = self._math.dsa_construct(obj.y, obj.g, obj.p, obj.q, obj.x)
-        return _DSAobj(self, key)
 
-    def construct(self, tup):
-        """Construct a DSA key from a tuple of valid DSA components.
+def _import_key_der(key_data, passphrase, params):
+    """Import a DSA key (public or private half), encoded in DER form."""
 
-        The modulus *p* must be a prime.
+    decodings = (_import_openssl_private,
+                 _import_subjectPublicKeyInfo,
+                 _import_x509_cert,
+                 _import_pkcs8)
 
-        The following equations must apply:
-
-        - p-1 = 0 mod q
-        - g^x = y mod p
-        - 0 < x < q
-        - 1 < g < p
-
-        :Parameters:
-         tup : tuple
-                    A tuple of long integers, with 4 or 5 items
-                    in the following order:
-
-                    1. Public key (*y*).
-                    2. Sub-group generator (*g*).
-                    3. Modulus, finite field order (*p*).
-                    4. Sub-group order (*q*).
-                    5. Private key (*x*). Optional.
-
-        :Return: A DSA key object (`_DSAobj`).
-        """
-        key = self._math.dsa_construct(*tup)
-        return _DSAobj(self, key)
-
-    def _importKeyDER(self, key_data, passphrase=None, params=None):
-        """Import a DSA key (public or private half), encoded in DER form."""
-
+    for decoding in decodings:
         try:
-            #
-            # Dss-Parms  ::=  SEQUENCE  {
-            #       p       OCTET STRING,
-            #       q       OCTET STRING,
-            #       g       OCTET STRING
-            # }
-            #
-
-            # Try a simple private key first
-            if params:
-                x = decode_der(DerInteger, key_data).value
-                params = decode_der(DerSequence, params)    # Dss-Parms
-                p, q, g = list(params)
-                y = pow(g, x, p)
-                tup = (y, g, p, q, x)
-                return self.construct(tup)
-
-            der = decode_der(DerSequence, key_data)
-
-            # Try OpenSSL format for private keys
-            if len(der) == 6 and der.hasOnlyInts() and der[0] == 0:
-                tup = [der[comp] for comp in (4, 3, 1, 2, 5)]
-                return self.construct(tup)
-
-            # Try SubjectPublicKeyInfo
-            if len(der) == 2:
-                try:
-                    algo = decode_der(DerSequence, der[0])
-                    algo_oid = decode_der(DerObjectId, algo[0]).value
-                    params = decode_der(DerSequence, algo[1])  # Dss-Parms
-
-                    if algo_oid == oid and len(params) == 3 and\
-                            params.hasOnlyInts():
-                        bitmap = decode_der(DerBitString, der[1])
-                        pub_key = decode_der(DerInteger, bitmap.value)
-                        tup = [pub_key.value]
-                        tup += [params[comp] for comp in (2, 0, 1)]
-                        return self.construct(tup)
-                except (ValueError, EOFError):
-                    pass
-
-            # Try unencrypted PKCS#8
-            p8_pair = PKCS8.unwrap(key_data, passphrase)
-            if p8_pair[0] == oid:
-                return self._importKeyDER(p8_pair[1], passphrase, p8_pair[2])
-
-        except (ValueError, EOFError):
+            return decoding(key_data, passphrase, params)
+        except ValueError:
             pass
 
-        raise ValueError("DSA key format is not supported")
+    raise ValueError("DSA key format is not supported")
 
-    def importKey(self, extern_key, passphrase=None):
-        """Import a DSA key (public or private).
 
-        :Parameters:
-          extern_key : (byte) string
-            The DSA key to import.
+def import_key(extern_key, passphrase=None):
+    """Import a DSA key.
 
-            An DSA *public* key can be in any of the following formats:
+    Args:
+      extern_key (string or byte string):
+        The DSA key to import.
 
-            - X.509 ``subjectPublicKeyInfo`` (binary or PEM)
-            - OpenSSH (one line of text, see `RFC4253`_)
+        The following formats are supported for a DSA **public** key:
 
-            A DSA *private* key can be in any of the following formats:
+        - X.509 certificate (binary DER or PEM)
+        - X.509 ``subjectPublicKeyInfo`` (binary DER or PEM)
+        - OpenSSH (ASCII one-liner, see `RFC4253`_)
 
-            - `PKCS#8`_ ``PrivateKeyInfo`` or ``EncryptedPrivateKeyInfo``
-              DER SEQUENCE (binary or PEM encoding)
-            - OpenSSL/OpenSSH (binary or PEM)
+        The following formats are supported for a DSA **private** key:
 
-            For details about the PEM encoding, see `RFC1421`_/`RFC1423`_.
+        - `PKCS#8`_ ``PrivateKeyInfo`` or ``EncryptedPrivateKeyInfo``
+          DER SEQUENCE (binary or PEM)
+        - OpenSSL/OpenSSH custom format (binary or PEM)
 
-            The private key may be encrypted by means of a certain pass phrase
-            either at the PEM level or at the PKCS#8 level.
+        For details about the PEM encoding, see `RFC1421`_/`RFC1423`_.
 
-          passphrase : string
-            In case of an encrypted private key, this is the pass phrase
-            from which the decryption key is derived.
+      passphrase (string):
+        In case of an encrypted private key, this is the pass phrase
+        from which the decryption key is derived.
 
-        :Return: A DSA key object (`_DSAobj`).
-        :Raise ValueError:
-            When the given key cannot be parsed (possibly because
-            the pass phrase is wrong).
+        Encryption may be applied either at the `PKCS#8`_ or at the PEM level.
 
-        .. _RFC1421: http://www.ietf.org/rfc/rfc1421.txt
-        .. _RFC1423: http://www.ietf.org/rfc/rfc1423.txt
-        .. _RFC4253: http://www.ietf.org/rfc/rfc4253.txt
-        .. _PKCS#8: http://www.ietf.org/rfc/rfc5208.txt
-        """
+    Returns:
+      :class:`DsaKey` : a DSA key object
 
-        extern_key = tobytes(extern_key)
-        if passphrase is not None:
-            passphrase = tobytes(passphrase)
+    Raises:
+      ValueError : when the given key cannot be parsed (possibly because
+        the pass phrase is wrong).
 
-        if extern_key.startswith(b('-----')):
-            # This is probably a PEM encoded key
-            (der, marker, enc_flag) = PEM.decode(tostr(extern_key), passphrase)
-            if enc_flag:
-                passphrase = None
-            return self._importKeyDER(der, passphrase)
+    .. _RFC1421: http://www.ietf.org/rfc/rfc1421.txt
+    .. _RFC1423: http://www.ietf.org/rfc/rfc1423.txt
+    .. _RFC4253: http://www.ietf.org/rfc/rfc4253.txt
+    .. _PKCS#8: http://www.ietf.org/rfc/rfc5208.txt
+    """
 
-        if extern_key.startswith(b('ssh-dss ')):
-            # This is probably a public OpenSSH key
-            keystring = binascii.a2b_base64(extern_key.split(b(' '))[1])
-            keyparts = []
-            while len(keystring) > 4:
-                length = struct.unpack(">I", keystring[:4])[0]
-                keyparts.append(keystring[4:4 + length])
-                keystring = keystring[4 + length:]
-            if keyparts[0] == b("ssh-dss"):
-                tup = [bytes_to_long(keyparts[x]) for x in (4, 3, 1, 2)]
-                return self.construct(tup)
+    extern_key = tobytes(extern_key)
+    if passphrase is not None:
+        passphrase = tobytes(passphrase)
 
-        if bord(extern_key[0]) == 0x30:
-            # This is probably a DER encoded key
-            return self._importKeyDER(extern_key, passphrase)
+    if extern_key.startswith(b('-----')):
+        # This is probably a PEM encoded key
+        (der, marker, enc_flag) = PEM.decode(tostr(extern_key), passphrase)
+        if enc_flag:
+            passphrase = None
+        return _import_key_der(der, passphrase, None)
 
-        raise ValueError("DSA key format is not supported")
+    if extern_key.startswith(b('ssh-dss ')):
+        # This is probably a public OpenSSH key
+        keystring = binascii.a2b_base64(extern_key.split(b(' '))[1])
+        keyparts = []
+        while len(keystring) > 4:
+            length = struct.unpack(">I", keystring[:4])[0]
+            keyparts.append(keystring[4:4 + length])
+            keystring = keystring[4 + length:]
+        if keyparts[0] == b("ssh-dss"):
+            tup = [Integer.from_bytes(keyparts[x]) for x in (4, 3, 1, 2)]
+            return construct(tup)
+
+    if bord(extern_key[0]) == 0x30:
+        # This is probably a DER encoded key
+        return _import_key_der(extern_key, passphrase, None)
+
+    raise ValueError("DSA key format is not supported")
+
+
+# Backward compatibility
+importKey = import_key
 
 #: `Object ID`_ for a DSA key.
 #:
@@ -672,12 +673,3 @@ class DSAImplementation(object):
 #:
 #: .. _`Object ID`: http://www.alvestrand.no/objectid/1.2.840.10040.4.1.html
 oid = "1.2.840.10040.4.1"
-
-_impl = DSAImplementation()
-generate = _impl.generate
-construct = _impl.construct
-importKey = _impl.importKey
-error = _impl.error
-
-# vim:set ts=4 sw=4 sts=4 expandtab:
-

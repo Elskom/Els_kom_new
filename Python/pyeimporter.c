@@ -6855,15 +6855,19 @@ static int __Pyx_InitGlobals(void) {
   return -1;
 }
 
+#ifdef CYTHON_NO_PYINIT_EXPORT
+/* define this to PyObject * manually because PyMODINIT_FUNC
+ * adds __declspec(dllexport) to it's definition.
+ */
+#define __Pyx_PyMODINIT_FUNC PyObject *
+#else
+#define __Pyx_PyMODINIT_FUNC PyMODINIT_FUNC
+#endif
+
 #if PY_MAJOR_VERSION < 3
 PyMODINIT_FUNC initpyeimporter(void); /*proto*/
 PyMODINIT_FUNC initpyeimporter(void)
 #else
-#ifdef CYTHON_NO_EXPORTS
-/* when compiling cython code in user made embedded python applications.*/
-#undef PyMODINIT_FUNC
-#define PyMODINIT_FUNC PyObject*
-#endif
 PyMODINIT_FUNC PyInit_pyeimporter(void); /*proto*/
 PyMODINIT_FUNC PyInit_pyeimporter(void)
 #if CYTHON_PEP489_MULTI_PHASE_INIT

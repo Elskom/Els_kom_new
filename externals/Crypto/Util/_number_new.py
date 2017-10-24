@@ -24,12 +24,7 @@
 
 ## NOTE: Do not import this module directly.  Import these functions from Crypto.Util.number.
 
-__revision__ = "$Id$"
 __all__ = ['ceil_shift', 'ceil_div', 'floor_div', 'exact_log2', 'exact_div']
-
-import sys
-if sys.version_info[0] == 2 and sys.version_info[1] == 1:
-    from Crypto.Util.py21compat import *
 
 def ceil_shift(n, b):
     """Return ceil(n / 2**b) without performing any floating-point or division operations.

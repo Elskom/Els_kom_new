@@ -18,32 +18,9 @@
 # SOFTWARE.
 # ===================================================================
 
-"""SHA-1 cryptographic hash algorithm.
-
-SHA-1_ produces the 160 bit digest of a message.
-
-    >>> from Crypto.Hash import SHA1
-    >>>
-    >>> h = SHA1.new()
-    >>> h.update(b'Hello')
-    >>> print h.hexdigest()
-
-*SHA* stands for Secure Hash Algorithm.
-
-This algorithm is not considered secure. Do not use it for new designs.
-
-.. _SHA-1: http://csrc.nist.gov/publications/fips/fips180-2/fips180-2.pdf
-"""
-
-
-
-_revision__ = "$Id$"
+from Crypto.Util.py3compat import *
 
 __all__ = ['new', 'block_size', 'digest_size']
-
-from Crypto.Util.py3compat import *
-if sys.version_info[0] == 2 and sys.version_info[1] == 1:
-    from Crypto.Util.py21compat import *
 
 def __make_constructor():
     try:
@@ -62,7 +39,7 @@ def __make_constructor():
         class _SHA1(object):
             digest_size = 20
             block_size = 64
-            name = "sha1"
+            oid = "1.3.14.3.2.26"
             def __init__(self, *args):
                 if args and args[0] is _copy_sentinel:
                     self._h = args[1]
@@ -85,8 +62,8 @@ def __make_constructor():
 new = __make_constructor()
 del __make_constructor
 
-#: The size of the resulting hash in bytes.
+# The size of the resulting hash in bytes.
 digest_size = new().digest_size
 
-#: The internal block size of the hash algorithm in bytes.
+# The internal block size of the hash algorithm in bytes.
 block_size = new().block_size

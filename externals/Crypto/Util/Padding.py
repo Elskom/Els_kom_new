@@ -1,33 +1,37 @@
 #
-# -*- coding: utf-8 -*-
-#
-#  Util/Padding.py :  Functions to manage padding
+# Util/Padding.py :  Functions to manage padding
 #
 # ===================================================================
-# The contents of this file are dedicated to the public domain.  To
-# the extent that dedication to the public domain is not available,
-# everyone is granted a worldwide, perpetual, royalty-free,
-# non-exclusive license to exercise all rights associated with the
-# contents of this file for any purpose whatsoever.
-# No rights are reserved.
 #
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-# BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-# ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+# Copyright (c) 2014, Legrandin <helderijs@gmail.com>
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in
+#    the documentation and/or other materials provided with the
+#    distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+# FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+# COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+# ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
 # ===================================================================
 
-""" Functions to manage padding
-
-This module provides minimal support for adding and removing standard padding
-from data.
-"""
-
-__all__ = [ 'ValueError', 'pad', 'unpad' ]
+__all__ = [ 'pad', 'unpad' ]
 
 from Crypto.Util.py3compat import *
 
@@ -35,16 +39,17 @@ from Crypto.Util.py3compat import *
 def pad(data_to_pad, block_size, style='pkcs7'):
     """Apply standard padding.
 
-    :Parameters:
-      data_to_pad : byte string
+    Args:
+      data_to_pad (byte string):
         The data that needs to be padded.
-      block_size : integer
+      block_size (integer):
         The block boundary to use for padding. The output length is guaranteed
-        to be a multiple of ``block_size``.
-      style : string
+        to be a multiple of :data:`block_size`.
+      style (string):
         Padding algorithm. It can be *'pkcs7'* (default), *'iso7816'* or *'x923'*.
-    :Return:
-      The original data with the appropriate padding added at the end.
+
+    Return:
+      byte string : the original data with the appropriate padding added at the end.
     """
 
     padding_len = block_size-len(data_to_pad)%block_size
@@ -58,21 +63,22 @@ def pad(data_to_pad, block_size, style='pkcs7'):
         raise ValueError("Unknown padding style")
     return data_to_pad + padding
 
+
 def unpad(padded_data, block_size, style='pkcs7'):
     """Remove standard padding.
 
-    :Parameters:
-      padded_data : byte string
+    Args:
+      padded_data (byte string):
         A piece of data with padding that needs to be stripped.
-      block_size : integer
+      block_size (integer):
         The block boundary to use for padding. The input length
-        must be a multiple of ``block_size``.
-      style : string
+        must be a multiple of :data:`block_size`.
+      style (string):
         Padding algorithm. It can be *'pkcs7'* (default), *'iso7816'* or *'x923'*.
-    :Return:
-        Data without padding.
-    :Raises ValueError:
-        if the padding is incorrect.
+    Return:
+        byte string : data without padding.
+    Raises:
+      ValueError: if the padding is incorrect.
     """
 
     pdata_len = len(padded_data)

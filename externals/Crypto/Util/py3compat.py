@@ -58,13 +58,9 @@ tobytes(s)
     a byte string and make a byte string.
 """
 
-__revision__ = "$Id$"
-
 import sys
 
 if sys.version_info[0] == 2:
-    from types import UnicodeType as _UnicodeType   # In Python 2.1, 'unicode' is a function, not a type.
-
     def b(s):
         return s
     def bchr(s):
@@ -74,14 +70,18 @@ if sys.version_info[0] == 2:
     def bord(s):
         return ord(s)
     def tobytes(s):
-        if isinstance(s, _UnicodeType):
+        if isinstance(s, str):
             return s.encode("latin-1")
         else:
             return ''.join(s)
     def tostr(bs):
-        return str(bs, 'latin-1')
+        return bs
+    def byte_string(s):
+        return isinstance(s, str)
+    from binascii import hexlify, unhexlify
     # In Pyton 2.x, StringIO is a stand-alone module
     from io import StringIO as BytesIO
+    from sys import maxsize
 else:
     def b(s):
        return s.encode("latin-1") # utf-8 would cause some side-effects we don't want
@@ -101,10 +101,26 @@ else:
             if isinstance(s,str):
                 return s.encode("latin-1")
             else:
-                return bytes(s)
+                return bytes([s])
     def tostr(bs):
         return bs.decode("latin-1")
+    def byte_string(s):
+        return isinstance(s, bytes)
+
+    # With Python 3.[0-2], unhexlify only accepts bytes.
+    # Starting from Python 3.3, strings can be passed too.
+    import binascii
+    hexlify = binascii.hexlify
+    if sys.version_info[1] <= 2:
+        _unhexlify = binascii.unhexlify
+        def unhexlify(x):
+            return _unhexlify(tobytes(x))
+    else:
+        unhexlify = binascii.unhexlify
+    del binascii
+
     # In Pyton 3.x, StringIO is a sub-module of io
     from io import BytesIO
- 
-# vim:set ts=4 sw=4 sts=4 expandtab:
+    from sys import maxsize as maxint
+
+del sys

@@ -3,9 +3,6 @@ using System.Windows.Forms;
 
 namespace Els_kom_Core
 {
-	/// <summary>
-	/// Namespace that Holds Classes that Allows the Core of Els_kom to do certain things.
-	/// </summary>
 	namespace Classes
 	{
 		/// <summary>

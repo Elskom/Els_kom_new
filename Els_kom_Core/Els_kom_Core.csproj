@@ -123,38 +123,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\CopyKoms.cs" />
+    <Compile Include="Classes\ExecutionManager.cs" />
     <Compile Include="Classes\INIObject.cs" />
     <Compile Include="Classes\KOMManager.cs" />
     <Compile Include="Classes\Process.cs" />
-    <Compile Include="Forms\Els_kom_Main_MainForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Classes\ShowTaskbarEvent.cs" />
+    <Compile Include="Classes\Version.cs" />
+    <Compile Include="Controls\AboutControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Els_kom_Main_MainForm.Designer.cs">
-      <DependentUpon>Els_kom_Main_MainForm.cs</DependentUpon>
+    <Compile Include="Controls\AboutControl.Designer.cs">
+      <DependentUpon>AboutControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Els_kom_Main_AboutForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Controls\MainControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Els_kom_Main_AboutForm.Designer.cs">
-      <DependentUpon>Els_kom_Main_AboutForm.cs</DependentUpon>
+    <Compile Include="Controls\MainControl.Designer.cs">
+      <DependentUpon>MainControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Els_kom_Main_SettingsForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Controls\SettingsControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Els_kom_Main_SettingsForm.Designer.cs">
-      <DependentUpon>Els_kom_Main_SettingsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Launcher_Stub_MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Launcher_Stub_MainForm.Designer.cs">
-      <DependentUpon>Launcher_Stub_MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Test_Mods_Stub_MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Test_Mods_Stub_MainForm.Designer.cs">
-      <DependentUpon>Test_Mods_Stub_MainForm.cs</DependentUpon>
+    <Compile Include="Controls\SettingsControl.Designer.cs">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -185,27 +176,20 @@
     <None Include="Resources\els_kom_icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\Els_kom_Main_MainForm.resx">
-      <DependentUpon>Els_kom_Main_MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\AboutControl.resx">
+      <DependentUpon>AboutControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Els_kom_Main_AboutForm.resx">
-      <DependentUpon>Els_kom_Main_AboutForm.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\MainControl.resx">
+      <DependentUpon>MainControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Els_kom_Main_SettingsForm.resx">
-      <DependentUpon>Els_kom_Main_SettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Launcher_Stub_MainForm.resX">
-      <DependentUpon>Launcher_Stub_MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Test_Mods_Stub_MainForm.resx">
-      <DependentUpon>Test_Mods_Stub_MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\SettingsControl.resx">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

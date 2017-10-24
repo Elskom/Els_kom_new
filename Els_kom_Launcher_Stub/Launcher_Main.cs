@@ -15,7 +15,7 @@ namespace Els_kom_Launcher_Stub
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Els_kom_Core.Forms.Launcher_Stub.MainForm());
+            Application.Run(new Forms.MainForm());
         }
     }
 }

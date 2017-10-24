@@ -1,43 +1,42 @@
-# -*- coding: ascii -*-
 #
 #  Util/PEM.py : Privacy Enhanced Mail utilities
 #
 # ===================================================================
-# The contents of this file are dedicated to the public domain.  To
-# the extent that dedication to the public domain is not available,
-# everyone is granted a worldwide, perpetual, royalty-free,
-# non-exclusive license to exercise all rights associated with the
-# contents of this file for any purpose whatsoever.
-# No rights are reserved.
 #
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-# BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-# ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+# Copyright (c) 2014, Legrandin <helderijs@gmail.com>
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in
+#    the documentation and/or other materials provided with the
+#    distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+# FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+# COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+# ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
 # ===================================================================
-"""Set of functions for encapsulating data according to the PEM format.
-
-PEM (Privacy Enhanced Mail) was an IETF standard for securing emails via a
-Public Key Infrastructure. It is specified in RFC 1421-1424.
-
-Even though it has been abandoned, the simple message encapsulation it defined
-is still widely used today for encoding *binary* cryptographic objects like
-keys and certificates into text.
-"""
 
 __all__ = ['encode', 'decode']
 
-import sys
-if sys.version_info[0] == 2 and sys.version_info[1] == 1:
-    from Crypto.Util.py21compat import *
-from Crypto.Util.py3compat import *
+from Crypto.Util.py3compat import b, hexlify, unhexlify, tobytes, tostr
 
 import re
-from binascii import hexlify, unhexlify, a2b_base64, b2a_base64
+from binascii import a2b_base64, b2a_base64
 
 from Crypto.Hash import MD5
 from Crypto.Util.Padding import pad, unpad
@@ -49,24 +48,25 @@ from Crypto.Random import get_random_bytes
 def encode(data, marker, passphrase=None, randfunc=None):
     """Encode a piece of binary data into PEM format.
 
-    :Parameters:
-      data : byte string
+    Args:
+      data (byte string):
         The piece of binary data to encode.
-      marker : string
+      marker (string):
         The marker for the PEM block (e.g. "PUBLIC KEY").
         Note that there is no official master list for all allowed markers.
         Still, you can refer to the OpenSSL_ source code.
-      passphrase : byte string
+      passphrase (byte string):
         If given, the PEM block will be encrypted. The key is derived from
         the passphrase.
-      randfunc : callable
+      randfunc (callable):
         Random number generation function; it accepts an integer N and returns
         a byte string of random data, N bytes long. If not given, a new one is
         instantiated.
-    :Returns:
+
+    Returns:
       The PEM block, as a string.
 
-    .. _OpenSSL: http://cvs.openssl.org/fileview?f=openssl/crypto/pem/pem.h&v=1.66.2.1.4.2
+    .. _OpenSSL: https://github.com/openssl/openssl/blob/master/include/openssl/pem.h
     """
 
     if randfunc is None:
@@ -83,6 +83,8 @@ def encode(data, marker, passphrase=None, randfunc=None):
             tostr(hexlify(salt).upper())
         # Encrypt with PKCS#7 padding
         data = objenc.encrypt(pad(data, objenc.block_size))
+    elif passphrase is not None:
+        raise ValueError("Empty password")
 
     # Each BASE64 line can take up to 64 characters (=48 bytes of data)
     # b2a_base64 adds a new line character!
@@ -96,22 +98,24 @@ def encode(data, marker, passphrase=None, randfunc=None):
 def decode(pem_data, passphrase=None):
     """Decode a PEM block into binary.
 
-    :Parameters:
-      pem_data : string
+    Args:
+      pem_data (string):
         The PEM block.
-      passphrase : byte string
+      passphrase (byte string):
         If given and the PEM block is encrypted,
         the key will be derived from the passphrase.
-    :Returns:
+
+    Returns:
       A tuple with the binary data, the marker string, and a boolean to
       indicate if decryption was performed.
-    :Raises ValueError:
-      If decoding fails, if the PEM file is encrypted and no passphrase has
-      been provided or if the passphrase is incorrect.
+
+    Raises:
+      ValueError: if decoding fails, if the PEM file is encrypted and no passphrase has
+                  been provided or if the passphrase is incorrect.
     """
 
     # Verify Pre-Encapsulation Boundary
-    r = re.compile("\s*-----BEGIN (.*)-----\n")
+    r = re.compile("\s*-----BEGIN (.*)-----\s+")
     m = r.match(pem_data)
     if not m:
         raise ValueError("Not a valid PEM pre boundary")
@@ -148,7 +152,7 @@ def decode(pem_data, passphrase=None):
             key = PBKDF1(passphrase, salt[:8], 16, 1, MD5)
             objdec = AES.new(key, AES.MODE_CBC, salt)
         else:
-            raise ValueError("Unsupport PEM encryption algorithm.")
+            raise ValueError("Unsupport PEM encryption algorithm (%s)." % algo)
         lines = lines[2:]
     else:
         objdec = None

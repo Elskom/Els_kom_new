@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "komextract_new", "komextract_new\komextract_new.vcxproj", "{FF7816A6-820B-418A-B9A6-0005C3C746FF}"
 EndProject
@@ -46,7 +46,6 @@ Global
 		{1E0DA3A0-E7EC-4ABD-B09F-D35000001D16}.Release|x64.Build.0 = Release|x64
 		{1E0DA3A0-E7EC-4ABD-B09F-D35000001D16}.Release|x86.ActiveCfg = Release|Win32
 		{1E0DA3A0-E7EC-4ABD-B09F-D35000001D16}.Release|x86.Build.0 = Release|Win32
-		{1E0DA3A0-E7EC-4ABD-B09F-D35000001D16}.Release|x86.Deploy.0 = Release|Win32
 		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Debug|x64.ActiveCfg = Debug|x64
 		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Debug|x64.Build.0 = Debug|x64
@@ -90,5 +89,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D97FF96-21DB-4939-A93E-F75A2BECC958}
 	EndGlobalSection
 EndGlobal

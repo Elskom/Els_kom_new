@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("A Core DLL for Els_kom that moves all Modules / Common Code to 1 DLL.")]
 [assembly: AssemblyCompany("AraHaan")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("Copyright © 2016")]
+[assembly: AssemblyCopyright("Copyright © 2014-2017")]
 
 [assembly: AssemblyTrademark("")]
 
@@ -32,6 +32,6 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // <Assembly: AssemblyVersion("1.0.*")>
 
-[assembly: AssemblyVersion("1.4.9.6")]
-[assembly: AssemblyFileVersion("1.4.9.6")]
+[assembly: AssemblyVersion("1.4.9.7")]
+[assembly: AssemblyFileVersion("1.4.9.7")]
 [assembly: NeutralResourcesLanguage("en-US")]
