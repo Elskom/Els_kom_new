@@ -14,20 +14,20 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Els_kom_Main_AboutForm.h">
+    <ClInclude Include="Els_kom_Main_AboutForm.hpp">
       <Filter>Forms</Filter>
     </ClInclude>
-    <ClInclude Include="Els_kom_Main_SettingsForm.h">
+    <ClInclude Include="Els_kom_Main_MainForm.hpp">
       <Filter>Forms</Filter>
     </ClInclude>
-    <ClInclude Include="LoadResources.h">
+    <ClInclude Include="Els_kom_Main_SettingsForm.hpp">
+      <Filter>Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadResources.hpp">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Els_kom_Main_MainForm.h">
-      <Filter>Forms</Filter>
+    <ClInclude Include="resource.hpp">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 #include <Windows.h>
-#include "LoadResources.h"
+#include "LoadResources.hpp"
 
 using namespace System::Runtime::InteropServices;
 

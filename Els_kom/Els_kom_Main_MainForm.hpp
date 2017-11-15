@@ -1,8 +1,8 @@
 #pragma once
-#include "LoadResources.h"
-#include "resource.h"
-#include "Els_kom_Main_AboutForm.h"
-#include "Els_kom_Main_SettingsForm.h"
+#include "LoadResources.hpp"
+#include "resource.hpp"
+#include "Els_kom_Main_AboutForm.hpp"
+#include "Els_kom_Main_SettingsForm.hpp"
 
 namespace Els_kom {
 	namespace Forms {

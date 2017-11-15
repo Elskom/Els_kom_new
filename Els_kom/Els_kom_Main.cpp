@@ -1,4 +1,4 @@
-#include "Els_kom_Main_MainForm.h"
+#include "Els_kom_Main_MainForm.hpp"
 
 using namespace System;
 using namespace System::Windows::Forms;
