@@ -119,11 +119,9 @@
       <ResourceOutputFileName>$(IntDir)$(ProjectName).res</ResourceOutputFileName>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>echo F|xcopy /Y /c $(SolutionDir)etc\pack.bat $(OutDir)pack.bat
-echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
+      <Command>echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
 echo F|xcopy /Y /c $(SolutionDir)etc\python36.zip $(OutDir)python36.zip
 echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
-echo F|xcopy /Y /c $(SolutionDir)etc\unpack.bat $(OutDir)unpack.bat
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -141,11 +139,9 @@ echo F|xcopy /Y /c $(SolutionDir)etc\unpack.bat $(OutDir)unpack.bat
       <AdditionalDependencies>..\obj\$(Platform)\$(Configuration)\Els_kom_Generic_Unpacker\Els_kom.GenericUnpacker.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>echo F|xcopy /Y /c $(SolutionDir)etc\pack.bat $(OutDir)pack.bat
-echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
+      <Command>echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
 echo F|xcopy /Y /c $(SolutionDir)etc\python36.zip $(OutDir)python36.zip
 echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
-echo F|xcopy /Y /c $(SolutionDir)etc\unpack.bat $(OutDir)unpack.bat
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -204,64 +200,19 @@ echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
       <FixedBaseAddress>true</FixedBaseAddress>
     </Link>
     <PostBuildEvent>
-      <Command>echo F|xcopy /Y /c $(SolutionDir)etc\pack.bat $(OutDir)pack.bat
-echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
+      <Command>echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
 echo F|xcopy /Y /c $(SolutionDir)etc\python36.zip $(OutDir)python36.zip
 echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
-echo F|xcopy /Y /c $(SolutionDir)etc\unpack.bat $(OutDir)unpack.bat
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\externals\py2exe\source\actctx.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\externals\py2exe\source\MemoryModule.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\externals\py2exe\source\MyLoadLibrary.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\externals\py2exe\source\Python-dynload.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\Python\encryption.h" />
-    <ClInclude Include="..\Python\memimp_setup.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\Python\memory.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="..\PC\encryption.h" />
     <ClInclude Include="..\PC\resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\externals\py2exe\source\actctx.c">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\externals\py2exe\source\MemoryModule.c">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\externals\py2exe\source\MyLoadLibrary.c">
+    <ClCompile Include="..\PC\encryption.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include</AdditionalIncludeDirectories>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\externals\py2exe\source\python-dynload.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include</AdditionalIncludeDirectories>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\externals\py2exe\source\_memimporter.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include</AdditionalIncludeDirectories>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Python\encryption.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include</AdditionalIncludeDirectories>
-    </ClCompile>
-    <ClCompile Include="..\Python\memimp_setup.c">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Python\memory.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include</AdditionalIncludeDirectories>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\PC\kompact_new.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Python361x64\include</AdditionalIncludeDirectories>

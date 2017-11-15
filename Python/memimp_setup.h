@@ -1,3 +1,0 @@
-/*
-* memimp_setup.h
-*/

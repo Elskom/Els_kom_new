@@ -12,27 +12,10 @@
  */
 #include <windows.h>
 #define WITH_ENCRYPTION
-/* DO NOT UNCOMMENT THIS!!!
- * THIS CAUSES AN CRASH IF YOU UNCOMMENT THIS AND
- * MARK THE FILES UNMAKRED FROM COMPILE TO COMPILE.
- * I need to figure out how to make _memimporter
- * work standalone with this (I do not want to be
- * forced to provide or define 'dirname'). I just want
- * to use _memimporter to just load up any pyd's in
- * zip files specified in 'python36._pth'.
- */
-//#define WITH_MEMORY
 #ifdef WITH_ENCRYPTION
-#include "../Python/encryption.h"
-#endif
-#ifdef WITH_MEMORY
-#include "../Python/memory.h"
+#include "encryption.h"
 #endif
 #include "resource.h"
-
-#ifdef WITH_MEMORY
-wchar_t dirname[_MAX_PATH];
-#endif
 
 int
 wmain(int argc, wchar_t **argv)
@@ -40,20 +23,12 @@ wmain(int argc, wchar_t **argv)
   int err;
   wchar_t *program = Py_DecodeLocale((char *)argv[0], NULL);
   wchar_t **argv_copy = argv;
-#ifdef WITH_MEMORY
-  /* Hopefully this works... */
-  GetCurrentDirectoryW(_MAX_PATH, dirname);
-#endif
   if (program == NULL) {
     LPSTR buffer1[36];
     LoadStringA(GetModuleHandle(NULL), IDS_STRING1, (LPSTR)buffer1, 36);
     fprintf(stderr, (const char *const)buffer1);
     exit(1);
   }
-#ifdef WITH_MEMORY
-  /* import the special module first before initializing. */
-  PyImport_Memory();
-#endif
   Py_SetProgramName(program);  /* optional but recommended */
   Py_Initialize();
   int initialized = Py_IsInitialized();

@@ -107,11 +107,13 @@ namespace Els_kom {
 		private: System::Void AboutForm_Load(System::Object^  sender, System::EventArgs^  e) {
 			this->Label1->Text = "1";
 			this->Icon = GetIconResource(IDI_MAINICON);
+			this->aboutControl1->picIcon->Image = Get48x48IconResource(IDI_MAINICON)->ToBitmap();
 		}
 
 		private: System::Void AboutForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 			this->Label1->Text = "0";
 		}
+
 		private: System::Void aboutControl1_CloseForm(System::Object^  sender, System::EventArgs^  e) {
 			this->Close();
 		}

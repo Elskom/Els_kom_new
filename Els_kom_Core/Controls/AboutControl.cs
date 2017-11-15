@@ -79,7 +79,6 @@ namespace Els_kom_Core.Controls
 
         private void AboutControl_Load(object sender, EventArgs e)
         {
-            picIcon.Image = Properties.Resources.els_kom;
             Picture1.Image = Properties.Resources.bmp100;
             Picture2.Image = Properties.Resources.bmp101;
         }

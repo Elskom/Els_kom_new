@@ -173,7 +173,9 @@
     <ClInclude Include="Els_kom_Main_AboutForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Els_kom_Main_MainForm.h" />
+    <ClInclude Include="Els_kom_Main_MainForm.h" >
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="LoadResources.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Els_kom_Main_SettingsForm.h">

@@ -13,40 +13,13 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Modules">
-      <UniqueIdentifier>{fef18889-64fa-45f2-be55-ec069ae35b9d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Modules\_memimporter">
-      <UniqueIdentifier>{cb8671fe-222f-488c-b6f3-d086deba6e4c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Modules">
-      <UniqueIdentifier>{a23844da-5931-440b-8998-0cd60489a539}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Modules\_memimporter">
-      <UniqueIdentifier>{98857e2e-5439-466f-93cd-c49bc0562468}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\PC\resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Python\encryption.h">
+    <ClInclude Include="..\PC\encryption.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Python\memory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\externals\py2exe\source\actctx.h">
-      <Filter>Header Files\Modules\_memimporter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\externals\py2exe\source\MemoryModule.h">
-      <Filter>Header Files\Modules\_memimporter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\externals\py2exe\source\MyLoadLibrary.h">
-      <Filter>Header Files\Modules\_memimporter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\externals\py2exe\source\Python-dynload.h">
-      <Filter>Header Files\Modules\_memimporter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -63,25 +36,7 @@
     <ClCompile Include="..\PC\komextract_new.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Python\memory.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\externals\py2exe\source\_memimporter.c">
-      <Filter>Source Files\Modules\_memimporter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\externals\py2exe\source\actctx.c">
-      <Filter>Source Files\Modules\_memimporter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\externals\py2exe\source\MemoryModule.c">
-      <Filter>Source Files\Modules\_memimporter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\externals\py2exe\source\MyLoadLibrary.c">
-      <Filter>Source Files\Modules\_memimporter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\externals\py2exe\source\python-dynload.c">
-      <Filter>Source Files\Modules\_memimporter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Python\encryption.c">
+    <ClCompile Include="..\PC\encryption.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

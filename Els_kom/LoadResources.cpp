@@ -30,4 +30,13 @@ namespace LoadResources {
 		}
 		return ico;
 	}
+
+	System::Drawing::Icon ^ Get48x48IconResource(int resource) {
+		HICON hIcon = (HICON)LoadImage(GetModuleHandle(nullptr), MAKEINTRESOURCE(resource), IMAGE_ICON, 48, 48, LR_SHARED);
+		System::Drawing::Icon^ ico;
+		if (hIcon) {
+			ico = System::Drawing::Icon::FromHandle((System::IntPtr)hIcon);
+		}
+		return ico;
+	}
 }

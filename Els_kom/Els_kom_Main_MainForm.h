@@ -7,7 +7,6 @@
 namespace Els_kom {
 	namespace Forms {
 
-		using namespace LoadResources;
 		using namespace System;
 		using namespace System::ComponentModel;
 		using namespace System::Collections;
@@ -15,6 +14,7 @@ namespace Els_kom {
 		using namespace System::Data;
 		using namespace System::Drawing;
 		using namespace System::Security::Permissions;
+		using namespace LoadResources;
 
 		/// <summary>
 		/// Summary for MainForm
@@ -43,8 +43,8 @@ namespace Els_kom {
 			}
 		private: Els_kom_Core::Controls::MainControl^  mainControl1;
 		protected:
-		public: Form^ aboutfrm;
-		public: Form^ settingsfrm;
+		public: System::Windows::Forms::Form^ aboutfrm;
+		public: System::Windows::Forms::Form^ settingsfrm;
 
 		/* Allows the user to enable or disable their event
 		 * handler at will if they only want it to sometimes

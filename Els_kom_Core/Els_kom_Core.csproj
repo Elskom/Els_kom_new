@@ -164,16 +164,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\bmp100.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\bmp101.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\els_kom.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\els_kom_icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\AboutControl.resx">
@@ -189,6 +179,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\bmp100.png" />
+    <Content Include="Resources\bmp101.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
