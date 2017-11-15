@@ -77,12 +77,6 @@ namespace Els_kom_Core.Controls
             CloseForm?.Invoke(this, new EventArgs());
         }
 
-        private void AboutControl_Load(object sender, EventArgs e)
-        {
-            Picture1.Image = Properties.Resources.bmp100;
-            Picture2.Image = Properties.Resources.bmp101;
-        }
-
         private void AboutControl_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawLine(Pens.Gray, 0, 151, this.Width, 151);

@@ -108,6 +108,8 @@ namespace Els_kom {
 			this->Label1->Text = "1";
 			this->Icon = GetIconResource(IDI_MAINICON);
 			this->aboutControl1->picIcon->Image = Get48x48IconResource(IDI_MAINICON)->ToBitmap();
+			this->aboutControl1->Picture1->Image = GetImageResource(IDR_RCDATA1, 10);
+			this->aboutControl1->Picture2->Image = GetImageResource(IDR_RCDATA2, 10);
 		}
 
 		private: System::Void AboutForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {

@@ -67,7 +67,7 @@
             this.Text1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Text1.Size = new System.Drawing.Size(361, 61);
             this.Text1.TabIndex = 7;
-            this.Text1.Text = resources.GetString("Text1.Text");
+            this.Text1.Text = "This version of Els_kom can test mods and update the game when a maintenance happens. It has also gone through a lot of changes including the removal of the stubs that used to handle the testing of mods and the updating of the game.";
             // 
             // picIcon
             // 
@@ -183,7 +183,6 @@
             this.Controls.Add(this.cmdOK);
             this.Name = "AboutControl";
             this.Size = new System.Drawing.Size(382, 207);
-            this.Load += new System.EventHandler(this.AboutControl_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.AboutControl_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.AboutControl_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.picIcon)).EndInit();
