@@ -22,7 +22,6 @@
  * zip files specified in 'python36._pth'.
  */
 //#define WITH_MEMORY
-#define WITH_PYEIMPORTER
 #ifdef WITH_ENCRYPTION
 #include "../Python/encryption.h"
 #endif
@@ -33,10 +32,6 @@
 
 #ifdef WITH_MEMORY
 wchar_t dirname[_MAX_PATH];
-#endif
-
-#ifdef WITH_PYEIMPORTER
-PyMODINIT_FUNC PyInit_pyeimporter(void);
 #endif
 
 int
@@ -58,9 +53,6 @@ wmain(int argc, wchar_t **argv)
 #ifdef WITH_MEMORY
   /* import the special module first before initializing. */
   PyImport_Memory();
-#endif
-#ifdef WITH_PYEIMPORTER
-  PyImport_AppendInittab("pyeimporter", PyInit_pyeimporter);
 #endif
   Py_SetProgramName(program);  /* optional but recommended */
   Py_Initialize();

@@ -31,14 +31,15 @@ namespace Els_kom_Core.Controls
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Game Folder");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Icon Settings");
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Game Folder");
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Icon Settings");
             this.FolderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.Timer1 = new System.Windows.Forms.Timer(this.components);
             this.Panel1 = new System.Windows.Forms.Panel();
             this.Label1 = new System.Windows.Forms.Label();
             this.Button1 = new System.Windows.Forms.Button();
             this.TextBox1 = new System.Windows.Forms.TextBox();
+            this.Button2 = new System.Windows.Forms.Button();
             this.TreeView1 = new System.Windows.Forms.TreeView();
             this.Panel2 = new System.Windows.Forms.Panel();
             this.Panel3 = new System.Windows.Forms.Panel();
@@ -50,8 +51,8 @@ namespace Els_kom_Core.Controls
             this.RadioButton1 = new System.Windows.Forms.RadioButton();
             this.Label3 = new System.Windows.Forms.Label();
             this.Label2 = new System.Windows.Forms.Label();
-            Label4 = new System.Windows.Forms.Label();
-            Label5 = new System.Windows.Forms.Label();
+            this.Label4 = new System.Windows.Forms.Label();
+            this.Label5 = new System.Windows.Forms.Label();
             this.Panel1.SuspendLayout();
             this.Panel2.SuspendLayout();
             this.Panel3.SuspendLayout();
@@ -106,17 +107,27 @@ namespace Els_kom_Core.Controls
             this.TextBox1.Size = new System.Drawing.Size(242, 20);
             this.TextBox1.TabIndex = 0;
             // 
+            // Button2
+            // 
+            this.Button2.Location = new System.Drawing.Point(432, 83);
+            this.Button2.Name = "Button2";
+            this.Button2.Size = new System.Drawing.Size(79, 21);
+            this.Button2.TabIndex = 5;
+            this.Button2.Text = "Ok";
+            this.Button2.UseVisualStyleBackColor = true;
+            this.Button2.Click += new System.EventHandler(this.Button2_Click);
+            // 
             // TreeView1
             // 
             this.TreeView1.Location = new System.Drawing.Point(0, 0);
             this.TreeView1.Name = "TreeView1";
-            treeNode1.Name = "Node0";
-            treeNode1.Text = "Game Folder";
-            treeNode2.Name = "Node1";
-            treeNode2.Text = "Icon Settings";
+            treeNode21.Name = "Node0";
+            treeNode21.Text = "Game Folder";
+            treeNode22.Name = "Node1";
+            treeNode22.Text = "Icon Settings";
             this.TreeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
+            treeNode21,
+            treeNode22});
             this.TreeView1.Scrollable = false;
             this.TreeView1.ShowLines = false;
             this.TreeView1.ShowPlusMinus = false;
@@ -241,35 +252,36 @@ namespace Els_kom_Core.Controls
             // 
             // Label4
             // 
-            Label4.AutoSize = true;
-            Label4.Location = new System.Drawing.Point(110, 94);
-            Label4.Name = "Label4";
-            Label4.Size = new System.Drawing.Size(16, 13);
-            Label4.TabIndex = 8;
-            Label4.Text = "...";
-            Label4.Visible = false;
+            this.Label4.AutoSize = true;
+            this.Label4.Location = new System.Drawing.Point(110, 94);
+            this.Label4.Name = "Label4";
+            this.Label4.Size = new System.Drawing.Size(16, 13);
+            this.Label4.TabIndex = 8;
+            this.Label4.Text = "...";
+            this.Label4.Visible = false;
             // 
             // Label5
             // 
-            Label5.AutoSize = true;
-            Label5.Location = new System.Drawing.Point(164, 93);
-            Label5.Name = "Label5";
-            Label5.Size = new System.Drawing.Size(16, 13);
-            Label5.TabIndex = 9;
-            Label5.Text = "...";
-            Label5.Visible = false;
+            this.Label5.AutoSize = true;
+            this.Label5.Location = new System.Drawing.Point(164, 93);
+            this.Label5.Name = "Label5";
+            this.Label5.Size = new System.Drawing.Size(16, 13);
+            this.Label5.TabIndex = 9;
+            this.Label5.Text = "...";
+            this.Label5.Visible = false;
             // 
             // SettingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(Label5);
-            this.Controls.Add(Label4);
+            this.Controls.Add(this.Label5);
+            this.Controls.Add(this.Label4);
             this.Controls.Add(this.TreeView1);
             this.Controls.Add(this.Panel1);
             this.Controls.Add(this.Panel2);
+            this.Controls.Add(this.Button2);
             this.Name = "SettingsControl";
-            this.Size = new System.Drawing.Size(510, 74);
+            this.Size = new System.Drawing.Size(510, 106);
             this.Load += new System.EventHandler(this.SettingsControl_Load);
             this.Panel1.ResumeLayout(false);
             this.Panel1.PerformLayout();
@@ -278,6 +290,7 @@ namespace Els_kom_Core.Controls
             this.Panel3.ResumeLayout(false);
             this.Panel3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -286,6 +299,7 @@ namespace Els_kom_Core.Controls
         internal Panel Panel1;
         internal Label Label1;
         internal Button Button1;
+        internal Button Button2;
         internal TextBox TextBox1;
         internal TreeView TreeView1;
         internal Panel Panel2;
@@ -300,7 +314,7 @@ namespace Els_kom_Core.Controls
         internal RadioButton RadioButton4;
         #endregion
 
-        public static Label Label5;
-        public static Label Label4;
+        public Label Label5;
+        public Label Label4;
     }
 }

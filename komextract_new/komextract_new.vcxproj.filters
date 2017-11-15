@@ -25,9 +25,6 @@
     <Filter Include="Source Files\Modules\_memimporter">
       <UniqueIdentifier>{98857e2e-5439-466f-93cd-c49bc0562468}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Modules\pyeimporter">
-      <UniqueIdentifier>{5c9a431a-41c7-4e25-8e6a-164c928de878}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\PC\resource.h">
@@ -86,9 +83,6 @@
     </ClCompile>
     <ClCompile Include="..\Python\encryption.c">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Python\pyeimporter.c">
-      <Filter>Source Files\Modules\pyeimporter</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

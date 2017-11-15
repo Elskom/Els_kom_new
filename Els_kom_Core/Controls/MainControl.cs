@@ -20,7 +20,7 @@ namespace Els_kom_Core.Controls
         string ElsDir;
         public string showintaskbar_value;
         public Classes.INIObject settingsini;
-        public bool x2bool;
+        //public bool x2bool;
         public string showintaskbar_value2;
         public string showintaskbar_tempvalue;
         public string showintaskbar_tempvalue2;
@@ -71,16 +71,9 @@ namespace Els_kom_Core.Controls
 
         void Command4_Click(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists(Application.StartupPath + "\\Test_Mods.exe"))
-            {
-                Label1.Text = "";
-                MinimizeForm?.Invoke(this, new EventArgs());
-                Timer3.Enabled = true;
-            }
-            else
-            {
-                MessageBox.Show("Can't find '" + Application.StartupPath + "\\Test_Mods.exe'.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+            Label1.Text = "";
+            MinimizeForm?.Invoke(this, new EventArgs());
+            Timer3.Enabled = true;
         }
 
         void Command4_MouseMove(object sender, MouseEventArgs e)
@@ -90,16 +83,10 @@ namespace Els_kom_Core.Controls
 
         void Command5_Click(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists(Application.StartupPath + "\\Launcher.exe"))
-            {
-                Label1.Text = "";
-                MinimizeForm?.Invoke(this, new EventArgs());
-                Classes.Process.Shell(Application.StartupPath + "\\Launcher.exe", null, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, Application.StartupPath, false);
-            }
-            else
-            {
-                MessageBox.Show("Can't find '" + Application.StartupPath + "\\Launcher.exe'.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+            Label1.Text = "";
+            MinimizeForm?.Invoke(this, new EventArgs());
+            System.Threading.Thread tr4 = new System.Threading.Thread(Classes.ExecutionManager.RunElswordLauncher);
+            tr4.Start();
         }
 
         void Command5_MouseMove(object sender, MouseEventArgs e)
@@ -116,7 +103,6 @@ namespace Els_kom_Core.Controls
         {
             if (Classes.KOMManager.is_unpacking)
             {
-                Timer6.Enabled = false;
                 Command1.Enabled = false;
                 Command2.Enabled = false;
                 Command4.Enabled = false;
@@ -131,7 +117,6 @@ namespace Els_kom_Core.Controls
             else
             {
                 Timer1.Enabled = false;
-                Timer6.Enabled = true;
                 Command1.Enabled = true;
                 Command2.Enabled = true;
                 Command4.Enabled = true;
@@ -149,7 +134,6 @@ namespace Els_kom_Core.Controls
         {
             if (Classes.KOMManager.is_packing)
             {
-                Timer6.Enabled = false;
                 Command1.Enabled = false;
                 Command2.Enabled = false;
                 Command4.Enabled = false;
@@ -164,7 +148,6 @@ namespace Els_kom_Core.Controls
             else
             {
                 Timer2.Enabled = false;
-                Timer6.Enabled = true;
                 Command1.Enabled = true;
                 Command2.Enabled = true;
                 Command4.Enabled = true;
@@ -180,7 +163,6 @@ namespace Els_kom_Core.Controls
 
         void Timer3_Tick(object sender, EventArgs e)
         {
-            Timer6.Enabled = false;
             Timer3.Enabled = false;
             Command1.Enabled = false;
             Command2.Enabled = false;
@@ -191,15 +173,15 @@ namespace Els_kom_Core.Controls
             TestModsToolStripMenuItem.Enabled = false;
             LauncherToolStripMenuItem.Enabled = false;
             // TODO: Copy All KOM Files on this part.
-            Classes.Process.Shell(Application.StartupPath + "\\Test_Mods.exe", null, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, Application.StartupPath, false);
+            System.Threading.Thread tr3 = new System.Threading.Thread(Classes.ExecutionManager.RunElswordDirectly);
+            tr3.Start();
             Timer4.Interval = 1;
             Timer4.Enabled = true;
         }
 
         void Timer4_Tick(object sender, EventArgs e)
         {
-            x2bool = Classes.Process.IsX2Running();
-            if (x2bool)
+            if (Classes.ExecutionManager.RunningElswordDirectly)
             {
                 Label2.Text = "Testing Mods...";
             }
@@ -214,7 +196,6 @@ namespace Els_kom_Core.Controls
                 TestModsToolStripMenuItem.Enabled = true;
                 LauncherToolStripMenuItem.Enabled = true;
                 Label2.Text = "";
-                Timer6.Enabled = true;
                 Timer4.Enabled = false;
             }
         }
@@ -228,8 +209,7 @@ namespace Els_kom_Core.Controls
         {
             showintaskbar_tempvalue = settingsini.Read("Settings.ini", "IconWhileElsNotRunning");
             showintaskbar_tempvalue2 = settingsini.Read("Settings.ini", "IconWhileElsRunning");
-            x2bool = Classes.Process.IsX2Running();
-            if (!x2bool)
+            if (!Classes.ExecutionManager.RunningElswordDirectly)
             {
                 if (showintaskbar_value != showintaskbar_tempvalue)
                 {
@@ -249,54 +229,12 @@ namespace Els_kom_Core.Controls
 
         void Timer6_Tick(object sender, EventArgs e)
         {
-            bool checkiflauncherstubexists = false;
-            bool checkiftestmodsstubexists = false;
-
-            if (!checkiflauncherstubexists)
-            {
-                checkiflauncherstubexists = true;
-            }
-            if (!checkiftestmodsstubexists)
-            {
-                checkiftestmodsstubexists = true;
-            }
-            if (checkiflauncherstubexists)
-            {
-                if (System.IO.File.Exists(Application.StartupPath + "\\Launcher.exe"))
-                {
-                    LauncherToolStripMenuItem.Enabled = true;
-                    Command5.Enabled = true;
-                    checkiflauncherstubexists = false;
-                }
-                else
-                {
-                    LauncherToolStripMenuItem.Enabled = false;
-                    Command5.Enabled = false;
-                    checkiflauncherstubexists = false;
-                }
-            }
-            if (checkiftestmodsstubexists)
-            {
-                if (System.IO.File.Exists(Application.StartupPath + "\\Test_Mods.exe"))
-                {
-                    TestModsToolStripMenuItem.Enabled = true;
-                    Command4.Enabled = true;
-                    checkiftestmodsstubexists = false;
-                }
-                else
-                {
-                    TestModsToolStripMenuItem.Enabled = false;
-                    Command4.Enabled = false;
-                    checkiftestmodsstubexists = false;
-                }
-            }
         }
 
         void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Timer1.Enabled = false;
             Timer2.Enabled = false;
-            Timer6.Enabled = false;
             timer5.Enabled = false;
             CloseForm?.Invoke(this, new EventArgs());
         }
@@ -304,15 +242,9 @@ namespace Els_kom_Core.Controls
         void LauncherToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Label1.Text = "";
-            if (System.IO.File.Exists(Application.StartupPath + "\\Launcher.exe"))
-            {
-                MinimizeForm?.Invoke(this, new EventArgs());
-                Classes.Process.Shell(Application.StartupPath + "\\Launcher.exe", null, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, Application.StartupPath, false);
-            }
-            else
-            {
-                MessageBox.Show("Can't find '" + Application.StartupPath + "\\Launcher.exe'.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+            MinimizeForm?.Invoke(this, new EventArgs());
+            System.Threading.Thread tr4 = new System.Threading.Thread(Classes.ExecutionManager.RunElswordLauncher);
+            tr4.Start();
         }
 
         void UnpackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -325,15 +257,8 @@ namespace Els_kom_Core.Controls
         void TestModsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Label1.Text = "";
-            if (System.IO.File.Exists(Application.StartupPath + "\\Test_Mods.exe"))
-            {
-                MinimizeForm?.Invoke(this, new EventArgs());
-                Timer3.Enabled = true;
-            }
-            else
-            {
-                MessageBox.Show("Can't find '" + Application.StartupPath + "\\Test_Mods.exe'.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+            MinimizeForm?.Invoke(this, new EventArgs());
+            Timer3.Enabled = true;
         }
 
         void PackToolStripMenuItem_Click(object sender, EventArgs e)

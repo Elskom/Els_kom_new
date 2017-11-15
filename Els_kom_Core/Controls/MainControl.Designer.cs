@@ -21,7 +21,6 @@
         }
 
         public System.Windows.Forms.Button Command5;
-        public System.Windows.Forms.Timer Timer6;
         public System.Windows.Forms.Button Command4;
         public System.Windows.Forms.Button Command3;
         public System.Windows.Forms.Timer Timer2;
@@ -41,7 +40,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.Command5 = new System.Windows.Forms.Button();
-            this.Timer6 = new System.Windows.Forms.Timer(this.components);
             this.Command4 = new System.Windows.Forms.Button();
             this.Command3 = new System.Windows.Forms.Button();
             this.Timer2 = new System.Windows.Forms.Timer(this.components);
@@ -84,12 +82,6 @@
             this.Command5.UseVisualStyleBackColor = false;
             this.Command5.Click += new System.EventHandler(this.Command5_Click);
             this.Command5.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Command5_MouseMove);
-            // 
-            // Timer6
-            // 
-            this.Timer6.Enabled = true;
-            this.Timer6.Interval = 1;
-            this.Timer6.Tick += new System.EventHandler(this.Timer6_Tick);
             // 
             // Command4
             // 

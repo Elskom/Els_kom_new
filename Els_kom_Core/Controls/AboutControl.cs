@@ -37,6 +37,8 @@ namespace Els_kom_Core.Controls
             SW_MAX = 11
         }
 
+        public event EventHandler CloseForm;
+
         [DllImport("shell32.dll")]
         static extern IntPtr ShellExecute(IntPtr hwnd, string lpOperation, string lpFile, string lpParameters, string lpDirectory, ShowCommands nShowCmd);
 
@@ -68,6 +70,11 @@ namespace Els_kom_Core.Controls
         {
             Picture1.Visible = true;
             Picture2.Visible = false;
+        }
+
+        void cmdOK_Click(object sender, EventArgs e)
+        {
+            CloseForm?.Invoke(this, new EventArgs());
         }
 
         private void AboutControl_Load(object sender, EventArgs e)

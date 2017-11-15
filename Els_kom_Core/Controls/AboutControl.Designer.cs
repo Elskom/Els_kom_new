@@ -20,6 +20,7 @@
             base.Dispose(disposing);
         }
 
+        public System.Windows.Forms.Button cmdOK;
         public System.Windows.Forms.TextBox Text1;
         public System.Windows.Forms.PictureBox picIcon;
         public System.Windows.Forms.PictureBox Picture1;
@@ -44,6 +45,7 @@
             this.lblDisclaimer = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblDescription = new System.Windows.Forms.Label();
+            this.cmdOK = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Picture1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Picture2)).BeginInit();
@@ -135,7 +137,7 @@
             this.lblTitle.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lblTitle.Size = new System.Drawing.Size(259, 16);
             this.lblTitle.TabIndex = 5;
-            this.lblTitle.Text = "Els_kom v1.4.9.7";
+            this.lblTitle.Text = "Els_kom v1.4.9.8";
             // 
             // lblDescription
             // 
@@ -151,6 +153,22 @@
             this.lblDescription.Text = "This tool allows you to Edit koms freely. Also this is a tool that replaces gPatc" +
     "her but with some limitations. l0l";
             // 
+            // cmdOK
+            // 
+            this.cmdOK.BackColor = System.Drawing.Color.Transparent;
+            this.cmdOK.Cursor = System.Windows.Forms.Cursors.Default;
+            this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cmdOK.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdOK.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmdOK.Location = new System.Drawing.Point(280, 181);
+            this.cmdOK.Name = "cmdOK";
+            this.cmdOK.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cmdOK.Size = new System.Drawing.Size(84, 21);
+            this.cmdOK.TabIndex = 2;
+            this.cmdOK.Text = "OK";
+            this.cmdOK.UseVisualStyleBackColor = false;
+            this.cmdOK.Click += new System.EventHandler(this.cmdOK_Click);
+            // 
             // AboutControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -162,8 +180,9 @@
             this.Controls.Add(this.lblDisclaimer);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.lblDescription);
+            this.Controls.Add(this.cmdOK);
             this.Name = "AboutControl";
-            this.Size = new System.Drawing.Size(382, 191);
+            this.Size = new System.Drawing.Size(382, 207);
             this.Load += new System.EventHandler(this.AboutControl_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.AboutControl_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.AboutControl_MouseMove);

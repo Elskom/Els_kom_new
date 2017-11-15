@@ -1,4 +1,11 @@
-                          Whats new in v1.4.9.7
+                          Whats new in v1.4.9.8
+=============================================================================
+	+Removed Deprecated stubs.
+	+Made Els_kom.exe an C++ WinForms Application.
+	-Requirements rolled back from .NET 4.6.2 to .NET 4.5.2
+
+=============================================================================
+                             Els_kom v1.4.9.7
 =============================================================================
 	+Fixed multiple instance error message icon.
 	+Fixed issue where Els_kom main window shows under the

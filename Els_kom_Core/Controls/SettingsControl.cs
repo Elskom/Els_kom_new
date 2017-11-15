@@ -20,6 +20,7 @@ namespace Els_kom_Core.Controls
         string curvalue;
         string curvalue2;
         string curvalue3;
+        public event EventHandler CloseForm;
 
         public void SaveSettings()
         {
@@ -63,6 +64,11 @@ namespace Els_kom_Core.Controls
         {
             FolderBrowserDialog1.ShowDialog();
             Timer1.Enabled = true;
+        }
+
+        void Button2_Click(object sender, System.EventArgs e)
+        {
+            CloseForm?.Invoke(this, new EventArgs());
         }
 
         void Timer1_Tick(object sender, System.EventArgs e)
