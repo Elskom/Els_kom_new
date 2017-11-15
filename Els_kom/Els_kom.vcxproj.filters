@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{c10c7113-2194-4acc-86ab-4f3cd9ee13cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Forms">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Els_kom_Main_AboutForm.h">
+      <Filter>Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Els_kom_Main_SettingsForm.h">
+      <Filter>Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadResources.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Els_kom_Main_MainForm.h">
+      <Filter>Forms</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="Els_kom_Main.cpp" />
+    <ClCompile Include="LoadResources.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
