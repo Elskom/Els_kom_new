@@ -152,7 +152,7 @@ echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;SUPPRESS_INITFUNC_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DebugInformationFormat>None</DebugInformationFormat>
       <ExceptionHandling>false</ExceptionHandling>
@@ -207,10 +207,25 @@ echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\externals\aes\aes.h" />
+    <ClInclude Include="..\externals\aes\aesopt.h" />
+    <ClInclude Include="..\externals\aes\aestab.h" />
+    <ClInclude Include="..\externals\aes\aes_ni.h" />
+    <ClInclude Include="..\externals\aes\aes_via_ace.h" />
+    <ClInclude Include="..\externals\aes\brg_endian.h" />
+    <ClInclude Include="..\externals\aes\brg_types.h" />
     <ClInclude Include="..\PC\encryption.h" />
     <ClInclude Include="..\PC\resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\externals\aes\aescrypt.c" />
+    <ClCompile Include="..\externals\aes\aeskey.c" />
+    <ClCompile Include="..\externals\aes\aestab.c" />
+    <ClCompile Include="..\externals\aes\aes_modes.c" />
+    <ClCompile Include="..\externals\aes\aes_ni.c" />
+    <ClCompile Include="..\externals\aes\python_binding\aesmodule.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include;$(SolutionDir)\externals\aes</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\PC\encryption.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include</AdditionalIncludeDirectories>
     </ClCompile>

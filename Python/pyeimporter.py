@@ -7,8 +7,8 @@ from base64 import b64decode
 import os
 import hashlib
 
-from Crypto.Cipher import AES
-from Crypto import Random
+from aes import AES
+#to support py2exe.
 try:
     import _memimporter
 except ImportError:
@@ -29,29 +29,39 @@ def _register_key(encryption_key):
 
 class AESCipher:
     def __init__(self, key): 
-        self.bs = 32
         self.key = hashlib.sha256(key.encode()).digest()
 
     def encrypt(self, raw):
-        raw = self._pad(raw)
-        iv = Random.new().read(AES.block_size)
-        cipher = AES.new(self.key, AES.MODE_CBC, iv)
-        return iv + cipher.encrypt(raw)
+        iv = bytearray(os.urandom(16))
+        cipher = AES(mode='cbc', key=self.key, iv=iv)
+        # for when raw is an bytes object and not an str object.
+        if isinstance(raw, str):
+            data = bytearray(raw.encode('ascii'))
+        else:
+            data = bytearray(raw)
+        while not self.is_whole(len(data) / 16):
+            data.append(0x00)
+        cipher.encrypt(data=data)
+        return iv + data
 
     def decrypt(self, enc):
-        iv = enc[:AES.block_size]
-        cipher = AES.new(self.key, AES.MODE_CBC, iv)
+        iv = enc[:16]
+        cipher = AES(mode='cbc', key=self.key, iv=iv)
+        data = bytearray(enc[16:])
+        cipher.decrypt(data=data)
+        while data[len(data) - 1] == 0x00:
+            del data[len(data) - 1]
         try:
-            return self._unpad(cipher.decrypt(enc[AES.block_size:])).decode('utf-8')
+            return bytes(data)
         except UnicodeDecodeError:
             return None
 
-    def _pad(self, s):
-        return s + (self.bs - len(s) % self.bs) * chr(self.bs - len(s) % self.bs)
-
-    def _unpad(self, s):
-        type(self)
-        return s[:-ord(s[len(s)-1:])]
+    @staticmethod
+    def is_whole(n):
+        if n % 1 == 0:
+            return True
+        else:
+            return False
 
 
 class PyeZipImporter(zipimporter):
@@ -94,12 +104,11 @@ class PyeZipImporter(zipimporter):
             if path in self._files:
                 if path.endswith('.pye'):
                     zlib_output = decompress(self.get_data(path))
-                    decrypted_output = _encryptor.decrypt(zlib_output)
+                    base64_output = b64decode(zlib_output)
+                    decrypted_output = _encryptor.decrypt(base64_output)
                     if decrypted_output is not None:
-                        base64_output = b64decode(decrypted_output)
-                        zlib_output = decompress(base64_output)
                         file2 = open(os.path.join(sys.path[0], filename + ".tmp"), 'wb')
-                        file2.write(zlib_output)
+                        file2.write(decrypted_output)
                         file2.close()
                         file3 = open(os.path.join(sys.path[0], filename + ".tmp"), 'r')
                         module_data = file3.read()

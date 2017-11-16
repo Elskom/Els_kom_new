@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\aesmodule">
+      <UniqueIdentifier>{1ce7d167-12ce-43cf-bf2b-28d4f83f0339}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aesmodule">
+      <UniqueIdentifier>{d1666f54-daaa-410f-8869-f83a7b005e9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aesmodule\dependants">
+      <UniqueIdentifier>{6aea8ac7-bf4e-4e7b-88b7-147afacd966c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aesmodule\dependants">
+      <UniqueIdentifier>{06658373-5458-453b-9e96-b00de95c8b03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\PC\resource.h">
@@ -20,6 +32,27 @@
     </ClInclude>
     <ClInclude Include="..\PC\encryption.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\aes\aes.h">
+      <Filter>Header Files\aesmodule\dependants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\aes\aes_ni.h">
+      <Filter>Header Files\aesmodule\dependants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\aes\aes_via_ace.h">
+      <Filter>Header Files\aesmodule\dependants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\aes\aesopt.h">
+      <Filter>Header Files\aesmodule\dependants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\aes\aestab.h">
+      <Filter>Header Files\aesmodule\dependants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\aes\brg_endian.h">
+      <Filter>Header Files\aesmodule\dependants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\externals\aes\brg_types.h">
+      <Filter>Header Files\aesmodule\dependants</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +71,24 @@
     </ClCompile>
     <ClCompile Include="..\PC\encryption.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\externals\aes\aes_modes.c">
+      <Filter>Source Files\aesmodule\dependants</Filter>
+    </ClCompile>
+    <ClCompile Include="..\externals\aes\aes_ni.c">
+      <Filter>Source Files\aesmodule\dependants</Filter>
+    </ClCompile>
+    <ClCompile Include="..\externals\aes\aeskey.c">
+      <Filter>Source Files\aesmodule\dependants</Filter>
+    </ClCompile>
+    <ClCompile Include="..\externals\aes\aestab.c">
+      <Filter>Source Files\aesmodule\dependants</Filter>
+    </ClCompile>
+    <ClCompile Include="..\externals\aes\python_binding\aesmodule.c">
+      <Filter>Source Files\aesmodule</Filter>
+    </ClCompile>
+    <ClCompile Include="..\externals\aes\aescrypt.c">
+      <Filter>Source Files\aesmodule\dependants</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

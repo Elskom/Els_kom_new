@@ -3,6 +3,7 @@
 	+Removed Deprecated stubs.
 	+Made Els_kom.exe an C++ WinForms Application.
 	-Requirements rolled back from .NET 4.6.2 to .NET 4.5.2
+	+Replaced PyCryptodome dependency.
 
 =============================================================================
                              Els_kom v1.4.9.7

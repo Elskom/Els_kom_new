@@ -17,6 +17,10 @@
 #endif
 #include "resource.h"
 
+#ifdef WITH_ENCRYPTION
+PyMODINIT_FUNC PyInit_aes(void);
+#endif
+
 int
 wmain(int argc, wchar_t **argv)
 {
@@ -29,6 +33,9 @@ wmain(int argc, wchar_t **argv)
     fprintf(stderr, (const char *const)buffer1);
     exit(1);
   }
+#ifdef WITH_ENCRYPTION
+  PyImport_AppendInittab("aes", PyInit_aes);
+#endif
   Py_SetProgramName(program);  /* optional but recommended */
   Py_Initialize();
   int initialized = Py_IsInitialized();
