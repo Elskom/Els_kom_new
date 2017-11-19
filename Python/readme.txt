@@ -3,7 +3,7 @@ This Folder is for Building the Python parts of Els_kom.
 Requirements:
 Python 3.5+
 
-Note: Python 3.5 or Newer must be installed to the Drive/Partition root of your Current Operating System.
+Note: Python 3.6 or newer can be downloaded in ../externals/cpython with get_externals.bat.
 
 To Make the embedded pythons work:
 

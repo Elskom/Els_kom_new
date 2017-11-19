@@ -19,6 +19,7 @@
 
 #ifdef WITH_ENCRYPTION
 PyMODINIT_FUNC PyInit_aes(void);
+PyMODINIT_FUNC PyInit_aescipher(void);
 #endif
 
 int
@@ -35,6 +36,7 @@ wmain(int argc, wchar_t **argv)
   }
 #ifdef WITH_ENCRYPTION
   PyImport_AppendInittab("aes", PyInit_aes);
+  PyImport_AppendInittab("aescipher", PyInit_aescipher);
 #endif
   Py_SetProgramName(program);  /* optional but recommended */
   Py_Initialize();

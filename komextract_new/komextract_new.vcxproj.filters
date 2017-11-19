@@ -25,6 +25,12 @@
     <Filter Include="Source Files\aesmodule\dependants">
       <UniqueIdentifier>{b470eb47-8167-4d3c-9a87-2bd5213a04bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\pyeimporter">
+      <UniqueIdentifier>{d324a4b3-c2a5-4f62-bf60-ed01100682f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aescipher">
+      <UniqueIdentifier>{82030fb5-d31c-4d64-a470-d4d270581cfe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\PC\resource.h">
@@ -89,6 +95,12 @@
     </ClCompile>
     <ClCompile Include="..\externals\aes\aescrypt.c">
       <Filter>Source Files\aesmodule\dependants</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PC\pyeimporter.c">
+      <Filter>Source Files\pyeimporter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PC\aesciphermodule.c">
+      <Filter>Source Files\aescipher</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

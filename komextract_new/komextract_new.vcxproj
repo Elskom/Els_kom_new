@@ -174,11 +174,15 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ProgramDatabaseFile />
-      <AdditionalDependencies>E:\Python360\libs\python36.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>python36.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <FixedBaseAddress>true</FixedBaseAddress>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(SolutionDir)externals\cpython\PCbuild\win32\</AdditionalLibraryDirectories>
     </Link>
+    <PreBuildEvent>
+      <Command>echo F|xcopy /Y /c $(SolutionDir)\etc\pyconfig.h $(SolutionDir)\externals\cpython\Include\pyconfig.h</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -229,15 +233,21 @@
     <ClCompile Include="..\externals\aes\aes_modes.c" />
     <ClCompile Include="..\externals\aes\aes_ni.c" />
     <ClCompile Include="..\externals\aes\python_binding\aesmodule.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include;$(SolutionDir)\externals\aes</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\externals\cpython\Include;$(SolutionDir)\externals\aes</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="..\PC\aesciphermodule.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\externals\cpython\Include</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\PC\encryption.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\externals\cpython\Include</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\PC\komextract_new.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Python361x64\include</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\Python360\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\externals\cpython\Include</AdditionalIncludeDirectories>
       <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Sync</ExceptionHandling>
+    </ClCompile>
+    <ClCompile Include="..\PC\pyeimporter.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\externals\cpython\Include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
