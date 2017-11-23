@@ -36,10 +36,10 @@ void get_encryption_key(char _key[]) {
   make_string(_key_string, 114, _key);
 }
 
-void PyEncryptionExec(const char *scriptstr) {
+int PyEncryptionExec(const char *scriptstr) {
   char _codebuffer[1100];
   char _key[114] = {0};
   get_encryption_key(_key);
   snprintf(_codebuffer, 1100, scriptstr, _key);
-  PyRun_SimpleString(_codebuffer);
+  return PyRun_SimpleString(_codebuffer);
 }
