@@ -22,7 +22,7 @@
     <ProjectGuid>{1E0DA3A0-E7EC-4ABD-B09F-D35000001D16}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>kompact_new</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -152,12 +152,13 @@ echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;SUPPRESS_INITFUNC_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;SUPPRESS_INITFUNC_EXPORT;NO_DOCS;CYTHON_NO_PYINIT_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DebugInformationFormat>None</DebugInformationFormat>
       <ExceptionHandling>false</ExceptionHandling>
       <CompileAs>Default</CompileAs>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\externals\cpython\Include;$(SolutionDir)\externals\aes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -172,31 +173,28 @@ echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
       <AdditionalLibraryDirectories>$(SolutionDir)externals\cpython\PCbuild\win32\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
-echo F|xcopy /Y /c $(SolutionDir)etc\python36.zip $(OutDir)python36.zip
-echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\python36.dll $(OutDir)python36.dll
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_asyncio.pyd $(OutDir)DLLs\_asyncio.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_bz2.pyd $(OutDir)DLLs\_bz2.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_ctypes.pyd $(OutDir)DLLs\_ctypes.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_decimal.pyd $(OutDir)DLLs\_decimal.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_elementtree.pyd $(OutDir)DLLs\_elementtree.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_hashlib.pyd $(OutDir)DLLs\_hashlib.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_lzma.pyd $(OutDir)DLLs\_lzma.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_msi.pyd $(OutDir)DLLs\_msi.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_multiprocessing.pyd $(OutDir)DLLs\_multiprocessing.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_overlapped.pyd $(OutDir)DLLs\_overlapped.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_socket.pyd $(OutDir)DLLs\_socket.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_sqlite3.pyd $(OutDir)DLLs\_sqlite3.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_ssl.pyd $(OutDir)DLLs\_ssl.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\_tkinter.pyd $(OutDir)DLLs\_tkinter.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\pyexpat.pyd $(OutDir)DLLs\pyexpat.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\select.pyd $(OutDir)DLLs\select.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\sqlite3.dll $(OutDir)DLLs\sqlite3.dll
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\tcl86t.dll $(OutDir)DLLs\tcl86t.dll
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\tk86t.dll $(OutDir)DLLs\tk86t.dll
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\unicodedata.pyd $(OutDir)DLLs\unicodedata.pyd
-echo F|xcopy /Y /c $(SolutionDir)externals\cpython\PCbuild\win32\winsound.pyd $(OutDir)DLLs\winsound.pyd
+      <Command>"$(SolutionDir)externals\cpython\PCbuild\win32\python.exe" "$(SolutionDir)externals\cpython\Tools\msi\make_zip.py" -e -o "$(OutDir)\"
+echo F|xcopy /Y /c $(SolutionDir)etc\python36._pth $(OutDir)python36._pth
+echo F|xcopy /Y /c "$(SolutionDir)etc\site.zip" "$(OutDir)site.zip"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\python36.dll" "$(OutDir)python36.dll"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\_asyncio.pyd" "$(OutDir)DLLs\_asyncio.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\_bz2.pyd" "$(OutDir)DLLs\_bz2.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\_ctypes.pyd" "$(OutDir)DLLs\_ctypes.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\_decimal.pyd" "$(OutDir)DLLs\_decimal.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\_elementtree.pyd" "$(OutDir)DLLs\_elementtree.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\_hashlib.pyd" "$(OutDir)DLLs\_hashlib.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\_lzma.pyd" "$(OutDir)DLLs\_lzma.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\_msi.pyd" "$(OutDir)DLLs\_msi.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\_multiprocessing.pyd" "$(OutDir)DLLs\_multiprocessing.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\_overlapped.pyd" "$(OutDir)DLLs\_overlapped.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\_socket.pyd" "$(OutDir)DLLs\_socket.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\_sqlite3.pyd" "$(OutDir)DLLs\_sqlite3.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\_ssl.pyd" "$(OutDir)DLLs\_ssl.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\pyexpat.pyd" "$(OutDir)DLLs\pyexpat.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\select.pyd" "$(OutDir)DLLs\select.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\sqlite3.dll" "$(OutDir)DLLs\sqlite3.dll"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\unicodedata.pyd" "$(OutDir)DLLs\unicodedata.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)externals\cpython\PCbuild\win32\winsound.pyd" "$(OutDir)DLLs\winsound.pyd"
 </Command>
     </PostBuildEvent>
     <PreBuildEvent>
@@ -248,18 +246,11 @@ echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
     <ClCompile Include="..\externals\aes\aestab.c" />
     <ClCompile Include="..\externals\aes\aes_modes.c" />
     <ClCompile Include="..\externals\aes\aes_ni.c" />
-    <ClCompile Include="..\externals\aes\python_binding\aesmodule.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\externals\cpython\Include;$(SolutionDir)\externals\aes</AdditionalIncludeDirectories>
-    </ClCompile>
-    <ClCompile Include="..\PC\encryption.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\externals\cpython\Include</AdditionalIncludeDirectories>
-    </ClCompile>
-    <ClCompile Include="..\PC\kompact_new.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Python361x64\include</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\externals\cpython\Include</AdditionalIncludeDirectories>
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Sync</ExceptionHandling>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
+    <ClCompile Include="..\externals\aes\python_binding\aesmodule.c" />
+    <ClCompile Include="..\PC\encryption.c" />
+    <ClCompile Include="..\PC\kompact_new.c" />
+    <ClCompile Include="..\PC\pyeimport.c" />
+    <ClCompile Include="..\PC\_zipimportmodule.c" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\PC\kompact_new.rc" />

@@ -19,13 +19,14 @@
 
 #ifdef WITH_ENCRYPTION
 PyMODINIT_FUNC PyInit_aes(void);
-PyMODINIT_FUNC PyInit_aescipher(void);
+PyMODINIT_FUNC PyInit__zipimport(void);
+PyMODINIT_FUNC PyInit_pyeimport(void);
 #endif
 
 int
 wmain(int argc, wchar_t **argv)
 {
-  int err;
+  int err, err2;
   wchar_t *program = Py_DecodeLocale((char *)argv[0], NULL);
   wchar_t **argv_copy = argv;
   if (program == NULL) {
@@ -36,7 +37,8 @@ wmain(int argc, wchar_t **argv)
   }
 #ifdef WITH_ENCRYPTION
   PyImport_AppendInittab("aes", PyInit_aes);
-  PyImport_AppendInittab("aescipher", PyInit_aescipher);
+  PyImport_AppendInittab("_zipimport", PyInit__zipimport);
+  PyImport_AppendInittab("pyeimport", PyInit_pyeimport);
 #endif
   Py_SetProgramName(program);  /* optional but recommended */
   Py_Initialize();
@@ -54,13 +56,15 @@ wmain(int argc, wchar_t **argv)
     HGLOBAL main2_script = LoadResource(NULL, script2_resource);
     void* pmain2_script = LockResource(main2_script);
     if (script2_size >= 0) {
-      PyEncryptionExec((const char *)pmain2_script);
+      err = PyEncryptionExec((const char *)pmain2_script);
     } else {
       /* python script is empty. */
       LPSTR buffer4[62];
       LoadStringA(GetModuleHandle(NULL), IDS_STRING4, (LPSTR)buffer4, 62);
       fprintf(stderr, (const char *const)buffer4);
     }
+    if (err > 0)
+      PyErr_Print();
 #endif
     HRSRC script_resource = FindResource(
       NULL, MAKEINTRESOURCE(IDR_RCDATA1), RT_RCDATA);
@@ -68,14 +72,14 @@ wmain(int argc, wchar_t **argv)
     HGLOBAL main_script = LoadResource(NULL, script_resource);
     void* pmain_script = LockResource(main_script);
     if (script_size >= 0) {
-      err = PyRun_SimpleString((const char *)pmain_script);
+      err2 = PyRun_SimpleString((const char *)pmain_script);
     } else {
       /* python script is empty. */
       LPSTR buffer2[38];
       LoadStringA(GetModuleHandle(NULL), IDS_STRING2, (LPSTR)buffer2, 38);
       fprintf(stderr, (const char *const)buffer2);
     }
-    if (err > 0)
+    if (err2 > 0)
       PyErr_Print();
     Py_Finalize();
   } else {

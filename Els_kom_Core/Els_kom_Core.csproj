@@ -10,7 +10,7 @@
     <AssemblyName>Els_kom.Core</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <NoWin32Manifest>False</NoWin32Manifest>
     <SignAssembly>True</SignAssembly>
@@ -161,12 +161,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\MainControl.resx">
+    <None Include="Controls\MainControl.resx">
       <DependentUpon>MainControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\SettingsControl.resx">
+    </None>
+    <None Include="Controls\SettingsControl.resx">
       <DependentUpon>SettingsControl.cs</DependentUpon>
-    </EmbeddedResource>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

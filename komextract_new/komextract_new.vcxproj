@@ -22,7 +22,7 @@
     <ProjectGuid>{FF7816A6-820B-418A-B9A6-0005C3C746FF}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>komextract_new</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -155,7 +155,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;SUPPRESS_INITFUNC_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;SUPPRESS_INITFUNC_EXPORT;NO_DOCS;CYTHON_NO_PYINIT_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DebugInformationFormat>None</DebugInformationFormat>
       <PrecompiledHeaderOutputFile>
@@ -167,6 +167,7 @@
       <CompileAs>Default</CompileAs>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\externals\cpython\Include;$(SolutionDir)\externals\aes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -232,23 +233,11 @@
     <ClCompile Include="..\externals\aes\aestab.c" />
     <ClCompile Include="..\externals\aes\aes_modes.c" />
     <ClCompile Include="..\externals\aes\aes_ni.c" />
-    <ClCompile Include="..\externals\aes\python_binding\aesmodule.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\externals\cpython\Include;$(SolutionDir)\externals\aes</AdditionalIncludeDirectories>
-    </ClCompile>
-    <ClCompile Include="..\PC\aesciphermodule.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\externals\cpython\Include</AdditionalIncludeDirectories>
-    </ClCompile>
-    <ClCompile Include="..\PC\encryption.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\externals\cpython\Include</AdditionalIncludeDirectories>
-    </ClCompile>
-    <ClCompile Include="..\PC\komextract_new.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Python361x64\include</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\externals\cpython\Include</AdditionalIncludeDirectories>
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Sync</ExceptionHandling>
-    </ClCompile>
-    <ClCompile Include="..\PC\pyeimporter.c">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\externals\cpython\Include</AdditionalIncludeDirectories>
-    </ClCompile>
+    <ClCompile Include="..\externals\aes\python_binding\aesmodule.c" />
+    <ClCompile Include="..\PC\encryption.c" />
+    <ClCompile Include="..\PC\komextract_new.c" />
+    <ClCompile Include="..\PC\pyeimport.c" />
+    <ClCompile Include="..\PC\_zipimportmodule.c" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\PC\komextract_new.rc" />

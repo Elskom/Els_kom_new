@@ -1,4 +1,4 @@
-import pyeimporter
+import pyeimport
 
 
-pyeimporter.install('%s')
+pyeimport.install('%s')

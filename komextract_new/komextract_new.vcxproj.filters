@@ -25,11 +25,11 @@
     <Filter Include="Source Files\aesmodule\dependants">
       <UniqueIdentifier>{b470eb47-8167-4d3c-9a87-2bd5213a04bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\pyeimporter">
-      <UniqueIdentifier>{d324a4b3-c2a5-4f62-bf60-ed01100682f0}</UniqueIdentifier>
+    <Filter Include="Source Files\_zipimportmodule">
+      <UniqueIdentifier>{1eb26721-f4bc-4e3e-a92f-f632f340bb14}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aescipher">
-      <UniqueIdentifier>{82030fb5-d31c-4d64-a470-d4d270581cfe}</UniqueIdentifier>
+    <Filter Include="Source Files\pyeimport">
+      <UniqueIdentifier>{d324a4b3-c2a5-4f62-bf60-ed01100682f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -96,11 +96,11 @@
     <ClCompile Include="..\externals\aes\aescrypt.c">
       <Filter>Source Files\aesmodule\dependants</Filter>
     </ClCompile>
-    <ClCompile Include="..\PC\pyeimporter.c">
-      <Filter>Source Files\pyeimporter</Filter>
+    <ClCompile Include="..\PC\_zipimportmodule.c">
+      <Filter>Source Files\_zipimportmodule</Filter>
     </ClCompile>
-    <ClCompile Include="..\PC\aesciphermodule.c">
-      <Filter>Source Files\aescipher</Filter>
+    <ClCompile Include="..\PC\pyeimport.c">
+      <Filter>Source Files\pyeimport</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

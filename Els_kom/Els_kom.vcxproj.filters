@@ -14,31 +14,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Els_kom_Main_AboutForm.hpp">
+    <ClInclude Include="..\PC\Els_kom_Main_AboutForm.hpp">
       <Filter>Forms</Filter>
     </ClInclude>
-    <ClInclude Include="Els_kom_Main_MainForm.hpp">
+    <ClInclude Include="..\PC\Els_kom_Main_MainForm.hpp">
       <Filter>Forms</Filter>
     </ClInclude>
-    <ClInclude Include="Els_kom_Main_SettingsForm.hpp">
+    <ClInclude Include="..\PC\Els_kom_Main_SettingsForm.hpp">
       <Filter>Forms</Filter>
     </ClInclude>
-    <ClInclude Include="LoadResources.hpp">
+    <ClInclude Include="..\PC\LoadResources.hpp">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="resource.hpp">
+    <ClInclude Include="..\PC\resource.hpp">
       <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="app.rc">
+    <ResourceCompile Include="..\PC\Els_kom.rc">
       <Filter>Resources</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="Els_kom_Main.cpp" />
-    <ClCompile Include="LoadResources.cpp">
+    <ClCompile Include="..\PC\AssemblyInfo.cpp" />
+    <ClCompile Include="..\PC\Els_kom_Main.cpp" />
+    <ClCompile Include="..\PC\LoadResources.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>

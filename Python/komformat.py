@@ -8,10 +8,10 @@ import os
 import struct
 import sys
 import zlib
-from xml.dom.minidom import parse, Document
+import xml.dom.minidom
 
 
-class EntryVer3(object):
+class EntryVer3:
     """
     Sets Data for entries.
     """
@@ -91,7 +91,7 @@ def unpacker_main(argv):
     with open("crc.xml", 'wb') as crc_creator:
         crc_creator.write(crc_data)
     with open("crc.xml") as crc_reader:
-        crc_er = parse(crc_reader)
+        crc_er = xml.dom.minidom.parse(crc_reader)
     entries, relative_offseterr = make_entries(crc_er, entry_count)
     for entry in entries:
         entry_file_data = (file_data[theunpack_offset + entry.relative_offset:theunpack_offset +
@@ -134,7 +134,7 @@ def packer_main(argv):
     if not os.path.isdir(in_path):
         print("Usage:\nkompact_new --in <Folder name> --out <KOM file name>")
         sys.exit(2)
-    crc = Document()
+    crc = xml.dom.minidom.Document()
     crc_file_info = crc.createElement("Files")
     crc.appendChild(crc_file_info)
     kom_file_entries = 0

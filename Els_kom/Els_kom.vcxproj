@@ -21,10 +21,10 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{253b39b2-b142-481e-8066-afe06c31d647}</ProjectGuid>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>Els_kom_cpp</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <ProjectName>Els_kom</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -89,6 +89,7 @@
     <GenerateManifest>false</GenerateManifest>
     <OutDir>$(SolutionDir)bin\x86\$(Configuration)\</OutDir>
     <IntDir>..\obj\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <EnableManagedIncrementalBuild>false</EnableManagedIncrementalBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -170,25 +171,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Els_kom_Main_AboutForm.hpp">
+    <ClInclude Include="..\PC\Els_kom_Main_AboutForm.hpp">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Els_kom_Main_MainForm.hpp">
+    <ClInclude Include="..\PC\Els_kom_Main_MainForm.hpp">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="LoadResources.hpp" />
-    <ClInclude Include="resource.hpp" />
-    <ClInclude Include="Els_kom_Main_SettingsForm.hpp">
+    <ClInclude Include="..\PC\LoadResources.hpp" />
+    <ClInclude Include="..\PC\resource.hpp" />
+    <ClInclude Include="..\PC\Els_kom_Main_SettingsForm.hpp">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="app.rc" />
+    <ResourceCompile Include="..\PC\Els_kom.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="Els_kom_Main.cpp" />
-    <ClCompile Include="LoadResources.cpp" />
+    <ClCompile Include="..\PC\AssemblyInfo.cpp" />
+    <ClCompile Include="..\PC\Els_kom_Main.cpp" />
+    <ClCompile Include="..\PC\LoadResources.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Els_kom_Core\Els_kom_Core.csproj">
