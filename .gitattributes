@@ -2,3 +2,4 @@ Python/* linguist-vendored
 PC/* linguist-vendored
 etc/* linguist-vendored
 .github/* linguist-vendored
+get_externals.bat linguist-vendored
