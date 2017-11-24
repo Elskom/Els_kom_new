@@ -149,7 +149,7 @@ echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <Optimization>Disabled</Optimization>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;SUPPRESS_INITFUNC_EXPORT;NO_DOCS;CYTHON_NO_PYINIT_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -247,7 +247,7 @@ echo F|xcopy /Y /c $(SolutionDir)etc\site.zip $(OutDir)site.zip
     <ClCompile Include="..\externals\aes\aes_modes.c" />
     <ClCompile Include="..\externals\aes\aes_ni.c" />
     <ClCompile Include="..\externals\aes\python_binding\aesmodule.c" />
-    <ClCompile Include="..\PC\encryption.c" />
+    <ClCompile Include="..\PC\encryption.cpp" />
     <ClCompile Include="..\PC\kompact_new.c" />
     <ClCompile Include="..\PC\pyeimport.c" />
     <ClCompile Include="..\PC\_zipimportmodule.c" />

@@ -152,7 +152,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <Optimization>Disabled</Optimization>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;SUPPRESS_INITFUNC_EXPORT;NO_DOCS;CYTHON_NO_PYINIT_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -168,6 +168,7 @@
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)\externals\cpython\Include;$(SolutionDir)\externals\aes</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -234,7 +235,7 @@
     <ClCompile Include="..\externals\aes\aes_modes.c" />
     <ClCompile Include="..\externals\aes\aes_ni.c" />
     <ClCompile Include="..\externals\aes\python_binding\aesmodule.c" />
-    <ClCompile Include="..\PC\encryption.c" />
+    <ClCompile Include="..\PC\encryption.cpp" />
     <ClCompile Include="..\PC\komextract_new.c" />
     <ClCompile Include="..\PC\pyeimport.c" />
     <ClCompile Include="..\PC\_zipimportmodule.c" />
