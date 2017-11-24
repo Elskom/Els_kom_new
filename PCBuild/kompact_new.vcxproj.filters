@@ -75,7 +75,7 @@
     <ClCompile Include="..\PC\kompact_new.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\PC\encryption.c">
+    <ClCompile Include="..\PC\encryption.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\externals\aes\aes_modes.c">

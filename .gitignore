@@ -1,0 +1,7 @@
+*.pyd
+*.chm
+PC/encryption_private.h
+Python/komformat.private.py
+Python/private_encryption.py
+obj/*.*
+bin/*.*
