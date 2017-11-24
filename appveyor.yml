@@ -3,8 +3,14 @@ max_jobs: 15
 image: Visual Studio 2017
 configuration: Release
 platform: x86
+
 before_build:
-- cmd: call get_externals.bat && call externals\cpython\PCBuild\build.bat
+- cmd: call ci_build.bat
+
+cache:
+  - .\externals\cpython -> .\externals\cpython\*.*
+  - .\externals\aes -> .\externals\aes\*.*
+
 build:
   project: Els_kom_Solution.sln
   parallel: true
