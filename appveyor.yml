@@ -3,6 +3,7 @@ max_jobs: 15
 image: Visual Studio 2017
 configuration: Release
 platform: x86
+test: off
 
 before_build:
 - cmd: call ci_build.bat
