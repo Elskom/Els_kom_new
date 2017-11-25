@@ -9,8 +9,8 @@ before_build:
 - cmd: call ci_build.bat
 
 cache:
-  - .\externals\cpython -> *.*
-  - .\externals\aes -> *.*
+  - .\externals\cpython -> dummyfile
+  - .\externals\aes -> dummyfile
 
 build:
   project: Els_kom_Solution.sln
