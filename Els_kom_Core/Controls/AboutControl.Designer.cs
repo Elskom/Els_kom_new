@@ -20,14 +20,22 @@
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// Ok button on the Control.
+        /// </summary>
         public System.Windows.Forms.Button cmdOK;
-        public System.Windows.Forms.TextBox Text1;
+        /// <summary>
+        /// Icon Picture on the Control.
+        /// </summary>
         public System.Windows.Forms.PictureBox picIcon;
+        /// <summary>
+        /// Forum Topic picture on the form when the mouse is not over it.
+        /// </summary>
         public System.Windows.Forms.PictureBox Picture1;
+        /// <summary>
+        /// Forum Topic picture on the form when the mouse is over it.
+        /// </summary>
         public System.Windows.Forms.PictureBox Picture2;
-        public System.Windows.Forms.Label lblDisclaimer;
-        public System.Windows.Forms.Label lblTitle;
-        public System.Windows.Forms.Label lblDescription;
 
         #region Component Designer generated code
 
@@ -193,6 +201,10 @@
 
         }
 
+        internal System.Windows.Forms.TextBox Text1;
+        internal System.Windows.Forms.Label lblDisclaimer;
+        internal System.Windows.Forms.Label lblTitle;
+        internal System.Windows.Forms.Label lblDescription;
         #endregion
     }
 }

@@ -3,6 +3,10 @@
 	+Removed Deprecated stubs.
 	+Made Els_kom.exe an C++ WinForms Application.
 	+Replaced PyCryptodome dependency.
+	+Added support for packing to and unpacking from KOM V2.
+	+Made Core able to handle packing and unpacking to/from whatever
+		KOM version the file requires. This is so the GUI can
+		properly pack and unpack and all KOM versions.
 
 =============================================================================
                              Els_kom v1.4.9.7

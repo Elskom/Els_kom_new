@@ -20,16 +20,15 @@
             base.Dispose(disposing);
         }
 
-        public System.Windows.Forms.Button Command5;
-        public System.Windows.Forms.Button Command4;
-        public System.Windows.Forms.Button Command3;
-        public System.Windows.Forms.Timer Timer2;
-        public System.Windows.Forms.Timer Timer1;
+        /// <summary>
+        /// Label that displays the information about the bottons the mouse is hovering on.
+        /// </summary>
         public System.Windows.Forms.Label Label1;
-        public System.Windows.Forms.GroupBox Frame1;
-        public System.Windows.Forms.Button Command2;
-        public System.Windows.Forms.Button Command1;
-        public System.Windows.Forms.Label Label2;
+        /// <summary>
+        /// Tray Icon.
+        /// </summary>
+        public System.Windows.Forms.NotifyIcon NotifyIcon1;
+
         #region Component Designer generated code
 
         /// <summary> 
@@ -308,6 +307,13 @@
             this.ResumeLayout(false);
 
         }
+        internal System.Windows.Forms.Label Label2;
+        internal System.Windows.Forms.GroupBox Frame1;
+        internal System.Windows.Forms.Button Command1;
+        internal System.Windows.Forms.Button Command2;
+        internal System.Windows.Forms.Button Command3;
+        internal System.Windows.Forms.Button Command4;
+        internal System.Windows.Forms.Button Command5;
         internal System.Windows.Forms.ContextMenuStrip ContextMenuStrip1;
         internal System.Windows.Forms.ToolStripMenuItem PackToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem UnpackToolStripMenuItem;
@@ -318,11 +324,11 @@
         internal System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
         internal System.Windows.Forms.ToolStripSeparator ToolStripMenuItem3;
         internal System.Windows.Forms.ToolStripMenuItem SettingsToolStripMenuItem;
+        internal System.Windows.Forms.Timer Timer1;
+        internal System.Windows.Forms.Timer Timer2;
         internal System.Windows.Forms.Timer Timer3;
         internal System.Windows.Forms.Timer Timer4;
+        internal System.Windows.Forms.Timer timer5;
         #endregion
-
-        public System.Windows.Forms.Timer timer5;
-        public System.Windows.Forms.NotifyIcon NotifyIcon1;
     }
 }

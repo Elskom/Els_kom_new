@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1E0DA3A0-E7EC-4ABD-B09F-D35000001D16}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>kompact_new</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)..\bin\x86\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\obj\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;SUPPRESS_INITFUNC_EXPORT;NO_DOCS;CYTHON_NO_PYINIT_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <ExceptionHandling>false</ExceptionHandling>
+      <CompileAs>Default</CompileAs>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\externals\cpython\Include;$(SolutionDir)..\externals\aes;$(SolutionDir)..\externals\cpython\Python</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ProgramDatabaseFile />
+      <AdditionalDependencies>python36.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <FixedBaseAddress>true</FixedBaseAddress>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\cpython\PCbuild\win32\</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>"$(SolutionDir)..\externals\cpython\PCbuild\win32\python.exe" "$(SolutionDir)..\externals\cpython\Tools\msi\make_zip.py" -e -o "$(OutDir)\"
+echo F|xcopy /Y /c $(SolutionDir)..\etc\python36._pth $(OutDir)python36._pth
+echo F|xcopy /Y /c "$(SolutionDir)..\etc\site.zip" "$(OutDir)site.zip"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\_asyncio.pyd" "$(OutDir)DLLs\_asyncio.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\_bz2.pyd" "$(OutDir)DLLs\_bz2.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\_ctypes.pyd" "$(OutDir)DLLs\_ctypes.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\_decimal.pyd" "$(OutDir)DLLs\_decimal.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\_elementtree.pyd" "$(OutDir)DLLs\_elementtree.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\_hashlib.pyd" "$(OutDir)DLLs\_hashlib.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\_lzma.pyd" "$(OutDir)DLLs\_lzma.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\_msi.pyd" "$(OutDir)DLLs\_msi.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\_multiprocessing.pyd" "$(OutDir)DLLs\_multiprocessing.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\_overlapped.pyd" "$(OutDir)DLLs\_overlapped.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\_socket.pyd" "$(OutDir)DLLs\_socket.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\_sqlite3.pyd" "$(OutDir)DLLs\_sqlite3.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\_ssl.pyd" "$(OutDir)DLLs\_ssl.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\pyexpat.pyd" "$(OutDir)DLLs\pyexpat.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\select.pyd" "$(OutDir)DLLs\select.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\sqlite3.dll" "$(OutDir)DLLs\sqlite3.dll"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\unicodedata.pyd" "$(OutDir)DLLs\unicodedata.pyd"
+echo F|xcopy /Y /c "$(SolutionDir)..\externals\cpython\PCbuild\win32\winsound.pyd" "$(OutDir)DLLs\winsound.pyd"
+</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>echo F|xcopy /Y /c $(SolutionDir)..\etc\pyconfig.h $(SolutionDir)..\externals\cpython\Include\pyconfig.h
+$(OutDir)\_freeze_pyeimport $(SolutionDir)..\Tools\pyeimport.py $(SolutionDir)..\PC\pyeimport.h pyeimport
+</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\externals\aes\aes.h" />
+    <ClInclude Include="..\externals\aes\aesopt.h" />
+    <ClInclude Include="..\externals\aes\aestab.h" />
+    <ClInclude Include="..\externals\aes\aes_ni.h" />
+    <ClInclude Include="..\externals\aes\aes_via_ace.h" />
+    <ClInclude Include="..\externals\aes\brg_endian.h" />
+    <ClInclude Include="..\externals\aes\brg_types.h" />
+    <ClInclude Include="..\PC\encryption.h" />
+    <ClInclude Include="..\PC\frozenlist.h" />
+    <ClInclude Include="..\PC\pyeimport.h" />
+    <ClInclude Include="..\PC\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\externals\aes\aescrypt.c" />
+    <ClCompile Include="..\externals\aes\aeskey.c" />
+    <ClCompile Include="..\externals\aes\aestab.c" />
+    <ClCompile Include="..\externals\aes\aes_modes.c" />
+    <ClCompile Include="..\externals\aes\aes_ni.c" />
+    <ClCompile Include="..\externals\aes\python_binding\aesmodule.c" />
+    <ClCompile Include="..\PC\encryption.cpp" />
+    <ClCompile Include="..\PC\kompact_new.c" />
+    <ClCompile Include="..\PC\_base64module.c" />
+    <ClCompile Include="..\PC\_zipimportmodule.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\PC\kompact_new.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\PC\WS.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

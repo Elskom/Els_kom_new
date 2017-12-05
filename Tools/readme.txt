@@ -1,9 +1,6 @@
 This Folder is for Building the Python parts of Els_kom.
 
-Requirements:
-Python 3.5+
-
-Note: Python 3.6 or newer can be downloaded in ../externals/cpython with get_externals.bat.
+Python 3.6 or newer will be cloned in ../externals/cpython with get_externals.bat using git.
 
 To Make the embedded pythons work:
 
