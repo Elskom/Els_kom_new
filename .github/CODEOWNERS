@@ -6,7 +6,7 @@
 
 # Any non-Core file
 # This is assigned to the core team for now though
-*                             @core-team
+*                             @Elskom/core-team
 
 # Core
-/Els_kom_Core                 @core-team
+/Els_kom_Core                 @Elskom/core-team
