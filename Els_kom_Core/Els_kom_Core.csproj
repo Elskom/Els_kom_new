@@ -2,8 +2,6 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <ProjectGuid>{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Els_kom_Core</RootNamespace>
@@ -21,7 +19,6 @@
     <IntermediateOutputPath>..\obj\$(Platform)\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>False</RunCodeAnalysis>
-    <SourceAnalysisOverrideSettingsFile>E:\Users\Elsword\AppData\Roaming\ICSharpCode\SharpDevelop5\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
   </PropertyGroup>
@@ -37,12 +34,6 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>false</DefineTrace>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -53,52 +44,17 @@
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DebugType>None</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
-    <PlatformTarget>x64</PlatformTarget>
-    <BaseAddress>4194304</BaseAddress>
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
     <RegisterForComInterop>False</RegisterForComInterop>
     <BaseAddress>4194304</BaseAddress>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <StartAction>Project</StartAction>
-    <Optimize>False</Optimize>
-    <BaseIntermediateOutputPath>..\obj\$(Platform)\$(Configuration)\$(ProjectName)</BaseIntermediateOutputPath>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DebugType>PdbOnly</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-    <LangVersion>7.1</LangVersion>
-    <OutputPath>..\bin\x64\Debug\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <LangVersion>7.1</LangVersion>
-    <OutputPath>..\bin\x86\Debug\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-    <LangVersion>7.1</LangVersion>
-    <OutputPath>..\bin\x64\Release\</OutputPath>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <LangVersion>7.1</LangVersion>
     <OutputPath>..\bin\x86\Release\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>x86</PlatformTarget>
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>..\bin\x86\Release\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>..\bin\x86\Release\</OutputPath>
+    <DocumentationFile>..\bin\x86\Release\Els_kom.Core.xml</DocumentationFile>
+    <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -122,11 +78,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\CopyKoms.cs" />
     <Compile Include="Classes\ExecutionManager.cs" />
     <Compile Include="Classes\INIObject.cs" />
     <Compile Include="Classes\KOMManager.cs" />
-    <Compile Include="Classes\Process.cs" />
+    <Compile Include="Classes\MessageManager.cs" />
     <Compile Include="Classes\ShowTaskbarEvent.cs" />
     <Compile Include="Classes\Version.cs" />
     <Compile Include="Controls\AboutControl.cs">

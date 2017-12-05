@@ -41,5 +41,8 @@
     <ClCompile Include="..\PC\LoadResources.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\PC\Els_kom_Main_SettingsForm.cpp" />
+    <ClCompile Include="..\PC\Els_kom_Main_MainForm.cpp" />
+    <ClCompile Include="..\PC\Els_kom_Main_AboutForm.cpp" />
   </ItemGroup>
 </Project>

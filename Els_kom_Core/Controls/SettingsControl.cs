@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace Els_kom_Core.Controls
+﻿namespace Els_kom_Core.Controls
 {
-    public partial class SettingsControl : UserControl
+    /// <summary>
+    /// SettingsControl control for Els_kom's Settings form.
+    /// </summary>
+    public partial class SettingsControl : System.Windows.Forms.UserControl
     {
+        /// <summary>
+        /// SettingsControl constructor.
+        /// </summary>
         public SettingsControl()
         {
             InitializeComponent();
@@ -20,11 +16,17 @@ namespace Els_kom_Core.Controls
         string curvalue;
         string curvalue2;
         string curvalue3;
-        public event EventHandler CloseForm;
+        /// <summary>
+        /// Event that the control fires that Closes the Form it is on.
+        /// </summary>
+        public event System.EventHandler CloseForm;
 
+        /// <summary>
+        /// Saves the Settings that changed in this Control's buffers.
+        /// </summary>
         public void SaveSettings()
         {
-            Classes.INIObject settingsini = new Classes.INIObject(Application.StartupPath + "\\Settings.ini");
+            Classes.INIObject settingsini = new Classes.INIObject(System.Windows.Forms.Application.StartupPath + "\\Settings.ini");
             if (!ReferenceEquals(TextBox1.Text, curvalue3))
             {
                 if (TextBox1.Text.Length > 0)
@@ -33,7 +35,7 @@ namespace Els_kom_Core.Controls
                 }
                 else
                 {
-                    MessageBox.Show("You Should Set a Working Elsword Directory.", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    Classes.MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!");
                 }
             }
             if (!ReferenceEquals(Label4.Text, curvalue))
@@ -68,7 +70,7 @@ namespace Els_kom_Core.Controls
 
         void Button2_Click(object sender, System.EventArgs e)
         {
-            CloseForm?.Invoke(this, new EventArgs());
+            CloseForm?.Invoke(this, new System.EventArgs());
         }
 
         void Timer1_Tick(object sender, System.EventArgs e)
@@ -176,7 +178,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        void TreeView1_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
         {
             if (TreeView1.SelectedNode.Index == 0)
             {
@@ -192,11 +194,11 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void SettingsControl_Load(object sender, EventArgs e)
+        private void SettingsControl_Load(object sender, System.EventArgs e)
         {
-            if (System.IO.File.Exists(Application.StartupPath + "\\Settings.ini"))
+            if (System.IO.File.Exists(System.Windows.Forms.Application.StartupPath + "\\Settings.ini"))
             {
-                Classes.INIObject settingsini = new Classes.INIObject(Application.StartupPath + "\\Settings.ini");
+                Classes.INIObject settingsini = new Classes.INIObject(System.Windows.Forms.Application.StartupPath + "\\Settings.ini");
                 curvalue3 = settingsini.Read("Settings.ini", "ElsDir");
                 curvalue = settingsini.Read("Settings.ini", "IconWhileElsNotRunning");
                 curvalue2 = settingsini.Read("Settings.ini", "IconWhileElsRunning");

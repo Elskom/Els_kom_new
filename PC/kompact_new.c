@@ -10,17 +10,20 @@
 /* for loading python script from the resource
  * section.
  */
-#include <windows.h>
+#include <Windows.h>
 #define WITH_ENCRYPTION
 #ifdef WITH_ENCRYPTION
 #include "encryption.h"
+#include "frozenlist.h"
 #endif
 #include "resource.h"
 
 #ifdef WITH_ENCRYPTION
 PyMODINIT_FUNC PyInit_aes(void);
 PyMODINIT_FUNC PyInit__zipimport(void);
-PyMODINIT_FUNC PyInit_pyeimport(void);
+#ifndef MS_WINDOWS
+const struct _frozen * PyImport_FrozenModules;
+#endif
 #endif
 
 int
@@ -38,7 +41,7 @@ wmain(int argc, wchar_t **argv)
 #ifdef WITH_ENCRYPTION
   PyImport_AppendInittab("aes", PyInit_aes);
   PyImport_AppendInittab("_zipimport", PyInit__zipimport);
-  PyImport_AppendInittab("pyeimport", PyInit_pyeimport);
+  PyImport_FrozenModules = _PyImport_FrozenModules;
 #endif
   Py_SetProgramName(program);  /* optional but recommended */
   Py_Initialize();
