@@ -1,11 +1,15 @@
-*.pyd
+*.pyc
 *.chm
-PC/encryption_private.h
-Python/komformat.private.py
-Python/private_encryption.py
 obj
 bin
 old
 aes
-externals/aes
-externals/cpython
+.vs
+_base64
+externals
+secure-file
+PC/encryption_private.h
+Tools/private_encryption.py
+
+# encrypted scripts.
+*.pye

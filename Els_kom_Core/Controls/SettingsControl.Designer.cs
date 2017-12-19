@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace Els_kom_Core.Controls
+﻿namespace Els_kom_Core.Controls
 {
     partial class SettingsControl
     {
@@ -294,27 +292,27 @@ namespace Els_kom_Core.Controls
 
         }
 
-        internal FolderBrowserDialog FolderBrowserDialog1;
-        internal Timer Timer1;
-        internal Panel Panel1;
-        internal Label Label1;
-        internal Button Button1;
-        internal Button Button2;
-        internal TextBox TextBox1;
-        internal TreeView TreeView1;
-        internal Panel Panel2;
-        internal Label Label3;
-        internal Label Label2;
-        internal RadioButton RadioButton3;
-        internal RadioButton RadioButton2;
-        internal RadioButton RadioButton1;
-        internal Panel Panel3;
-        internal RadioButton RadioButton6;
-        internal RadioButton RadioButton5;
-        internal RadioButton RadioButton4;
+        internal System.Windows.Forms.FolderBrowserDialog FolderBrowserDialog1;
+        internal System.Windows.Forms.Timer Timer1;
+        internal System.Windows.Forms.Panel Panel1;
+        internal System.Windows.Forms.Label Label1;
+        internal System.Windows.Forms.Button Button1;
+        internal System.Windows.Forms.Button Button2;
+        internal System.Windows.Forms.TextBox TextBox1;
+        internal System.Windows.Forms.TreeView TreeView1;
+        internal System.Windows.Forms.Panel Panel2;
+        internal System.Windows.Forms.Label Label3;
+        internal System.Windows.Forms.Label Label2;
+        internal System.Windows.Forms.RadioButton RadioButton3;
+        internal System.Windows.Forms.RadioButton RadioButton2;
+        internal System.Windows.Forms.RadioButton RadioButton1;
+        internal System.Windows.Forms.Panel Panel3;
+        internal System.Windows.Forms.RadioButton RadioButton6;
+        internal System.Windows.Forms.RadioButton RadioButton5;
+        internal System.Windows.Forms.RadioButton RadioButton4;
+        internal System.Windows.Forms.Label Label5;
+        internal System.Windows.Forms.Label Label4;
         #endregion
 
-        public Label Label5;
-        public Label Label4;
     }
 }

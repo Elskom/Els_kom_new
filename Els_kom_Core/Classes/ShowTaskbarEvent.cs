@@ -1,15 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Els_kom_Core.Classes
+﻿namespace Els_kom_Core.Classes
 {
-    public class ShowTaskbarEvent : EventArgs
+    /// <summary>
+    /// Event Fired when The form is shown in taskbar.
+    /// </summary>
+    public class ShowTaskbarEvent : System.EventArgs
     {
-        public string value;
+        /// <summary>
+        /// The value of the string the class was initialized with. This value is read only.
+        /// </summary>
+        public readonly string value;
 
+        /// <summary>
+        /// Sets the value to pass to the Event that is being fired.
+        /// </summary>
+        /// <param name="showtaskbarvalue"></param>
         public ShowTaskbarEvent(string showtaskbarvalue)
         {
             this.value = showtaskbarvalue;

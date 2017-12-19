@@ -5,8 +5,8 @@ using namespace System::Windows::Forms;
 
 [STAThread]
 int main() {
-	Application::EnableVisualStyles();
-	Application::SetCompatibleTextRenderingDefault(false);
-	Application::Run(gcnew Els_kom::Forms::MainForm());
-	return 0;
+  Application::EnableVisualStyles();
+  Application::SetCompatibleTextRenderingDefault(false);
+  Application::Run(gcnew Els_kom::Forms::MainForm());
+  return 0;
 }

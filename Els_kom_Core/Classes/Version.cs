@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Els_kom_Core.Classes
+﻿namespace Els_kom_Core.Classes
 {
+    /// <summary>
+    /// Els_kom's Core Version class.
+    /// </summary>
     public static class Version
     {
-        public static string version = "1.4.9.8";
+        /// <summary>
+        /// Els_kom's Core Version string.
+        /// </summary>
+        public static readonly string version = "1.4.9.8";
     }
 }

@@ -1,13 +1,24 @@
-import types
 import sys
 try:
     import _zipimport as zipimport
 except ImportError:
     import zipimport
 import zlib
-import base64
-import os
-import hashlib
+try:
+    import _base64 as base64
+except ImportError:
+    import base64
+try:
+    # avoid importing entire
+    # os module on Windows
+    # just for urandom.
+    import nt as os
+except ImportError:
+    # on non-windows systems
+    # I think that urandom is
+    # in the posix module.
+    import posix as os
+import _sha256
 import aes
 
 
@@ -16,7 +27,7 @@ __all__ = ['PyeZipImporter', 'install', 'uninstall']
 
 class AESCipher:
     def __init__(self, key):
-        self.key = hashlib.sha256(key.encode()).digest()
+        self.key = _sha256.sha256(key.encode()).digest()
 
     def encrypt(self, raw):
         iv = bytearray(os.urandom(16))
@@ -90,10 +101,10 @@ class PyeZipImporter(zipimport.zipimporter):
                         base64_output = base64.b64decode(decrypted_output)
                         zlib_output = zlib.decompress(base64_output)
                         module_data = zlib_output.decode('utf-8')
-                        mod = types.ModuleType(fullname)
+                        mod = type(sys)(fullname)
                         exec(module_data, mod.__dict__)
                         sys.modules[fullname] = mod
-                        mod.__file__ = os.path.join(self.archive, path)
+                        mod.__file__ = self.archive + "\\" + path
                         mod.__loader__ = self
                         return mod
         raise PyeZipImportError(f"can't find module {str(fullname)}")

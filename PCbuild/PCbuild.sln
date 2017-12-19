@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "komextract_new", "komextract_new.vcxproj", "{FF7816A6-820B-418A-B9A6-0005C3C746FF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A3A6C22-92AF-4997-BCEA-BC04C402E66E} = {4A3A6C22-92AF-4997-BCEA-BC04C402E66E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kompact_new", "kompact_new.vcxproj", "{1E0DA3A0-E7EC-4ABD-B09F-D35000001D16}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A3A6C22-92AF-4997-BCEA-BC04C402E66E} = {4A3A6C22-92AF-4997-BCEA-BC04C402E66E}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Els_kom_Core", "..\Els_kom_Core\Els_kom_Core.csproj", "{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Els_kom", "Els_kom.vcxproj", "{253B39B2-B142-481E-8066-AFE06C31D647}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_freeze_pyeimport", "_freeze_pyeimport.vcxproj", "{4A3A6C22-92AF-4997-BCEA-BC04C402E66E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF7816A6-820B-418A-B9A6-0005C3C746FF}.Release|x86.ActiveCfg = Release|Win32
+		{FF7816A6-820B-418A-B9A6-0005C3C746FF}.Release|x86.Build.0 = Release|Win32
+		{FF7816A6-820B-418A-B9A6-0005C3C746FF}.Release|x86.Deploy.0 = Release|Win32
+		{1E0DA3A0-E7EC-4ABD-B09F-D35000001D16}.Release|x86.ActiveCfg = Release|Win32
+		{1E0DA3A0-E7EC-4ABD-B09F-D35000001D16}.Release|x86.Build.0 = Release|Win32
+		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|x86.ActiveCfg = Release|x86
+		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|x86.Build.0 = Release|x86
+		{253B39B2-B142-481E-8066-AFE06C31D647}.Release|x86.ActiveCfg = Release|Win32
+		{253B39B2-B142-481E-8066-AFE06C31D647}.Release|x86.Build.0 = Release|Win32
+		{4A3A6C22-92AF-4997-BCEA-BC04C402E66E}.Release|x86.ActiveCfg = Release|Win32
+		{4A3A6C22-92AF-4997-BCEA-BC04C402E66E}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D97FF96-21DB-4939-A93E-F75A2BECC958}
+	EndGlobalSection
+EndGlobal
