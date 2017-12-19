@@ -11,6 +11,8 @@ before_build:
 cache:
   - .\externals\cpython
   - .\externals\aes
+  - .\obj
+  - .\bin
 
 build:
   project: Els_kom_Solution.sln
