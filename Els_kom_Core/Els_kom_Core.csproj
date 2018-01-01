@@ -51,10 +51,13 @@
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <LangVersion>7.1</LangVersion>
+    <LangVersion>7.2</LangVersion>
     <OutputPath>..\bin\x86\Release\</OutputPath>
     <DocumentationFile>..\bin\x86\Release\Els_kom.Core.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -81,8 +84,13 @@
     <Compile Include="Classes\ExecutionManager.cs" />
     <Compile Include="Classes\INIObject.cs" />
     <Compile Include="Classes\KOMManager.cs" />
+    <Compile Include="Classes\KOMV2.cs" />
+    <Compile Include="Classes\KOMV3.cs" />
+    <Compile Include="Classes\KOMV4.cs" />
     <Compile Include="Classes\MessageManager.cs" />
+    <Compile Include="Classes\Packer.cs" />
     <Compile Include="Classes\ShowTaskbarEvent.cs" />
+    <Compile Include="Classes\Unpacker.cs" />
     <Compile Include="Classes\Version.cs" />
     <Compile Include="Controls\AboutControl.cs">
       <SubType>UserControl</SubType>

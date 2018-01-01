@@ -30,26 +30,37 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
-        /// Overload for Shell() Function that Allows Overloading of the Working directory Variable. It must be a String but can be variables that returns strings.
+        /// Overload for Shell() Function that Allows Overloading of the Working directory Variable.
+        /// It must be a String but can be variables that returns strings.
         /// </summary>
-        /// <returns>0</returns>
-        public static object Shell(string FileName, string Arguments, bool RedirectStandardOutput, bool UseShellExecute, bool CreateNoWindow, System.Diagnostics.ProcessWindowStyle WindowStyle, string WorkingDirectory, bool WaitForProcessExit)
+        /// <returns>0, process stdout data, process stderr data</returns>
+        public static object Shell(string FileName, string Arguments, bool RedirectStandardOutput, bool RedirectStandardError, bool UseShellExecute, bool CreateNoWindow, System.Diagnostics.ProcessWindowStyle WindowStyle, string WorkingDirectory, bool WaitForProcessExit)
         {
+            object ret = 0;
             System.Diagnostics.Process proc = new System.Diagnostics.Process();
             proc.StartInfo.FileName = FileName;
             proc.StartInfo.Arguments = Arguments;
             proc.StartInfo.RedirectStandardOutput = RedirectStandardOutput;
+            proc.StartInfo.RedirectStandardError = RedirectStandardError;
             proc.StartInfo.UseShellExecute = UseShellExecute;
             proc.StartInfo.CreateNoWindow = CreateNoWindow;
             proc.StartInfo.WindowStyle = WindowStyle;
             proc.StartInfo.WorkingDirectory = WorkingDirectory;
             proc.Start();
+            if (RedirectStandardError)
+            {
+                ret = proc.StandardError.ReadToEnd();
+            }
+            if (RedirectStandardOutput)
+            {
+                ret = proc.StandardOutput.ReadToEnd();
+            }
             if (WaitForProcessExit)
             {
                 proc.WaitForExit();
             }
             // Required to have Detection on the process running to work right.
-            return 0;
+            return ret;
         }
 
         /// <summary>
@@ -87,7 +98,7 @@ namespace Els_kom_Core.Classes
                     if (System.IO.File.Exists(ElsDir + "\\data\\x2.exe"))
                     {
                         RunningElswordDirectly = true;
-                        Shell(ElsDir + "\\data\\x2.exe", "pxk19slammsu286nfha02kpqnf729ck", false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir + "\\data\\", true);
+                        Shell(ElsDir + "\\data\\x2.exe", "pxk19slammsu286nfha02kpqnf729ck", false, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir + "\\data\\", true);
                         RunningElswordDirectly = false;
                     }
                     else
@@ -122,7 +133,7 @@ namespace Els_kom_Core.Classes
                     if (System.IO.File.Exists(ElsDir + "\\voidels.exe"))
                     {
                         RunningElsword = true;
-                        Shell(ElsDir + "\\voidels.exe", "", false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir, true);
+                        Shell(ElsDir + "\\voidels.exe", "", false, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir, true);
                         RunningElsword = false;
                     }
                     else
@@ -130,7 +141,7 @@ namespace Els_kom_Core.Classes
                         if (System.IO.File.Exists(ElsDir + "\\elsword.exe"))
                         {
                             RunningElsword = true;
-                            Shell(ElsDir + "\\elsword.exe", "", false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir, true);
+                            Shell(ElsDir + "\\elsword.exe", "", false, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir, true);
                             RunningElsword = false;
                         }
                         else

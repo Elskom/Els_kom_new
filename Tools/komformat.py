@@ -146,6 +146,7 @@ def kom_v3_unpack(in_path, out_path):
         crc_creator.write(crc_data)
     with open("crc.xml") as crc_reader:
         crc_er = xml.dom.minidom.parse(crc_reader)
+    os.remove("crc.xml")
     entries, relative_offseterr = make_entries_v3(crc_er, entry_count)
     for entry in entries:
         entry_file_data = (file_data[theunpack_offset + entry.relative_offset:theunpack_offset +
@@ -176,40 +177,33 @@ def unpacker_main(argv):
     Main Unpacker Program Function.
     """
     if len(argv) < 1:
-        print("Usage:\nkomextract_new [--2, --3, --4] --in <KOM file name> --out <Folder name>")
+        print("Usage:\nkomextract_new --version <number> --in <KOM file name> --out <Folder name>")
         sys.exit(2)
     try:
-        options, arguments = getopt.getopt(argv, 'i:o:2:3:4', ['in=', 'out=', '2=', '3=', '4='])
+        options, arguments = getopt.getopt(argv, 'i:o:v', ['in=', 'out=', 'version='])
     except getopt.GetoptError:
         sys.exit(2)
     in_path = None
     out_path = None
-    use_alg2 = False
-    use_alg3 = False
-    use_alg4 = False
+    version = None
     for option, argument in options:
         if option in ('i', '--in'):
             in_path = argument
         elif option in ('o', '--out'):
             out_path = argument
-        elif option in ('2', '--2'):
-            use_alg2 = True
-        elif option in ('3', '--3'):
-            use_alg3 = True
-        elif option in ('4', '--4'):
-            use_alg4 = True
-    if(not in_path or not out_path or not os.path.isfile(in_path) or (os.path.exists(out_path) and not
-       os.path.isdir(out_path))):
-        print("Usage:\nkomextract_new [--2, --3, --4] --in <KOM file name> --out <Folder name>")
+        elif option in ('v', '--version'):
+            version = int(argument)
+    val1 = True if in_path is None and out_path is None else False
+    val2 = True if not os.path.isfile(in_path) else False
+    val3 = True if version is None else False
+    if ((val1) or (val2) or (val3)):
+        print("Usage:\nkomextract_new --version <number> --in <KOM file name> --out <Folder name>")
         sys.exit(2)
-    if not use_alg2 and not use_alg3 and not use_alg4:
-        print("sage:\nkomextract_new [--2, --3, --4] --in <KOM file name> --out <Folder name>")
-        sys.exit(2)
-    if use_alg2:
+    if version == 2:
         kom_v2_unpack(in_path, out_path)
-    elif use_alg3:
+    elif version == 3:
         kom_v3_unpack(in_path, out_path)
-    elif use_alg4:
+    elif version == 4:
         kom_v4_unpack(in_path, out_path)
 
 
@@ -392,40 +386,31 @@ def packer_main(argv):
     Main Packer Program Function.
     """
     if len(argv) < 2:
-        print("Usage:\nkompact_new [--2, --3, --4] --in <Folder name> --out <KOM file name>")
+        print("Usage:\nkompact_new --version <number> --in <Folder name> --out <KOM file name>")
         sys.exit(2)
     try:
-        options, arguments = getopt.getopt(argv, 'i:o:2:3:4', ['in=', 'out=', '2=', '3=', '4='])
+        options, arguments = getopt.getopt(argv, 'i:o:v', ['in=', 'out=', 'version='])
     except getopt.GetoptError:
         sys.exit(2)
     in_path = None
     out_path = None
-    use_alg2 = False
-    use_alg3 = False
-    use_alg4 = False
+    version = None
     for option, argument in options:
         if option in ('i', '--in'):
             in_path = argument
         elif option in ('o', '--out'):
             out_path = argument
-        elif option in ('2', '--2'):
-            use_alg2 = True
-        elif option in ('3', '--3'):
-            use_alg3 = True
-        elif option in ('4', '--4'):
-            use_alg4 = True
-    if not in_path and not out_path:
-        print("Usage:\nkompact_new --in [--2, --3, --4] <Folder name> --out <KOM file name>")
+        elif option in ('v', '--version'):
+            version = int(argument)
+    val1 = True if in_path is None and out_path is None else False
+    val2 = True if not os.path.isdir(in_path) else False
+    val3 = True if version is None else False
+    if ((val1) or (val2) or (val3)):
+        print("Usage:\nkompact_new --version <number> --in <Folder name> --out <KOM file name>")
         sys.exit(2)
-    if not os.path.isdir(in_path):
-        print("Usage:\nkompact_new --in [--2, --3, --4] <Folder name> --out <KOM file name>")
-        sys.exit(2)
-    if not use_alg2 and not use_alg3 and not use_alg4:
-        print("Usage:\nkompact_new --in [--2, --3, --4] <Folder name> --out <KOM file name>")
-        sys.exit(2)
-    if use_alg2:
+    if version == 2:
         kom_v2_pack(in_path, out_path)
-    elif use_alg3:
+    elif version == 3:
         kom_v3_pack(in_path, out_path)
-    elif use_alg4:
+    elif version == 4:
         kom_v4_pack(in_path, out_path)
