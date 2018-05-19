@@ -1,0 +1,42 @@
+// Copyright (c) 2014-2018, Els_kom org.
+// https://github.com/Elskom/
+// All rights reserved.
+// license: MIT, see LICENSE for more details.
+
+namespace komv3_plugin
+{
+    public class Komv3_plugin : Els_kom_Core.interfaces.IKomPlugin
+    {
+        public string KOMHeaderString => "KOG GC TEAM MASSFILE V.0.3.";
+        public int SupportedKOMVersion => 3;
+
+        public void Pack(string in_path, string out_path, string KOMFileName)
+        {
+            // not implemented yet due to lack of packing information on v3 koms.
+            throw new System.NotImplementedException();
+        }
+
+        public void Unpack(string in_path, string out_path, string KOMFileName)
+        {
+            System.IO.BinaryReader reader = new System.IO.BinaryReader(System.IO.File.OpenRead(in_path), System.Text.Encoding.ASCII);
+            reader.BaseStream.Position += 52;
+            int entry_count = (int)reader.ReadUInt64();
+            reader.BaseStream.Position += 4;
+            int file_time = reader.ReadInt32();
+            int xml_size = reader.ReadInt32();
+            byte[] xmldatabuffer = reader.ReadBytes(xml_size);
+            string xmldata = System.Text.Encoding.ASCII.GetString(xmldatabuffer);
+            System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> entries = Extras.Make_entries_v3(xmldata, entry_count);
+            foreach (var entry in entries)
+            {
+                // we iterate through every entry here and unpack the data.
+                Els_kom_Core.Classes.KOMManager.WriteOutput(reader, out_path, entry, SupportedKOMVersion);
+            }
+            reader.Dispose();
+        }
+
+        public void Delete(string in_path, bool folder)
+        {
+        }
+    }
+}

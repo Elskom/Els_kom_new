@@ -1,4 +1,7 @@
-﻿using System.Linq;
+// Copyright (c) 2014-2018, Els_kom org.
+// https://github.com/Elskom/
+// All rights reserved.
+// license: MIT, see LICENSE for more details.
 
 namespace Els_kom_Core.Classes
 {
@@ -10,31 +13,27 @@ namespace Els_kom_Core.Classes
         private static string ElsDir;
         private static bool RunningElsword = false;
         private static bool RunningElswordDirectly = false;
+        private static bool ExecutingElsword = false;
 
         /// <summary>
         /// Gets if the launcher to Elsword is running.
         /// </summary>
-        /// <returns>bool</returns>
-        public static bool GetRunningElsword()
-        {
-            return RunningElsword;
-        }
-
+        public static bool GetRunningElsword() => RunningElsword;
         /// <summary>
         /// Gets if Elsword is running Directly.
         /// </summary>
-        /// <returns>bool</returns>
-        public static bool GetRunningElswordDirectly()
-        {
-            return RunningElswordDirectly;
-        }
+        public static bool GetRunningElswordDirectly() => RunningElswordDirectly;
+        /// <summary>
+        /// Gets if Elsword is still getting ready to execute. False if executing.
+        /// </summary>
+        public static bool GetExecutingElsword() => ExecutingElsword;
 
         /// <summary>
         /// Overload for Shell() Function that Allows Overloading of the Working directory Variable.
         /// It must be a String but can be variables that returns strings.
         /// </summary>
         /// <returns>0, process stdout data, process stderr data</returns>
-        public static object Shell(string FileName, string Arguments, bool RedirectStandardOutput, bool RedirectStandardError, bool UseShellExecute, bool CreateNoWindow, System.Diagnostics.ProcessWindowStyle WindowStyle, string WorkingDirectory, bool WaitForProcessExit)
+        internal static object Shell(string FileName, string Arguments, bool RedirectStandardOutput, bool RedirectStandardError, bool UseShellExecute, bool CreateNoWindow, System.Diagnostics.ProcessWindowStyle WindowStyle, string WorkingDirectory, bool WaitForProcessExit)
         {
             object ret = 0;
             System.Diagnostics.Process proc = new System.Diagnostics.Process();
@@ -46,6 +45,11 @@ namespace Els_kom_Core.Classes
             proc.StartInfo.CreateNoWindow = CreateNoWindow;
             proc.StartInfo.WindowStyle = WindowStyle;
             proc.StartInfo.WorkingDirectory = WorkingDirectory;
+            // so that way main form Test mods functionality actually works (Lame ass hack I think tbh)...
+            if (ExecutingElsword)
+            {
+                ExecutingElsword = false;
+            }
             proc.Start();
             if (RedirectStandardError)
             {
@@ -64,22 +68,19 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
-        /// Bypasses Elsword's Integrity Check (makes it read checkkom.xml locally).
+        /// Bypasses Elsword's Integrity Check making it think that none of the KOM files was modified.
         /// </summary>
-        public static bool BypassIntegrityChecks()
-        {
-            // TODO: Add code that can bypass Integrity Checks without needing Fidler as GameGuard detects it.
-            return true;
-        }
+        [System.Obsolete("This function will be replaced with Test Mods callback plugin functions because of easy extendability and simplicity.")]
+        internal static bool BypassIntegrityChecks() => true;
 
         /// <summary>
         /// Gets if Els_kom.exe is already Running. If So, Helps with Closing any new Instances.
         /// </summary>
         /// <returns>Boolean</returns>
-        public static bool IsElsKomRunning()
+        internal static bool IsElsKomRunning()
         {
             System.Diagnostics.Process[] els_komexe = System.Diagnostics.Process.GetProcessesByName("Els_kom");
-            return els_komexe.Count() > 1;
+            return System.Linq.Enumerable.Count(els_komexe) > 1;
         }
 
         /// <summary>
@@ -87,12 +88,13 @@ namespace Els_kom_Core.Classes
         /// This is an blocking call that has to run in an separate thread from Els_kom's main thread.
         /// NEVER UNDER ANY CIRCUMSTANCES RUN THIS IN THE MAIN THREAD, YOU WILL DEADLOCK ELS_KOM!!!
         /// </summary>
-        public static void RunElswordDirectly()
+        internal static void RunElswordDirectly()
         {
-            if (System.IO.File.Exists(System.Windows.Forms.Application.StartupPath + "\\Settings.ini"))
+            ExecutingElsword = true;
+            if (System.IO.File.Exists(Classes.SettingsFile.Path))
             {
-                INIObject settingsini = new INIObject(System.Windows.Forms.Application.StartupPath + "\\Settings.ini");
-                ElsDir = settingsini.Read("Settings.ini", "ElsDir");
+                Classes.SettingsFile.Settingsxml.ReopenFile();
+                ElsDir = Classes.SettingsFile.Settingsxml.Read("ElsDir");
                 if (ElsDir.Length > 0)
                 {
                     if (System.IO.File.Exists(ElsDir + "\\data\\x2.exe"))
@@ -122,12 +124,15 @@ namespace Els_kom_Core.Classes
         /// This is an blocking call that has to run in an separate thread from Els_kom's main thread.
         /// NEVER UNDER ANY CIRCUMSTANCES RUN THIS IN THE MAIN THREAD, YOU WILL DEADLOCK ELS_KOM!!!
         /// </summary>
-        public static void RunElswordLauncher()
+        internal static void RunElswordLauncher()
         {
-            if (System.IO.File.Exists(System.Windows.Forms.Application.StartupPath + "\\Settings.ini"))
+            // for the sake of sanity and the need to disable the pack, unpack, and test mods
+            // buttons in UI while updating game.
+            ExecutingElsword = true;
+            if (System.IO.File.Exists(Classes.SettingsFile.Path))
             {
-                INIObject settingsini = new INIObject(System.Windows.Forms.Application.StartupPath + "\\Settings.ini");
-                ElsDir = settingsini.Read("Settings.ini", "ElsDir");
+                Classes.SettingsFile.Settingsxml.ReopenFile();
+                ElsDir = Classes.SettingsFile.Settingsxml.Read("ElsDir");
                 if (ElsDir.Length > 0)
                 {
                     if (System.IO.File.Exists(ElsDir + "\\voidels.exe"))
@@ -158,6 +163,19 @@ namespace Els_kom_Core.Classes
             else
             {
                 MessageManager.ShowError("The Elsword Directory Setting is not set. Make sure to Set your Elsword Directory Setting and try to update Elsword Again!", "Error!");
+            }
+        }
+
+        /// <summary>
+        /// Deploys the Test Mods callback functions provided by plugins.
+        /// This is an blocking call that has to run in an separate thread from Els_kom's main thread.
+        /// NEVER UNDER ANY CIRCUMSTANCES RUN THIS IN THE MAIN THREAD, YOU WILL DEADLOCK ELS_KOM!!!
+        /// </summary>
+        internal static void DeployCallBack()
+        {
+            while (RunningElswordDirectly)
+            {
+                // TODO: Implement this.
             }
         }
     }

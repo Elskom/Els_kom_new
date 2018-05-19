@@ -1,4 +1,9 @@
-﻿namespace Els_kom_Core.Controls
+// Copyright (c) 2014-2018, Els_kom org.
+// https://github.com/Elskom/
+// All rights reserved.
+// license: MIT, see LICENSE for more details.
+
+namespace Els_kom_Core.Controls
 {
     /// <summary>
     /// SettingsControl control for Els_kom's Settings form.
@@ -13,80 +18,87 @@
             InitializeComponent();
         }
 
-        string curvalue;
-        string curvalue2;
-        string curvalue3;
+        private string curvalue;
+        private string curvalue2;
+        private string curvalue3;
+        private string Label4 = "...";
+        private string Label5 = "...";
+
         /// <summary>
-        /// Event that the control fires that Closes the Form it is on.
+        /// Parrent Form that the control is on.
         /// </summary>
-        public event System.EventHandler CloseForm;
+        public new System.Windows.Forms.Form ParentForm;
 
         /// <summary>
         /// Saves the Settings that changed in this Control's buffers.
         /// </summary>
         public void SaveSettings()
         {
-            Classes.INIObject settingsini = new Classes.INIObject(System.Windows.Forms.Application.StartupPath + "\\Settings.ini");
-            if (!ReferenceEquals(TextBox1.Text, curvalue3))
+            Classes.SettingsFile.Settingsxml.ReopenFile();
+            if (!string.Equals(TextBox1.Text, curvalue3))
             {
                 if (TextBox1.Text.Length > 0)
                 {
-                    settingsini.Write("Settings.ini", "ElsDir", TextBox1.Text);
+                    Classes.SettingsFile.Settingsxml.Write("ElsDir", TextBox1.Text);
                 }
                 else
                 {
                     Classes.MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!");
                 }
             }
-            if (!ReferenceEquals(Label4.Text, curvalue))
+            if (!string.Equals(Label4, curvalue))
             {
-                if (Label5.Text == "...")
+                if (Label5 == "...")
                 {
-                    settingsini.Write("Settings.ini", "IconWhileElsNotRunning", "2");
+                    Classes.SettingsFile.Settingsxml.Write("IconWhileElsNotRunning", "2");
                 }
                 else
                 {
-                    settingsini.Write("Settings.ini", "IconWhileElsNotRunning", Label4.Text);
+                    Classes.SettingsFile.Settingsxml.Write("IconWhileElsNotRunning", Label4);
                 }
             }
-            if (!ReferenceEquals(Label5.Text, curvalue2))
+            if (!string.Equals(Label5, curvalue2))
             {
-                if (Label5.Text == "...")
+                if (Label5 == "...")
                 {
-                    settingsini.Write("Settings.ini", "IconWhileElsRunning", "1");
+                    Classes.SettingsFile.Settingsxml.Write("IconWhileElsRunning", "1");
                 }
                 else
                 {
-                    settingsini.Write("Settings.ini", "IconWhileElsRunning", Label5.Text);
+                    Classes.SettingsFile.Settingsxml.Write("IconWhileElsRunning", Label5);
                 }
             }
+            Classes.SettingsFile.Settingsxml.Save();
         }
 
         void Button1_Click(object sender, System.EventArgs e)
         {
-            FolderBrowserDialog1.ShowDialog();
-            Timer1.Enabled = true;
+            System.Windows.Forms.FolderBrowserDialog FolderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog
+            {
+                Description = "Select the Folder that Your Elsword Install is in (Must be the one that either elsword.exe or voidels.exe is in).",
+                RootFolder = System.Environment.SpecialFolder.MyComputer,
+                ShowNewFolderButton = false
+            };
+            System.Windows.Forms.DialogResult res = FolderBrowserDialog1.ShowDialog();
+            if (res == System.Windows.Forms.DialogResult.OK)
+            {
+                if (FolderBrowserDialog1.SelectedPath.Length > 0)
+                {
+                    TextBox1.Text = FolderBrowserDialog1.SelectedPath;
+                }
+            }
         }
 
         void Button2_Click(object sender, System.EventArgs e)
         {
-            CloseForm?.Invoke(this, new System.EventArgs());
-        }
-
-        void Timer1_Tick(object sender, System.EventArgs e)
-        {
-            if (FolderBrowserDialog1.SelectedPath.Length > 0)
-            {
-                TextBox1.Text = FolderBrowserDialog1.SelectedPath;
-                Timer1.Enabled = false;
-            }
+            ParentForm.Close();
         }
 
         void RadioButton1_CheckedChanged(object sender, System.EventArgs e)
         {
             if (RadioButton1.Checked)
             {
-                Label4.Text = "0";
+                Label4 = "0";
                 if (RadioButton2.Checked)
                 {
                     RadioButton2.Checked = false;
@@ -102,7 +114,7 @@
         {
             if (RadioButton2.Checked)
             {
-                Label4.Text = "1";
+                Label4 = "1";
                 if (RadioButton1.Checked)
                 {
                     RadioButton1.Checked = false;
@@ -118,7 +130,7 @@
         {
             if (RadioButton3.Checked)
             {
-                Label4.Text = "2";
+                Label4 = "2";
                 if (RadioButton1.Checked)
                 {
                     RadioButton1.Checked = false;
@@ -134,7 +146,7 @@
         {
             if (RadioButton4.Checked)
             {
-                Label5.Text = "0";
+                Label5 = "0";
                 if (RadioButton5.Checked)
                 {
                     RadioButton5.Checked = false;
@@ -150,7 +162,7 @@
         {
             if (RadioButton5.Checked)
             {
-                Label5.Text = "1";
+                Label5 = "1";
                 if (RadioButton4.Checked)
                 {
                     RadioButton4.Checked = false;
@@ -166,7 +178,7 @@
         {
             if (RadioButton6.Checked)
             {
-                Label5.Text = "2";
+                Label5 = "2";
                 if (RadioButton4.Checked)
                 {
                     RadioButton4.Checked = false;
@@ -182,63 +194,73 @@
         {
             if (TreeView1.SelectedNode.Index == 0)
             {
-                Panel1.Visible = true;
-                Panel2.Visible = false;
+                Panel3.Visible = true;
                 TreeView1.Focus();
             }
-            else if (TreeView1.SelectedNode.Index == 1)
+            // TODO: Make sure to check if an plugin panel's node is selected or not.
+        }
+
+        private void SetRadios()
+        {
+            if (Label4 == "0")
             {
-                Panel1.Visible = false;
-                Panel2.Visible = true;
-                TreeView1.Focus();
+                RadioButton1.Checked = true;
             }
+            else if (Label4 == "1")
+            {
+                RadioButton2.Checked = true;
+            }
+            else if (Label4 == "2")
+            {
+                RadioButton3.Checked = true;
+            }
+            else if (Label4 == "...")
+            {
+                RadioButton3.Checked = true;
+            }
+            if (Label5 == "0")
+            {
+                RadioButton4.Checked = true;
+            }
+            else if (Label5 == "1")
+            {
+                RadioButton5.Checked = true;
+            }
+            else if (Label5 == "2")
+            {
+                RadioButton6.Checked = true;
+            }
+            else if (Label5 == "...")
+            {
+                RadioButton5.Checked = true;
+            }
+
+        }
+
+        /// <summary>
+        /// Initializes the SettingsControl's constants.
+        /// </summary>
+        public void InitControl()
+        {
+            if (System.IO.File.Exists(Classes.SettingsFile.Path))
+            {
+                Classes.SettingsFile.Settingsxml.ReopenFile();
+                curvalue3 = Classes.SettingsFile.Settingsxml.Read("ElsDir");
+                curvalue = Classes.SettingsFile.Settingsxml.Read("IconWhileElsNotRunning");
+                curvalue2 = Classes.SettingsFile.Settingsxml.Read("IconWhileElsRunning");
+                TextBox1.Text = curvalue3;
+                // set these to the values read above only if they are not empty.
+                Label4 = string.IsNullOrEmpty(curvalue) ? Label4 : curvalue;
+                Label5 = string.IsNullOrEmpty(curvalue2) ? Label5 : curvalue2;
+            }
+            SetRadios();
+            TreeView1.SelectedNode = TreeView1.Nodes[0];
         }
 
         private void SettingsControl_Load(object sender, System.EventArgs e)
         {
-            if (System.IO.File.Exists(System.Windows.Forms.Application.StartupPath + "\\Settings.ini"))
-            {
-                Classes.INIObject settingsini = new Classes.INIObject(System.Windows.Forms.Application.StartupPath + "\\Settings.ini");
-                curvalue3 = settingsini.Read("Settings.ini", "ElsDir");
-                curvalue = settingsini.Read("Settings.ini", "IconWhileElsNotRunning");
-                curvalue2 = settingsini.Read("Settings.ini", "IconWhileElsRunning");
-                TextBox1.Text = curvalue3;
-                Label4.Text = curvalue;
-                Label5.Text = curvalue2;
-                if (Label4.Text == "0")
-                {
-                    RadioButton1.Checked = true;
-                }
-                else if (Label4.Text == "1")
-                {
-                    RadioButton2.Checked = true;
-                }
-                else if (Label4.Text == "2")
-                {
-                    RadioButton3.Checked = true;
-                }
-                else if (Label4.Text == "...")
-                {
-                    RadioButton3.Checked = true;
-                }
-                if (Label5.Text == "0")
-                {
-                    RadioButton4.Checked = true;
-                }
-                else if (Label5.Text == "1")
-                {
-                    RadioButton5.Checked = true;
-                }
-                else if (Label5.Text == "2")
-                {
-                    RadioButton6.Checked = true;
-                }
-                else if (Label5.Text == "...")
-                {
-                    RadioButton5.Checked = true;
-                }
-                TreeView1.SelectedNode = TreeView1.Nodes[0];
-            }
+            SetRadios();
+            TreeView1.SelectedNode = TreeView1.Nodes[0];
         }
     }
 }

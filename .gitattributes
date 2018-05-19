@@ -1,3 +1,1 @@
 .github/* linguist-vendored
-get_externals.bat linguist-vendored
-ci_build.bat linguist-vendored

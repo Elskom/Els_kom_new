@@ -1,0 +1,1 @@
+Replaced INIObject class with XMLObject class. Now settings is much more easier without lame P/Invoke calls.
