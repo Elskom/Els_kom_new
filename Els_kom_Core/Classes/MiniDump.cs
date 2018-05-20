@@ -5,8 +5,14 @@
 
 namespace Els_kom_Core.Classes
 {
+    /// <summary>
+    /// Class in the Core that allows creating Mini-dumps when a fatal exception occurs.
+    /// </summary>
     public class MiniDump
     {
+        /// <summary>
+        /// Creates a Mini-dump in the file specified.
+        /// </summary>
         public static void MiniDumpToFile(string fileToDump)
         {
             System.IO.FileStream fsToDump = null;
