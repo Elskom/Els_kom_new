@@ -20,7 +20,7 @@ namespace Els_kom_Core.Classes
             }
             System.Diagnostics.Process thisProcess = System.Diagnostics.Process.GetCurrentProcess();
             SafeNativeMethods.MiniDumpWriteDump(thisProcess.Handle, thisProcess.Id,
-                fsToDump.SafeFileHandle.DangerousGetHandle(), MINIDUMP_TYPE.MiniDumpNormal,
+                fsToDump.SafeFileHandle.DangerousGetHandle(), Enums.MINIDUMP_TYPE.MiniDumpNormal,
                 System.IntPtr.Zero, System.IntPtr.Zero, System.IntPtr.Zero);
             thisProcess.Dispose();
             fsToDump.Dispose();
