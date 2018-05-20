@@ -97,6 +97,7 @@
     <Compile Include="Enums\LoadImagefuLoad.cs" />
     <Compile Include="Enums\LoadImageTypes.cs" />
     <Compile Include="Enums\SYSCOMMANDS.cs" />
+    <Compile Include="Enums\MINIDUMP_TYPE.cs" />
     <Compile Include="interfaces\ICallbackPlugin.cs" />
     <Compile Include="interfaces\IEncryptionPlugin.cs" />
     <Compile Include="interfaces\IKomPlugin.cs" />
