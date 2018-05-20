@@ -55,7 +55,7 @@ namespace Els_kom_Core.Classes
                 localPath += "\\Els_kom";
                 System.Diagnostics.Process thisProcess = System.Diagnostics.Process.GetCurrentProcess();
                 localPath += "\\" + thisProcess.ProcessName + "-" + thisProcess.Id.ToString() + ".log";
-                thisProcess.Disposs();
+                thisProcess.Dispose();
                 if (!System.IO.File.Exists(localPath))
                 {
                     System.IO.File.Create(localPath).Dispose();
@@ -94,7 +94,7 @@ namespace Els_kom_Core.Classes
                 localPath += "\\Els_kom";
                 System.Diagnostics.Process thisProcess = System.Diagnostics.Process.GetCurrentProcess();
                 localPath += "\\" + thisProcess.ProcessName + "-" + thisProcess.Id.ToString() + ".mdmp";
-                thisProcess.Disposs();
+                thisProcess.Dispose();
                 return localPath;
             }
         }
