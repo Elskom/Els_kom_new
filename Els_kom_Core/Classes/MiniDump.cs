@@ -26,16 +26,6 @@ namespace Els_kom_Core.Classes
             MiniDumpWithCodeSegs = 0x00002000
         }
 
-        [DllImport( "dbghelp.dll" )]
-        static extern bool MiniDumpWriteDump(
-            System.IntPtr hProcess,
-            int ProcessId,
-            System.IntPtr hFile,
-            MINIDUMP_TYPE DumpType,
-            System.IntPtr ExceptionParam,
-            System.IntPtr UserStreamParam,
-            System.IntPtr CallackParam);
-
         public static void MiniDumpToFile(string fileToDump)
         {
             System.IO.FileStream fsToDump = null;
