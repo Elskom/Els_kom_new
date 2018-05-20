@@ -21,6 +21,8 @@ namespace Els_kom_Core.Classes
         internal static extern System.IntPtr LoadLibrary(string lpLibFileName);
         [System.Runtime.InteropServices.DllImport("kernel32.dll", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
         internal static extern int FreeLibrary(System.IntPtr hLibModule);
+        [System.Runtime.InteropServices.DllImport("dbghelp.dll")]
+        internal static extern bool MiniDumpWriteDump(System.IntPtr hProcess, int ProcessId, System.IntPtr hFile, Enums.MINIDUMP_TYPE DumpType, System.IntPtr ExceptionParam, System.IntPtr UserStreamParam, System.IntPtr CallackParam);
 
         internal static System.IntPtr _LoadIconErrorChecked(string resource, int Width, int Height, string filenamefallback, string fallbackmodule)
         {
