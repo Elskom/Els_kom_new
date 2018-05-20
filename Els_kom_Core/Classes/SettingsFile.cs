@@ -82,6 +82,9 @@ namespace Els_kom_Core.Classes
             }
         }
  
+        /// <summary>
+        /// The path to the Els_kom Mini-Dump file.
+        /// </summary>
         public static string MiniDumpPath
         {
             get
