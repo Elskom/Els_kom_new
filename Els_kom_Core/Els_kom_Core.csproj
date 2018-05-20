@@ -53,6 +53,7 @@
     <Compile Include="Classes\KOMManager.cs" />
     <Compile Include="Classes\LoadResources.cs" />
     <Compile Include="Classes\MessageManager.cs" />
+    <Compile Include="Classes\MiniDump.cs" />
     <Compile Include="Classes\PackingError.cs" />
     <Compile Include="Classes\SafeNativeMethods.cs" />
     <Compile Include="Classes\SettingsFile.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Enums\LoadImagefuLoad.cs" />
     <Compile Include="Enums\LoadImageTypes.cs" />
     <Compile Include="Enums\SYSCOMMANDS.cs" />
+    <Compile Include="Enums\MINIDUMP_TYPE.cs" />
     <Compile Include="interfaces\ICallbackPlugin.cs" />
     <Compile Include="interfaces\IEncryptionPlugin.cs" />
     <Compile Include="interfaces\IKomPlugin.cs" />
