@@ -53,7 +53,9 @@ namespace Els_kom_Core.Classes
                 string localPath = System.Environment.GetFolderPath(
                     System.Environment.SpecialFolder.LocalApplicationData);
                 localPath += "\\Els_kom";
-                localPath += "\\Exceptions.log";
+                System.Diagnostics.Process thisProcess = System.Diagnostics.Process.GetCurrentProcess();
+                localPath += "\\" + thisProcess.ProcessName + "-" + thisProcess.Id.ToString() + ".log";
+                thisProcess.Disposs();
                 if (!System.IO.File.Exists(localPath))
                 {
                     System.IO.File.Create(localPath).Dispose();
@@ -77,6 +79,20 @@ namespace Els_kom_Core.Classes
             set
             {
                 _settingsxml = value;
+            }
+        }
+ 
+        public static string MiniDumpPath
+        {
+            get
+            {
+                string localPath = System.Environment.GetFolderPath(
+                    System.Environment.SpecialFolder.LocalApplicationData);
+                localPath += "\\Els_kom";
+                System.Diagnostics.Process thisProcess = System.Diagnostics.Process.GetCurrentProcess();
+                localPath += "\\" + thisProcess.ProcessName + "-" + thisProcess.Id.ToString() + ".mdmp";
+                thisProcess.Disposs();
+                return localPath;
             }
         }
     }
