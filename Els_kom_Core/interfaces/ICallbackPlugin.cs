@@ -3,12 +3,10 @@
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
-/* 0x01050000 = v1.5.0.0 */
-#if VERSION_0x01050000
 namespace Els_kom_Core.interfaces
 {
     /// <summary>
-    /// Interface for Els_kom Test Mods callback plugins (Version 1.5.0.0 or newer).
+    /// Interface for Els_kom Test Mods callback plugins.
     /// </summary>
     public interface ICallbackPlugin
     {
@@ -16,15 +14,15 @@ namespace Els_kom_Core.interfaces
         /// Name of the Test Mods Callback plugin.
         /// </summary>
         string PluginName { get; }
-
         /// <summary>
         /// Returns if this plugin has it's own settings window that should display from the settings window.
         /// </summary>
-        bool GetSupportsSettings();
+        bool SupportsSettings { get; }
         /// <summary>
         /// Returns the plugin's actual settings window for executing in Els_kom's core at runtime.
         /// </summary>
-        System.Windows.Forms.Form GetSettingsWindow();
+        System.Windows.Forms.Form SettingsWindow { get; }
+
         /// <summary>
         /// Test Mods Callback Function.
         ///
@@ -34,7 +32,6 @@ namespace Els_kom_Core.interfaces
         /// file to be spoofed or something is probably ok.
         /// </summary>
         /// <exception cref="System.NotImplementedException">Thrown when a plugin does not have this implemented yet.</exception>
-        void TestModsCallBack();
+        void TestModsCallback();
     }
 }
-#endif

@@ -295,6 +295,12 @@ namespace Els_kom_Core.Controls
                 {
                     Classes.KOMManager.komplugins.Add(komplugin);
                 }
+                System.Collections.Generic.ICollection<interfaces.ICallbackPlugin> _callbackplugins = Classes.GenericPluginLoader<interfaces.ICallbackPlugin>.LoadPlugins("plugins");
+                Classes.ExecutionManager.callbackplugins = new System.Collections.Generic.List<interfaces.ICallbackPlugin>();
+                foreach (var callbackplugins in _callbackplugins)
+                {
+                    Classes.ExecutionManager.callbackplugins.Add(callbackplugins);
+                }
                 if (!Classes.Git.IsMaster)
                 {
                     Classes.MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!");
