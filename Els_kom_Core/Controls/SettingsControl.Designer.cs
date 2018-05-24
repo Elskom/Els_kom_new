@@ -1,4 +1,9 @@
-﻿namespace Els_kom_Core.Controls
+// Copyright (c) 2014-2018, Els_kom org.
+// https://github.com/Elskom/
+// All rights reserved.
+// license: MIT, see LICENSE for more details.
+
+namespace Els_kom_Core.Controls
 {
     partial class SettingsControl
     {
@@ -13,6 +18,7 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            // TODO: check if disposing and for the plugins settings controls list to be cleared and disposed.
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -28,11 +34,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Game Folder");
-            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Icon Settings");
-            this.FolderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.Timer1 = new System.Windows.Forms.Timer(this.components);
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("General");
             this.Panel1 = new System.Windows.Forms.Panel();
             this.Label1 = new System.Windows.Forms.Label();
             this.Button1 = new System.Windows.Forms.Button();
@@ -41,6 +43,7 @@
             this.TreeView1 = new System.Windows.Forms.TreeView();
             this.Panel2 = new System.Windows.Forms.Panel();
             this.Panel3 = new System.Windows.Forms.Panel();
+            this.Panel4 = new System.Windows.Forms.Panel();
             this.RadioButton6 = new System.Windows.Forms.RadioButton();
             this.RadioButton5 = new System.Windows.Forms.RadioButton();
             this.RadioButton4 = new System.Windows.Forms.RadioButton();
@@ -49,35 +52,21 @@
             this.RadioButton1 = new System.Windows.Forms.RadioButton();
             this.Label3 = new System.Windows.Forms.Label();
             this.Label2 = new System.Windows.Forms.Label();
-            this.Label4 = new System.Windows.Forms.Label();
-            this.Label5 = new System.Windows.Forms.Label();
             this.Panel1.SuspendLayout();
             this.Panel2.SuspendLayout();
             this.Panel3.SuspendLayout();
+            this.Panel4.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // FolderBrowserDialog1
-            // 
-            this.FolderBrowserDialog1.Description = "Select the Folder that Your Elsword Install is in (Must be the one that either el" +
-    "sword.exe or voidels.exe is in).";
-            this.FolderBrowserDialog1.RootFolder = System.Environment.SpecialFolder.MyComputer;
-            this.FolderBrowserDialog1.ShowNewFolderButton = false;
-            // 
-            // Timer1
-            // 
-            this.Timer1.Interval = 1;
-            this.Timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // Panel1
             // 
             this.Panel1.Controls.Add(this.Label1);
             this.Panel1.Controls.Add(this.Button1);
             this.Panel1.Controls.Add(this.TextBox1);
-            this.Panel1.Location = new System.Drawing.Point(96, 0);
+            this.Panel1.Location = new System.Drawing.Point(96, 1);
             this.Panel1.Name = "Panel1";
-            this.Panel1.Size = new System.Drawing.Size(414, 46);
+            this.Panel1.Size = new System.Drawing.Size(413, 46);
             this.Panel1.TabIndex = 4;
-            this.Panel1.Visible = false;
             // 
             // Label1
             // 
@@ -107,7 +96,7 @@
             // 
             // Button2
             // 
-            this.Button2.Location = new System.Drawing.Point(432, 83);
+            this.Button2.Location = new System.Drawing.Point(432, 134);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(79, 21);
             this.Button2.TabIndex = 5;
@@ -119,45 +108,38 @@
             // 
             this.TreeView1.Location = new System.Drawing.Point(0, 0);
             this.TreeView1.Name = "TreeView1";
-            treeNode21.Name = "Node0";
-            treeNode21.Text = "Game Folder";
-            treeNode22.Name = "Node1";
-            treeNode22.Text = "Icon Settings";
+            treeNode1.Name = "Node0";
+            treeNode1.Text = "General";
             this.TreeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode21,
-            treeNode22});
+            treeNode1});
             this.TreeView1.Scrollable = false;
-            this.TreeView1.ShowLines = false;
-            this.TreeView1.ShowPlusMinus = false;
-            this.TreeView1.ShowRootLines = false;
-            this.TreeView1.Size = new System.Drawing.Size(96, 74);
+            this.TreeView1.Size = new System.Drawing.Size(96, 127);
             this.TreeView1.TabIndex = 6;
             this.TreeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView1_AfterSelect);
             // 
             // Panel2
             // 
-            this.Panel2.Controls.Add(this.Panel3);
+            this.Panel2.Controls.Add(this.Panel4);
             this.Panel2.Controls.Add(this.RadioButton3);
             this.Panel2.Controls.Add(this.RadioButton2);
             this.Panel2.Controls.Add(this.RadioButton1);
             this.Panel2.Controls.Add(this.Label3);
             this.Panel2.Controls.Add(this.Label2);
-            this.Panel2.Location = new System.Drawing.Point(96, 0);
+            this.Panel2.Location = new System.Drawing.Point(96, 52);
             this.Panel2.Name = "Panel2";
-            this.Panel2.Size = new System.Drawing.Size(414, 74);
+            this.Panel2.Size = new System.Drawing.Size(413, 74);
             this.Panel2.TabIndex = 7;
-            this.Panel2.Visible = false;
             // 
-            // Panel3
-            // 
-            this.Panel3.Controls.Add(this.RadioButton6);
-            this.Panel3.Controls.Add(this.RadioButton5);
-            this.Panel3.Controls.Add(this.RadioButton4);
-            this.Panel3.Location = new System.Drawing.Point(144, 34);
-            this.Panel3.Name = "Panel3";
-            this.Panel3.Size = new System.Drawing.Size(198, 29);
-            this.Panel3.TabIndex = 6;
-            // 
+            // Panel4
+            //
+            this.Panel4.Controls.Add(this.RadioButton6);
+            this.Panel4.Controls.Add(this.RadioButton5);
+            this.Panel4.Controls.Add(this.RadioButton4);
+            this.Panel4.Location = new System.Drawing.Point(144, 34);
+            this.Panel4.Name = "Panel3";
+            this.Panel4.Size = new System.Drawing.Size(198, 29);
+            this.Panel4.TabIndex = 6;
+            //
             // RadioButton6
             // 
             this.RadioButton6.AutoSize = true;
@@ -248,38 +230,25 @@
             this.Label2.TabIndex = 0;
             this.Label2.Text = "While Elsword is not Running:";
             // 
-            // Label4
-            // 
-            this.Label4.AutoSize = true;
-            this.Label4.Location = new System.Drawing.Point(110, 94);
-            this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(16, 13);
-            this.Label4.TabIndex = 8;
-            this.Label4.Text = "...";
-            this.Label4.Visible = false;
-            // 
-            // Label5
-            // 
-            this.Label5.AutoSize = true;
-            this.Label5.Location = new System.Drawing.Point(164, 93);
-            this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(16, 13);
-            this.Label5.TabIndex = 9;
-            this.Label5.Text = "...";
-            this.Label5.Visible = false;
+            // Panel3
+            //
+            this.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Panel3.Location = new System.Drawing.Point(95, 0);
+            this.Panel3.Name = "Panel3";
+            this.Panel3.Size = new System.Drawing.Size(415, 127);
+            this.Panel3.TabIndex = 6;
             // 
             // SettingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.Label5);
-            this.Controls.Add(this.Label4);
             this.Controls.Add(this.TreeView1);
             this.Controls.Add(this.Panel1);
             this.Controls.Add(this.Panel2);
+            this.Controls.Add(this.Panel3);
             this.Controls.Add(this.Button2);
             this.Name = "SettingsControl";
-            this.Size = new System.Drawing.Size(510, 106);
+            this.Size = new System.Drawing.Size(510, 160);
             this.Load += new System.EventHandler(this.SettingsControl_Load);
             this.Panel1.ResumeLayout(false);
             this.Panel1.PerformLayout();
@@ -287,13 +256,13 @@
             this.Panel2.PerformLayout();
             this.Panel3.ResumeLayout(false);
             this.Panel3.PerformLayout();
+            this.Panel4.ResumeLayout(false);
+            this.Panel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
-        internal System.Windows.Forms.FolderBrowserDialog FolderBrowserDialog1;
-        internal System.Windows.Forms.Timer Timer1;
         internal System.Windows.Forms.Panel Panel1;
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.Button Button1;
@@ -307,11 +276,10 @@
         internal System.Windows.Forms.RadioButton RadioButton2;
         internal System.Windows.Forms.RadioButton RadioButton1;
         internal System.Windows.Forms.Panel Panel3;
+        internal System.Windows.Forms.Panel Panel4;
         internal System.Windows.Forms.RadioButton RadioButton6;
         internal System.Windows.Forms.RadioButton RadioButton5;
         internal System.Windows.Forms.RadioButton RadioButton4;
-        internal System.Windows.Forms.Label Label5;
-        internal System.Windows.Forms.Label Label4;
         #endregion
 
     }

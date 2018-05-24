@@ -1,0 +1,1 @@
+Replaced ReferenceEquals with string.Equals because it is not friendly with string and in the end always returns true because it does not compare the actual values of the 2 strings in the Settings Window.

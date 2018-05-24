@@ -1,77 +1,63 @@
+// Copyright (c) 2014-2018, Els_kom org.
+// https://github.com/Elskom/
+// All rights reserved.
+// license: MIT, see LICENSE for more details.
+
 namespace Els_kom_Core.Classes
 {
     /// <summary>
-    /// Kom File format block size structure.
-    /// </summary>
-    public enum KOM_DATA
-    {
-        /// <summary>
-        /// Size of the kom file header.
-        /// </summary>
-        KOM_HEADER_SIZE = 27,
-        /// <summary>
-        /// Size of the Entry Count block.
-        /// </summary>
-        KOM_ENTRY_COUNT_SIZE = 8,
-        /// <summary>
-        /// Size of the File Timer block.
-        /// </summary>
-        KOM_FILE_TIMER_SIZE = 4,
-        /// <summary>
-        /// Size of the XML File Size block.
-        /// </summary>
-        KOM_XML_SIZE_FILE_SIZE = 4
-    };
-
-    /// <summary>
-    /// Class in the Core that allows Packing and Unpacking kom Files.
+    /// Class in the Core that allows managing kom Files.
     /// </summary>
     public static class KOMManager
     {
         /* required to see if we are packing or unpacking. Default to false. */
         private static bool is_packing = false;
         private static bool is_unpacking = false;
+        internal static System.Collections.Generic.List<interfaces.IKomPlugin> komplugins;
 
         /// <summary>
         /// Gets the current state on packing KOM files.
         /// </summary>
-        public static bool GetPackingState() {
-            return is_packing;
-        }
-
+        public static bool GetPackingState() => is_packing;
         /// <summary>
         /// Gets the current state on unpacking KOM files.
         /// </summary>
-        public static bool GetUnpackingState() {
-            return is_unpacking;
-        }
+        public static bool GetUnpackingState() => is_unpacking;
 
         /// <summary>
         /// Copies Modified KOM files to the Elsword Directory that was Set in the Settings Dialog in Els_kom. Requires: File Name, Original Directory the File is in, And Destination Directory.
         /// </summary>
-        public static object CopyKomFiles(string FileName, string OrigFileDir, string DestFileDir)
+        internal static void CopyKomFiles(string FileName, string OrigFileDir, string DestFileDir)
         {
-            if (System.IO.File.Exists(FileName))
+            if (System.IO.File.Exists(OrigFileDir + FileName))
             {
-                if ((!System.IO.Directory.Exists(DestFileDir)))
-                {
-                    return 1;
-                }
-                else
+                if ((System.IO.Directory.Exists(DestFileDir)))
                 {
                     MoveOriginalKomFiles(FileName, DestFileDir, DestFileDir + "\\backup");
+                    if (!DestFileDir.EndsWith("\\"))
+                    {
+                        // we must add this before copying the file to the target location.
+                        DestFileDir += "\\";
+                    }
                     System.IO.File.Copy(OrigFileDir + FileName, DestFileDir + FileName);
                 }
             }
-            return 0;
         }
 
         /// <summary>
         /// Backs up Original KOM files to a sub folder in the Elsword Directory that was Set in the Settings Dialog in Els_kom. Requires: File Name, Original Directory the File is in, And Destination Directory. USED INSIDE OF CopyKomFiles SO, USE THAT FUNCTION INSTEAD.
         /// </summary>
-        private static object MoveOriginalKomFiles(string FileName, string OrigFileDir, string DestFileDir)
+        private static void MoveOriginalKomFiles(string FileName, string OrigFileDir, string DestFileDir)
         {
-            if (System.IO.File.Exists(FileName))
+            if (!OrigFileDir.EndsWith("\\"))
+            {
+                OrigFileDir += "\\";
+            }
+            if (!DestFileDir.EndsWith("\\"))
+            {
+                DestFileDir += "\\";
+            }
+            if (System.IO.File.Exists(OrigFileDir + FileName))
             {
                 if ((!System.IO.Directory.Exists(DestFileDir)))
                 {
@@ -79,7 +65,29 @@ namespace Els_kom_Core.Classes
                 }
                 System.IO.File.Move(OrigFileDir + FileName, DestFileDir + FileName);
             }
-            return 0;
+        }
+
+        /// <summary>
+        /// Moves the Original KOM Files back to their original locations, overwriting the modified ones.
+        /// </summary>
+        internal static void MoveOriginalKomFilesBack(string FileName, string OrigFileDir, string DestFileDir)
+        {
+            if (!OrigFileDir.EndsWith("\\"))
+            {
+                OrigFileDir += "\\";
+            }
+            if (!DestFileDir.EndsWith("\\"))
+            {
+                DestFileDir += "\\";
+            }
+            if (System.IO.File.Exists(OrigFileDir + FileName))
+            {
+                if (System.IO.File.Exists(DestFileDir + FileName))
+                {
+                    System.IO.File.Copy(OrigFileDir + FileName, DestFileDir + FileName, true);
+                    System.IO.File.Delete(OrigFileDir + FileName);
+                }
+            }
         }
 
         /// <summary>
@@ -88,25 +96,25 @@ namespace Els_kom_Core.Classes
         private static int GetHeaderVersion(string komfile)
         {
             int ret = 0;
-            System.IO.FileStream reader = new System.IO.FileStream(System.Windows.Forms.Application.StartupPath + "\\koms\\" + komfile, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            byte[] headerbuffer = new byte[System.Convert.ToInt32(KOM_DATA.KOM_HEADER_SIZE)];
+            System.IO.BinaryReader reader = new System.IO.BinaryReader(System.IO.File.OpenRead(System.Windows.Forms.Application.StartupPath + "\\koms\\" + komfile), System.Text.Encoding.ASCII);
+            byte[] headerbuffer = new byte[27];
             // 27 is the size of the header string denoting the KOM file version number.
             int offset = 0;
-            reader.Read(headerbuffer, offset, System.Convert.ToInt32(KOM_DATA.KOM_HEADER_SIZE));
+            reader.Read(headerbuffer, offset, 27);
             string headerstring = System.Text.Encoding.UTF8.GetString(headerbuffer);
-            reader.Close();
             reader.Dispose();
-            if (headerstring == "KOG GC TEAM MASSFILE V.0.2.")
+            foreach (var komplugin in komplugins)
             {
-                ret = 2;
-            }
-            else if (headerstring == "KOG GC TEAM MASSFILE V.0.3.")
-            {
-                ret = 3;
-            }
-            else if (headerstring == "KOG GC TEAM MASSFILE V.0.4.")
-            {
-                ret = 4;
+                // get version of kom file for unpacking it.
+                if (komplugin.KOMHeaderString == string.Empty)
+                {
+                    // skip this plugin it does not implement an packer or unpacker.
+                    continue;
+                }
+                if (headerstring == komplugin.KOMHeaderString)
+                {
+                    ret = komplugin.SupportedKOMVersion;
+                }
             }
             return ret;
         }
@@ -117,40 +125,22 @@ namespace Els_kom_Core.Classes
         private static int CheckFolderVersion(string datafolder)
         {
             int ret = 0;
-            if (System.IO.File.Exists(datafolder + "\\KOMVERSION.2"))
+            foreach (var komplugin in komplugins)
             {
-                try
+                if (komplugin.SupportedKOMVersion != 0)
                 {
-                    System.IO.File.Delete(datafolder + "\\KOMVERSION.2");
-                    ret = 2;
-                }
-                catch (System.IO.IOException)
-                {
-                    ret = -1;
-                }
-            }
-            else if (System.IO.File.Exists(datafolder + "\\KOMVERSION.3"))
-            {
-                try
-                {
-                    System.IO.File.Delete(datafolder + "\\KOMVERSION.3");
-                    ret = 3;
-                }
-                catch (System.IO.IOException)
-                {
-                    ret = -1;
-                }
-            }
-            else if (System.IO.File.Exists(datafolder + "\\KOMVERSION.4"))
-            {
-                try
-                {
-                    System.IO.File.Delete(datafolder + "\\KOMVERSION.4");
-                    ret = 4;
-                }
-                catch (System.IO.IOException)
-                {
-                    ret = -1;
+                    if (System.IO.File.Exists(datafolder + "\\KOMVERSION." + komplugin.SupportedKOMVersion))
+                    {
+                        try
+                        {
+                            System.IO.File.Delete(datafolder + "\\KOMVERSION." + komplugin.SupportedKOMVersion);
+                            ret = komplugin.SupportedKOMVersion;
+                        }
+                        catch (System.IO.IOException)
+                        {
+                            ret = -1;
+                        }
+                    }
                 }
             }
             return ret;
@@ -159,7 +149,7 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Unpacks KOM files by invoking the extractor.
         /// </summary>
-        public static void UnpackKoms()
+        internal static void UnpackKoms()
         {
             is_unpacking = true;
             System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(System.Windows.Forms.Application.StartupPath + "\\koms");
@@ -167,18 +157,45 @@ namespace Els_kom_Core.Classes
             {
                 string _kom_file = fi.Name;
                 int kom_ver = GetHeaderVersion(_kom_file);
-                if (kom_ver != 0 && kom_ver != 4)
+                if (kom_ver != 0)
                 {
                     // remove ".kom" on end of string.
                     string _kom_data_folder = System.IO.Path.GetFileNameWithoutExtension(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_file);
-                    ExecutionManager.Shell(System.Windows.Forms.Application.StartupPath + "\\komextract_new.exe", "--version " + kom_ver + " --in \"" + System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_file + "\" --out \"" + System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_data_folder + "\"", false, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, System.Windows.Forms.Application.StartupPath, true);
-                    fi.Delete();
-                    // make the version dummy file for the packer.
-                    System.IO.File.Create(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_data_folder + "\\KOMVERSION." + kom_ver);
-                }
-                else if (kom_ver == 4)
-                {
-                    MessageManager.ShowError("KOM V4 is currently not supported yet. Please wait until it is.", "Error!");
+                    foreach (var komplugin in komplugins)
+                    {
+                        try
+                        {
+                            if (kom_ver == komplugin.SupportedKOMVersion)
+                            {
+                                komplugin.Unpack(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_file, System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_data_folder, _kom_file);
+                            }
+                            else
+                            {
+                                // loop until the right plugin for this kom version is found.
+                                continue;
+                            }
+                            // make the version dummy file for the packer.
+                            try
+                            {
+                                System.IO.File.Create(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_data_folder + "\\KOMVERSION." + kom_ver).Dispose();
+                            }
+                            catch (System.IO.DirectoryNotFoundException)
+                            {
+                                // cannot create this since nothing was written or made.
+                            }
+                            // delete original kom file.
+                            komplugin.Delete(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_file, false);
+                        }
+                        catch (UnpackingError)
+                        {
+                            // do not delete kom file.
+                            MessageManager.ShowError("Unpacking this KOM file failed.", "Error!");
+                        }
+                        catch (System.NotImplementedException)
+                        {
+                            MessageManager.ShowError("The KOM V" + komplugin.SupportedKOMVersion + " plugin does not implement an unpacker function yet. Although it should.", "Error!");
+                        }
+                    }
                 }
                 else
                 {
@@ -191,7 +208,7 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Packs KOM files by invoking the packer.
         /// </summary>
-        public static void PackKoms()
+        internal static void PackKoms()
         {
             is_packing = true;
             System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(System.Windows.Forms.Application.StartupPath + "\\koms");
@@ -199,28 +216,44 @@ namespace Els_kom_Core.Classes
             {
                 string _kom_data_folder = dri.Name;
                 int kom_ver = CheckFolderVersion(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_data_folder);
-                if (kom_ver != 0 && kom_ver != 4)
+                if (kom_ver != 0)
                 {
                     string _kom_file = _kom_data_folder + ".kom";
                     // pack kom based on the version of kom supplied.
-                    ExecutionManager.Shell(System.Windows.Forms.Application.StartupPath + "\\kompact_new.exe", "--version " + kom_ver + " --in \"" + System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_data_folder + "\" --out \"" + System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_file + "\"", false, false, false, true, System.Diagnostics.ProcessWindowStyle.Hidden, System.Windows.Forms.Application.StartupPath, true);
-                    foreach (var fi in dri.GetFiles())
+                    if (kom_ver != -1)
                     {
-                        fi.Delete();
+                        foreach (var komplugin in komplugins)
+                        {
+                            try
+                            {
+                                if (kom_ver == komplugin.SupportedKOMVersion)
+                                {
+                                    komplugin.Pack(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_data_folder, System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_file, _kom_file);
+                                    // delete unpacked kom folder data.
+                                    komplugin.Delete(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_data_folder, true);
+                                }
+                            }
+                            catch (PackingError)
+                            {
+                                // do not delete kom data folder.
+                                System.IO.File.Create(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_data_folder + "\\KOMVERSION." + komplugin.SupportedKOMVersion).Dispose();
+                                MessageManager.ShowError("Packing an folder to an KOM file failed.", "Error!");
+                            }
+                            catch (System.NotImplementedException)
+                            {
+                                System.IO.File.Create(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_data_folder + "\\KOMVERSION." + komplugin.SupportedKOMVersion).Dispose();
+                                MessageManager.ShowError("The KOM V" + komplugin.SupportedKOMVersion + " plugin does not implement an packer function yet. Although it should.", "Error!");
+                            }
+                        }
                     }
-                    dri.Delete();
-                }
-                else if (kom_ver == 4)
-                {
-                    MessageManager.ShowError("KOM V4 is currently not supported yet. Please wait until it is.", "Error!");
-                }
-                else if (kom_ver == 0)
-                {
-                    MessageManager.ShowError("Unknown KOM version Detected. Please send this KOM to the Els_kom Developers file for inspection.", "Error!");
+                    else
+                    {
+                        MessageManager.ShowError("An error occured while packing the file(s) to an KOM file.", "Error!");
+                    }
                 }
                 else
                 {
-                    MessageManager.ShowError("An error occured while packing the file(s) to an KOM file.", "Error!");
+                    MessageManager.ShowError("Unknown KOM version Detected. Please send this KOM to the Els_kom Developers file for inspection.", "Error!");
                 }
             }
             is_packing = false;

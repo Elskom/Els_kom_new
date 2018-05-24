@@ -1,0 +1,1 @@
+Fixed the Label bug on the part of that Else statement to change it back to "". The way it should be done. The only flaw I see still at the moment is the tray icon not giving the Els_kom Window Focus like it should be doing. The Taskbar icon works on that part though.

@@ -3,22 +3,20 @@ max_jobs: 15
 image: Visual Studio 2017
 configuration: Release
 platform: x86
-environment:
-  SECRET_KEY:
-    secure: Aj3VN2tlLSPP6QhY5bTXIUJiI/de9iTyr3wpO3FPDSLkXj/Il1nV+I+PCrl7ci94Rqv6KtVXIxzfvk0yXjN7u9CVYU3y1oMIzp3cM6u2fVOdaIX06RTNlF2EunvxLZoG/etETEUfb7O8kBIPxEmSd5E+/1cp0igjKsiTlqq5ivA=
-install:
-- nuget install secure-file -ExcludeVersion
-- secure-file\tools\secure-file -decrypt ./Tools/private_encryption.py.enc -secret %SECRET_KEY% -out ./Tools/private_encryption.py
-- secure-file\tools\secure-file -decrypt ./PC/encryption_private.h.enc -secret %SECRET_KEY% -out ./PC/encryption_private.h
-before_build:
-- cmd: call ci_build.bat
-cache:
-- .\externals\cpython
-- .\externals\aes
-- .\obj
-- .\bin
 build:
-  project: PCbuild\PCbuild.sln
+  project: PCbuild\pcbuild.sln
   parallel: true
   verbosity: minimal
 test: off
+deploy:
+  release: $(APPVEYOR_REPO_TAG_NAME)
+  description: $(APPVEYOR_REPO_COMMIT_MESSAGE)
+  provider: GitHub
+  auth_token:
+    secure: tFhxq8kLPTT5I3IwiLKp8efBTsZD0madTaOD4+MgmwX3u9t0fVsXsU+/aXBJTcfE
+  artifact: /bin\Release\*.zip/ # upload all zip files to release assets
+  draft: false
+  prerelease: false
+  on:
+    branch: master
+    appveyor_repo_tag: true

@@ -1,114 +1,118 @@
                           Whats new in v1.4.9.8
 =============================================================================
-	+Removed Deprecated stubs.
-	+Made Els_kom.exe an C++ WinForms Application.
-	+Replaced PyCryptodome dependency.
-	+Added support for packing to and unpacking from KOM V2.
-	+Made Core able to handle packing and unpacking to/from whatever
+	+ Removed Deprecated stubs.
+	+ Made Els_kom.exe an C++ WinForms Application.
+	+ Replaced PyCryptodome dependency.
+	+ Added support for packing to and unpacking from KOM V2.
+	+ Made Core able to handle packing and unpacking to/from whatever
 		KOM version the file requires. This is so the GUI can
 		properly pack and unpack and all KOM versions.
+	+ Updated copyright info.
+	+ Removed Python kom file format packing and unpacking code
+		(The C# core does it all now).
+	+ Renamed PCbuild.sln to pcbuild.sln.
 
 =============================================================================
                              Els_kom v1.4.9.7
 =============================================================================
-	+Fixed multiple instance error message icon.
-	+Fixed issue where Els_kom main window shows under the
+	+ Fixed multiple instance error message icon.
+	+ Fixed issue where Els_kom main window shows under the
 		multiple instance error message.
-	+Removed pack.bat and unpack.bat. They been replaced with
+	+ Removed pack.bat and unpack.bat. They been replaced with
 		something much more manageable and goes out of
 		date far fewer times.
-	+Fixed Minimize/Maximize bug.
-	+Moved Forms back to exe's.
-	+Deprecated the stubs and will be removed on 1.4.9.8.
-	+Moved most of the form Controls to custom ones to size the forms
+	+ Fixed Minimize/Maximize bug.
+	+ Moved Forms back to exe's.
+	+ Deprecated the stubs and will be removed on 1.4.9.8.
+	+ Moved most of the form Controls to custom ones to size the forms
 		down considerably by designer and code.
-	-This means the Core would have to be built before the forms
+	- This means the Core would have to be built before the forms
 		controls can display properly in Visual Studio.
 
 =============================================================================
                              Els_kom v1.4.9.6
 =============================================================================
-	+Modified settings dialog to Set minimize options.
-	+Converted Project Files to C#. Future Code Will be in C# and C++ only.
-	+Implimented Settings into Main Dialog for the program to minimize to the
+	+ Modified settings dialog to Set minimize options.
+	+ Converted Project Files to C#. Future Code Will be in C# and C++ only.
+	+ Implimented Settings into Main Dialog for the program to minimize to the
 		Taskbar, Tray, or to both.
-	-Had To change Everything to work in C# natively and well.
+	- Had To change Everything to work in C# natively and well.
 
 =============================================================================
                              Els_kom v1.4.9.5
 =============================================================================
-	+Add Detection for x2.exe when Test Mods option is pressed until closed.
-	+Add Detection for launcher & x2.exe when running when Launcher
+	+ Add Detection for x2.exe when Test Mods option is pressed until closed.
+	+ Add Detection for launcher & x2.exe when running when Launcher
 		Option is pressed until closed.
 
 =============================================================================
                              Els_kom v1.4.9.4
 =============================================================================
-	+Removed Reference and use of Microsoft.VisualBasic.Compatibility in
+	+ Removed Reference and use of Microsoft.VisualBasic.Compatibility in
 		Els_kom Project (to the Els_kom.exe file).
-	+Removed Reference and Use of Microsoft.VisualBasic.PowerPacks.VS in
+	+ Removed Reference and Use of Microsoft.VisualBasic.PowerPacks.VS in
 		Els_kom Project (to the Els_kom.exe file) as well.
-	-Will Replace the WindowFind Class in the core with something much
+	- Will Replace the WindowFind Class in the core with something much
 		more Accurate and can find stuff even if it has no Window by
 		it's Image name (AKA x2.exe). (Will come before v1.5.0.0)
 
 =============================================================================
                              Els_kom v1.4.9.3
 =============================================================================
-	+Replaced module1's FileExists with System.IO.File.Exists.
-	+Removed 2 bat files. (Not Needed anymore because System.IO.File.Create
+	+ Replaced module1's FileExists with System.IO.File.Exists.
+	+ Removed 2 bat files. (Not Needed anymore because System.IO.File.Create
 		is better)
-	+Changed the way x2.exe is executed. (Your mods would have to be in the
+	+ Changed the way x2.exe is executed. (Your mods would have to be in the
 		folder of x2.exe)
-	+2 bat file still Exists which allows fully customized kom 
+	+ 2 bat file still Exists which allows fully customized kom 
 		unpacking/packing.
-	+Added a INI Writer to the Core.
-	+Added a Config Dialog for setting the Elsword Directory.
-	+Made Stubs Aware and Use the Settings for Running the Launcher /
+	+ Added a INI Writer to the Core.
+	+ Added a Config Dialog for setting the Elsword Directory.
+	+ Made Stubs Aware and Use the Settings for Running the Launcher /
 		Testing Mods to not require Els_kom in the folder of elsword.exe
 		or voidels.exe
 
 =============================================================================
                              Els_kom v1.4.9.2
 =============================================================================
-	+Added a Core DLL.
-	+Moved All Modules to a Core DLL.
-	+Version change as well forgot to change the physical label on the
+	+ Added a Core DLL.
+	+ Moved All Modules to a Core DLL.
+	+ Version change as well forgot to change the physical label on the
 		binaries last time.
-	+Changed some labels not being reset when the Test Mods and the
+	+ Changed some labels not being reset when the Test Mods and the
 		Launcher buttons are pressed.
-	+Fixed bug where the packing and unpacking timers was not disabled
+	+ Fixed bug where the packing and unpacking timers was not disabled
 		after use. (Causes a Conflict when Packing / Unpacking multiple
 		times)
 
 =============================================================================
                              Els_kom v1.4.9.1
 =============================================================================
-	+Fixed some things with the Launcher and Test Mods button flashing
+	+ Fixed some things with the Launcher and Test Mods button flashing
 		uncontrolably.
-	+Removed all compile Warnings (had to supress some).
-	+Changed Pack and Unpack button Hover Texts.
-	+Fixed Hovering over the link and then moving the cursor to a label not
+	+ Removed all compile Warnings (had to supress some).
+	+ Changed Pack and Unpack button Hover Texts.
+	+ Fixed Hovering over the link and then moving the cursor to a label not
 		resetting the image back to not hover status.
-	+Fix All buttons having a box look in the Center.
-	-Algorithm 3 Support Pushed up to v1.5.0.0 As it will take some time to
+	+ Fix All buttons having a box look in the Center.
+	- Algorithm 3 Support Pushed up to v1.5.0.0 As it will take some time to
 		get it added.
 
 =============================================================================
                              Els_kom v1.4.9.0
 =============================================================================
-	+Converted from VB6 to VB.Net in Visual Studio 2015.
-	+Made the kom packing/unpacking console apps support Python 3.x.
+	+ Converted from VB6 to VB.Net in Visual Studio 2015.
+	+ Made the kom packing/unpacking console apps support Python 3.x.
 		(Still built into exe's to not require a python install)
-	+Launcher Stub now supports running voidels.exe instead of elsword.exe
+	+ Launcher Stub now supports running voidels.exe instead of elsword.exe
 		(if present for Void Elsword).
 
 =============================================================================
                              Els_kom v1.4.8.0
 =============================================================================
-	+Reduced packing/unpacking times by editing the bat files.(Sorry about
+	+ Reduced packing/unpacking times by editing the bat files.(Sorry about
 		that)
-	+Attempt fix on the taskbar icon not being 32 bit(still not fixed)
+	+ Attempt fix on the taskbar icon not being 32 bit(still not fixed)
 	-need hacks for the icon thing sadly.
 
 =============================================================================

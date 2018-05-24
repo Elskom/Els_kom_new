@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Els_kom", "..\Els_kom\Els_kom.csproj", "{0116DE95-C3D6-487A-9133-5D26B6CA09FB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{296E8E43-A1EF-4D40-8340-B12457C78751} = {296E8E43-A1EF-4D40-8340-B12457C78751}
+		{AC9B0C5B-1051-4388-B811-1870837D9241} = {AC9B0C5B-1051-4388-B811-1870837D9241}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Els_kom_Core", "..\Els_kom_Core\Els_kom_Core.csproj", "{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{296E8E43-A1EF-4D40-8340-B12457C78751} = {296E8E43-A1EF-4D40-8340-B12457C78751}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "komv2_plugin", "..\Plugins\komv2_plugin.csproj", "{F65ED5F5-0986-4EC1-909A-BA7D20EEBC61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "komv3_plugin", "..\Plugins\komv3_plugin.csproj", "{6C0953F1-3ED9-4FB8-9C3B-2DC6A0A38649}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "komv4_plugin", "..\Plugins\komv4_plugin.csproj", "{E24744AF-C920-42A9-890A-0772A2F99E16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gitbuildinfo", "..\gitbuildinfo\gitbuildinfo.csproj", "{296E8E43-A1EF-4D40-8340-B12457C78751}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Els_kom_resources", "Els_kom_resources.vcxproj", "{AC9B0C5B-1051-4388-B811-1870837D9241}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "packbuild", "..\packbuild\packbuild.csproj", "{3467C542-33BB-4B8D-B32D-03A1694C52BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E} = {8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}
+		{296E8E43-A1EF-4D40-8340-B12457C78751} = {296E8E43-A1EF-4D40-8340-B12457C78751}
+		{AC9B0C5B-1051-4388-B811-1870837D9241} = {AC9B0C5B-1051-4388-B811-1870837D9241}
+		{0116DE95-C3D6-487A-9133-5D26B6CA09FB} = {0116DE95-C3D6-487A-9133-5D26B6CA09FB}
+		{E24744AF-C920-42A9-890A-0772A2F99E16} = {E24744AF-C920-42A9-890A-0772A2F99E16}
+		{6C0953F1-3ED9-4FB8-9C3B-2DC6A0A38649} = {6C0953F1-3ED9-4FB8-9C3B-2DC6A0A38649}
+		{F65ED5F5-0986-4EC1-909A-BA7D20EEBC61} = {F65ED5F5-0986-4EC1-909A-BA7D20EEBC61}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0116DE95-C3D6-487A-9133-5D26B6CA09FB}.Release|x86.ActiveCfg = Release|x86
+		{0116DE95-C3D6-487A-9133-5D26B6CA09FB}.Release|x86.Build.0 = Release|x86
+		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|x86.ActiveCfg = Release|x86
+		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|x86.Build.0 = Release|x86
+		{F65ED5F5-0986-4EC1-909A-BA7D20EEBC61}.Release|x86.ActiveCfg = Release|x86
+		{F65ED5F5-0986-4EC1-909A-BA7D20EEBC61}.Release|x86.Build.0 = Release|x86
+		{6C0953F1-3ED9-4FB8-9C3B-2DC6A0A38649}.Release|x86.ActiveCfg = Release|x86
+		{6C0953F1-3ED9-4FB8-9C3B-2DC6A0A38649}.Release|x86.Build.0 = Release|x86
+		{E24744AF-C920-42A9-890A-0772A2F99E16}.Release|x86.ActiveCfg = Release|x86
+		{E24744AF-C920-42A9-890A-0772A2F99E16}.Release|x86.Build.0 = Release|x86
+		{296E8E43-A1EF-4D40-8340-B12457C78751}.Release|x86.ActiveCfg = Release|x86
+		{296E8E43-A1EF-4D40-8340-B12457C78751}.Release|x86.Build.0 = Release|x86
+		{AC9B0C5B-1051-4388-B811-1870837D9241}.Release|x86.ActiveCfg = Release|Win32
+		{AC9B0C5B-1051-4388-B811-1870837D9241}.Release|x86.Build.0 = Release|Win32
+		{3467C542-33BB-4B8D-B32D-03A1694C52BA}.Release|x86.ActiveCfg = Release|x86
+		{3467C542-33BB-4B8D-B32D-03A1694C52BA}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D97FF96-21DB-4939-A93E-F75A2BECC958}
+	EndGlobalSection
+EndGlobal

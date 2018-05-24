@@ -11,5 +11,3 @@ Information the fix is for.
 - OS: ``[Your OS version here]``
 - OS Arch: ``[Your OS Arch here]``
 - OS Build: ``[Your OS Build here]``
-
-Note: Newer versions from time to time ship with a newer version of python embedded.

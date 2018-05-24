@@ -1,0 +1,1 @@
+Made Icons loadable using the Windows PE Resource Loading API (like LoadImageA/W for example). This is to reduce the size of the output exe file.
