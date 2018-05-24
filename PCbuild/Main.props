@@ -20,7 +20,7 @@ With this file it requires Visual Studio 2017 at least.
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>latest</LangVersion>
     <DebugSymbols>true</DebugSymbols>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>

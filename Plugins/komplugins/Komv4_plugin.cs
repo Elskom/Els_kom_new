@@ -2,11 +2,16 @@
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
+/* define if not defined already. */
+#if !KOMV4
+#define KOMV4
+#endif
 
 namespace komv4_plugin
 {
     public class Komv4_plugin : Els_kom_Core.interfaces.IKomPlugin
     {
+        public string PluginName => "KOM V4 Plugin";
         public string KOMHeaderString => "KOG GC TEAM MASSFILE V.0.4.";
         public int SupportedKOMVersion => 4;
 
@@ -27,21 +32,23 @@ namespace komv4_plugin
             int file_time = reader.ReadInt32();
             int xml_size = reader.ReadInt32();
             byte[] xmldatabuffer = reader.ReadBytes(xml_size);
-            Extras.DecryptCRCXml(compressed, ref xmldatabuffer, xml_size, System.Text.Encoding.ASCII);
+            Els_kom_Core.Classes.KOMStream kOMStream = new Els_kom_Core.Classes.KOMStream();
+            kOMStream.DecryptCRCXml(compressed, ref xmldatabuffer, xml_size, System.Text.Encoding.ASCII);
             string xmldata = System.Text.Encoding.ASCII.GetString(xmldatabuffer);
             try
             {
-                System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> entries = Extras.Make_entries_v4(xmldata, entry_count);
+                System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> entries = kOMStream.Make_entries_v4(xmldata, entry_count);
                 foreach (var entry in entries)
                 {
                     // we iterate through every entry here and unpack the data.
-                    Els_kom_Core.Classes.KOMManager.WriteOutput(reader, out_path, entry, SupportedKOMVersion);
+                    kOMStream.WriteOutput(reader, out_path, entry, SupportedKOMVersion);
                 }
             }
             catch (System.Xml.XmlException)
             {
                 throw new Els_kom_Core.Classes.UnpackingError("failure with xml entry data reading...");
             }
+            kOMStream.Dispose();
             reader.Dispose();
         }
 

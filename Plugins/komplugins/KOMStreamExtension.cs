@@ -11,10 +11,10 @@ namespace komv3_plugin
 namespace komv4_plugin
 #endif
 {
-    internal static class Extras
+    internal static class KOMStreamExtension
     {
 #if KOMV2
-        internal static void ReadCrc(string crcfile, out byte[] crcdata, ref int entry_count, ref int crc_size)
+        internal static void ReadCrc(this Els_kom_Core.Classes.KOMStream kOMStream, string crcfile, out byte[] crcdata, ref int entry_count, ref int crc_size)
         {
             crcdata = System.IO.File.ReadAllBytes(crcfile);
             System.IO.File.Delete(crcfile);
@@ -22,22 +22,22 @@ namespace komv4_plugin
             crc_size = crcdata.Length;
         }
 
-        internal static System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> Make_entries_v2(int entrycount, System.IO.BinaryReader reader)
+        internal static System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> Make_entries_v2(this Els_kom_Core.Classes.KOMStream kOMStream, int entrycount, System.IO.BinaryReader reader)
         {
             System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> entries = new System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer>();
             for (int i = 0; i < entrycount; i++)
             {
-                ReadInFile(reader, out string key, 60, System.Text.Encoding.ASCII);
-                ReadInFile(reader, out int originalsize);
-                ReadInFile(reader, out int compressedSize);
-                ReadInFile(reader, out int offset);
-                var entry = new Els_kom_Core.Classes.EntryVer(GetSafeString(key), originalsize, compressedSize, offset);
+                kOMStream.ReadInFile(reader, out string key, 60, System.Text.Encoding.ASCII);
+                kOMStream.ReadInFile(reader, out int originalsize);
+                kOMStream.ReadInFile(reader, out int compressedSize);
+                kOMStream.ReadInFile(reader, out int offset);
+                var entry = new Els_kom_Core.Classes.EntryVer(kOMStream.GetSafeString(key), originalsize, compressedSize, offset);
                 entries.Add(entry);
             }
             return entries;
         }
 
-        internal static string GetSafeString(string source)
+        internal static string GetSafeString(this Els_kom_Core.Classes.KOMStream kOMStream, string source)
         {
             if (source.Contains(new string(char.MinValue, 1)))
             {
@@ -46,7 +46,7 @@ namespace komv4_plugin
             return source;
         }
 
-        internal static bool ReadInFile(System.IO.BinaryReader binaryReader, out string destString, int length, System.Text.Encoding encoding)
+        internal static bool ReadInFile(this Els_kom_Core.Classes.KOMStream kOMStream, System.IO.BinaryReader binaryReader, out string destString, int length, System.Text.Encoding encoding)
         {
             if (binaryReader == null)
             {
@@ -67,7 +67,7 @@ namespace komv4_plugin
             return false;
         }
 
-        internal static bool ReadInFile(System.IO.BinaryReader binaryReader, out int destInt)
+        internal static bool ReadInFile(this Els_kom_Core.Classes.KOMStream kOMStream, System.IO.BinaryReader binaryReader, out int destInt)
         {
             if (binaryReader == null)
             {
@@ -84,7 +84,7 @@ namespace komv4_plugin
             return false;
         }
 #elif KOMV3
-        internal static System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> Make_entries_v3(string xmldata, int entry_count)
+        internal static System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> Make_entries_v3(this Els_kom_Core.Classes.KOMStream kOMStream, string xmldata, int entry_count)
         {
             System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> entries = new System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer>();
             var xml = System.Xml.Linq.XElement.Parse(xmldata);
@@ -123,7 +123,7 @@ namespace komv4_plugin
             }
         }
 
-        internal static void DecryptCRCXml(int key, ref byte[] data, int length, System.Text.Encoding encoding)
+        internal static void DecryptCRCXml(this Els_kom_Core.Classes.KOMStream kOMStream, int key, ref byte[] data, int length, System.Text.Encoding encoding)
         {
             // Load the KOM V4 keymap file.
             LoadKeyMap();
@@ -138,7 +138,7 @@ namespace komv4_plugin
             blowfish.Dispose();
         }
 
-        internal static System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> Make_entries_v4(string xmldata, int entry_count)
+        internal static System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> Make_entries_v4(this Els_kom_Core.Classes.KOMStream kOMStream, string xmldata, int entry_count)
         {
             System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> entries = new System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer>();
             var xml = System.Xml.Linq.XElement.Parse(xmldata);

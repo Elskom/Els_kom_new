@@ -24,7 +24,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="komplugins\Extras.cs" />
+    <Compile Include="komplugins\KOMStreamExtension.cs" />
     <Compile Include="komplugins\Komv2_plugin.cs" />
     <Compile Include="komplugins\Properties\AssemblyInfo.cs" />
   </ItemGroup>
