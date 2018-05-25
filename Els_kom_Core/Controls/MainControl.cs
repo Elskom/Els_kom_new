@@ -502,12 +502,16 @@ namespace Els_kom_Core.Controls
                 Name = "Classes.ExecutionManager.RunElswordDirectly"
             };
             tr3.Start();
-            // TODO: in v1.5.0.0 call DeployCallBack in a new thread right before TestMods2!!!
-            System.Threading.Thread tr4 = new System.Threading.Thread(TestMods2)
+            System.Threading.Thread tr4 = new System.Threading.Thread(Classes.ExecutionManager.DeployCallBack)
+            {
+                Name = "Classes.ExecutionManager.DeployCallBack"
+            };
+            tr4.Start();
+            System.Threading.Thread tr5 = new System.Threading.Thread(TestMods2)
             {
                 Name = "TestMods2"
             };
-            tr4.Start();
+            tr5.Start();
         }
 
         /// <summary>

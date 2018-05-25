@@ -2,11 +2,16 @@
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
+/* define if not defined already. */
+#if !KOMV2
+#define KOMV2
+#endif
 
 namespace komv2_plugin
 {
     public class Komv2_plugin : Els_kom_Core.interfaces.IKomPlugin
     {
+        public string PluginName => "KOM V2 Plugin";
         public string KOMHeaderString => "KOG GC TEAM MASSFILE V.0.2.";
         public int SupportedKOMVersion => 2;
 
@@ -21,7 +26,9 @@ namespace komv2_plugin
             System.IO.BinaryWriter writer = new System.IO.BinaryWriter(System.IO.File.Create(out_path), System.Text.Encoding.ASCII);
             int entry_count = 0;
             int crc_size = 0;
-            Extras.ReadCrc(in_path + "\\crc.xml", out byte[] crc_data, ref entry_count, ref crc_size);
+            Els_kom_Core.Classes.KOMStream kOMStream = new Els_kom_Core.Classes.KOMStream();
+            kOMStream.ReadCrc(in_path + "\\crc.xml", out byte[] crc_data, ref entry_count, ref crc_size);
+            kOMStream.Dispose();
             System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(in_path);
             int offset = 0;
             System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> entries = new System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer>();
@@ -89,16 +96,18 @@ namespace komv2_plugin
         {
             System.IO.BinaryReader reader = new System.IO.BinaryReader(System.IO.File.OpenRead(in_path), System.Text.Encoding.ASCII);
             reader.BaseStream.Position = 52;
-            Extras.ReadInFile(reader, out int entry_count);
+            Els_kom_Core.Classes.KOMStream kOMStream = new Els_kom_Core.Classes.KOMStream();
+            kOMStream.ReadInFile(reader, out int entry_count);
             // without this dummy read the entry instances would not get the correct
             // data leading to an crash when tring to make an file with the entry name in the output path.
-            Extras.ReadInFile(reader, out int size);
-            System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> entries = Extras.Make_entries_v2(entry_count, reader);
+            kOMStream.ReadInFile(reader, out int size);
+            System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> entries = kOMStream.Make_entries_v2(entry_count, reader);
             foreach (var entry in entries)
             {
                 // we iterate through every entry here and unpack the data.
-                Els_kom_Core.Classes.KOMManager.WriteOutput(reader, out_path, entry, SupportedKOMVersion);
+                kOMStream.WriteOutput(reader, out_path, entry, SupportedKOMVersion);
             }
+            kOMStream.Dispose();
             reader.Dispose();
         }
 

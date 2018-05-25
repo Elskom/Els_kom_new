@@ -51,6 +51,7 @@
     <Compile Include="Classes\Git.cs" />
     <Compile Include="Classes\Icons.cs" />
     <Compile Include="Classes\KOMManager.cs" />
+    <Compile Include="Classes\KOMStream.cs" />
     <Compile Include="Classes\LoadResources.cs" />
     <Compile Include="Classes\MessageManager.cs" />
     <Compile Include="Classes\MiniDump.cs" />

@@ -69,12 +69,6 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
-        /// Bypasses Elsword's Integrity Check making it think that none of the KOM files was modified.
-        /// </summary>
-        [System.Obsolete("This function will be replaced with Test Mods callback plugin functions because of easy extendability and simplicity.")]
-        internal static bool BypassIntegrityChecks() => true;
-
-        /// <summary>
         /// Gets if Els_kom.exe is already Running. If So, Helps with Closing any new Instances.
         /// </summary>
         /// <returns>Boolean</returns>
@@ -92,10 +86,10 @@ namespace Els_kom_Core.Classes
         internal static void RunElswordDirectly()
         {
             ExecutingElsword = true;
-            if (System.IO.File.Exists(Classes.SettingsFile.Path))
+            if (System.IO.File.Exists(SettingsFile.Path))
             {
-                Classes.SettingsFile.Settingsxml.ReopenFile();
-                ElsDir = Classes.SettingsFile.Settingsxml.Read("ElsDir");
+                SettingsFile.Settingsxml.ReopenFile();
+                ElsDir = SettingsFile.Settingsxml.Read("ElsDir");
                 if (ElsDir.Length > 0)
                 {
                     if (System.IO.File.Exists(ElsDir + "\\data\\x2.exe"))
@@ -130,10 +124,10 @@ namespace Els_kom_Core.Classes
             // for the sake of sanity and the need to disable the pack, unpack, and test mods
             // buttons in UI while updating game.
             ExecutingElsword = true;
-            if (System.IO.File.Exists(Classes.SettingsFile.Path))
+            if (System.IO.File.Exists(SettingsFile.Path))
             {
-                Classes.SettingsFile.Settingsxml.ReopenFile();
-                ElsDir = Classes.SettingsFile.Settingsxml.Read("ElsDir");
+                SettingsFile.Settingsxml.ReopenFile();
+                ElsDir = SettingsFile.Settingsxml.Read("ElsDir");
                 if (ElsDir.Length > 0)
                 {
                     if (System.IO.File.Exists(ElsDir + "\\voidels.exe"))

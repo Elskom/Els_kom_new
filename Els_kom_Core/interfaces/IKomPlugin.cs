@@ -15,6 +15,10 @@ namespace Els_kom_Core.interfaces
     public interface IKomPlugin
     {
         /// <summary>
+        /// Name of the KOM plugin.
+        /// </summary>
+        string PluginName { get; }
+        /// <summary>
         /// List of KOM File header string constant for this plugin's supported KOM version.
         /// </summary>
         string KOMHeaderString { get; }

@@ -17,6 +17,10 @@ namespace Els_kom_Core.interfaces
     public interface IEncryptionPlugin
     {
         /// <summary>
+        /// Name of the Encryption plugin.
+        /// </summary>
+        string PluginName { get; }
+        /// <summary>
         /// Decrypts an KOM file entry.
         /// </summary>
         void DecryptEntry(byte[] input, out byte[] output, string KOMFileName, int algorithm);

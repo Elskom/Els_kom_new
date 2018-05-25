@@ -2,11 +2,16 @@
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
+/* define if not defined already. */
+#if !KOMV3
+#define KOMV3
+#endif
 
 namespace komv3_plugin
 {
     public class Komv3_plugin : Els_kom_Core.interfaces.IKomPlugin
     {
+        public string PluginName => "KOM V3 Plugin";
         public string KOMHeaderString => "KOG GC TEAM MASSFILE V.0.3.";
         public int SupportedKOMVersion => 3;
 
@@ -26,12 +31,14 @@ namespace komv3_plugin
             int xml_size = reader.ReadInt32();
             byte[] xmldatabuffer = reader.ReadBytes(xml_size);
             string xmldata = System.Text.Encoding.ASCII.GetString(xmldatabuffer);
-            System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> entries = Extras.Make_entries_v3(xmldata, entry_count);
+            Els_kom_Core.Classes.KOMStream kOMStream = new Els_kom_Core.Classes.KOMStream();
+            System.Collections.Generic.List<Els_kom_Core.Classes.EntryVer> entries = kOMStream.Make_entries_v3(xmldata, entry_count);
             foreach (var entry in entries)
             {
                 // we iterate through every entry here and unpack the data.
-                Els_kom_Core.Classes.KOMManager.WriteOutput(reader, out_path, entry, SupportedKOMVersion);
+                kOMStream.WriteOutput(reader, out_path, entry, SupportedKOMVersion);
             }
+            kOMStream.Dispose();
             reader.Dispose();
         }
 

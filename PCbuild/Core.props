@@ -29,7 +29,7 @@ With this file it requires Visual Studio 2017 at least.
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>latest</LangVersion>
     <OutputPath>..\bin\x86\Release\</OutputPath>
     <DocumentationFile>..\bin\x86\Release\Els_kom.Core.xml</DocumentationFile>
     <Optimize>false</Optimize>
