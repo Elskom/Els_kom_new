@@ -46,12 +46,12 @@ namespace Els_kom_Core.Classes
             proc.StartInfo.CreateNoWindow = CreateNoWindow;
             proc.StartInfo.WindowStyle = WindowStyle;
             proc.StartInfo.WorkingDirectory = WorkingDirectory;
+            proc.Start();
             // so that way main form Test mods functionality actually works (Lame ass hack I think tbh)...
             if (ExecutingElsword)
             {
                 ExecutingElsword = false;
             }
-            proc.Start();
             if (RedirectStandardError)
             {
                 ret = proc.StandardError.ReadToEnd();
@@ -168,18 +168,14 @@ namespace Els_kom_Core.Classes
         /// </summary>
         internal static void DeployCallBack()
         {
+            while (ExecutingElsword)
+            {
+            }
             while (RunningElswordDirectly)
             {
                 foreach (var plugin in callbackplugins)
                 {
-                    try
-                    {
-                        plugin.TestModsCallback();
-                    }
-                    catch (System.NotImplementedException)
-                    {
-                        // this callback plugin seems to not implement this method.
-                    }
+                    plugin.TestModsCallback();
                 }
             }
         }

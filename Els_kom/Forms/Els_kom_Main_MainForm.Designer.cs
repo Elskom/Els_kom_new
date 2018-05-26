@@ -62,6 +62,7 @@ namespace Els_kom.Forms
             this.Font = new System.Drawing.Font("Arial", 8, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (System.Byte)0);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Location = new System.Drawing.Point(3, 23);
+            this.ShowInTaskbar = false;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Icon = Els_kom_Core.Classes.Icons.FormIcon;

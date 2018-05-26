@@ -325,7 +325,7 @@ namespace Els_kom_Core.Controls
             }
             else
             {
-                Classes.SettingsFile.Settingsxml.Dispose();
+                Classes.SettingsFile.Settingsxml?.Dispose();
                 CloseForm?.Invoke(this, new System.EventArgs());
             }
         }
@@ -338,7 +338,6 @@ namespace Els_kom_Core.Controls
             if (Classes.Version.version != version)
             {
                 Classes.MessageManager.ShowError("Sorry, you cannot use Els_kom.exe from this version with a newer or older Core. Please update the executable as well.", "Error!");
-                Classes.SettingsFile.Settingsxml.Dispose();
                 CloseForm?.Invoke(this, new System.EventArgs());
                 return false;
             }

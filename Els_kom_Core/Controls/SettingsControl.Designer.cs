@@ -18,7 +18,6 @@ namespace Els_kom_Core.Controls
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            // TODO: check if disposing and for the plugins settings controls list to be cleared and disposed.
             if (disposing && (components != null))
             {
                 components.Dispose();

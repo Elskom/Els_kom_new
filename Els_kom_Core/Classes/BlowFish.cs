@@ -781,7 +781,6 @@ namespace Els_kom_Core.Classes
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
                     randomSource.Dispose();
                     randomSource = null;
                 }
@@ -790,7 +789,6 @@ namespace Els_kom_Core.Classes
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
         // ~BlowFish() {
         //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
         //   Dispose(false);
@@ -804,7 +802,6 @@ namespace Els_kom_Core.Classes
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
 

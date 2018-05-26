@@ -57,7 +57,7 @@ namespace Els_kom.Forms
             }
             if (!Cancel)
             {
-                Els_kom_Core.Classes.SettingsFile.Settingsxml.Dispose();
+                Els_kom_Core.Classes.SettingsFile.Settingsxml?.Dispose();
                 this.MainControl1.end_settings_loop = true;
             }
             e.Cancel = Cancel;
@@ -66,7 +66,6 @@ namespace Els_kom.Forms
         private void MainForm_Load(object sender, System.EventArgs e)
         {
             this.Hide();
-            this.ShowInTaskbar = false;
             if (this.MainControl1.VersionCheck("1.4.9.8"))
             {
                 this.MainControl1.LoadControl();
@@ -77,14 +76,8 @@ namespace Els_kom.Forms
 
         private void MainControl1_CloseForm(object sender, System.EventArgs e)
         {
-            if (aboutfrm != null)
-            {
-                aboutfrm.Close();
-            }
-            if (settingsfrm != null)
-            {
-                settingsfrm.Close();
-            }
+            aboutfrm?.Close();
+            settingsfrm?.Close();
             this.Close();
         }
 

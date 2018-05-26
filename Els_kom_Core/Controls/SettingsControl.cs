@@ -270,6 +270,10 @@ namespace Els_kom_Core.Controls
                 Entries.Add(new System.Windows.Forms.ListViewItem(new string[] {
                     komplugin.PluginName }, -1));
             }
+            if (Entries.Count > 3)
+            {
+                this.columnHeader1.Width -= 17;
+            }
             listView1.Items.AddRange(Entries.ToArray());
             SetRadios();
             TreeView1.SelectedNode = TreeView1.Nodes[0];
@@ -286,15 +290,24 @@ namespace Els_kom_Core.Controls
             for (int i = 0; i < (listView1.SelectedItems.Count); i++)
             {
                 System.Windows.Forms.ListViewItem selitem = listView1.SelectedItems[i];
+                bool found = false;
                 foreach (var callbackplugin in Classes.ExecutionManager.callbackplugins)
                 {
                     if (callbackplugin.PluginName.Equals(selitem.Text))
                     {
                         if (callbackplugin.SupportsSettings)
                         {
-                            button3.Enabled = true;
+                            found = true;
                         }
                     }
+                }
+                if (!found)
+                {
+                    button3.Enabled = false;
+                }
+                else
+                {
+                    button3.Enabled = true;
                 }
             }
         }
@@ -303,7 +316,7 @@ namespace Els_kom_Core.Controls
         {
             for (int i = 0; i < (listView1.SelectedItems.Count); i++)
             {
-                System.Windows.Forms.ListViewItem selitem = listView1.SelectedItems[i - 1];
+                System.Windows.Forms.ListViewItem selitem = listView1.SelectedItems[i];
                 foreach (var callbackplugin in Classes.ExecutionManager.callbackplugins)
                 {
                     if (callbackplugin.PluginName.Equals(selitem.Text))

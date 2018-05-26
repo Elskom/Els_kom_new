@@ -63,6 +63,10 @@ namespace Els_kom_Core.Classes
                 {
                     System.IO.Directory.CreateDirectory(DestFileDir);
                 }
+                if (!System.IO.File.Exists(DestFileDir + FileName))
+                {
+                    System.IO.File.Delete(DestFileDir + FileName);
+                }
                 System.IO.File.Move(OrigFileDir + FileName, DestFileDir + FileName);
             }
         }
