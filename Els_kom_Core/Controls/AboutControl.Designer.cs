@@ -52,9 +52,9 @@ namespace Els_kom_Core.Controls
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.picIcon)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // Text1
-            // 
+            //
             this.Text1.AcceptsReturn = true;
             this.Text1.BackColor = System.Drawing.SystemColors.Control;
             this.Text1.Cursor = System.Windows.Forms.Cursors.IBeam;
@@ -70,9 +70,9 @@ namespace Els_kom_Core.Controls
             this.Text1.Size = new System.Drawing.Size(361, 61);
             this.Text1.TabIndex = 7;
             this.Text1.Text = "This version of Els_kom can test mods and update the game when a maintenance happens. It has also gone through a lot of changes including the removal of the stubs that used to handle the testing of mods and the updating of the game.";
-            // 
+            //
             // picIcon
-            // 
+            //
             this.picIcon.BackColor = System.Drawing.Color.Transparent;
             this.picIcon.Cursor = System.Windows.Forms.Cursors.Default;
             this.picIcon.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -83,9 +83,9 @@ namespace Els_kom_Core.Controls
             this.picIcon.Size = new System.Drawing.Size(48, 48);
             this.picIcon.TabIndex = 1;
             this.picIcon.TabStop = false;
-            // 
+            //
             // lblDisclaimer
-            // 
+            //
             this.lblDisclaimer.BackColor = System.Drawing.SystemColors.Control;
             this.lblDisclaimer.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblDisclaimer.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -96,9 +96,9 @@ namespace Els_kom_Core.Controls
             this.lblDisclaimer.Size = new System.Drawing.Size(249, 31);
             this.lblDisclaimer.TabIndex = 6;
             this.lblDisclaimer.Text = "Visit my Forum topic here if you would like to post something about my Els_kom.";
-            // 
+            //
             // lblTitle
-            // 
+            //
             this.lblTitle.BackColor = System.Drawing.Color.Transparent;
             this.lblTitle.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblTitle.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -109,9 +109,9 @@ namespace Els_kom_Core.Controls
             this.lblTitle.Size = new System.Drawing.Size(259, 16);
             this.lblTitle.TabIndex = 5;
             this.lblTitle.Text = "Els_kom v1.4.9.8";
-            // 
+            //
             // lblDescription
-            // 
+            //
             this.lblDescription.BackColor = System.Drawing.Color.Transparent;
             this.lblDescription.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblDescription.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -123,9 +123,9 @@ namespace Els_kom_Core.Controls
             this.lblDescription.TabIndex = 4;
             this.lblDescription.Text = "This tool allows you to Edit koms freely. Also this is a tool that replaces gPatc" +
     "her but with some limitations. l0l";
-            // 
+            //
             // CmdOK
-            // 
+            //
             this.CmdOK.BackColor = System.Drawing.Color.Transparent;
             this.CmdOK.Cursor = System.Windows.Forms.Cursors.Default;
             this.CmdOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -139,7 +139,7 @@ namespace Els_kom_Core.Controls
             this.CmdOK.Text = "OK";
             this.CmdOK.UseVisualStyleBackColor = false;
             this.CmdOK.Click += new System.EventHandler(this.CmdOK_Click);
-            // 
+            //
             // linkLabel1
             //
             this.linkLabel1.Location = new System.Drawing.Point(256, 149);
@@ -154,7 +154,7 @@ namespace Els_kom_Core.Controls
             this.linkLabel1.MouseLeave += new System.EventHandler(this.LinkLabel1_MouseLeave);
             //
             // AboutControl
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.linkLabel1);

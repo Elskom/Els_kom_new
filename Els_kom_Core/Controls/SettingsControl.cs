@@ -195,9 +195,15 @@ namespace Els_kom_Core.Controls
             if (TreeView1.SelectedNode.Index == 0)
             {
                 Panel3.Visible = true;
+                Panel5.Visible = false;
                 TreeView1.Focus();
             }
-            // TODO: Make sure to check if an plugin panel's node is selected or not.
+            else if (TreeView1.SelectedNode.Index == 1)
+            {
+                Panel3.Visible = false;
+                Panel5.Visible = true;
+                TreeView1.Focus();
+            }
         }
 
         private void SetRadios()
@@ -253,6 +259,18 @@ namespace Els_kom_Core.Controls
                 Label4 = string.IsNullOrEmpty(curvalue) ? Label4 : curvalue;
                 Label5 = string.IsNullOrEmpty(curvalue2) ? Label5 : curvalue2;
             }
+            System.Collections.Generic.List<System.Windows.Forms.ListViewItem> Entries = new System.Collections.Generic.List<System.Windows.Forms.ListViewItem>();
+            foreach (var callbackplugin in Classes.ExecutionManager.callbackplugins)
+            {
+                Entries.Add(new System.Windows.Forms.ListViewItem(new string[] {
+                    callbackplugin.PluginName }, -1));
+            }
+            foreach (var komplugin in Classes.KOMManager.komplugins)
+            {
+                Entries.Add(new System.Windows.Forms.ListViewItem(new string[] {
+                    komplugin.PluginName }, -1));
+            }
+            listView1.Items.AddRange(Entries.ToArray());
             SetRadios();
             TreeView1.SelectedNode = TreeView1.Nodes[0];
         }
@@ -261,6 +279,46 @@ namespace Els_kom_Core.Controls
         {
             SetRadios();
             TreeView1.SelectedNode = TreeView1.Nodes[0];
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            for (int i = 0; i < (listView1.SelectedItems.Count); i++)
+            {
+                System.Windows.Forms.ListViewItem selitem = listView1.SelectedItems[i];
+                foreach (var callbackplugin in Classes.ExecutionManager.callbackplugins)
+                {
+                    if (callbackplugin.PluginName.Equals(selitem.Text))
+                    {
+                        if (callbackplugin.SupportsSettings)
+                        {
+                            button3.Enabled = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void button3_Click(object sender, System.EventArgs e)
+        {
+            for (int i = 0; i < (listView1.SelectedItems.Count); i++)
+            {
+                System.Windows.Forms.ListViewItem selitem = listView1.SelectedItems[i - 1];
+                foreach (var callbackplugin in Classes.ExecutionManager.callbackplugins)
+                {
+                    if (callbackplugin.PluginName.Equals(selitem.Text))
+                    {
+                        System.Windows.Forms.Form plugsettingfrm = callbackplugin.SettingsWindow;
+                        plugsettingfrm.ShowDialog();
+                        // ensure disposed.
+                        if (!plugsettingfrm.IsDisposed)
+                        {
+                            plugsettingfrm.Dispose();
+                        }
+                        plugsettingfrm = null;
+                    }
+                }
+            }
         }
     }
 }

@@ -31,5 +31,27 @@ namespace Els_kom_Core.Classes
             thisProcess.Dispose();
             fsToDump.Dispose();
         }
+
+        /// <summary>
+        /// Creates a Full Mini-dump in the file specified.
+        /// </summary>
+        public static void FullMiniDumpToFile(string fileToDump)
+        {
+            System.IO.FileStream fsToDump = null;
+            if (System.IO.File.Exists(fileToDump))
+            {
+                fsToDump = System.IO.File.Open(fileToDump, System.IO.FileMode.Append);
+            }
+            else
+            {
+                fsToDump = System.IO.File.Create(fileToDump);
+            }
+            System.Diagnostics.Process thisProcess = System.Diagnostics.Process.GetCurrentProcess();
+            SafeNativeMethods.MiniDumpWriteDump(thisProcess.Handle, thisProcess.Id,
+                fsToDump.SafeFileHandle.DangerousGetHandle(), Enums.MINIDUMP_TYPE.MiniDumpWithFullMemoryInfo,
+                System.IntPtr.Zero, System.IntPtr.Zero, System.IntPtr.Zero);
+            thisProcess.Dispose();
+            fsToDump.Dispose();
+        }
     };
 }

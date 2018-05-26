@@ -56,10 +56,6 @@ namespace Els_kom_Core.Classes
                 System.Diagnostics.Process thisProcess = System.Diagnostics.Process.GetCurrentProcess();
                 localPath += "\\" + thisProcess.ProcessName + "-" + thisProcess.Id.ToString() + ".log";
                 thisProcess.Dispose();
-                if (!System.IO.File.Exists(localPath))
-                {
-                    System.IO.File.Create(localPath).Dispose();
-                }
                 return localPath;
             }
         }

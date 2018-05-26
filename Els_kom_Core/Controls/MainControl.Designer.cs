@@ -66,9 +66,9 @@ namespace Els_kom_Core.Controls
             this.Command6.UseVisualStyleBackColor = false;
             this.Command6.Click += new System.EventHandler(this.Command6_Click);
             this.Command6.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Command6_MouseMove);
-            // 
+            //
             // Command5
-            // 
+            //
             this.Command5.BackColor = System.Drawing.Color.Transparent;
             this.Command5.Cursor = System.Windows.Forms.Cursors.Default;
             this.Command5.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -82,9 +82,9 @@ namespace Els_kom_Core.Controls
             this.Command5.UseVisualStyleBackColor = false;
             this.Command5.Click += new System.EventHandler(this.Command5_Click);
             this.Command5.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Command5_MouseMove);
-            // 
+            //
             // Command4
-            // 
+            //
             this.Command4.BackColor = System.Drawing.Color.Transparent;
             this.Command4.Cursor = System.Windows.Forms.Cursors.Default;
             this.Command4.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -98,9 +98,9 @@ namespace Els_kom_Core.Controls
             this.Command4.UseVisualStyleBackColor = false;
             this.Command4.Click += new System.EventHandler(this.Command4_Click);
             this.Command4.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Command4_MouseMove);
-            // 
+            //
             // Command3
-            // 
+            //
             this.Command3.BackColor = System.Drawing.Color.Transparent;
             this.Command3.Cursor = System.Windows.Forms.Cursors.Default;
             this.Command3.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -114,9 +114,9 @@ namespace Els_kom_Core.Controls
             this.Command3.UseVisualStyleBackColor = false;
             this.Command3.Click += new System.EventHandler(this.Command3_Click);
             this.Command3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Command3_MouseMove);
-            // 
+            //
             // Frame1
-            // 
+            //
             this.Frame1.BackColor = System.Drawing.SystemColors.Control;
             this.Frame1.Controls.Add(this.Label1);
             this.Frame1.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -128,9 +128,9 @@ namespace Els_kom_Core.Controls
             this.Frame1.Size = new System.Drawing.Size(217, 147);
             this.Frame1.TabIndex = 2;
             this.Frame1.TabStop = false;
-            // 
+            //
             // Label1
-            // 
+            //
             this.Label1.BackColor = System.Drawing.SystemColors.Control;
             this.Label1.Cursor = System.Windows.Forms.Cursors.Default;
             this.Label1.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -141,9 +141,9 @@ namespace Els_kom_Core.Controls
             this.Label1.Size = new System.Drawing.Size(203, 132);
             this.Label1.TabIndex = 3;
             this.Label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Label1_MouseMove);
-            // 
+            //
             // Command2
-            // 
+            //
             this.Command2.BackColor = System.Drawing.Color.Transparent;
             this.Command2.Cursor = System.Windows.Forms.Cursors.Default;
             this.Command2.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -157,9 +157,9 @@ namespace Els_kom_Core.Controls
             this.Command2.UseVisualStyleBackColor = false;
             this.Command2.Click += new System.EventHandler(this.Command2_Click);
             this.Command2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Command2_MouseMove);
-            // 
+            //
             // Command1
-            // 
+            //
             this.Command1.BackColor = System.Drawing.Color.Transparent;
             this.Command1.Cursor = System.Windows.Forms.Cursors.Default;
             this.Command1.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -173,9 +173,9 @@ namespace Els_kom_Core.Controls
             this.Command1.UseVisualStyleBackColor = false;
             this.Command1.Click += new System.EventHandler(this.Command1_Click);
             this.Command1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Command1_MouseMove);
-            // 
+            //
             // Label2
-            // 
+            //
             this.Label2.BackColor = System.Drawing.Color.Transparent;
             this.Label2.Cursor = System.Windows.Forms.Cursors.Default;
             this.Label2.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -185,9 +185,9 @@ namespace Els_kom_Core.Controls
             this.Label2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Label2.Size = new System.Drawing.Size(81, 17);
             this.Label2.TabIndex = 4;
-            // 
+            //
             // MainControl
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.Command6);

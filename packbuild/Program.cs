@@ -13,6 +13,7 @@ namespace packbuild
         private static string ExcludeFile3 = "packbuild.exe";
         private static string ExcludeFile4 = "gitbuildinfo.pdb";
         private static string ExcludeFile5 = "packbuild.pdb";
+        private static string ExcludeFile6 = ".CodeAnalysisLog.xml";
 
         private static void Main(string[] args)
         {
@@ -55,14 +56,30 @@ namespace packbuild
                             System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _dll_file, _dll_file);
                         }
                     }
+                    foreach (var fi3 in di1.GetFiles("*.xml"))
+                    {
+                        string _xml_file = fi3.Name;
+                        if (!_xml_file.EndsWith(ExcludeFile6))
+                        {
+                            System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _xml_file, _xml_file);
+                        }
+                    }
                     foreach (var di2 in di1.GetDirectories())
                     {
-                        foreach (var fi3 in di2.GetFiles("*.dll"))
+                        foreach (var fi4 in di2.GetFiles("*.dll"))
                         {
-                            string _dll_file = fi3.Name;
+                            string _dll_file = fi4.Name;
                             if (!_dll_file.Equals(ExcludeFile2))
                             {
                                 System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + "\\" + _dll_file, di2.Name + "\\" + _dll_file);
+                            }
+                        }
+                        foreach (var fi5 in di2.GetFiles("*.xml"))
+                        {
+                            string _xml_file = fi5.Name;
+                            if (!_xml_file.EndsWith(ExcludeFile6))
+                            {
+                                System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + "\\" + _xml_file, di2.Name + "\\" + _xml_file);
                             }
                         }
                     }
