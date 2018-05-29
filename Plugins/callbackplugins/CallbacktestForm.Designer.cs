@@ -1,4 +1,4 @@
-namespace callbacktest_plugin.callbackplugins
+namespace callbacktest_plugin
 {
     partial class CallbacktestForm
     {

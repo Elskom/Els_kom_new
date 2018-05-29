@@ -3,7 +3,7 @@
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
-namespace callbacktest_plugin.callbackplugins
+namespace callbacktest_plugin
 {
     public class Callbacktest_plugin : Els_kom_Core.interfaces.ICallbackPlugin
     {
