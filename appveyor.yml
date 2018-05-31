@@ -12,9 +12,9 @@ before_deploy:
 - cmd: >-
     IF "%APPVEYOR_REPO_TAG_NAME%"=="" (
 
-    echo Setting Tag name to AppVeyor version.
+    echo "Setting Tag name to AppVeyor version."
 
-    set /p APPVEYOR_REPO_TAG_NAME = $(version)
+    set /p APPVEYOR_REPO_TAG_NAME = "%version%"
 
     )
 deploy:
