@@ -8,15 +8,22 @@ build:
   parallel: true
   verbosity: minimal
 test: off
+before_deploy:
+  - cmd: IF APPVEYOR_REPO_TAG_NAME == "" (
+         echo Setting Tag name to AppVeyor version.
+         APPVEYOR_REPO_TAG_NAME = $(version)
+         )
 deploy:
   release: $(APPVEYOR_REPO_TAG_NAME)
   description: $(APPVEYOR_REPO_COMMIT_MESSAGE)
   provider: GitHub
+  repository: Elskom/Els_kom_builds
   auth_token:
     secure: tFhxq8kLPTT5I3IwiLKp8efBTsZD0madTaOD4+MgmwX3u9t0fVsXsU+/aXBJTcfE
   artifact: /bin\Release\*.zip/ # upload all zip files to release assets
   draft: false
   prerelease: false
-  on:
-    branch: master
-    appveyor_repo_tag: true
+  force_update: true
+# on:
+#   branch: master
+#   appveyor_repo_tag: true
