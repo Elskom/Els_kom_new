@@ -14,7 +14,7 @@ before_deploy:
 
     echo "Setting Tag name to AppVeyor version."
 
-    set /p APPVEYOR_REPO_TAG_NAME = "%version%"
+    set /p "APPVEYOR_REPO_TAG_NAME=%version%"
 
     )
 deploy:
