@@ -10,9 +10,9 @@ build:
 test: off
 before_deploy:
   - cmd: IF "%APPVEYOR_REPO_TAG_NAME%" == "" (
-         echo Setting Tag name to AppVeyor version.
-         set /p APPVEYOR_REPO_TAG_NAME = $(version)
-         )
+    cmd: echo Setting Tag name to AppVeyor version.
+    cmd: set /p APPVEYOR_REPO_TAG_NAME = $(version)
+    cmd: )
 deploy:
   release: $(APPVEYOR_REPO_TAG_NAME)
   description: $(APPVEYOR_REPO_COMMIT_MESSAGE)
