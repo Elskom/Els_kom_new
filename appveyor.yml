@@ -10,19 +10,15 @@ build:
 test: off
 before_deploy:
 - cmd: >-
-    @echo on
-
     echo "%APPVEYOR_REPO_TAG_NAME%"
 
     IF "%APPVEYOR_REPO_TAG_NAME%"=="" (
 
-    echo "Setting Tag name to AppVeyor version."
+        echo "Setting Tag name to AppVeyor version."
 
-    set /p "APPVEYOR_REPO_TAG_NAME=%version%"
+        set /p "APPVEYOR_REPO_TAG_NAME=%version%"
 
     )
-
-    @echo off
 deploy:
 - provider: GitHub
   release: $(APPVEYOR_REPO_TAG_NAME)
