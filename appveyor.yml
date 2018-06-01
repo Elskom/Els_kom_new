@@ -19,7 +19,7 @@ deploy:
   auth_token:
     secure: tFhxq8kLPTT5I3IwiLKp8efBTsZD0madTaOD4+MgmwX3u9t0fVsXsU+/aXBJTcfE
   repository: Elskom/Els_kom_builds
-  artifact: /\.\/bin\/Release\/*.zip/
+  artifact: /\.\/bin\/$(configuration)\/$(platform)\/*.zip/
   force_update: true
   on:
     platform: x86
