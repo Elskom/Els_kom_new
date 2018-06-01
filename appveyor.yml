@@ -15,12 +15,12 @@ test: off
 #    set /p APPVEYOR_REPO_TAG_NAME=%version%
 deploy:
 - provider: GitHub
-  release: $(APPVEYOR_REPO_TAG_NAME)
+  release: $(version)
   description: $(APPVEYOR_REPO_COMMIT_MESSAGE)
   auth_token:
     secure: tFhxq8kLPTT5I3IwiLKp8efBTsZD0madTaOD4+MgmwX3u9t0fVsXsU+/aXBJTcfE
   repository: Elskom/Els_kom_builds
-  artifact: /bin\Release\*.zip/
+  artifact: /bin\\Release\\*.zip/
   force_update: true
   on:
     platform: x86
