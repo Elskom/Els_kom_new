@@ -8,11 +8,11 @@ build:
   parallel: true
   verbosity: minimal
 test: off
-before_deploy:
-- cmd: >-
-    echo "Setting Tag name to AppVeyor version."
-
-    set /p APPVEYOR_REPO_TAG_NAME=%version%
+#before_deploy:
+#- cmd: >-
+#    echo "Setting Tag name to AppVeyor version."
+#
+#    set /p APPVEYOR_REPO_TAG_NAME=%version%
 deploy:
 - provider: GitHub
   release: $(APPVEYOR_REPO_TAG_NAME)
