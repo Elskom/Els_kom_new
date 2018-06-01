@@ -13,13 +13,16 @@ test: off
 #    echo "Setting Tag name to AppVeyor version."
 #
 #    set /p APPVEYOR_REPO_TAG_NAME=%version%
+artifacts:
+- path: bin/$(platform)/$(configuration)/*.zip
+  name: myartifact
 deploy:
 - provider: GitHub
   description: $(APPVEYOR_REPO_COMMIT_MESSAGE)
   auth_token:
     secure: tFhxq8kLPTT5I3IwiLKp8efBTsZD0madTaOD4+MgmwX3u9t0fVsXsU+/aXBJTcfE
   repository: Elskom/Els_kom_builds
-  artifact: /\.\/bin\/$(platform)\/$(configuration)\/*.zip/
+  artifact: myartifact
   force_update: true
   on:
     platform: x86
