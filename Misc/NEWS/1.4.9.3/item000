@@ -1,0 +1,1 @@
+Replaced module1's FileExists with System.IO.File.Exists.

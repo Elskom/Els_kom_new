@@ -3,22 +3,28 @@ max_jobs: 15
 image: Visual Studio 2017
 configuration: Release
 platform: x86
-environment:
-  SECRET_KEY:
-    secure: Aj3VN2tlLSPP6QhY5bTXIUJiI/de9iTyr3wpO3FPDSLkXj/Il1nV+I+PCrl7ci94Rqv6KtVXIxzfvk0yXjN7u9CVYU3y1oMIzp3cM6u2fVOdaIX06RTNlF2EunvxLZoG/etETEUfb7O8kBIPxEmSd5E+/1cp0igjKsiTlqq5ivA=
-install:
-- nuget install secure-file -ExcludeVersion
-- secure-file\tools\secure-file -decrypt ./Tools/private_encryption.py.enc -secret %SECRET_KEY% -out ./Tools/private_encryption.py
-- secure-file\tools\secure-file -decrypt ./PC/encryption_private.h.enc -secret %SECRET_KEY% -out ./PC/encryption_private.h
-before_build:
-- cmd: call ci_build.bat
-cache:
-- .\externals\cpython
-- .\externals\aes
-- .\obj
-- .\bin
 build:
-  project: PCbuild\PCbuild.sln
+  project: PCbuild\pcbuild.sln
   parallel: true
   verbosity: minimal
 test: off
+#before_deploy:
+#- cmd: >-
+#    echo "Setting Tag name to AppVeyor version."
+#
+#    set /p APPVEYOR_REPO_TAG_NAME=%version%
+artifacts:
+- path: bin/$(platform)/$(configuration)/*.zip
+  name: myartifact
+deploy:
+- provider: GitHub
+  description: $(APPVEYOR_REPO_COMMIT_MESSAGE)
+  auth_token:
+    secure: tFhxq8kLPTT5I3IwiLKp8efBTsZD0madTaOD4+MgmwX3u9t0fVsXsU+/aXBJTcfE
+  repository: Elskom/Els_kom_builds
+  artifact: myartifact
+  force_update: true
+  on:
+    platform: x86
+#   branch: master
+#   appveyor_repo_tag: true

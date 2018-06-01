@@ -1,0 +1,1 @@
+Reconstituted some of the TerminateProcess function for when the Option in the Menu on the Shell icon is pressed (option did not work in the 1.3.0.10 code test).

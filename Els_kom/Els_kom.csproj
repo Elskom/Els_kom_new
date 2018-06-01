@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(SolutionDir)\Main.props" Condition="Exists('$(SolutionDir)\Main.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{0116DE95-C3D6-487A-9133-5D26B6CA09FB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Els_kom</RootNamespace>
+    <AssemblyName>Els_kom</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>False</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <NoStdLib>False</NoStdLib>
+    <IntermediateOutputPath>..\obj\$(Platform)\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Els_kom_Main</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Win32Resource>Resources\Els_kom.res</Win32Resource>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Els_kom_Main.cs" />
+    <Compile Include="Forms\Els_kom_Main_AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Els_kom_Main_AboutForm.Designer.cs">
+      <DependentUpon>Els_kom_Main_AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Els_kom_Main_MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Els_kom_Main_MainForm.Designer.cs">
+      <DependentUpon>Els_kom_Main_MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Els_kom_Main_SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Els_kom_Main_SettingsForm.Designer.cs">
+      <DependentUpon>Els_kom_Main_SettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Els_kom_Core\Els_kom_Core.csproj">
+      <Project>{8588ae1c-cd41-4a96-8c9a-cd48b311bb6e}</Project>
+      <Name>Els_kom_Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\els_kom.manifest" />
+    <None Include="Resources\els_kom.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

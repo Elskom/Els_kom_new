@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(SolutionDir)\Core.props" Condition="Exists('$(SolutionDir)\Core.props')" />
   <PropertyGroup>
     <ProjectGuid>{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -8,67 +9,28 @@
     <AssemblyName>Els_kom.Core</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <NoWin32Manifest>False</NoWin32Manifest>
     <SignAssembly>True</SignAssembly>
-    <DelaySign>False</DelaySign>
+    <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <IntermediateOutputPath>..\obj\$(Platform)\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>False</RunCodeAnalysis>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
   </PropertyGroup>
-  <PropertyGroup>
-    <OptionExplicit>On</OptionExplicit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionCompare>Binary</OptionCompare>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionStrict>Off</OptionStrict>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionInfer>On</OptionInfer>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <DefineTrace>false</DefineTrace>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <Optimize>False</Optimize>
-    <BaseIntermediateOutputPath>..\obj\$(Platform)\$(Configuration)\$(ProjectName)</BaseIntermediateOutputPath>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DebugType>None</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <BaseAddress>4194304</BaseAddress>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <LangVersion>7.2</LangVersion>
-    <OutputPath>..\bin\x86\Release\</OutputPath>
-    <DocumentationFile>..\bin\x86\Release\Els_kom.Core.xml</DocumentationFile>
-    <Optimize>false</Optimize>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="System" />
@@ -81,17 +43,40 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\BlowFish.cs" />
+    <Compile Include="Classes\BuildDir.cs" />
+    <Compile Include="Classes\EntryVer.cs" />
     <Compile Include="Classes\ExecutionManager.cs" />
-    <Compile Include="Classes\INIObject.cs" />
+    <Compile Include="Classes\GenericPluginLoader.cs" />
+    <Compile Include="Classes\Git.cs" />
+    <Compile Include="Classes\Icons.cs" />
     <Compile Include="Classes\KOMManager.cs" />
-    <Compile Include="Classes\KOMV2.cs" />
-    <Compile Include="Classes\KOMV3.cs" />
-    <Compile Include="Classes\KOMV4.cs" />
+    <Compile Include="Classes\KOMStream.cs" />
+    <Compile Include="Classes\LoadResources.cs" />
     <Compile Include="Classes\MessageManager.cs" />
-    <Compile Include="Classes\Packer.cs" />
+    <Compile Include="Classes\MiniDump.cs" />
+    <Compile Include="Classes\PackingError.cs" />
+    <Compile Include="Classes\SafeNativeMethods.cs" />
+    <Compile Include="Classes\SettingsFile.cs" />
     <Compile Include="Classes\ShowTaskbarEvent.cs" />
-    <Compile Include="Classes\Unpacker.cs" />
+    <Compile Include="Classes\UnpackingError.cs" />
     <Compile Include="Classes\Version.cs" />
+    <Compile Include="Classes\XMLObject.cs" />
+    <Compile Include="Classes\ZlibHelper.cs" />
+    <Compile Include="Classes\Zlib\Adler32.cs" />
+    <Compile Include="Classes\Zlib\Deflate.cs" />
+    <Compile Include="Classes\Zlib\InfBlocks.cs" />
+    <Compile Include="Classes\Zlib\InfCodes.cs" />
+    <Compile Include="Classes\Zlib\Inflate.cs" />
+    <Compile Include="Classes\Zlib\InfTree.cs" />
+    <Compile Include="Classes\Zlib\StaticTree.cs" />
+    <Compile Include="Classes\Zlib\SupportClass.cs" />
+    <Compile Include="Classes\Zlib\Tree.cs" />
+    <Compile Include="Classes\Zlib\ZInputStream.cs" />
+    <Compile Include="Classes\Zlib\Zlib.cs" />
+    <Compile Include="Classes\Zlib\ZOutputStream.cs" />
+    <Compile Include="Classes\Zlib\ZStream.cs" />
+    <Compile Include="Classes\Zlib\ZStreamException.cs" />
     <Compile Include="Controls\AboutControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -110,28 +95,19 @@
     <Compile Include="Controls\SettingsControl.Designer.cs">
       <DependentUpon>SettingsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Enums\LoadImagefuLoad.cs" />
+    <Compile Include="Enums\LoadImageTypes.cs" />
+    <Compile Include="Enums\SYSCOMMANDS.cs" />
+    <Compile Include="Enums\MINIDUMP_TYPE.cs" />
+    <Compile Include="interfaces\ICallbackPlugin.cs" />
+    <Compile Include="interfaces\IEncryptionPlugin.cs" />
+    <Compile Include="interfaces\IKomPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Controls\MainControl.resx">
-      <DependentUpon>MainControl.cs</DependentUpon>
-    </None>
-    <None Include="Controls\SettingsControl.resx">
-      <DependentUpon>SettingsControl.cs</DependentUpon>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>"$(TargetDir)gitbuildinfo.exe" "$(ProjectDir)\Classes\Git.cs" Els_kom_Core.Classes --b "$(TargetDir)\" "$(ProjectDir)\Classes\BuildDir.cs"</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

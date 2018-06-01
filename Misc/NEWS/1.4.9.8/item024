@@ -1,0 +1,1 @@
+Use a single global Settings XMLObject Instance for all forms. Now all used memory by Els_kom drops from like 10 MB to about 8 MB.
