@@ -1,0 +1,1 @@
+Fixed the issue in Test mods again that I didn't see before it turns out I should have done the enable part on the else part of the if statement that checks to see if Elsword is running sorry for that mess.

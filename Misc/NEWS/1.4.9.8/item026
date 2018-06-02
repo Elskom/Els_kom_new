@@ -1,0 +1,1 @@
+Added a Thread event handler and a Unhandled Exception handler to force application exits to avoid WerFault.exe from kicking in.

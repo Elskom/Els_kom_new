@@ -1,15 +1,18 @@
-*.pyc
-*.chm
 obj
 bin
 old
-aes
 .vs
-_base64
-externals
-secure-file
-PC/encryption_private.h
-Tools/private_encryption.py
-
-# encrypted scripts.
-*.pye
+*.user
+Els_kom_Core/Classes/Git.cs
+# hack for Visual Studio Designer.
+Els_kom_Core/Classes/BuildDir.cs
+*.res
+# build log crap.
+*.log
+*.tlog
+*.lastbuildstate
+# local backup files.
+*.bak
+# possible patch files that can be made by anyone.
+*.patch
+*.diff
