@@ -1,4 +1,5 @@
 version: 1.4.9.8a{build}
+skip_branch_with_pr: true
 max_jobs: 15
 image: Visual Studio 2017
 configuration: Release
@@ -24,5 +25,3 @@ deploy:
   force_update: true
   on:
     platform: x86
-#   branch: master
-#   appveyor_repo_tag: true
