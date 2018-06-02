@@ -12,7 +12,7 @@ artifacts:
 - path: bin/$(platform)/$(configuration)/*.zip
   name: myartifact
 before_deploy:
-- ps: IF ($env:APPVEYOR_REPO_TAG -eq "false") {$env:APPVEYOR_REPO_TAG_NAME = $env:version}
+- ps: IF ($env:APPVEYOR_REPO_TAG -eq "false") {$env:APPVEYOR_REPO_TAG_NAME = $env:APPVEYOR_BUILD_VERSION}
 deploy:
 - provider: GitHub
   release: $(APPVEYOR_REPO_TAG_NAME)
