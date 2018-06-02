@@ -12,10 +12,10 @@ artifacts:
 - path: bin/$(platform)/$(configuration)/*.zip
   name: myartifact
 before_deploy:
-- ps: IF ($env:APPVEYOR_REPO_TAG -eq "true") {$env:APPVEYOR_REPO_TAG_NAME = $env:version}
+- ps: IF ($env:APPVEYOR_REPO_TAG -eq "false") {$env:APPVEYOR_REPO_TAG_NAME = $env:version}
 deploy:
 - provider: GitHub
-  tag: {APPVEYOR_REPO_TAG_NAME}
+  release: $(APPVEYOR_REPO_TAG_NAME)
   description: $(APPVEYOR_REPO_COMMIT_MESSAGE)
   auth_token:
     secure: oHqKZpK6huL4v9LT6ifeFb/MA3vI1NRlN66jP+qbI7DiGhV0ZF3L7xmTeJR+OEFG
