@@ -4,8 +4,6 @@ max_jobs: 15
 image: Visual Studio 2017
 configuration: Release
 platform: x86
-init:
-- ps: if($env:APPVEYOR_PULL_REQUEST_NUMBER) { $env:do_deploy = "true"; } else { $env:do_deploy = "true"; }
 build:
   project: PCbuild\pcbuild.sln
   parallel: true
@@ -27,4 +25,3 @@ deploy:
   force_update: true
   on:
     platform: x86
-    do_deploy: true
