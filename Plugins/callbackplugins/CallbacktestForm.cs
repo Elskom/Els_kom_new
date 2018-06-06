@@ -20,12 +20,9 @@ namespace callbacktest_plugin
             {
                 callbacksetting1_temp = 1;
             }
-            else
+            else if (callbacksetting1_temp > 0)
             {
-                if (callbacksetting1_temp > 0)
-                {
-                    callbacksetting1_temp = 0;
-                }
+                callbacksetting1_temp = 0;
             }
         }
 
