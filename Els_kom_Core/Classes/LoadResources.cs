@@ -47,18 +47,17 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Gets plain image Resource data with a specific Width and Height and uses that data to construct an .NET Image Object.
         /// </summary>
-        public static System.Drawing.Image GetImageResource(string resource, int Width, int Height, string filenamefallback, string fallbackmodule) => GetIconResource(resource, Width, Height, filenamefallback, fallbackmodule)?.ToBitmap();
+        public static System.Drawing.Image GetImageResource(string resource, int Width, int Height) => GetIconResource(resource, Width, Height)?.ToBitmap();
 
         /// <summary>
         /// Gets plain Icon image Resource data with a specific Width and Height and uses that data to construct an .NET Icon Object.
         /// </summary>
-        private static System.Drawing.Icon GetIconResource(string resource, int Width, int Height, string filenamefallback, string fallbackmodule)
+        private static System.Drawing.Icon GetIconResource(string resource, int Width, int Height)
         {
-            System.IntPtr hIcon = SafeNativeMethods._LoadIconErrorChecked(resource, Width, Height, filenamefallback, fallbackmodule);
-            System.Drawing.Icon ico = null;
-            if (hIcon != System.IntPtr.Zero)
+            System.Drawing.Icon ico = SafeNativeMethods._LoadIconErrorChecked(resource, Width, Height);
+            if (ico == null)
             {
-                ico = System.Drawing.Icon.FromHandle(hIcon);
+                //something must have failed here.
             }
             return ico;
         }
@@ -66,6 +65,6 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Gets plain Icon image Resource data and uses that data to construct an .NET Icon Object.
         /// </summary>
-        public static System.Drawing.Icon GetIconResource(string resource, string filenamefallback, string fallbackmodule) => GetIconResource(resource, 16, 16, filenamefallback, fallbackmodule);
+        public static System.Drawing.Icon GetIconResource(string resource) => GetIconResource(resource, 16, 16);
     }
 }

@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\BlowFish.cs" />
-    <Compile Include="Classes\BuildDir.cs" />
     <Compile Include="Classes\EntryVer.cs" />
     <Compile Include="Classes\ExecutionManager.cs" />
     <Compile Include="Classes\GenericPluginLoader.cs" />
@@ -56,6 +55,7 @@
     <Compile Include="Classes\MessageManager.cs" />
     <Compile Include="Classes\MiniDump.cs" />
     <Compile Include="Classes\PackingError.cs" />
+    <Compile Include="Classes\ResourcesDir.cs" />
     <Compile Include="Classes\SafeNativeMethods.cs" />
     <Compile Include="Classes\SettingsFile.cs" />
     <Compile Include="Classes\ShowTaskbarEvent.cs" />
@@ -106,7 +106,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>"$(TargetDir)gitbuildinfo.exe" "$(ProjectDir)\Classes\Git.cs" Els_kom_Core.Classes --b "$(TargetDir)\" "$(ProjectDir)\Classes\BuildDir.cs"</PreBuildEvent>
+    <PreBuildEvent>"$(TargetDir)gitbuildinfo.exe" "$(ProjectDir)\Classes\Git.cs" Els_kom_Core.Classes --r "$(SolutionDir)\" "$(ProjectDir)\Classes\ResourcesDir.cs"
+rc /nologo /r "$(SolutionDir)\..\Els_kom\Resources\els_kom.rc"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
