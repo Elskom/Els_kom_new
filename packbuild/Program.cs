@@ -7,16 +7,12 @@ namespace packbuild
 {
     internal class Program
     {
-        // files to exclude from Release zip.
-        private static string ExcludeFile1 = "gitbuildinfo.exe";
-        private static string ExcludeFile2 = "Els_kom_resources.dll";
-        private static string ExcludeFile3 = "packbuild.exe";
-        private static string ExcludeFile4 = "gitbuildinfo.pdb";
-        private static string ExcludeFile5 = "packbuild.pdb";
-        private static string ExcludeFile6 = ".CodeAnalysisLog.xml";
-
         private static void Main(string[] args)
         {
+            // files to exclude from Release zip.
+            string ExcludeFile1 = "packbuild.exe";
+            string ExcludeFile2 = "packbuild.pdb";
+            string ExcludeFile3 = ".CodeAnalysisLog.xml";
             if ((args.Length - 1) > -1)
             {
                 string outfilename = "";
@@ -43,7 +39,7 @@ namespace packbuild
                     foreach (var fi1 in di1.GetFiles("*.exe"))
                     {
                         string _exe_file = fi1.Name;
-                        if (!(_exe_file.Equals(ExcludeFile1) | _exe_file.Equals(ExcludeFile3)))
+                        if (!_exe_file.Equals(ExcludeFile1))
                         {
                             System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _exe_file, _exe_file);
                         }
@@ -51,15 +47,12 @@ namespace packbuild
                     foreach (var fi2 in di1.GetFiles("*.dll"))
                     {
                         string _dll_file = fi2.Name;
-                        if (!_dll_file.Equals(ExcludeFile2))
-                        {
-                            System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _dll_file, _dll_file);
-                        }
+                        System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _dll_file, _dll_file);
                     }
                     foreach (var fi3 in di1.GetFiles("*.xml"))
                     {
                         string _xml_file = fi3.Name;
-                        if (!_xml_file.EndsWith(ExcludeFile6))
+                        if (!_xml_file.EndsWith(ExcludeFile3))
                         {
                             System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _xml_file, _xml_file);
                         }
@@ -69,15 +62,12 @@ namespace packbuild
                         foreach (var fi4 in di2.GetFiles("*.dll"))
                         {
                             string _dll_file = fi4.Name;
-                            if (!_dll_file.Equals(ExcludeFile2))
-                            {
-                                System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + "\\" + _dll_file, di2.Name + "\\" + _dll_file);
-                            }
+                            System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + "\\" + _dll_file, di2.Name + "\\" + _dll_file);
                         }
                         foreach (var fi5 in di2.GetFiles("*.xml"))
                         {
                             string _xml_file = fi5.Name;
-                            if (!_xml_file.EndsWith(ExcludeFile6))
+                            if (!_xml_file.EndsWith(ExcludeFile3))
                             {
                                 System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + "\\" + _xml_file, di2.Name + "\\" + _xml_file);
                             }
@@ -95,7 +85,7 @@ namespace packbuild
                     foreach (var fi1 in di1.GetFiles("*.pdb"))
                     {
                         string _pdb_file = fi1.Name;
-                        if (!(_pdb_file.Equals(ExcludeFile4) | _pdb_file.Equals(ExcludeFile5)))
+                        if (!_pdb_file.Equals(ExcludeFile2))
                         {
                             System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _pdb_file, _pdb_file);
                         }

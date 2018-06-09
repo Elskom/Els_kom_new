@@ -17,9 +17,7 @@ namespace Els_kom_Core.Classes
         {
             get
             {
-                return LoadResources.GetIconResource("#1",
-                    System.Windows.Forms.Application.StartupPath + "\\els_kom.ico",
-                    "Els_kom_resources.dll");
+                return LoadResources.GetIconResource("#1");
             }
         }
 
@@ -31,9 +29,7 @@ namespace Els_kom_Core.Classes
         {
             get
             {
-                return LoadResources.GetImageResource("#1",
-                    48, 48, System.Windows.Forms.Application.StartupPath + "\\els_kom.ico",
-                    "Els_kom_resources.dll");
+                return LoadResources.GetImageResource("#1", 48, 48);
             }
         }
     }
