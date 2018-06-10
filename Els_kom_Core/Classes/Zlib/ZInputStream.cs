@@ -51,7 +51,7 @@ namespace Els_kom_Core.Classes.Zlib
     /// <summary>
     /// zlib input stream.
     /// </summary>
-    public class ZInputStream: System.IO.BinaryReader
+    internal class ZInputStream: System.IO.BinaryReader
     {
         internal void  InitBlock()
         {

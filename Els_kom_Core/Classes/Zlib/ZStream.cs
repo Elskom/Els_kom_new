@@ -51,7 +51,7 @@ namespace Els_kom_Core.Classes.Zlib
     /// <summary>
     /// base zlib stream.
     /// </summary>
-    sealed public class ZStream
+    internal sealed class ZStream
     {
         
         private const int MAX_WBITS = 15; // 32K LZ77 window        
@@ -125,20 +125,20 @@ namespace Els_kom_Core.Classes.Zlib
         /// <summary>
         /// adler32 of the stream data.
         /// </summary>
-        public long adler;
+        internal long adler;
         internal Adler32 _adler = new Adler32();
         
         /// <summary>
         /// init inflate.
         /// </summary>
-        public int inflateInit()
+        internal int inflateInit()
         {
             return inflateInit(DEF_WBITS);
         }
         /// <summary>
         /// init inflate with size.
         /// </summary>
-        public int inflateInit(int w)
+        internal int inflateInit(int w)
         {
             istate = new Inflate();
             return istate.inflateInit(this, w);
@@ -147,7 +147,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <summary>
         /// inflate with some int.
         /// </summary>
-        public int inflate(int f)
+        internal int inflate(int f)
         {
             if (istate == null)
                 return Z_STREAM_ERROR;
@@ -156,7 +156,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <summary>
         /// end inflate.
         /// </summary>
-        public int inflateEnd()
+        internal int inflateEnd()
         {
             if (istate == null)
                 return Z_STREAM_ERROR;
@@ -167,7 +167,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <summary>
         /// sync the inflate.
         /// </summary>
-        public int inflateSync()
+        internal int inflateSync()
         {
             if (istate == null)
                 return Z_STREAM_ERROR;
@@ -176,7 +176,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <summary>
         /// set the inflate dictionary.
         /// </summary>
-        public int inflateSetDictionary(byte[] dictionary, int dictLength)
+        internal int inflateSetDictionary(byte[] dictionary, int dictLength)
         {
             if (istate == null)
                 return Z_STREAM_ERROR;
@@ -186,14 +186,14 @@ namespace Els_kom_Core.Classes.Zlib
         /// <summary>
         /// deflate init.
         /// </summary>
-        public int deflateInit(int level)
+        internal int deflateInit(int level)
         {
             return deflateInit(level, MAX_WBITS);
         }
         /// <summary>
         /// deflate init with level and bits.
         /// </summary>
-        public int deflateInit(int level, int bits)
+        internal int deflateInit(int level, int bits)
         {
             dstate = new Deflate();
             return dstate.deflateInit(this, level, bits);
@@ -201,7 +201,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <summary>
         /// deflate with optional flush setting.
         /// </summary>
-        public int deflate(int flush)
+        internal int deflate(int flush)
         {
             if (dstate == null)
             {
@@ -212,7 +212,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <summary>
         /// deflate end.
         /// </summary>
-        public int deflateEnd()
+        internal int deflateEnd()
         {
             if (dstate == null)
                 return Z_STREAM_ERROR;
@@ -223,7 +223,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <summary>
         /// deflate params with level and strategy.
         /// </summary>
-        public int deflateParams(int level, int strategy)
+        internal int deflateParams(int level, int strategy)
         {
             if (dstate == null)
                 return Z_STREAM_ERROR;
@@ -232,7 +232,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <summary>
         /// deflate dictionary setter.
         /// </summary>
-        public int deflateSetDictionary(byte[] dictionary, int dictLength)
+        internal int deflateSetDictionary(byte[] dictionary, int dictLength)
         {
             if (dstate == null)
                 return Z_STREAM_ERROR;
@@ -243,7 +243,7 @@ namespace Els_kom_Core.Classes.Zlib
         // through this function so some applications may wish to modify it
         // to avoid allocating a large strm->next_out buffer and copying into it.
         // (See also read_buf()).
-        internal void  flush_pending()
+        internal void flush_pending()
         {
             int len = dstate.pending;
             
@@ -300,7 +300,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <summary>
         /// free all the internal state.
         /// </summary>
-        public void  free()
+        internal void free()
         {
             next_in = null;
             next_out = null;
