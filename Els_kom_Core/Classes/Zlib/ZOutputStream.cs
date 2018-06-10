@@ -52,7 +52,7 @@ namespace Els_kom_Core.Classes.Zlib
     /// <summary>
     /// zlib output stream.
     /// </summary>
-    public class ZOutputStream: System.IO.Stream
+    internal class ZOutputStream: System.IO.Stream
     {
         private void  InitBlock()
         {

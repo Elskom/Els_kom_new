@@ -51,13 +51,13 @@ namespace Els_kom_Core.Classes.Zlib
     /// <summary>
     /// the main zlib stuffs?
     /// </summary>
-    sealed public class zlibConst
+    internal sealed class zlibConst
     {
         private const System.String version_Renamed_Field = "1.0.2";
         /// <summary>
         /// zlib version.
         /// </summary>
-        public static System.String version()
+        internal static System.String version()
         {
             return version_Renamed_Field;
         }
@@ -66,90 +66,90 @@ namespace Els_kom_Core.Classes.Zlib
         /// <summary>
         /// No compression.
         /// </summary>
-        public const int Z_NO_COMPRESSION = 0;
+        internal const int Z_NO_COMPRESSION = 0;
         /// <summary>
         /// Best for speed.
         /// </summary>
-        public const int Z_BEST_SPEED = 1;
+        internal const int Z_BEST_SPEED = 1;
         /// <summary>
         /// the highest compression level (slow).
         /// </summary>
-        public const int Z_BEST_COMPRESSION = 9;
+        internal const int Z_BEST_COMPRESSION = 9;
         /// <summary>
         /// Default compression level.
         /// </summary>
-        public const int Z_DEFAULT_COMPRESSION = (- 1);
+        internal const int Z_DEFAULT_COMPRESSION = (- 1);
 
         // compression strategy
         /// <summary>
         /// Filtered compression strategy.
         /// </summary>
-        public const int Z_FILTERED = 1;
+        internal const int Z_FILTERED = 1;
         /// <summary>
         /// Huffman strategy.
         /// </summary>
-        public const int Z_HUFFMAN_ONLY = 2;
+        internal const int Z_HUFFMAN_ONLY = 2;
         /// <summary>
         /// Default strategy.
         /// </summary>
-        public const int Z_DEFAULT_STRATEGY = 0;
+        internal const int Z_DEFAULT_STRATEGY = 0;
 
         /// <summary>
         /// Do not flush.
         /// </summary>
-        public const int Z_NO_FLUSH = 0;
+        internal const int Z_NO_FLUSH = 0;
         /// <summary>
         /// Partial flush.
         /// </summary>
-        public const int Z_PARTIAL_FLUSH = 1;
+        internal const int Z_PARTIAL_FLUSH = 1;
         /// <summary>
         /// sync flush.
         /// </summary>
-        public const int Z_SYNC_FLUSH = 2;
+        internal const int Z_SYNC_FLUSH = 2;
         /// <summary>
         /// full flush.
         /// </summary>
-        public const int Z_FULL_FLUSH = 3;
+        internal const int Z_FULL_FLUSH = 3;
         /// <summary>
         /// finish of compression stuff?
         /// </summary>
-        public const int Z_FINISH = 4;
+        internal const int Z_FINISH = 4;
         
         /// <summary>
         /// all was ok.
         /// </summary>
-        public const int Z_OK = 0;
+        internal const int Z_OK = 0;
         /// <summary>
         /// stream ended.
         /// </summary>
-        public const int Z_STREAM_END = 1;
+        internal const int Z_STREAM_END = 1;
         /// <summary>
         /// need something.
         /// </summary>
-        public const int Z_NEED_DICT = 2;
+        internal const int Z_NEED_DICT = 2;
         /// <summary>
         /// some error.
         /// </summary>
-        public const int Z_ERRNO = - 1;
+        internal const int Z_ERRNO = - 1;
         /// <summary>
         /// some stream error.
         /// </summary>
-        public const int Z_STREAM_ERROR = - 2;
+        internal const int Z_STREAM_ERROR = - 2;
         /// <summary>
         /// data was incorrect.
         /// </summary>
-        public const int Z_DATA_ERROR = - 3;
+        internal const int Z_DATA_ERROR = - 3;
         /// <summary>
         /// out of memory.
         /// </summary>
-        public const int Z_MEM_ERROR = - 4;
+        internal const int Z_MEM_ERROR = - 4;
         /// <summary>
         /// buffer overflow.
         /// </summary>
-        public const int Z_BUF_ERROR = - 5;
+        internal const int Z_BUF_ERROR = - 5;
         /// <summary>
         /// version missmatch.
         /// </summary>
-        public const int Z_VERSION_ERROR = - 6;
+        internal const int Z_VERSION_ERROR = - 6;
     }
 }

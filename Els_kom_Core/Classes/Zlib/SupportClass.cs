@@ -8,14 +8,14 @@ namespace Els_kom_Core.Classes.Zlib
     /// <summary>
     /// Helper class for zlib stuffs.
     /// </summary>
-    public class SupportClass
+    internal class SupportClass
     {
         /// <summary>
         /// This method returns the literal value received
         /// </summary>
         /// <param name="literal">The literal to return</param>
         /// <returns>The received value</returns>
-        public static long Identity(long literal)
+        internal static long Identity(long literal)
         {
             return literal;
         }
@@ -25,7 +25,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// </summary>
         /// <param name="literal">The literal to return</param>
         /// <returns>The received value</returns>
-        public static ulong Identity(ulong literal)
+        internal static ulong Identity(ulong literal)
         {
             return literal;
         }
@@ -35,7 +35,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// </summary>
         /// <param name="literal">The literal to return</param>
         /// <returns>The received value</returns>
-        public static float Identity(float literal)
+        internal static float Identity(float literal)
         {
             return literal;
         }
@@ -45,7 +45,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// </summary>
         /// <param name="literal">The literal to return</param>
         /// <returns>The received value</returns>
-        public static double Identity(double literal)
+        internal static double Identity(double literal)
         {
             return literal;
         }
@@ -57,7 +57,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <param name="number">Number to operate on</param>
         /// <param name="bits">Ammount of bits to shift</param>
         /// <returns>The resulting number from the shift operation</returns>
-        public static int URShift(int number, int bits)
+        internal static int URShift(int number, int bits)
         {
             if ( number >= 0)
                 return number >> bits;
@@ -71,7 +71,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <param name="number">Number to operate on</param>
         /// <param name="bits">Ammount of bits to shift</param>
         /// <returns>The resulting number from the shift operation</returns>
-        public static int URShift(int number, long bits)
+        internal static int URShift(int number, long bits)
         {
             return URShift(number, (int)bits);
         }
@@ -82,7 +82,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <param name="number">Number to operate on</param>
         /// <param name="bits">Ammount of bits to shift</param>
         /// <returns>The resulting number from the shift operation</returns>
-        public static long URShift(long number, int bits)
+        internal static long URShift(long number, int bits)
         {
             if ( number >= 0)
                 return number >> bits;
@@ -96,7 +96,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <param name="number">Number to operate on</param>
         /// <param name="bits">Ammount of bits to shift</param>
         /// <returns>The resulting number from the shift operation</returns>
-        public static long URShift(long number, long bits)
+        internal static long URShift(long number, long bits)
         {
             return URShift(number, (int)bits);
         }
@@ -108,7 +108,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <param name="start">The starting index of the target array.</param>
         /// <param name="count">The maximum number of characters to read from the source Stream.</param>
         /// <returns>The number of characters read. The number will be less than or equal to count depending on the data available in the source Stream. Returns -1 if the end of the stream is reached.</returns>
-        public static System.Int32 ReadInput(System.IO.Stream sourceStream, byte[] target, int start, int count)
+        internal static System.Int32 ReadInput(System.IO.Stream sourceStream, byte[] target, int start, int count)
         {
             // Returns 0 bytes if not enough space in target
             if (target.Length == 0)
@@ -133,7 +133,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// <param name="start">The starting index of the target array.</param>
         /// <param name="count">The maximum number of characters to read from the source TextReader.</param>
         /// <returns>The number of characters read. The number will be less than or equal to count depending on the data available in the source TextReader. Returns -1 if the end of the stream is reached.</returns>
-        public static System.Int32 ReadInput(System.IO.TextReader sourceTextReader, byte[] target, int start, int count)
+        internal static System.Int32 ReadInput(System.IO.TextReader sourceTextReader, byte[] target, int start, int count)
         {
             // Returns 0 bytes if not enough space in target
             if (target.Length == 0) return 0;
@@ -155,7 +155,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// </summary>
         /// <param name="sourceString">The string to be converted</param>
         /// <returns>The new array of bytes</returns>
-        public static byte[] ToByteArray(System.String sourceString)
+        internal static byte[] ToByteArray(System.String sourceString)
         {
             return System.Text.UTF8Encoding.UTF8.GetBytes(sourceString);
         }
@@ -165,7 +165,7 @@ namespace Els_kom_Core.Classes.Zlib
         /// </summary>
         /// <param name="byteArray">The array of bytes to convert</param>
         /// <returns>The new array of chars</returns>
-        public static char[] ToCharArray(byte[] byteArray) 
+        internal static char[] ToCharArray(byte[] byteArray) 
         {
             return System.Text.UTF8Encoding.UTF8.GetChars(byteArray);
         }
