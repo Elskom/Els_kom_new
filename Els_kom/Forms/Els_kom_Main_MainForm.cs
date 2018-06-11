@@ -50,7 +50,7 @@ namespace Els_kom.Forms
         {
             bool Cancel = e.Cancel;
             // CloseReason UnloadMode = e->CloseReason; <-- Removed because not used.
-            if (Els_kom_Core.Classes.ExecutionManager.GetRunningElsword() || Els_kom_Core.Classes.ExecutionManager.GetRunningElswordDirectly() || Els_kom_Core.Classes.KOMManager.GetPackingState() || Els_kom_Core.Classes.KOMManager.GetUnpackingState())
+            if (!this.MainControl1.AbleToClose())
             {
                 Cancel = true;
                 System.Windows.Forms.MessageBox.Show("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);

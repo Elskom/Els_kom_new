@@ -261,6 +261,21 @@ namespace Els_kom_Core.Controls
         }
 
         /// <summary>
+        /// Gets if the Els_kom window can be closed or not.
+        /// </summary>
+        public bool AbleToClose()
+        {
+            if (Classes.ExecutionManager.GetRunningElsword() ||
+                Classes.ExecutionManager.GetRunningElswordDirectly() ||
+                Classes.KOMManager.GetPackingState() ||
+                Classes.KOMManager.GetUnpackingState())
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
         /// Initializes the MainControl's constants.
         /// </summary>
         public void LoadControl()

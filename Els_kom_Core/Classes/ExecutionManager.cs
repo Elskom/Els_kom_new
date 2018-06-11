@@ -8,7 +8,7 @@ namespace Els_kom_Core.Classes
     /// <summary>
     /// Class in the Core that allows executing Elsword directly or it's launcher.
     /// </summary>
-    public static class ExecutionManager
+    internal static class ExecutionManager
     {
         private static string ElsDir;
         private static bool RunningElsword = false;
@@ -19,15 +19,15 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Gets if the launcher to Elsword is running.
         /// </summary>
-        public static bool GetRunningElsword() => RunningElsword;
+        internal static bool GetRunningElsword() => RunningElsword;
         /// <summary>
         /// Gets if Elsword is running Directly.
         /// </summary>
-        public static bool GetRunningElswordDirectly() => RunningElswordDirectly;
+        internal static bool GetRunningElswordDirectly() => RunningElswordDirectly;
         /// <summary>
         /// Gets if Elsword is still getting ready to execute. False if executing.
         /// </summary>
-        public static bool GetExecutingElsword() => ExecutingElsword;
+        internal static bool GetExecutingElsword() => ExecutingElsword;
 
         /// <summary>
         /// Overload for Shell() Function that Allows Overloading of the Working directory Variable.

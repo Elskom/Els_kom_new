@@ -8,7 +8,7 @@ namespace Els_kom_Core.Classes
     /// <summary>
     /// Class in the Core that allows managing kom Files.
     /// </summary>
-    public static class KOMManager
+    internal static class KOMManager
     {
         /* required to see if we are packing or unpacking. Default to false. */
         private static bool is_packing = false;
@@ -18,11 +18,11 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Gets the current state on packing KOM files.
         /// </summary>
-        public static bool GetPackingState() => is_packing;
+        internal static bool GetPackingState() => is_packing;
         /// <summary>
         /// Gets the current state on unpacking KOM files.
         /// </summary>
-        public static bool GetUnpackingState() => is_unpacking;
+        internal static bool GetUnpackingState() => is_unpacking;
 
         /// <summary>
         /// Copies Modified KOM files to the Elsword Directory that was Set in the Settings Dialog in Els_kom. Requires: File Name, Original Directory the File is in, And Destination Directory.
