@@ -752,5 +752,37 @@ namespace Els_kom_Core.Controls
             };
             this.NotifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon1_MouseClick);
         }
+
+        /// <summary>
+        /// Gets the Syscommand check value.
+        /// </summary>
+        public int GetSysCommand()
+        {
+            return (int)Enums.SYSCOMMANDS.WM_SYSCOMMAND;
+        }
+
+        /// <summary>
+        /// Gets the Minimize Command check value.
+        /// </summary>
+        public int GetMinimizeCommand()
+        {
+            return (int)Enums.SYSCOMMANDS.SC_MINIMIZE;
+        }
+
+        /// <summary>
+        /// Gets the Maximize Command check value.
+        /// </summary>
+        public int GetMaximizeCommand()
+        {
+            return (int)Enums.SYSCOMMANDS.SC_MAXIMIZE;
+        }
+
+        /// <summary>
+        /// Gets the Restore Command check value.
+        /// </summary>
+        public int GetRestoreCommand()
+        {
+            return (int)Enums.SYSCOMMANDS.SC_RESTORE;
+        }
     }
 }
