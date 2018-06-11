@@ -20,22 +20,22 @@ namespace Els_kom.Forms
 
         protected override void WndProc(ref System.Windows.Forms.Message m)
         {
-            if (Enablehandlers && m.Msg == (int)Els_kom_Core.Enums.SYSCOMMANDS.WM_SYSCOMMAND)
+            if (Enablehandlers && m.Msg == this.MainControl1.GetSysCommand())
             {
-                if (m.WParam.ToInt32() == (int)Els_kom_Core.Enums.SYSCOMMANDS.SC_MINIMIZE)
+                if (m.WParam.ToInt32() == this.MainControl1.GetMinimizeCommand())
                 {
                     this.Hide();
                     m.Result = System.IntPtr.Zero;
                     return;
                 }
-                else if (m.WParam.ToInt32() == (int)Els_kom_Core.Enums.SYSCOMMANDS.SC_MAXIMIZE)
+                else if (m.WParam.ToInt32() == this.MainControl1.GetMaximizeCommand())
                 {
                     this.Show();
                     this.Activate();
                     m.Result = System.IntPtr.Zero;
                     return;
                 }
-                else if (m.WParam.ToInt32() == (int)Els_kom_Core.Enums.SYSCOMMANDS.SC_RESTORE)
+                else if (m.WParam.ToInt32() == this.MainControl1.GetRestoreCommand())
                 {
                     this.Show();
                     this.Activate();

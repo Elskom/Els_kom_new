@@ -8,7 +8,7 @@ namespace Els_kom_Core.Enums
     /// <summary>
     /// System Window Commands.
     /// </summary>
-    public enum SYSCOMMANDS
+    internal enum SYSCOMMANDS
     {
         /// <summary>
         /// Did a Window size command happen?
