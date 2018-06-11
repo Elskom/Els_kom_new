@@ -8,12 +8,12 @@ namespace Els_kom_Core.Classes
     /// <summary>
     /// Loads Images from resource section.
     /// </summary>
-    public static class LoadResources
+    internal static class LoadResources
     {
         /// <summary>
         /// Gets plain image Resource data and uses that data to construct an .NET Image Object.
         /// </summary>
-        public static System.Drawing.Image GetImageResource(int resource, int type)
+        internal static System.Drawing.Image GetImageResource(int resource, int type)
         {
             System.IntPtr hProc = System.Runtime.InteropServices.Marshal.GetHINSTANCE(System.Reflection.Assembly.GetEntryAssembly().GetModules()[0]);
             System.IntPtr image_resource = SafeNativeMethods.FindResourceW(hProc, (System.IntPtr)resource, (System.IntPtr)type);
@@ -47,7 +47,7 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Gets plain image Resource data with a specific Width and Height and uses that data to construct an .NET Image Object.
         /// </summary>
-        public static System.Drawing.Image GetImageResource(string resource, int Width, int Height) => GetIconResource(resource, Width, Height)?.ToBitmap();
+        internal static System.Drawing.Image GetImageResource(string resource, int Width, int Height) => GetIconResource(resource, Width, Height)?.ToBitmap();
 
         /// <summary>
         /// Gets plain Icon image Resource data with a specific Width and Height and uses that data to construct an .NET Icon Object.
@@ -65,6 +65,6 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Gets plain Icon image Resource data and uses that data to construct an .NET Icon Object.
         /// </summary>
-        public static System.Drawing.Icon GetIconResource(string resource) => GetIconResource(resource, 16, 16);
+        internal static System.Drawing.Icon GetIconResource(string resource) => GetIconResource(resource, 16, 16);
     }
 }
