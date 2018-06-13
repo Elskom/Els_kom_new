@@ -1,0 +1,5 @@
+    + Fixed Additional issues with "Invalid use of Null" message in v1.4.3.
+    + Fixed some other events when testing mods/running launcher to not hide
+        the Els_kom Window.
+    + Fixed the Detections if Elsword Window is open or not by using
+        EnumWindows API function.

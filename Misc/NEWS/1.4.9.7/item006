@@ -1,1 +1,0 @@
-Moved most of the form Controls to custom ones to size the forms down considerably by designer and code. This means the Core would have to be built before the forms controls can display properly in Visual Studio.

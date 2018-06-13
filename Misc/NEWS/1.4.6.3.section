@@ -1,0 +1,4 @@
+    + Fixed issue with Window resizing itself sometimes for real this time.
+    + Fixed some other issues I seen in Windows 8 x64 Pro.
+    + Fixed issue of the fact that when you close Els_kom you can see it in
+        Windows Task Manager still even on Windows 8.

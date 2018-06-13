@@ -1,0 +1,6 @@
+    + now can make use of the menu resources that I made earlier on the tray
+        icon when you right click it. and Left click shows Els_kom.
+    + Can now be hidden when you press the minimize system button.
+    + Unpacking from menu on the Tray icon will crash the program at the moment
+        (Will see how to fix it in 1.3.0.8).
+    + Testing UPX 3.08 on this to instead of Petite 2.3 for now.

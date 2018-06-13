@@ -1,0 +1,6 @@
+    + Fixed another issue I was trying to fix in a previous version (was in the
+        shell icon code).
+    + Fixed the issue in 1.3.0.9.
+    + Reconstituted some of the TerminateProcess function for when the Option
+        in the Menu on the Shell icon is pressed (option did not work in the
+        1.3.0.10 code test).

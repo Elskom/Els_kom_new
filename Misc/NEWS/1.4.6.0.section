@@ -1,0 +1,5 @@
+    + Fixed the freezing Window in Els_kom when Launching Game with "Test Mods"
+        button.
+    + Moved the Launching to the game to a External Program named
+        "Test_Mods.exe".
+    + Changed a Little of the About Window.

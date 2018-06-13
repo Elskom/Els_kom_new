@@ -1,1 +1,0 @@
-Fixed a Issue where you can accidentally open up a lot of Pythons with the Pack/Unpack options within the program (Fixed by disabling them while Packing/Unpacking only).

@@ -1,0 +1,3 @@
+    + 1st initial build that was working.
+    + seems to not work in Win8 x64 (does not know for sure as indication of
+        packing or unpacking was not present).

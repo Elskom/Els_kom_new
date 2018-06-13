@@ -1,0 +1,4 @@
+    + Added ability to Test mods out.
+    + Added ability to run launcher as well as x2.exe directly. Flaw is that
+        x2.exe looks for the koms in the folder of my Els_kom.exe file (might
+        be within x2.exe itself so I cant help it).

@@ -1,0 +1,3 @@
+    + Replaced VB6's default error when missing a bat file that would make the
+        program close has been replaced with a message that says what file(s)
+        is missing and wont close the program.

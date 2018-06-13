@@ -1,0 +1,3 @@
+    + Fixed some issue with having things not Work when users have Space in
+        their user name on Win8 (this could be the cause of why the program
+        would not pack or unpack in Win8).

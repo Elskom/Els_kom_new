@@ -1,0 +1,5 @@
+    + Fixed a Issue where you can accidentally open up a lot of Pythons with
+        the Pack/Unpack options within the program (Fixed by disabling them
+        while Packing/Unpacking only).
+    + Added Support for Unpacking koms named "data153" and "data154" and all
+        the way up to 160.

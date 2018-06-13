@@ -1,1 +1,0 @@
-Made the kom packing/unpacking console applications support Python 3.x (Still built into exe's to not require a python install).

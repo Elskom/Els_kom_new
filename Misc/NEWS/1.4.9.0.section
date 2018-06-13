@@ -1,0 +1,5 @@
+    + Converted from VB6 to VB.Net in Visual Studio 2015.
+    + Made the kom packing/unpacking console applications support Python 3.x
+        (Still built into exe's to not require a python install).
+    + Launcher Stub now supports running voidels.exe instead of elsword.exe (if
+        present for Void Elsword).

@@ -1,0 +1,8 @@
+    + Fixed some things with the Launcher and Test Mods button flashing
+        uncontrollably.
+    + Removed all compile Warnings (had to suppress some).
+    + Changed Pack and Unpack button Hover Texts.
+    + Fixed Hovering over the link and then moving the cursor to a label not
+        resetting the image back to not hover status.
+    + Fix All buttons having a box look in the Center. Algorithm 3 Support
+        Pushed up to v1.5.0.0 As it will take some time to get it added.

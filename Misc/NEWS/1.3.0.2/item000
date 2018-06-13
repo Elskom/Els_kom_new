@@ -1,1 +1,0 @@
-Fixed some problem with detecting if it is unpacking or not from 1.3.0.1 that I didn't notice till now.
