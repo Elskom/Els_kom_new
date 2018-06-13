@@ -1,1 +1,0 @@
-Fixed a issue of program executing more than 1 instance of cmd.exe and python.exe which caused a lot of slowing down of computer speed.

@@ -1,0 +1,6 @@
+    + Moved Launching of the Launcher to a Separate file.
+    + Fixed some other stuff.
+    + Made a Project Group File. Now its more easier to make without opening
+        Visual Basic 6 3 times.
+    + Edited the about window some more.
+    + Added another Topic link to About window as well.

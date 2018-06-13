@@ -1,0 +1,8 @@
+    + Changed the About Window a lot.
+    + Changed some of the Main Window things to.
+    + Reverted the bat files like they was in 1.3 state but without the mobs
+        and the protected kom files.
+    + Fixed the Drive letter problem on the Python27 folder in the bat files.
+        It should now be able to find Python installed on any Drive letter that
+        isn't "C:\" example what if your Version of Windows is on a Drive
+        letter of "E:\" it should now work properly.

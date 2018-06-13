@@ -1,0 +1,7 @@
+    + Fixed about window issue from the main window able to cover the about
+        window up.
+    + Added INI's now down to 1 file instead of 6.
+    + Added ability to see if the INI exists or not.
+    + Might add ability to test mods out but whenever the game updates you must
+        make a backup of your unpacked copy before packing as packing removes
+        them.

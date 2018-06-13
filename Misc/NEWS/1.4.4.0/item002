@@ -1,1 +1,0 @@
-Fixed the Detections if Elsword Window is open or not by using EnumWindows API function.

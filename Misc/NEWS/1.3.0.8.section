@@ -1,0 +1,5 @@
+    + Added where only 1 instance of Els_kom is possible at 1 time.
+    + Fixed the unpacking issue in the menu on the Tray.
+    + Seems like the 1 instance detection also triggers the TerminateProcess
+        function which also terminates all instances (will look for a fix in
+        1.3.0.9).

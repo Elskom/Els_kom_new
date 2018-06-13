@@ -1,0 +1,6 @@
+    + Removed the Ability to see Program on Taskbar.
+    + Added Icon on System Tray.
+    + The Petite Compression of this seems to make Security Essentials think it
+        is a virus (False positive as they are stupid).
+    + Problem on Closing Program when you think it is close (to fix this you
+        must use Task Manager to terminate the process until it is fixed).

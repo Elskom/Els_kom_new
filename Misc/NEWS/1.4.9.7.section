@@ -1,0 +1,11 @@
+    + Fixed multiple instance error message icon.
+    + Fixed issue where Els_kom main window shows under the multiple instance
+        error message.
+    + Removed pack.bat and unpack.bat. They been replaced with something much
+        more manageable and goes out of date far fewer times.
+    + Fixed Minimize/Maximize bug.
+    + Moved Forms back to exe's.
+    + Deprecated the stubs and will be removed on 1.4.9.8.
+    + Moved most of the form Controls to custom ones to size the forms down
+        considerably by designer and code. This means the Core would have to be
+        built before the forms controls can display properly in Visual Studio.

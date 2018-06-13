@@ -1,1 +1,0 @@
-Added way of detecting of Python 2.7.1 and the Scripts for koms are installed in "C:\Python27" (if they aren't there then the program would close without crashing with a error that people would not know what files are missing).
