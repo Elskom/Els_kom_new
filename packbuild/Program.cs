@@ -19,17 +19,17 @@ namespace packbuild
                 if (args[1].StartsWith(".\\"))
                 {
                     outfilename = args[1];
-                    args[1] = args[1].Replace(".\\", System.IO.Directory.GetCurrentDirectory() + "\\");
+                    args[1] = args[1].Replace(".\\", System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar);
                 }
                 else if (args[1].StartsWith("./"))
                 {
                     outfilename = args[1];
-                    args[1] = args[1].Replace("./", System.IO.Directory.GetCurrentDirectory() + "\\");
+                    args[1] = args[1].Replace("./", System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar);
                 }
                 else
                 {
                     outfilename = args[1];
-                    args[1] = System.IO.Directory.GetCurrentDirectory() + "\\" + args[1];
+                    args[1] = System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + args[1];
                 }
                 if (args[0].Equals("-p"))
                 {
@@ -57,20 +57,30 @@ namespace packbuild
                             System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _xml_file, _xml_file);
                         }
                     }
+                    foreach (var fi4 in di1.GetFiles("*.txt"))
+                    {
+                        string _txt_file = fi4.Name;
+                        System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _txt_file, _txt_file);
+                    }
                     foreach (var di2 in di1.GetDirectories())
                     {
-                        foreach (var fi4 in di2.GetFiles("*.dll"))
+                        foreach (var fi5 in di2.GetFiles("*.dll"))
                         {
-                            string _dll_file = fi4.Name;
-                            System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + "\\" + _dll_file, di2.Name + "\\" + _dll_file);
+                            string _dll_file = fi5.Name;
+                            System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + _dll_file, di2.Name + System.IO.Path.DirectorySeparatorChar + _dll_file);
                         }
-                        foreach (var fi5 in di2.GetFiles("*.xml"))
+                        foreach (var fi6 in di2.GetFiles("*.xml"))
                         {
-                            string _xml_file = fi5.Name;
+                            string _xml_file = fi6.Name;
                             if (!_xml_file.EndsWith(ExcludeFile3))
                             {
-                                System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + "\\" + _xml_file, di2.Name + "\\" + _xml_file);
+                                System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + _xml_file, di2.Name + System.IO.Path.DirectorySeparatorChar + _xml_file);
                             }
+                        }
+                        foreach (var fi7 in di2.GetFiles("*.txt"))
+                        {
+                            string _txt_file = fi7.Name;
+                            System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + _txt_file, di2.Name + System.IO.Path.DirectorySeparatorChar + _txt_file);
                         }
                     }
                     zipFile.CreateEntry("koms\\");
@@ -92,12 +102,12 @@ namespace packbuild
                     }
                     foreach (var di2 in di1.GetDirectories())
                     {
-                        foreach (var fi3 in di2.GetFiles("*.pdb"))
+                        foreach (var fi2 in di2.GetFiles("*.pdb"))
                         {
-                            string _pdb_file = fi3.Name;
+                            string _pdb_file = fi2.Name;
                             if (!_pdb_file.Equals(ExcludeFile2))
                             {
-                                System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + "\\" + _pdb_file, di2.Name + "\\" + _pdb_file);
+                                System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + _pdb_file, di2.Name + System.IO.Path.DirectorySeparatorChar + _pdb_file);
                             }
                         }
                     }
