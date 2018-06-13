@@ -4,6 +4,21 @@ max_jobs: 15
 image: Visual Studio 2017
 configuration: Release
 platform: x86
+before_build:
+- cmd: >-
+    git clone https://github.com/Elskom/newsmake.git
+
+    cd newsmake/build
+
+    cmake ..
+
+    msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
+
+    cd ../../Misc/NEWS
+
+    "../../newsmake/build/Release/newsmake"
+
+    cd ../..
 build:
   project: PCbuild\pcbuild.sln
   parallel: true
