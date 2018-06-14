@@ -644,48 +644,51 @@ namespace Els_kom_Core.Controls
                 }
                 else
                 {
-                    Classes.SettingsFile.Settingsxml.ReopenFile();
-                    showintaskbar_tempvalue = Classes.SettingsFile.Settingsxml.Read("IconWhileElsNotRunning");
-                    showintaskbar_tempvalue2 = Classes.SettingsFile.Settingsxml.Read("IconWhileElsRunning");
-                    ElsDir_temp = Classes.SettingsFile.Settingsxml.Read("ElsDir");
-                    if (!string.Equals(ElsDir, ElsDir_temp))
+                    if (AbleToClose())
                     {
-                        ElsDir = ElsDir_temp;
-                    }
-                    if (!Classes.ExecutionManager.GetRunningElswordDirectly())
-                    {
-                        if (showintaskbar_value != showintaskbar_tempvalue)
+                        Classes.SettingsFile.Settingsxml.ReopenFile();
+                        showintaskbar_tempvalue = Classes.SettingsFile.Settingsxml.Read("IconWhileElsNotRunning");
+                        showintaskbar_tempvalue2 = Classes.SettingsFile.Settingsxml.Read("IconWhileElsRunning");
+                        ElsDir_temp = Classes.SettingsFile.Settingsxml.Read("ElsDir");
+                        if (!string.Equals(ElsDir, ElsDir_temp))
                         {
-                            showintaskbar_value = showintaskbar_tempvalue;
+                            ElsDir = ElsDir_temp;
                         }
-                        try
+                        if (!Classes.ExecutionManager.GetRunningElswordDirectly())
                         {
-                            Invoke((System.Windows.Forms.MethodInvoker)delegate
+                            if (showintaskbar_value != showintaskbar_tempvalue)
                             {
-                                TaskbarShow?.Invoke(this, new Classes.ShowTaskbarEvent(showintaskbar_value));
-                            });
-                        }
-                        catch (System.ComponentModel.InvalidAsynchronousStateException)
-                        {
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        if (showintaskbar_value2 != showintaskbar_tempvalue2)
-                        {
-                            showintaskbar_value2 = showintaskbar_tempvalue2;
-                        }
-                        try
-                        {
-                            Invoke((System.Windows.Forms.MethodInvoker)delegate
+                                showintaskbar_value = showintaskbar_tempvalue;
+                            }
+                            try
                             {
-                                TaskbarShow?.Invoke(this, new Classes.ShowTaskbarEvent(showintaskbar_value));
-                            });
+                                Invoke((System.Windows.Forms.MethodInvoker)delegate
+                                {
+                                    TaskbarShow?.Invoke(this, new Classes.ShowTaskbarEvent(showintaskbar_value));
+                                });
+                            }
+                            catch (System.ComponentModel.InvalidAsynchronousStateException)
+                            {
+                                break;
+                            }
                         }
-                        catch (System.ComponentModel.InvalidAsynchronousStateException)
+                        else
                         {
-                            break;
+                            if (showintaskbar_value2 != showintaskbar_tempvalue2)
+                            {
+                                showintaskbar_value2 = showintaskbar_tempvalue2;
+                            }
+                            try
+                            {
+                                Invoke((System.Windows.Forms.MethodInvoker)delegate
+                                {
+                                    TaskbarShow?.Invoke(this, new Classes.ShowTaskbarEvent(showintaskbar_value));
+                                });
+                            }
+                            catch (System.ComponentModel.InvalidAsynchronousStateException)
+                            {
+                                break;
+                            }
                         }
                     }
                 }

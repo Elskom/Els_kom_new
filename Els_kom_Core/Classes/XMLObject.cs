@@ -68,15 +68,21 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
-        /// Reopens from the file name used to construct the object.
+        /// Reopens from the file name used to construct the object,
+        /// but only if it has changed. If the file was not saved it
+        /// will be saved first.
         /// </summary>
         public void ReopenFile()
         {
+            if (Has_changed())
+            {
+                Save();
+                byte[] xmldata = System.IO.File.ReadAllBytes(cached_xmlfilename);
+                System.IO.MemoryStream xmlDataStream = new System.IO.MemoryStream(xmldata, true);
+                doc = System.Xml.Linq.XDocument.Load(xmlDataStream);
+                xmlDataStream.Dispose();
+            }
             Save();
-            byte[] xmldata = System.IO.File.ReadAllBytes(cached_xmlfilename);
-            System.IO.MemoryStream xmlDataStream = new System.IO.MemoryStream(xmldata, true);
-            doc = System.Xml.Linq.XDocument.Load(xmlDataStream);
-            xmlDataStream.Dispose();
         }
 
         /// <summary>
@@ -176,6 +182,34 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
+        /// Gets if the xml file has changed.
+        /// </summary>
+        /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
+        private bool Has_changed()
+        {
+            if (disposedValue)
+            {
+                throw new System.ObjectDisposedException("XMLOblect is disposed.");
+            }
+            System.IO.MemoryStream outxmlData = new System.IO.MemoryStream();
+            doc.Save(outxmlData);
+            byte[] OutXmlBytes = outxmlData.ToArray();
+            if (System.IO.File.Exists(cached_xmlfilename))
+            {
+                byte[] dataOnFile = System.IO.File.ReadAllBytes(cached_xmlfilename);
+                if (!System.Linq.Enumerable.SequenceEqual(dataOnFile, OutXmlBytes))
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Saves the underlying XML file if it changed.
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
@@ -190,17 +224,7 @@ namespace Els_kom_Core.Classes
                 System.IO.MemoryStream outxmlData = new System.IO.MemoryStream();
                 doc.Save(outxmlData);
                 byte[] OutXmlBytes = outxmlData.ToArray();
-                if (System.IO.File.Exists(cached_xmlfilename))
-                {
-                    byte[] dataOnFile = System.IO.File.ReadAllBytes(cached_xmlfilename);
-                    if (!System.Linq.Enumerable.SequenceEqual(dataOnFile, OutXmlBytes))
-                    {
-                        System.IO.FileStream fstream = System.IO.File.Create(cached_xmlfilename);
-                        fstream.Write(OutXmlBytes, 0, OutXmlBytes.Length);
-                        fstream.Dispose();
-                    }
-                }
-                else
+                if (Has_changed())
                 {
                     System.IO.FileStream fstream = System.IO.File.Create(cached_xmlfilename);
                     fstream.Write(OutXmlBytes, 0, OutXmlBytes.Length);
