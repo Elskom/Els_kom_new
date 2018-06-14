@@ -3,15 +3,17 @@ projname = "Els_kom"
 genfilename = "../../bin/x86/Release/news.txt"
 # tab or spaces for entries in generated section chunks.
 tabs = false
-# delete checked entry file with the imported folder generating
-# *.section files that are then imported skipping any preprocessing.
-deletechunkentryfiles = true
 # controls weather or not to delete the first imported folder with
 # it's entry files or not. If set to false it will delete them.
 # if true it will not denoting that this project is on it's development
 # status and not an release version yet (e.g. Python 3.7.0a4 being not
 # release 3.7.0).
+# Must always go before the deletechunkentryfiles setting or it will
+# be ignored.
 devmode = true
+# delete checked entry file with the imported folder generating
+# *.section files that are then imported skipping any preprocessing.
+deletechunkentryfiles = true
 
 # imports for all the sections for the generated output.
 # all processed files after section generation would be
