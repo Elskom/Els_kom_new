@@ -7,12 +7,12 @@ namespace Els_kom_Core.Controls
 {
     partial class AboutControl
     {
-        /// <summary> 
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -37,7 +37,7 @@ namespace Els_kom_Core.Controls
 
         #region Component Designer generated code
 
-        /// <summary> 
+        /// <summary>
         /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
@@ -119,10 +119,10 @@ namespace Els_kom_Core.Controls
             this.lblDescription.Location = new System.Drawing.Point(72, 45);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblDescription.Size = new System.Drawing.Size(282, 30);
+            this.lblDescription.Size = new System.Drawing.Size(307, 30);
             this.lblDescription.TabIndex = 4;
             this.lblDescription.Text = "This tool allows you to Edit koms freely. Also this is a tool that replaces gPatc" +
-    "her but with some limitations. l0l";
+    "her but with Test Mods callback plugin support.";
             //
             // CmdOK
             //

@@ -26,13 +26,13 @@ namespace Els_kom_Core.Controls
         }
 
         /// <summary>
-        /// Label that displays the information about the bottons the mouse is hovering on.
+        /// Label that displays the information about the buttons the mouse is hovering on.
         /// </summary>
         public System.Windows.Forms.Label Label1;
 
         #region Component Designer generated code
 
-        /// <summary> 
+        /// <summary>
         /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
