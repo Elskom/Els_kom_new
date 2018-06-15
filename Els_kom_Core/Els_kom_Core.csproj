@@ -115,7 +115,7 @@
     <Task>
       <Code Type="Fragment" Language="cs">
         <![CDATA[
-        System.Console.WriteLine("Getting build info from git");
+        Log.LogMessage("Getting build info from git");
         string git_out1;
         System.Diagnostics.Process pro1 = new System.Diagnostics.Process();
         pro1.StartInfo.FileName = "git";
@@ -211,7 +211,7 @@
         System.IO.StreamWriter fstream = new System.IO.StreamWriter(OutputFile1, false, new System.Text.UTF8Encoding(false));
         fstream.Write(outputData.ToCharArray(), 0, outputData.Length);
         fstream.Dispose();
-        System.Console.WriteLine("Dumping Resources Path for Forms Designer.");
+        Log.LogMessage("Dumping Resources Path for Forms Designer.");
         string resourcespath = SolutionDir + "..{0}Els_kom{0}Resources{0}els_kom.resx";
         resourcespath = resourcespath.Replace("\\\\", "\\");
         resourcespath = string.Format(resourcespath, System.IO.Path.DirectorySeparatorChar);
@@ -303,7 +303,7 @@
             }
           }
         }
-        System.Console.WriteLine("Compiling els_kom.rc...");
+        Log.LogMessage("Compiling els_kom.rc...");
         System.Diagnostics.Process proc = new System.Diagnostics.Process();
         proc.StartInfo.FileName = rcexepath;
         proc.StartInfo.Arguments = "/nologo /r \"" + SolutionDir + "..\\Els_kom\\Resources\\els_kom.rc\"";
