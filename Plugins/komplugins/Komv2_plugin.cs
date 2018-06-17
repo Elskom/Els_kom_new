@@ -107,7 +107,7 @@ namespace komv2_plugin
             foreach (var entry in entries)
             {
                 // we iterate through every entry here and unpack the data.
-                kOMStream.WriteOutput(reader, out_path, entry, SupportedKOMVersion);
+                kOMStream.WriteOutput(reader, out_path, entry, SupportedKOMVersion, string.Empty);
             }
             kOMStream.Dispose();
             reader.Dispose();

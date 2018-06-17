@@ -93,7 +93,7 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Writes the KOM File entry to file.
         /// </summary>
-        public void WriteOutput(System.IO.BinaryReader reader, string out_path, EntryVer entry, int version)
+        public void WriteOutput(System.IO.BinaryReader reader, string out_path, EntryVer entry, int version, string xmldata)
         {
             if (version > 2)
             {
@@ -156,6 +156,13 @@ namespace Els_kom_Core.Classes
                 if (!System.IO.Directory.Exists(out_path))
                 {
                     System.IO.Directory.CreateDirectory(out_path);
+                }
+                byte[] xmldatabuffer = System.Text.Encoding.ASCII.GetBytes(xmldata);
+                if (!System.IO.File.Exists(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml"))
+                {
+                    System.IO.FileStream fs = System.IO.File.Create(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml");
+                    fs.Write(xmldatabuffer, 0, xmldatabuffer.Length);
+                    fs.Dispose();
                 }
                 byte[] entrydata = reader.ReadBytes(entry.compressed_size);
                 System.IO.FileStream entryfile = System.IO.File.Create(out_path + "\\" + entry.name);
