@@ -193,6 +193,16 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
+        /// Converts the KOM crc.xml file to the provided version,
+        /// if it is not already that version.
+        /// </summary>
+        /// <param name="toVersion"></param>
+        public void ConvertCRC(int toVersion)
+        {
+            // TODO: Implement this converter.
+        }
+
+        /// <summary>
         /// Disposes the Stream.
         /// </summary>
         /// <param name="disposing"></param>

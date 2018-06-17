@@ -27,6 +27,8 @@ namespace komv2_plugin
             int entry_count = 0;
             int crc_size = 0;
             Els_kom_Core.Classes.KOMStream kOMStream = new Els_kom_Core.Classes.KOMStream();
+            // convert the crc.xml file to the version for this plugin, if needed.
+            kOMStream.ConvertCRC(2);
             kOMStream.ReadCrc(in_path + "\\crc.xml", out byte[] crc_data, ref entry_count, ref crc_size);
             kOMStream.Dispose();
             System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(in_path);
