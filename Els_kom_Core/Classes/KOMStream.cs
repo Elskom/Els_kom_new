@@ -101,6 +101,13 @@ namespace Els_kom_Core.Classes
                 {
                     System.IO.Directory.CreateDirectory(out_path);
                 }
+                byte[] xmldatabuffer = System.Text.Encoding.ASCII.GetBytes(xmldata);
+                if (!System.IO.File.Exists(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml"))
+                {
+                    System.IO.FileStream fs = System.IO.File.Create(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml");
+                    fs.Write(xmldatabuffer, 0, xmldatabuffer.Length);
+                    fs.Dispose();
+                }
                 byte[] entrydata = reader.ReadBytes(entry.compressed_size);
                 if (entry.algorithm == 0)
                 {
@@ -157,13 +164,6 @@ namespace Els_kom_Core.Classes
                 {
                     System.IO.Directory.CreateDirectory(out_path);
                 }
-                byte[] xmldatabuffer = System.Text.Encoding.ASCII.GetBytes(xmldata);
-                if (!System.IO.File.Exists(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml"))
-                {
-                    System.IO.FileStream fs = System.IO.File.Create(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml");
-                    fs.Write(xmldatabuffer, 0, xmldatabuffer.Length);
-                    fs.Dispose();
-                }
                 byte[] entrydata = reader.ReadBytes(entry.compressed_size);
                 System.IO.FileStream entryfile = System.IO.File.Create(out_path + "\\" + entry.name);
                 byte[] dec_entrydata;
@@ -199,14 +199,43 @@ namespace Els_kom_Core.Classes
         {
         }
 
+        internal int GetCRCVersion(string xmldata)
+        {
+            var xml = System.Xml.Linq.XElement.Parse(xmldata);
+            if (xml.Element("File") != null)
+            {
+                // version 3 or 4.
+                foreach (var fileElement in xml.Elements("File"))
+                {
+                    var MappedIDAttribute = fileElement.Attribute("MappedID");
+                    if (MappedIDAttribute != null)
+                    {
+                        return 4;
+                    }
+                    return 3;
+                }
+            }
+            else
+            {
+                return 2;
+            }
+            return 0;
+        }
+
         /// <summary>
         /// Converts the KOM crc.xml file to the provided version,
         /// if it is not already that version.
         /// </summary>
-        /// <param name="toVersion"></param>
-        public void ConvertCRC(int toVersion)
+        public void ConvertCRC(int toVersion, string crcpath)
         {
-            // TODO: Implement this converter.
+            if (System.IO.File.Exists(crcpath))
+            {
+                int crcversion = GetCRCVersion(System.Text.Encoding.ASCII.GetString(System.IO.File.ReadAllBytes(crcpath)));
+                if (crcversion != toVersion)
+                {
+                    // TODO: Implement this converter.
+                }
+            }
         }
 
         /// <summary>

@@ -19,7 +19,7 @@ namespace komv3_plugin
         {
             Els_kom_Core.Classes.KOMStream kOMStream = new Els_kom_Core.Classes.KOMStream();
             // convert the crc.xml file to the version for this plugin, if needed.
-            kOMStream.ConvertCRC(3);
+            kOMStream.ConvertCRC(3, in_path + System.IO.Path.DirectorySeparatorChar + "crc.xml");
             kOMStream.Dispose();
             // not implemented yet due to lack of packing information on v3 koms.
             throw new System.NotImplementedException();

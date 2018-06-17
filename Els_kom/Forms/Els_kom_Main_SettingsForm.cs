@@ -5,13 +5,12 @@
 
 namespace Els_kom.Forms
 {
-    public partial class SettingsForm : System.Windows.Forms.Form
+    internal partial class SettingsForm : System.Windows.Forms.Form
     {
-        public static string Label1 = "0";
+        internal static string Label1 = "0";
+        internal SettingsForm() => InitializeComponent();
 
-        public SettingsForm() => InitializeComponent();
-
-        void SettingsForm_Load(object sender, System.EventArgs e)
+        private void SettingsForm_Load(object sender, System.EventArgs e)
         {
             // This new member is to ensure the data from
             // the control load function does not try to get the data

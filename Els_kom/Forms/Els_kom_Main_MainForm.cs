@@ -5,7 +5,7 @@
 
 namespace Els_kom.Forms
 {
-    public partial class MainForm : System.Windows.Forms.Form
+    internal partial class MainForm : System.Windows.Forms.Form
     {
         /// <summary>
         /// Allows the user to enable or disable their event
@@ -15,8 +15,9 @@ namespace Els_kom.Forms
         private bool Enablehandlers;
         private System.Windows.Forms.Form aboutfrm;
         private System.Windows.Forms.Form settingsfrm;
+        internal static bool _closable = false;
 
-        public MainForm() => InitializeComponent();
+        internal MainForm() => InitializeComponent();
 
         protected override void WndProc(ref System.Windows.Forms.Message m)
         {
@@ -50,7 +51,7 @@ namespace Els_kom.Forms
         {
             bool Cancel = e.Cancel;
             // CloseReason UnloadMode = e->CloseReason; <-- Removed because not used.
-            if (!this.MainControl1.AbleToClose())
+            if (!this.MainControl1.AbleToClose() && !_closable)
             {
                 Cancel = true;
                 System.Windows.Forms.MessageBox.Show("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);

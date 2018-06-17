@@ -21,11 +21,12 @@ internal static class Els_kom_Main
     static void ExceptionHandler(object sender, System.UnhandledExceptionEventArgs args)
     {
         System.Exception e = (System.Exception)args.ExceptionObject;
-        string exceptionData = e.Message + System.Environment.NewLine + e.StackTrace;
+        string exceptionData = e.GetType().ToString() + ": " + e.Message + System.Environment.NewLine + e.StackTrace + System.Environment.NewLine;
         byte[] outputData = System.Text.Encoding.ASCII.GetBytes(exceptionData);
         // do not dump or close if in a debugger.
         if (!System.Diagnostics.Debugger.IsAttached)
         {
+            Els_kom.Forms.MainForm._closable = true;
             System.IO.FileStream fileStream = System.IO.File.OpenWrite(Els_kom_Core.Classes.SettingsFile.ErrorLogPath);
             fileStream.Write(outputData, 0, outputData.Length);
             fileStream.Dispose();
@@ -38,11 +39,12 @@ internal static class Els_kom_Main
     static void ThreadExceptionHandler(object sender, System.Threading.ThreadExceptionEventArgs e)
     {
         System.Exception ex = e.Exception;
-        string exceptionData = ex.Message + System.Environment.NewLine + ex.StackTrace;
+        string exceptionData = ex.GetType().ToString() + ": " + ex.Message + System.Environment.NewLine + ex.StackTrace + System.Environment.NewLine;
         byte[] outputData = System.Text.Encoding.ASCII.GetBytes(exceptionData);
         // do not dump or close if in a debugger.
         if (!System.Diagnostics.Debugger.IsAttached)
         {
+            Els_kom.Forms.MainForm._closable = true;
             System.IO.FileStream fileStream = System.IO.File.OpenWrite(Els_kom_Core.Classes.SettingsFile.ErrorLogPath);
             fileStream.Write(outputData, 0, outputData.Length);
             fileStream.Dispose();
