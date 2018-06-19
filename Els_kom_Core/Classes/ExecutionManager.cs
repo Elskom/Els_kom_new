@@ -168,10 +168,7 @@ namespace Els_kom_Core.Classes
         /// </summary>
         internal static void DeployCallBack()
         {
-            while (ExecutingElsword)
-            {
-            }
-            while (RunningElswordDirectly)
+            if (RunningElswordDirectly)
             {
                 foreach (var plugin in callbackplugins)
                 {

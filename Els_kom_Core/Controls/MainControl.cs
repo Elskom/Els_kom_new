@@ -32,6 +32,7 @@ namespace Els_kom_Core.Controls
         private string showintaskbar_tempvalue;
         private string showintaskbar_tempvalue2;
         private string ElsDir_temp;
+        private System.Windows.Forms.Timer SettingsTmr;
         /// <summary>
         /// Allows this control to properly close the loop that reads
         /// settings that makes it work properly.
@@ -331,11 +332,16 @@ namespace Els_kom_Core.Controls
             }
             if (!Closing)
             {
-                System.Threading.Thread tr1 = new System.Threading.Thread(CheckSettings)
+                if (components == null)
                 {
-                    Name = "CheckSettings"
+                    components = new System.ComponentModel.Container();
+                }
+                SettingsTmr = new System.Windows.Forms.Timer(components)
+                {
+                    Enabled = true,
+                    Interval = 1
                 };
-                tr1.Start();
+                SettingsTmr.Tick += new System.EventHandler(CheckSettings);
                 ShowForm?.Invoke(this, new System.EventArgs());
             }
             else
@@ -516,16 +522,11 @@ namespace Els_kom_Core.Controls
                 Name = "Classes.ExecutionManager.RunElswordDirectly"
             };
             tr3.Start();
-            System.Threading.Thread tr4 = new System.Threading.Thread(Classes.ExecutionManager.DeployCallBack)
-            {
-                Name = "Classes.ExecutionManager.DeployCallBack"
-            };
-            tr4.Start();
-            System.Threading.Thread tr5 = new System.Threading.Thread(TestMods2)
+            System.Threading.Thread tr4 = new System.Threading.Thread(TestMods2)
             {
                 Name = "TestMods2"
             };
-            tr5.Start();
+            tr4.Start();
         }
 
         /// <summary>
@@ -538,6 +539,7 @@ namespace Els_kom_Core.Controls
             }
             while (Classes.ExecutionManager.GetRunningElswordDirectly())
             {
+                Classes.ExecutionManager.DeployCallBack();
                 if (string.Equals(Label2.Text, string.Empty))
                 {
                     Invoke((System.Windows.Forms.MethodInvoker)delegate
@@ -631,65 +633,39 @@ namespace Els_kom_Core.Controls
             });
         }
 
-        /// <summary>
-        /// Ensures the settings that the Main Form reads is always up to date.
-        /// </summary>
-        private void CheckSettings()
+        private void CheckSettings(object sender, System.EventArgs e)
         {
-            while (true)
+            if (end_settings_loop)
             {
-                if (end_settings_loop)
+                SettingsTmr.Enabled = false;
+            }
+            else
+            {
+                if (AbleToClose())
                 {
-                    break;
-                }
-                else
-                {
-                    if (AbleToClose())
+                    Classes.SettingsFile.Settingsxml.ReopenFile();
+                    showintaskbar_tempvalue = Classes.SettingsFile.Settingsxml.Read("IconWhileElsNotRunning");
+                    showintaskbar_tempvalue2 = Classes.SettingsFile.Settingsxml.Read("IconWhileElsRunning");
+                    ElsDir_temp = Classes.SettingsFile.Settingsxml.Read("ElsDir");
+                    if (!string.Equals(ElsDir, ElsDir_temp))
                     {
-                        Classes.SettingsFile.Settingsxml.ReopenFile();
-                        showintaskbar_tempvalue = Classes.SettingsFile.Settingsxml.Read("IconWhileElsNotRunning");
-                        showintaskbar_tempvalue2 = Classes.SettingsFile.Settingsxml.Read("IconWhileElsRunning");
-                        ElsDir_temp = Classes.SettingsFile.Settingsxml.Read("ElsDir");
-                        if (!string.Equals(ElsDir, ElsDir_temp))
+                        ElsDir = ElsDir_temp;
+                    }
+                    if (!Classes.ExecutionManager.GetRunningElswordDirectly())
+                    {
+                        if (showintaskbar_value != showintaskbar_tempvalue)
                         {
-                            ElsDir = ElsDir_temp;
+                            showintaskbar_value = showintaskbar_tempvalue;
                         }
-                        if (!Classes.ExecutionManager.GetRunningElswordDirectly())
+                        TaskbarShow?.Invoke(this, new Classes.ShowTaskbarEvent(showintaskbar_value));
+                    }
+                    else
+                    {
+                        if (showintaskbar_value2 != showintaskbar_tempvalue2)
                         {
-                            if (showintaskbar_value != showintaskbar_tempvalue)
-                            {
-                                showintaskbar_value = showintaskbar_tempvalue;
-                            }
-                            try
-                            {
-                                Invoke((System.Windows.Forms.MethodInvoker)delegate
-                                {
-                                    TaskbarShow?.Invoke(this, new Classes.ShowTaskbarEvent(showintaskbar_value));
-                                });
-                            }
-                            catch (System.ComponentModel.InvalidAsynchronousStateException)
-                            {
-                                break;
-                            }
+                            showintaskbar_value2 = showintaskbar_tempvalue2;
                         }
-                        else
-                        {
-                            if (showintaskbar_value2 != showintaskbar_tempvalue2)
-                            {
-                                showintaskbar_value2 = showintaskbar_tempvalue2;
-                            }
-                            try
-                            {
-                                Invoke((System.Windows.Forms.MethodInvoker)delegate
-                                {
-                                    TaskbarShow?.Invoke(this, new Classes.ShowTaskbarEvent(showintaskbar_value));
-                                });
-                            }
-                            catch (System.ComponentModel.InvalidAsynchronousStateException)
-                            {
-                                break;
-                            }
-                        }
+                        TaskbarShow?.Invoke(this, new Classes.ShowTaskbarEvent(showintaskbar_value));
                     }
                 }
             }
