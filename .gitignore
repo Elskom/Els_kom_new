@@ -17,3 +17,5 @@ Els_kom/Resources/els_kom.resx
 # possible patch files that can be made by anyone.
 *.patch
 *.diff
+externals
+!externals/README.md
