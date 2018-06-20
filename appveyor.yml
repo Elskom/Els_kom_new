@@ -6,6 +6,8 @@ configuration: Release
 platform: x86
 before_build:
 - cmd: >-
+    cd externals
+
     git clone https://github.com/Elskom/newsmake.git
 
     cd newsmake/build
@@ -14,9 +16,13 @@ before_build:
 
     msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
 
-    cd ../../Misc/NEWS
+    cd ../../
 
-    "../../newsmake/build/Release/newsmake"
+    git clone https://github.com/Elskom/ZLIB.NET.git --branch patches
+
+    cd ../Misc/NEWS
+
+    "../../externals/newsmake/build/Release/newsmake"
 
     cd ../..
 build:

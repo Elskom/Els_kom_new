@@ -24,6 +24,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>ELS_KOM_CORE_BUILD</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -63,20 +64,48 @@
     <Compile Include="Classes\Version.cs" />
     <Compile Include="Classes\XMLObject.cs" />
     <Compile Include="Classes\ZlibHelper.cs" />
-    <Compile Include="Classes\Zlib\Adler32.cs" />
-    <Compile Include="Classes\Zlib\Deflate.cs" />
-    <Compile Include="Classes\Zlib\InfBlocks.cs" />
-    <Compile Include="Classes\Zlib\InfCodes.cs" />
-    <Compile Include="Classes\Zlib\Inflate.cs" />
-    <Compile Include="Classes\Zlib\InfTree.cs" />
-    <Compile Include="Classes\Zlib\StaticTree.cs" />
-    <Compile Include="Classes\Zlib\SupportClass.cs" />
-    <Compile Include="Classes\Zlib\Tree.cs" />
-    <Compile Include="Classes\Zlib\ZInputStream.cs" />
-    <Compile Include="Classes\Zlib\Zlib.cs" />
-    <Compile Include="Classes\Zlib\ZOutputStream.cs" />
-    <Compile Include="Classes\Zlib\ZStream.cs" />
-    <Compile Include="Classes\Zlib\ZStreamException.cs" />
+    <Compile Include="..\externals\ZLIB.NET\Adler32.cs">
+      <Link>Classes\Zlib\Adler32.cs</Link>
+    </Compile>
+    <Compile Include="..\externals\ZLIB.NET\Deflate.cs">
+      <Link>Classes\Zlib\Deflate.cs</Link>
+    </Compile>
+    <Compile Include="..\externals\ZLIB.NET\InfBlocks.cs">
+      <Link>Classes\Zlib\InfBlocks.cs</Link>
+    </Compile>
+    <Compile Include="..\externals\ZLIB.NET\InfCodes.cs">
+      <Link>Classes\Zlib\InfCodes.cs</Link>
+    </Compile>
+    <Compile Include="..\externals\ZLIB.NET\Inflate.cs">
+      <Link>Classes\Zlib\Inflate.cs</Link>
+    </Compile>
+    <Compile Include="..\externals\ZLIB.NET\InfTree.cs">
+      <Link>Classes\Zlib\InfTree.cs</Link>
+    </Compile>
+    <Compile Include="..\externals\ZLIB.NET\StaticTree.cs">
+      <Link>Classes\Zlib\StaticTree.cs</Link>
+    </Compile>
+    <Compile Include="..\externals\ZLIB.NET\SupportClass.cs">
+      <Link>Classes\Zlib\SupportClass.cs</Link>
+    </Compile>
+    <Compile Include="..\externals\ZLIB.NET\Tree.cs">
+      <Link>Classes\Zlib\Tree.cs</Link>
+    </Compile>
+    <Compile Include="..\externals\ZLIB.NET\ZInputStream.cs">
+      <Link>Classes\Zlib\ZInputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\externals\ZLIB.NET\Zlib.cs">
+      <Link>Classes\Zlib\Zlib.cs</Link>
+    </Compile>
+    <Compile Include="..\externals\ZLIB.NET\ZOutputStream.cs">
+      <Link>Classes\Zlib\ZOutputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\externals\ZLIB.NET\ZStream.cs">
+      <Link>Classes\Zlib\ZStream.cs</Link>
+    </Compile>
+    <Compile Include="..\externals\ZLIB.NET\ZStreamException.cs">
+      <Link>Classes\Zlib\ZStreamException.cs</Link>
+    </Compile>
     <Compile Include="Controls\AboutControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -323,9 +352,9 @@
     </Task>
   </UsingTask>
   <Target Name="BeforeBuild">
-    <gitbuildinfo OutputFile1="$(ProjectDir)\Classes\Git.cs" TargetNamespace="Els_kom_Core.Classes" SolutionDir="$(SolutionDir)" OutputFile2="$(ProjectDir)\Classes\ResourcesDir.cs"/>
+    <gitbuildinfo OutputFile1="$(ProjectDir)\Classes\Git.cs" TargetNamespace="Els_kom_Core.Classes" SolutionDir="$(SolutionDir)" OutputFile2="$(ProjectDir)\Classes\ResourcesDir.cs" />
   </Target>
   <Target Name="AfterBuild">
-    <FindRCExe SolutionDir="$(SolutionDir)"/>
+    <FindRCExe SolutionDir="$(SolutionDir)" />
   </Target>
 </Project>

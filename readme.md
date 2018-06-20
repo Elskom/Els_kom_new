@@ -14,12 +14,15 @@ This is a version of Els_kom for Elsword and Grand Chase KOM Files.
 1. Run ``git clone https://github.com/Elskom/Els_kom_new.git``. Do not download the master branch as a zip file or build might fail or crash Visual Studio 2017.
 2. Run:
 ```cmd
+cd externals
 git clone https://github.com/Elskom/newsmake.git
 cd newsmake/build
 cmake ..
 msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
-cd ../../Misc/NEWS
-"../../newsmake/build/Release/newsmake"
+cd ../../
+git clone https://github.com/Elskom/ZLIB.NET.git --branch patches
+cd ../Misc/NEWS
+"../../externals/newsmake/build/Release/newsmake"
 cd ../..
 ```
 
