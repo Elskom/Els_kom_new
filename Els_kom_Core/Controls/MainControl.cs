@@ -33,6 +33,10 @@ namespace Els_kom_Core.Controls
         private string showintaskbar_tempvalue2;
         private string ElsDir_temp;
         private System.Windows.Forms.Timer SettingsTmr;
+        private System.Windows.Forms.Timer PackingTmr;
+        private System.Windows.Forms.Timer UnpackingTmr;
+        private System.Windows.Forms.Timer TestModsTmr;
+        private System.Windows.Forms.Timer LauncherTmr;
         /// <summary>
         /// Allows this control to properly close the loop that reads
         /// settings that makes it work properly.
@@ -92,11 +96,7 @@ namespace Els_kom_Core.Controls
                 Name = "Classes.KOMManager.PackKoms"
             };
             tr2.Start();
-            System.Threading.Thread tr3 = new System.Threading.Thread(Packing)
-            {
-                Name = "Packing"
-            };
-            tr3.Start();
+            PackingTmr.Enabled = true;
         }
 
         private void Command1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -112,11 +112,7 @@ namespace Els_kom_Core.Controls
                 Name = "Classes.KOMManager.UnpackKoms"
             };
             tr1.Start();
-            System.Threading.Thread tr2 = new System.Threading.Thread(Unpacking)
-            {
-                Name = "Unpacking"
-            };
-            tr2.Start();
+            UnpackingTmr.Enabled = true;
         }
 
         private void Command2_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -156,16 +152,12 @@ namespace Els_kom_Core.Controls
                 Name = "Classes.ExecutionManager.RunElswordLauncher"
             };
             tr4.Start();
-            System.Threading.Thread tr5 = new System.Threading.Thread(Launcher)
-            {
-                Name = "Launcher"
-            };
-            tr5.Start();
+            LauncherTmr.Enabled = true;
         }
 
         private void Command5_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            Label1.Text = "Run the Launcher to Elsword to Update the client for when a server Maintenance happens. (you might have to remake some mods for some files)";
+            Label1.Text = "Run the Launcher to Elsword to Update the client for when a server Maintenance happens (you might have to remake some mods for some files).";
         }
 
         private void Command6_Click(object sender, System.EventArgs e)
@@ -209,11 +201,7 @@ namespace Els_kom_Core.Controls
                 Name = "Classes.ExecutionManager.RunElswordLauncher"
             };
             tr4.Start();
-            System.Threading.Thread tr5 = new System.Threading.Thread(Launcher)
-            {
-                Name = "Launcher"
-            };
-            tr5.Start();
+            LauncherTmr.Enabled = true;
         }
 
         private void UnpackToolStripMenuItem_Click(object sender, System.EventArgs e)
@@ -223,11 +211,7 @@ namespace Els_kom_Core.Controls
                 Name = "Classes.KOMManager.UnpackKoms"
             };
             tr1.Start();
-            System.Threading.Thread tr2 = new System.Threading.Thread(Unpacking)
-            {
-                Name = "Unpacking"
-            };
-            tr2.Start();
+            UnpackingTmr.Enabled = true;
         }
 
         private void TestModsToolStripMenuItem_Click(object sender, System.EventArgs e)
@@ -244,11 +228,7 @@ namespace Els_kom_Core.Controls
                 Name = "Classes.KOMManager.PackKoms"
             };
             tr2.Start();
-            System.Threading.Thread tr3 = new System.Threading.Thread(Packing)
-            {
-                Name = "Packing"
-            };
-            tr3.Start();
+            PackingTmr.Enabled = true;
         }
 
         private void NotifyIcon1_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -341,7 +321,30 @@ namespace Els_kom_Core.Controls
                     Enabled = true,
                     Interval = 1
                 };
-                SettingsTmr.Tick += new System.EventHandler(CheckSettings);
+                PackingTmr = new System.Windows.Forms.Timer(components)
+                {
+                    Enabled = false,
+                    Interval = 1
+                };
+                PackingTmr.Tick += new System.EventHandler(Packing);
+                UnpackingTmr = new System.Windows.Forms.Timer(components)
+                {
+                    Enabled = false,
+                    Interval = 1
+                };
+                UnpackingTmr.Tick += new System.EventHandler(Unpacking);
+                TestModsTmr = new System.Windows.Forms.Timer(components)
+                {
+                    Enabled = false,
+                    Interval = 1
+                };
+                TestModsTmr.Tick += new System.EventHandler(TestMods2);
+                LauncherTmr = new System.Windows.Forms.Timer(components)
+                {
+                    Enabled = false,
+                    Interval = 1
+                };
+                LauncherTmr.Tick += new System.EventHandler(Launcher);
                 ShowForm?.Invoke(this, new System.EventArgs());
             }
             else
@@ -368,55 +371,52 @@ namespace Els_kom_Core.Controls
         /// <summary>
         /// Handles Packing on the Main Form.
         /// </summary>
-        private void Packing()
+        private void Packing(object sender, System.EventArgs e)
         {
-            while (Classes.KOMManager.GetPackingState())
+            if (Classes.KOMManager.GetPackingState())
             {
-                Invoke((System.Windows.Forms.MethodInvoker)delegate
+                if (Command1.Enabled)
                 {
-                    if (Command1.Enabled)
-                    {
-                        Command1.Enabled = false;
-                    }
-                    if (Command2.Enabled)
-                    {
-                        Command2.Enabled = false;
-                    }
-                    if (Command4.Enabled)
-                    {
-                        Command4.Enabled = false;
-                    }
-                    if (Command5.Enabled)
-                    {
-                        Command5.Enabled = false;
-                    }
-                    if (PackToolStripMenuItem.Enabled)
-                    {
-                        PackToolStripMenuItem.Enabled = false;
-                    }
-                    if (UnpackToolStripMenuItem.Enabled)
-                    {
-                        UnpackToolStripMenuItem.Enabled = false;
-                    }
-                    if (TestModsToolStripMenuItem.Enabled)
-                    {
-                        TestModsToolStripMenuItem.Enabled = false;
-                    }
-                    if (LauncherToolStripMenuItem.Enabled)
-                    {
-                        LauncherToolStripMenuItem.Enabled = false;
-                    }
-                    if (string.Equals(Label2.Text, string.Empty))
-                    {
-                        Label2.Text = "Packing...";
-                    }
-                    if (!string.Equals(NotifyIcon1.Text, Label2.Text))
-                    {
-                        NotifyIcon1.Text = Label2.Text;
-                    }
-                });
+                    Command1.Enabled = false;
+                }
+                if (Command2.Enabled)
+                {
+                    Command2.Enabled = false;
+                }
+                if (Command4.Enabled)
+                {
+                    Command4.Enabled = false;
+                }
+                if (Command5.Enabled)
+                {
+                    Command5.Enabled = false;
+                }
+                if (PackToolStripMenuItem.Enabled)
+                {
+                    PackToolStripMenuItem.Enabled = false;
+                }
+                if (UnpackToolStripMenuItem.Enabled)
+                {
+                    UnpackToolStripMenuItem.Enabled = false;
+                }
+                if (TestModsToolStripMenuItem.Enabled)
+                {
+                    TestModsToolStripMenuItem.Enabled = false;
+                }
+                if (LauncherToolStripMenuItem.Enabled)
+                {
+                    LauncherToolStripMenuItem.Enabled = false;
+                }
+                if (string.Equals(Label2.Text, string.Empty))
+                {
+                    Label2.Text = "Packing...";
+                }
+                if (!string.Equals(NotifyIcon1.Text, Label2.Text))
+                {
+                    NotifyIcon1.Text = Label2.Text;
+                }
             }
-            Invoke((System.Windows.Forms.MethodInvoker)delegate
+            else
             {
                 Command1.Enabled = true;
                 Command2.Enabled = true;
@@ -428,61 +428,59 @@ namespace Els_kom_Core.Controls
                 LauncherToolStripMenuItem.Enabled = true;
                 Label2.Text = "";
                 TrayNameChange?.Invoke(this, new System.EventArgs());
-            });
+                PackingTmr.Enabled = false;
+            }
         }
 
         /// <summary>
         /// Handles Unpacking on the Main Form.
         /// </summary>
-        private void Unpacking()
+        private void Unpacking(object sender, System.EventArgs e)
         {
-            while (Classes.KOMManager.GetUnpackingState())
+            if (Classes.KOMManager.GetUnpackingState())
             {
-                Invoke((System.Windows.Forms.MethodInvoker)delegate
+                if (Command1.Enabled)
                 {
-                    if (Command1.Enabled)
-                    {
-                        Command1.Enabled = false;
-                    }
-                    if (Command2.Enabled)
-                    {
-                        Command2.Enabled = false;
-                    }
-                    if (Command4.Enabled)
-                    {
-                        Command4.Enabled = false;
-                    }
-                    if (Command5.Enabled)
-                    {
-                        Command5.Enabled = false;
-                    }
-                    if (PackToolStripMenuItem.Enabled)
-                    {
-                        PackToolStripMenuItem.Enabled = false;
-                    }
-                    if (UnpackToolStripMenuItem.Enabled)
-                    {
-                        UnpackToolStripMenuItem.Enabled = false;
-                    }
-                    if (TestModsToolStripMenuItem.Enabled)
-                    {
-                        TestModsToolStripMenuItem.Enabled = false;
-                    }
-                    if (LauncherToolStripMenuItem.Enabled)
-                    {
-                        LauncherToolStripMenuItem.Enabled = false;
-                    }
-                    if (string.Equals(Label2.Text, string.Empty))
-                    {
-                        Label2.Text = "Unpacking...";
-                    }
-                    if (!string.Equals(NotifyIcon1.Text, Label2.Text))
-                    {
-                        NotifyIcon1.Text = Label2.Text;
-                    }
-                });
+                    Command1.Enabled = false;
+                }
+                if (Command2.Enabled)
+                {
+                    Command2.Enabled = false;
+                }
+                if (Command4.Enabled)
+                {
+                    Command4.Enabled = false;
+                }
+                if (Command5.Enabled)
+                {
+                    Command5.Enabled = false;
+                }
+                if (PackToolStripMenuItem.Enabled)
+                {
+                    PackToolStripMenuItem.Enabled = false;
+                }
+                if (UnpackToolStripMenuItem.Enabled)
+                {
+                    UnpackToolStripMenuItem.Enabled = false;
+                }
+                if (TestModsToolStripMenuItem.Enabled)
+                {
+                    TestModsToolStripMenuItem.Enabled = false;
+                }
+                if (LauncherToolStripMenuItem.Enabled)
+                {
+                    LauncherToolStripMenuItem.Enabled = false;
+                }
+                if (string.Equals(Label2.Text, string.Empty))
+                {
+                    Label2.Text = "Unpacking...";
+                }
+                if (!string.Equals(NotifyIcon1.Text, Label2.Text))
+                {
+                    NotifyIcon1.Text = Label2.Text;
+                }
             }
-            Invoke((System.Windows.Forms.MethodInvoker)delegate
+            else
             {
                 Command1.Enabled = true;
                 Command2.Enabled = true;
@@ -494,7 +492,8 @@ namespace Els_kom_Core.Controls
                 LauncherToolStripMenuItem.Enabled = true;
                 Label2.Text = "";
                 TrayNameChange?.Invoke(this, new System.EventArgs());
-            });
+                UnpackingTmr.Enabled = false;
+            }
         }
 
         /// <summary>
@@ -522,64 +521,55 @@ namespace Els_kom_Core.Controls
                 Name = "Classes.ExecutionManager.RunElswordDirectly"
             };
             tr3.Start();
-            System.Threading.Thread tr4 = new System.Threading.Thread(TestMods2)
-            {
-                Name = "TestMods2"
-            };
-            tr4.Start();
+            TestModsTmr.Enabled = true;
         }
 
         /// <summary>
         /// Handles Testing Mods on the Main Form (when Elsword (the game window) closes).
         /// </summary>
-        private void TestMods2()
+        private void TestMods2(object sender, System.EventArgs e)
         {
-            while (Classes.ExecutionManager.GetExecutingElsword())
+            if (!Classes.ExecutionManager.GetExecutingElsword())
             {
-            }
-            while (Classes.ExecutionManager.GetRunningElswordDirectly())
-            {
-                Classes.ExecutionManager.DeployCallBack();
-                if (string.Equals(Label2.Text, string.Empty))
+                if (Classes.ExecutionManager.GetRunningElswordDirectly())
                 {
-                    Invoke((System.Windows.Forms.MethodInvoker)delegate
+                    Classes.ExecutionManager.DeployCallBack();
+                    if (string.Equals(Label2.Text, string.Empty))
                     {
                         Label2.Text = "Testing Mods...";
-                    });
+                    }
+                }
+                else
+                {
+                    System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(System.Windows.Forms.Application.StartupPath + "\\koms");
+                    foreach (var fi in di.GetFiles("*.kom"))
+                    {
+                        string _kom_file = fi.Name;
+                        Classes.KOMManager.MoveOriginalKomFilesBack(_kom_file, ElsDir + "\\data\\backup", ElsDir + "\\data");
+                    }
+                    Command1.Enabled = true;
+                    Command2.Enabled = true;
+                    Command4.Enabled = true;
+                    Command5.Enabled = true;
+                    PackToolStripMenuItem.Enabled = true;
+                    UnpackToolStripMenuItem.Enabled = true;
+                    TestModsToolStripMenuItem.Enabled = true;
+                    LauncherToolStripMenuItem.Enabled = true;
+                    Label2.Text = "";
+                    TestModsTmr.Enabled = false;
                 }
             }
-            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(System.Windows.Forms.Application.StartupPath + "\\koms");
-            foreach (var fi in di.GetFiles("*.kom"))
-            {
-                string _kom_file = fi.Name;
-                Classes.KOMManager.MoveOriginalKomFilesBack(_kom_file, ElsDir + "\\data\\backup", ElsDir + "\\data");
-            }
-            Invoke((System.Windows.Forms.MethodInvoker)delegate
-            {
-                Command1.Enabled = true;
-                Command2.Enabled = true;
-                Command4.Enabled = true;
-                Command5.Enabled = true;
-                PackToolStripMenuItem.Enabled = true;
-                UnpackToolStripMenuItem.Enabled = true;
-                TestModsToolStripMenuItem.Enabled = true;
-                LauncherToolStripMenuItem.Enabled = true;
-                Label2.Text = "";
-            });
         }
 
         /// <summary>
         /// Handles Updating the Game but disables the controls while it is updating to avoid unpacking,
         /// packing, and testing mods.
         /// </summary>
-        private void Launcher()
+        private void Launcher(object sender, System.EventArgs e)
         {
-            while (Classes.ExecutionManager.GetExecutingElsword())
+            if (!Classes.ExecutionManager.GetExecutingElsword())
             {
-            }
-            while (Classes.ExecutionManager.GetRunningElsword())
-            {
-                Invoke((System.Windows.Forms.MethodInvoker)delegate
+                if (Classes.ExecutionManager.GetRunningElsword())
                 {
                     if (Command1.Enabled)
                     {
@@ -617,20 +607,21 @@ namespace Els_kom_Core.Controls
                     {
                         Label2.Text = "Updating...";
                     }
-                });
+                }
+                else
+                {
+                    Command1.Enabled = true;
+                    Command2.Enabled = true;
+                    Command4.Enabled = true;
+                    Command5.Enabled = true;
+                    PackToolStripMenuItem.Enabled = true;
+                    UnpackToolStripMenuItem.Enabled = true;
+                    TestModsToolStripMenuItem.Enabled = true;
+                    LauncherToolStripMenuItem.Enabled = true;
+                    Label2.Text = "";
+                    LauncherTmr.Enabled = false;
+                }
             }
-            Invoke((System.Windows.Forms.MethodInvoker)delegate
-            {
-                Command1.Enabled = true;
-                Command2.Enabled = true;
-                Command4.Enabled = true;
-                Command5.Enabled = true;
-                PackToolStripMenuItem.Enabled = true;
-                UnpackToolStripMenuItem.Enabled = true;
-                TestModsToolStripMenuItem.Enabled = true;
-                LauncherToolStripMenuItem.Enabled = true;
-                Label2.Text = "";
-            });
         }
 
         private void CheckSettings(object sender, System.EventArgs e)
