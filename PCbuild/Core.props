@@ -36,6 +36,5 @@ With this file it requires Visual Studio 2017 at least.
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
 </Project>
