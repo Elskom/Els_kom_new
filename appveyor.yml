@@ -1,11 +1,13 @@
 version: 1.4.9.8a{build}
-skip_branch_with_pr: true
+# skip_branch_with_pr: true
 max_jobs: 15
 image: Visual Studio 2017
 configuration: Release
 platform: x86
 before_build:
 - cmd: >-
+    mkdir bin\x86\Release
+
     cd externals
 
     git clone https://github.com/Elskom/newsmake.git
@@ -34,7 +36,7 @@ artifacts:
 - path: bin/$(platform)/$(configuration)/*.zip
   name: myartifact
 before_deploy:
-- ps: IF ($env:APPVEYOR_REPO_TAG -eq "false") {$env:APPVEYOR_REPO_TAG_NAME = $env:APPVEYOR_BUILD_VERSION}
+- ps: IF ($env:APPVEYOR_REPO_TAG -eq "false") {$env:APPVEYOR_REPO_TAG_NAME = "v" + $env:APPVEYOR_BUILD_VERSION}
 deploy:
 - provider: GitHub
   release: $(APPVEYOR_REPO_TAG_NAME)
