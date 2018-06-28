@@ -114,8 +114,23 @@ namespace komv4_plugin
         {
             try
             {
-                byte[] KeyMapData = System.IO.File.ReadAllBytes(System.Windows.Forms.Application.StartupPath + "\\plugins\\komKeyMap.dms");
-                // TODO: put KeyMapData into KeyMap dictonary.
+                System.IO.FileStream KeyMapfs = System.IO.File.OpenRead(System.Windows.Forms.Application.StartupPath + "\\plugins\\komKeyMap.dms");
+                System.IO.BinaryReader KeyMapreader = new System.IO.BinaryReader(KeyMapfs, System.Text.Encoding.ASCII);
+                // TODO: Read KeyMap data properly.
+                for (long i = 0; i < KeyMapreader.BaseStream.Length;)
+                {
+                    int key = KeyMapreader.ReadInt32();
+                    int value = KeyMapreader.ReadInt32();
+                    try
+                    {
+                        KeyMap.Add(key, value);
+                    }
+                    catch (System.ArgumentException)
+                    {
+                    }
+                    i = KeyMapreader.BaseStream.Position;
+                }
+                KeyMapreader.Dispose();
             }
             catch (System.IO.FileNotFoundException)
             {

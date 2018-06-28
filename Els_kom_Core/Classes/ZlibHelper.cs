@@ -43,6 +43,8 @@ namespace Els_kom_Core.Classes
                 throw;
             }
             outData = outMemoryStream.ToArray();
+            // TODO: Get new adler32.
+            // outZStream.adler & 0xffff
             outZStream.Dispose();
             inMemoryStream.Dispose();
         }
