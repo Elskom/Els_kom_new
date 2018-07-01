@@ -27,8 +27,9 @@ before_build:
     cd ../..
 build:
   project: PCbuild\pcbuild.sln
-#  parallel: true
-  verbosity: minimal
+  parallel: true
+  verbosity: normal
+#  verbosity: minimal
 test: off
 artifacts:
 - path: bin/$(platform)/$(configuration)/*.zip
