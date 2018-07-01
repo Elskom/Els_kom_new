@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="$(SolutionDir)\Core.props" Condition="Exists('$(SolutionDir)\Core.props')" />
   <PropertyGroup>
@@ -144,7 +144,7 @@
     <Task>
       <Code Type="Fragment" Language="cs">
         <![CDATA[
-        Log.LogMessage("Getting build info from git");
+        Log.LogMessage(MessageImportance.High, "Getting build info from git");
         string git_out1;
         System.Diagnostics.Process pro1 = new System.Diagnostics.Process();
         pro1.StartInfo.FileName = "git";
@@ -240,7 +240,7 @@
         System.IO.StreamWriter fstream = new System.IO.StreamWriter(OutputFile1, false, new System.Text.UTF8Encoding(false));
         fstream.Write(outputData.ToCharArray(), 0, outputData.Length);
         fstream.Dispose();
-        Log.LogMessage("Dumping Resources Path for Forms Designer.");
+        Log.LogMessage(MessageImportance.High, "Dumping Resources Path for Forms Designer.");
         string resourcespath = SolutionDir + "..{0}Els_kom{0}Resources{0}els_kom.resx";
         resourcespath = resourcespath.Replace("\\\\", "\\");
         resourcespath = string.Format(resourcespath, System.IO.Path.DirectorySeparatorChar);
@@ -332,7 +332,7 @@
             }
           }
         }
-        Log.LogMessage("Compiling els_kom.rc...");
+        Log.LogMessage(MessageImportance.High, "Compiling els_kom.rc...");
         System.Diagnostics.Process proc = new System.Diagnostics.Process();
         proc.StartInfo.FileName = rcexepath;
         proc.StartInfo.Arguments = "/nologo /r \"" + SolutionDir + "..\\Els_kom\\Resources\\els_kom.rc\"";
@@ -342,6 +342,7 @@
         try
         {
           proc.Start();
+          proc.WaitForExit();
         }
         catch (System.ComponentModel.Win32Exception)
         {
