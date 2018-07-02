@@ -49,7 +49,6 @@ deploy:
   on:
     platform: x86
     appveyor_repo_tag: true
-deploy:
 - provider: GitHub
   release: $(APPVEYOR_REPO_TAG_NAME)
   description: '$(APPVEYOR_REPO_COMMIT_MESSAGE) - $(APPVEYOR_REPO_BRANCH)'
