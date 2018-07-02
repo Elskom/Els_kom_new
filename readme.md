@@ -28,5 +28,15 @@ cd ../..
 
 To build the changelog (optional but recommended). Make sure that msbuild from your VS2017 install is in your global path environment variable first before these commands.
 
+Note: When building changelog and if it does not display in the output folder that it should be at
+then do:
+
+```cmd
+mkdir bin\x86\Release
+```
+
+Although if you already built the Els_kom solution then msbuild will create it for you. However
+I plan to somehow fix this in newsmake to avoid this mkdir step altogether.
+
 3. Open the ``PCbuild/pcbuild.sln`` solution file in Visual Studio 2017 and then select ``Release``, ``x86`` and hit ``Build Solution``. Alternatively you can use the same msbuild command above but change ``Win32`` to ``x86``, and ``newsmake.sln`` to ``PCbuild/pcbuild.sln``.
 4. Get a cup of Tea. Build might take a bit.
