@@ -6,8 +6,6 @@ configuration: Release
 platform: x86
 before_build:
 - cmd: >-
-    mkdir bin\x86\Release
-
     cd externals
 
     git clone https://github.com/Elskom/newsmake.git
