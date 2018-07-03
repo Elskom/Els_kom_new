@@ -294,8 +294,8 @@ namespace Els_kom_Core.Classes
                 {
                     bool found = false;
                     // lookup the file entry in the crc.xml.
-                    // if not found add it. But save a
-                    // backup of crc.xml though.
+                    string xmldata = System.Text.Encoding.UTF8.GetString(
+                       System.IO.File.ReadAllBytes(crcpath));
                     var xml = System.Xml.Linq.XElement.Parse(xmldata);
                     foreach (var fileElement in xml.Elements("File"))
                     {
