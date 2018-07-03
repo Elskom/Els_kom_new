@@ -296,6 +296,23 @@ namespace Els_kom_Core.Classes
                     // lookup the file entry in the crc.xml.
                     // if not found add it. But save a
                     // backup of crc.xml though.
+                    var xml = System.Xml.Linq.XElement.Parse(xmldata);
+                    foreach (var fileElement in xml.Elements("File"))
+                    {
+                        var nameAttribute = fileElement.Attribute("Name");
+                        var name = nameAttribute?.Value ?? "no value";
+                        if (name.Equals(fi1.Name))
+                        {
+                            found = true;
+                        }
+                    }
+                    if (!found)
+                    {
+                        // backup original crc.xml.
+                        // modify crc.xml object.
+                        // save xml object.
+                        // manually compare the 2 files later when debugging.
+                    }
                 }
             }
         }
