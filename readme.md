@@ -4,8 +4,8 @@
 
 |       | Build | VS2017 | VS2017 Preview |
 |:---------------:  |:---------------:  |:---------------:  |:---------------:  |
-| Master: | [![Build status](https://ci.appveyor.com/api/projects/status/5ikdee6h3qy6lyum/branch/master?svg=true&passingText=Master%20-%20OK)](https://ci.appveyor.com/project/AraHaan/els-kom-new) |
-| Current: | [![Build status](https://ci.appveyor.com/api/projects/status/5ikdee6h3qy6lyum?svg=true&passingText=Current%20-%20OK)](https://ci.appveyor.com/project/AraHaan/els-kom-new) |
+| Master: | [![Build status](https://ci.appveyor.com/api/projects/status/5ikdee6h3qy6lyum/branch/master?svg=true&passingText=Master%20-%20OK&pendingText=Master%20-%20Pending&failingText=Master%20-%20Failing)](https://ci.appveyor.com/project/AraHaan/els-kom-new) |
+| Current: | [![Build status](https://ci.appveyor.com/api/projects/status/5ikdee6h3qy6lyum?svg=true&passingText=Current%20-%20OK&pendingText=Current%20-%20Pending&failingText=Current%20-%20Failing)](https://ci.appveyor.com/project/AraHaan/els-kom-new) |
 
 This is a version of Els_kom for Elsword and Grand Chase KOM Files.
 
