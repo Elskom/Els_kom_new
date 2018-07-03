@@ -26,11 +26,8 @@ namespace Els_kom_Core.Classes
         /// Compresses data using an specific compression level.
         /// </summary>
         /// <exception cref="Zlib.ZStreamException">Thrown when the stream Errors in any way.</exception>
-        public static void CompressData(byte[] inData, out byte[] outData, int level)
-        {
-            // discard returned adler32. The caller does not want it.
-            CompressData(inData, outData, level, out int _adler32);
-        }
+        // discard returned adler32. The caller does not want it.
+        public static void CompressData(byte[] inData, out byte[] outData, int level) => CompressData(inData, out outData, level, out int _adler32);
 
         /// <summary>
         /// Compresses data using an specific compression level.
