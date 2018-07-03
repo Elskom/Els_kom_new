@@ -45,7 +45,7 @@ namespace Els_kom_Core.Classes
                 throw;
             }
             outData = outMemoryStream.ToArray();
-            _adler32 = outZStream.adler & 0xffff;
+            _adler32 = outZStream.z.adler & 0xffff;
             outZStream.Dispose();
             inMemoryStream.Dispose();
         }
