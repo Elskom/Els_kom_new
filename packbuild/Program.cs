@@ -9,6 +9,7 @@ namespace packbuild
     {
         private static void Main(string[] args)
         {
+            System.Collections.Generic.List<string> filelist = new System.Collections.Generic.List<string>();
             // files to exclude from Release zip.
             string ExcludeFile1 = "packbuild.exe";
             string ExcludeFile2 = "packbuild.pdb";
@@ -41,12 +42,14 @@ namespace packbuild
                         string _exe_file = fi1.Name;
                         if (!_exe_file.Equals(ExcludeFile1))
                         {
+                            filelist.Add(_exe_file);
                             System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _exe_file, _exe_file);
                         }
                     }
                     foreach (var fi2 in di1.GetFiles("*.dll"))
                     {
                         string _dll_file = fi2.Name;
+                        filelist.Add(_dll_file);
                         System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _dll_file, _dll_file);
                     }
                     foreach (var fi3 in di1.GetFiles("*.xml"))
@@ -54,12 +57,14 @@ namespace packbuild
                         string _xml_file = fi3.Name;
                         if (!_xml_file.EndsWith(ExcludeFile3))
                         {
+                            filelist.Add(_xml_file);
                             System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _xml_file, _xml_file);
                         }
                     }
                     foreach (var fi4 in di1.GetFiles("*.txt"))
                     {
                         string _txt_file = fi4.Name;
+                        filelist.Add(_txt_file);
                         System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _txt_file, _txt_file);
                     }
                     foreach (var di2 in di1.GetDirectories())
@@ -67,6 +72,7 @@ namespace packbuild
                         foreach (var fi5 in di2.GetFiles("*.dll"))
                         {
                             string _dll_file = fi5.Name;
+                            filelist.Add(di2.Name + System.IO.Path.DirectorySeparatorChar + _dll_file);
                             System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + _dll_file, di2.Name + System.IO.Path.DirectorySeparatorChar + _dll_file);
                         }
                         foreach (var fi6 in di2.GetFiles("*.xml"))
@@ -74,12 +80,14 @@ namespace packbuild
                             string _xml_file = fi6.Name;
                             if (!_xml_file.EndsWith(ExcludeFile3))
                             {
+                                filelist.Add(di2.Name + System.IO.Path.DirectorySeparatorChar + _xml_file);
                                 System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + _xml_file, di2.Name + System.IO.Path.DirectorySeparatorChar + _xml_file);
                             }
                         }
                         foreach (var fi7 in di2.GetFiles("*.txt"))
                         {
                             string _txt_file = fi7.Name;
+                            filelist.Add(di2.Name + System.IO.Path.DirectorySeparatorChar + _txt_file);
                             System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + _txt_file, di2.Name + System.IO.Path.DirectorySeparatorChar + _txt_file);
                         }
                     }
@@ -97,6 +105,7 @@ namespace packbuild
                         string _pdb_file = fi1.Name;
                         if (!_pdb_file.Equals(ExcludeFile2))
                         {
+                            filelist.Add(_pdb_file);
                             System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _pdb_file, _pdb_file);
                         }
                     }
@@ -107,12 +116,20 @@ namespace packbuild
                             string _pdb_file = fi2.Name;
                             if (!_pdb_file.Equals(ExcludeFile2))
                             {
+                                filelist.Add(di2.Name + System.IO.Path.DirectorySeparatorChar + _pdb_file);
                                 System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + _pdb_file, di2.Name + System.IO.Path.DirectorySeparatorChar + _pdb_file);
                             }
                         }
                     }
                     zipFile.Dispose();
                 }
+                // tell users what files was added to zip.
+                System.Console.WriteLine("Added Files:");
+                foreach (var file in filelist)
+                {
+                    System.Console.WriteLine("\t- " + file);
+                }
+                filelist.Clear();
             }
             else
             {
