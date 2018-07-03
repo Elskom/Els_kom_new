@@ -280,6 +280,27 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
+        /// Updates the crc.xml file if the folder has new files
+        /// not in the crc.xml, or removes files listed in crc.xml that
+        /// no longer in the folder.
+        /// </summary>
+        public void UpdateCRC(int crcversion, string crcpath, string checkpath)
+        {
+            System.IO.FileInfo crcfile = new System.IO.FileInfo(crcpath);
+            System.IO.DirectoryInfo di1 = new System.IO.DirectoryInfo(checkpath);
+            foreach (var fi1 in di1.GetFiles())
+            {
+                if (!fi1.Name.Equals(crcfile.Name))
+                {
+                    bool found = false;
+                    // lookup the file entry in the crc.xml.
+                    // if not found add it. But save a
+                    // backup of crc.xml though.
+                }
+            }
+        }
+
+        /// <summary>
         /// Disposes the Stream.
         /// </summary>
         /// <param name="disposing"></param>
