@@ -233,7 +233,48 @@ namespace Els_kom_Core.Classes
                 int crcversion = GetCRCVersion(System.Text.Encoding.ASCII.GetString(System.IO.File.ReadAllBytes(crcpath)));
                 if (crcversion != toVersion)
                 {
-                    // TODO: Implement this converter.
+                    if (crcversion == 2)
+                    {
+                        if (toVersion == 2)
+                        {
+                        }
+                        else if (toVersion == 3)
+                        {
+                            // do conversions here.
+                        }
+                        else
+                        {
+                            // do conversions here.
+                        }
+                    }
+                    else if (crcversion == 3)
+                    {
+                        if (toVersion == 3)
+                        {
+                        }
+                        else if (toVersion == 2)
+                        {
+                            // do conversions here.
+                        }
+                        else
+                        {
+                            // do conversions here.
+                        }
+                    }
+                    else if (crcversion == 4)
+                    {
+                        if (toVersion == 4)
+                        {
+                        }
+                        else if (toVersion == 3)
+                        {
+                            // do conversions here.
+                        }
+                        else
+                        {
+                            // do conversions here.
+                        }
+                    }
                 }
             }
         }
