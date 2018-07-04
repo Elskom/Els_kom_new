@@ -4,6 +4,11 @@ max_jobs: 15
 image:
 - Visual Studio 2017
 - Visual Studio 2017 Preview
+matrix:
+  allow_failures:
+    - platform: x86
+      configuration: Release
+      image: Ubuntu
 configuration: Release
 platform: x86
 before_build:
@@ -48,7 +53,7 @@ deploy:
   force_update: true
   on:
     platform: x86
-    appveyor_repo_tag: true
+    APPVEYOR_REPO_TAG: true
 - provider: GitHub
   release: $(APPVEYOR_REPO_TAG_NAME)
   description: '$(APPVEYOR_REPO_COMMIT_MESSAGE) - $(APPVEYOR_REPO_BRANCH)'
@@ -60,4 +65,4 @@ deploy:
   force_update: true
   on:
     platform: x86
-    appveyor_repo_tag: false
+    APPVEYOR_REPO_TAG: false
