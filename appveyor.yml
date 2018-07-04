@@ -4,6 +4,7 @@ max_jobs: 15
 image:
 - Visual Studio 2017
 - Visual Studio 2017 Preview
+- Ubuntu
 matrix:
   allow_failures:
     - platform: x86
