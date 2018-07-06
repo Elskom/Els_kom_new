@@ -1,14 +1,11 @@
 version: 1.4.9.8a{build}
 # skip_branch_with_pr: true
 max_jobs: 15
-matrix:
-  include:
-    - platform: x86
-      configuration: Release
-      image: Visual Studio 2017
-    - platform: x86
-      configuration: Release
-      image: Visual Studio 2017 Preview
+image:
+- Visual Studio 2017
+- Visual Studio 2017 Preview
+configuration: Release
+platform: x86
 before_build:
 - cmd: >-
     cd externals
