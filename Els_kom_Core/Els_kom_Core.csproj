@@ -44,6 +44,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AssemblyExtensions.cs" />
     <Compile Include="Classes\BlowFish.cs" />
     <Compile Include="Classes\EntryVer.cs" />
     <Compile Include="Classes\ExecutionManager.cs" />
