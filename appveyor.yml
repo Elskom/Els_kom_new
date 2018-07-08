@@ -35,7 +35,7 @@ after_build:
 - cmd: >-
     cd bin/x86/Release/
 
-    echo "%~dp0"
+    echo %CD%
 
     IF EXIST "Els_kom_new.zip" (
 
