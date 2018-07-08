@@ -12,7 +12,40 @@ namespace Els_kom_Core.Classes
             // check if the assembly is in the zip file.
             // If it is, get it’s bytes then load it.
             // If not throw an exception.
-            return null;
+            bool found = false;
+            byte[] asmbytes = null;
+            byte[] pdbbytes = null;
+            string pdbFileName = AssemblyName.Replace("dll", "pdb");
+            System.IO.Compression.ZipArchive zipFile = System.IO.Compression.ZipFile.OpenRead(ZipFileName);
+            foreach (ZipArchiveEntry entry in zipFile.Entries)
+            {
+                if (entry.FullName.Equals(AssemblyName))
+                {
+                    found = true;
+                    System.IO.Stream strm = entry.Open();
+                    System.IO.MemoryStream ms = new System.IO.MemoryStream();
+                    strm.CopyTo(ms);
+                    asmbytes = ms.ToArray();
+                    ms.Dispose();
+                    strm.Dispose();
+                }
+                else if (entry.FullName.Equals(pdbFileName))
+                {
+                    System.IO.Stream strm = entry.Open();
+                    System.IO.MemoryStream ms = new System.IO.MemoryStream();
+                    strm.CopyTo(ms);
+                    pdbbytes = ms.ToArray();
+                    ms.Dispose();
+                    strm.Dispose();
+                }
+            }
+            zipFile.Dispose();
+            if (!found)
+            {
+                throw new System.Exception(
+                    "Assembly specified to load in ZipFile not found.");
+            }
+            return System.Reflection.Assembly.Load(asmbyes, pdbbytes);
         }
     }
 }
