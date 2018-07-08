@@ -45,7 +45,7 @@ namespace Els_kom_Core.Classes
                 throw new System.Exception(
                     "Assembly specified to load in ZipFile not found.");
             }
-            return System.Reflection.Assembly.Load(asmbyes, pdbbytes);
+            return System.Reflection.Assembly.Load(asmbytes, pdbbytes);
         }
     }
 }
