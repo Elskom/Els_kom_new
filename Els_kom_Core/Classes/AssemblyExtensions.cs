@@ -17,7 +17,7 @@ namespace Els_kom_Core.Classes
             byte[] pdbbytes = null;
             string pdbFileName = AssemblyName.Replace("dll", "pdb");
             System.IO.Compression.ZipArchive zipFile = System.IO.Compression.ZipFile.OpenRead(ZipFileName);
-            foreach (ZipArchiveEntry entry in zipFile.Entries)
+            foreach (System.IO.Compression.ZipArchiveEntry entry in zipFile.Entries)
             {
                 if (entry.FullName.Equals(AssemblyName))
                 {
