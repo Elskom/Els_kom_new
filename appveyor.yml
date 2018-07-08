@@ -31,6 +31,26 @@ build:
   project: PCbuild\pcbuild.sln
   parallel: true
   verbosity: minimal
+after_build:
+- cmd: >-
+    cd bin/x86/Release/
+
+    IF EXIST "Els_kom_new.zip" (
+
+    del "Els_kom_new.zip"
+
+    )
+
+    IF EXIST "Symbols.zip" (
+
+    del "Symbols.zip"
+    )
+
+    "Els_kom" -p Els_kom_new.zip
+
+    "Els_kom" -d Symbols.zip
+
+    cd ../../..
 test: off
 artifacts:
 - path: bin/$(platform)/$(configuration)/*.zip
