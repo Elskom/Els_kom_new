@@ -10,43 +10,43 @@ cache:
 - externals/newsmake
 before_build:
 - ps: >-
-    cd externals
+    Set-Location -Path externals
 
-    $env:nsmkpth = $env:CD + "\newsmake\"
+    $env:nsmkpth = Get-Location + "\newsmake\"
 
     if(!(Test-Path -Path $env:nsmkpth)) {
 
     git clone -q https://github.com/Elskom/newsmake.git
 
-    cd newsmake/build
+    Set-Location -Path newsmake/build
 
     cmake ..
 
-    cd ../..
+    Set-Location -Path ../..
 
     } else {
 
-    cd newsmake
+    Set-Location -Path newsmake
 
     git pull -q
 
-    cd ..
+    Set-Location -Path ..
 
     }
 
-    cd newsmake/build
+    Set-Location -Path newsmake/build
 
     msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
 
-    cd ../../
+    Set-Location -Path ../../
 
     git clone -q https://github.com/Elskom/ZLIB.NET.git --branch patches
 
-    cd ../Misc/NEWS
+    Set-Location -Path ../Misc/NEWS
 
     "../../externals/newsmake/build/Release/newsmake"
 
-    cd ../..
+    Set-Location -Path ../..
 build:
   project: PCbuild\pcbuild.sln
   parallel: true
