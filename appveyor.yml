@@ -18,6 +18,12 @@ before_build:
 
     git clone -q https://github.com/Elskom/newsmake.git
 
+    cd newsmake/build
+
+    cmake ..
+
+    cd ../..
+
     } else {
 
     cd newsmake
@@ -29,8 +35,6 @@ before_build:
     }
 
     cd newsmake/build
-
-    cmake ..
 
     msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
 
