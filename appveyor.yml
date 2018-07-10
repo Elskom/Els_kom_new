@@ -12,7 +12,7 @@ before_build:
 - cmd: >-
     cd externals
 
-    IF NOT EXIST "%CD%\newsmake" (
+    IF NOT EXIST "%CD%\newsmake\" (
 
     git clone https://github.com/Elskom/newsmake.git
 
