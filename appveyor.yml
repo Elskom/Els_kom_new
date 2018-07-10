@@ -9,24 +9,24 @@ platform: x86
 cache:
 - externals/newsmake -> externals/newsmake/*.*
 before_build:
-- cmd: >-
+- ps: >-
     cd externals
 
-    echo "%CD%\newsmake\"
+    $env:nsmkpth = $env:CD + "\newsmake\"
 
-    IF NOT EXIST "%CD%\newsmake\" (
+    if(!(Test-Path -Path $env:nsmkpth) {
 
-    git clone https://github.com/Elskom/newsmake.git
+    git clone -q https://github.com/Elskom/newsmake.git
 
-    ) ELSE (
+    } else {
 
     cd newsmake
 
-    git pull
+    git pull -q
 
     cd ..
 
-    )
+    }
 
     cd newsmake/build
 
@@ -36,7 +36,7 @@ before_build:
 
     cd ../../
 
-    git clone https://github.com/Elskom/ZLIB.NET.git --branch patches
+    git clone -q https://github.com/Elskom/ZLIB.NET.git --branch patches
 
     cd ../Misc/NEWS
 
