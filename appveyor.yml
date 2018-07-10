@@ -7,7 +7,7 @@ image:
 configuration: Release
 platform: x86
 before_build:
-- cmd: >-
+- ps: >-
     cd externals
 
     git clone https://github.com/Elskom/newsmake.git
@@ -32,12 +32,12 @@ build:
   parallel: true
   verbosity: minimal
 after_build:
-- cmd: >-
+- ps: >-
     cd bin/x86/Release/
 
-    "Els_kom" -p "%CD%\Els_kom_new.zip"
+    "Els_kom" -p ./Els_kom_new.zip
 
-    "Els_kom" -d "%CD%\Symbols.zip"
+    "Els_kom" -d ./Symbols.zip
 
     cd ../../..
 test: off
