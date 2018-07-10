@@ -35,6 +35,8 @@ after_build:
 - cmd: >-
     cd bin/x86/Release/
 
+    echo "%CD%Els_kom_new.zip"
+
     IF EXIST "%CD%Els_kom_new.zip" (
 
     del "%CD%Els_kom_new.zip"
