@@ -35,17 +35,17 @@ after_build:
 - cmd: >-
     cd bin/x86/Release/
 
-    echo "%CD%/Els_kom_new.zip"
+    echo "%CD%\Els_kom_new.zip"
 
-    IF EXIST "%CD%/Els_kom_new.zip" (
+    IF EXIST "%CD%\Els_kom_new.zip" (
 
-    del "%CD%/Els_kom_new.zip"
+    del "%CD%\Els_kom_new.zip"
 
     )
 
-    IF EXIST "%CD%/Symbols.zip" (
+    IF EXIST "%CD%\Symbols.zip" (
 
-    del "%CD%/Symbols.zip"
+    del "%CD%\Symbols.zip"
     )
 
     "Els_kom" -p %CD%Els_kom_new.zip
