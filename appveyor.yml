@@ -6,11 +6,17 @@ image:
 - Visual Studio 2017 Preview
 configuration: Release
 platform: x86
+cache:
+- externals/newsmake -> externals/newsmake/*.*
 before_build:
 - cmd: >-
     cd externals
 
+    IF EXIST ".\newsmake" (
+
     git clone https://github.com/Elskom/newsmake.git
+
+    )
 
     cd newsmake/build
 
@@ -45,7 +51,14 @@ artifacts:
 - path: bin/$(platform)/$(configuration)/*.zip
   name: myartifact
 before_deploy:
-- ps: IF ($env:APPVEYOR_REPO_TAG -eq "false") {$env:APPVEYOR_REPO_TAG_NAME = "v" + $env:APPVEYOR_BUILD_VERSION}
+- ps: >-
+    IF ($env:APPVEYOR_REPO_TAG -eq "false") {
+
+    $env:APPVEYOR_REPO_TAG_NAME = "v" + $env:APPVEYOR_BUILD_VERSION
+
+    }
+
+    $env:APPVEYOR_CACHE_ENTRY_ZIP_ARGS = "-t7z -m0=lzma -mx=9"
 deploy:
 - provider: GitHub
   release: $(APPVEYOR_REPO_TAG_NAME)
