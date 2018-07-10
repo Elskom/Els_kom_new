@@ -7,7 +7,7 @@ image:
 configuration: Release
 platform: x86
 before_build:
-- ps: >-
+- cmd: >-
     cd externals
 
     git clone https://github.com/Elskom/newsmake.git
@@ -32,7 +32,7 @@ build:
   parallel: true
   verbosity: minimal
 after_build:
-- ps: >-
+- cmd: >-
     cd bin/x86/Release/
 
     "Els_kom" -p ./Els_kom_new.zip
