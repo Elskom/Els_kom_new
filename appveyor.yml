@@ -7,7 +7,7 @@ image:
 configuration: Release
 platform: x86
 cache:
-- externals/newsmake -> externals/newsmake/*.*
+- externals/newsmake
 before_build:
 - ps: >-
     cd externals
