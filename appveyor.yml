@@ -12,7 +12,7 @@ before_build:
 - ps: >-
     Set-Location -Path externals
 
-    $env:nsmkpth = Get-Location + "\newsmake\"
+    $env:nsmkpth = [environment]::CurrentDirectory + "\newsmake\"
 
     if(!(Test-Path -Path $env:nsmkpth)) {
 
