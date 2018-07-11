@@ -32,6 +32,10 @@ internal static class Els_kom_Main
             if (args[0].Equals("-p"))
             {
                 System.Console.WriteLine("Writing build files to " + outfilename + ".");
+                if (System.IO.File.Exists(args[1])
+                {
+                    System.IO.File.Delete(args[1]);
+                }
                 System.IO.Compression.ZipArchive zipFile = System.IO.Compression.ZipFile.Open(args[1], System.IO.Compression.ZipArchiveMode.Update);
                 System.IO.DirectoryInfo di1 = new System.IO.DirectoryInfo(System.IO.Directory.GetCurrentDirectory());
                 foreach (var fi1 in di1.GetFiles("*.exe"))
@@ -85,6 +89,10 @@ internal static class Els_kom_Main
             else if (args[0].Equals("-d"))
             {
                 System.Console.WriteLine("Writing debug symbol files to " + outfilename + ".");
+                if (System.IO.File.Exists(args[1])
+                {
+                    System.IO.File.Delete(args[1]);
+                }
                 System.IO.Compression.ZipArchive zipFile = System.IO.Compression.ZipFile.Open(args[1], System.IO.Compression.ZipArchiveMode.Update);
                 System.IO.DirectoryInfo di1 = new System.IO.DirectoryInfo(System.IO.Directory.GetCurrentDirectory());
                 foreach (var fi1 in di1.GetFiles("*.pdb"))
