@@ -2,7 +2,6 @@
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
-#define PLUGINS
 
 #if KOMV2
 namespace komv2_plugin
