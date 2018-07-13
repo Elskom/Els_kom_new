@@ -2,7 +2,6 @@
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
-#define PLUGINS
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
