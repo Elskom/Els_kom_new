@@ -2,6 +2,7 @@
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
+#define PLUGINS
 
 namespace callbacktest_plugin
 {
