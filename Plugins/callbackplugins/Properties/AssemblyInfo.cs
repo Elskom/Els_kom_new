@@ -9,13 +9,6 @@
 #if CLBTEST
 [assembly: System.Reflection.AssemblyTitle("Test Mods callback test Plugin for Els_kom.")]
 #endif
-[assembly: System.Reflection.AssemblyDescription("")]
-[assembly: System.Reflection.AssemblyConfiguration("")]
-[assembly: System.Reflection.AssemblyCompany("Els_kom org.")]
-[assembly: System.Reflection.AssemblyProduct("")]
-[assembly: System.Reflection.AssemblyCopyright("Copyright © 2018")]
-[assembly: System.Reflection.AssemblyTrademark("")]
-[assembly: System.Reflection.AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -34,4 +27,3 @@
 //
 [assembly: System.Reflection.AssemblyVersion("1.0.0.0")]
 [assembly: System.Reflection.AssemblyFileVersion("1.0.0.0")]
-[assembly: System.Resources.NeutralResourcesLanguage("en-US")]
