@@ -13,13 +13,6 @@
 #elif KOMV4
 [assembly: System.Reflection.AssemblyTitle("KOM V4 Plugin for Els_kom.")]
 #endif
-[assembly: System.Reflection.AssemblyDescription("")]
-[assembly: System.Reflection.AssemblyConfiguration("")]
-[assembly: System.Reflection.AssemblyCompany("Els_kom org.")]
-[assembly: System.Reflection.AssemblyProduct("")]
-[assembly: System.Reflection.AssemblyCopyright("Copyright © 2014-2018")]
-[assembly: System.Reflection.AssemblyTrademark("")]
-[assembly: System.Reflection.AssemblyCulture("")]
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
 // COM, set the ComVisible attribute to true on that type.
