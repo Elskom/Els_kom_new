@@ -22,6 +22,7 @@ With this file it requires Visual Studio 2017 at least.
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <LangVersion>latest</LangVersion>
     <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>PLUGINS</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
