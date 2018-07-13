@@ -4,7 +4,9 @@
 // license: MIT, see LICENSE for more details.
 
 // Shared attrubutes.
+#if !ELS_KOM_CORE_BUILD
 [assembly: System.Reflection.AssemblyDescription("")]
+#endif
 [assembly: System.Reflection.AssemblyConfiguration("")]
 [assembly: System.Reflection.AssemblyCompany("Els_kom org.")]
 [assembly: System.Reflection.AssemblyProduct("")]
