@@ -12,7 +12,7 @@
 [assembly: System.Reflection.AssemblyProduct("")]
 [assembly: System.Reflection.AssemblyCopyright("Copyright © 2014-2018")]
 [assembly: System.Reflection.AssemblyTrademark("")]
-[assembly: System.Reflection.AssemblyCulture("en-US")]
+[assembly: System.Reflection.AssemblyCulture("")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -25,7 +25,7 @@
 // by using the '*' as shown below:
 // <Assembly: AssemblyVersion("1.0.*")>
 
-#if ! PLUGINS
+#if !PLUGINS
 [assembly: System.Reflection.AssemblyVersion("1.4.9.8")]
 [assembly: System.Reflection.AssemblyFileVersion("1.4.9.8")]
 #endif
