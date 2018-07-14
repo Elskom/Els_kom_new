@@ -53,6 +53,8 @@ build:
   verbosity: minimal
 after_build:
 - cmd: >-
+    msbuild Plugins\DefaultPlugins.sln /m /verbosity:minimal
+
     cd bin/x86/Release/
 
     "Els_kom" -p ./Els_kom_new.zip
