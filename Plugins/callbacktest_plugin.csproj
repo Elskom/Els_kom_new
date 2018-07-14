@@ -47,7 +47,7 @@
     </Compile>
     <Compile Include="callbackplugins\Callbacktest_plugin.cs" />
     <Compile Include="callbackplugins\Properties\AssemblyInfo.cs" />
-    <Compile Include="..\PCbuild\SharedAssemblyInfo.cs">
+    <Compile Include="SharedAssemblyInfo.cs">
       <Link>callbackplugins\Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
   </ItemGroup>
