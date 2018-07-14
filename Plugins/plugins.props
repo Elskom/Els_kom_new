@@ -15,7 +15,7 @@ With this file it requires Visual Studio 2017 at least.
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\x86\Release\plugins\</OutputPath>
+    <OutputPath>..\bin\$(Platform)\$(Configuration)\plugins\</OutputPath>
     <ErrorReport>none</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
