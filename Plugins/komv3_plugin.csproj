@@ -27,7 +27,7 @@
     <Compile Include="komplugins\KOMStreamExtension.cs" />
     <Compile Include="komplugins\Komv3_plugin.cs" />
     <Compile Include="komplugins\Properties\AssemblyInfo.cs" />
-    <Compile Include="..\PCbuild\SharedAssemblyInfo.cs">
+    <Compile Include="SharedAssemblyInfo.cs">
       <Link>komplugins\Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
   </ItemGroup>
