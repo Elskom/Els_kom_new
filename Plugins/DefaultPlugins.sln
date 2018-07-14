@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Els_kom", "..\Els_kom\Els_kom.csproj", "{0116DE95-C3D6-487A-9133-5D26B6CA09FB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Els_kom_Core", "..\Els_kom_Core\Els_kom_Core.csproj", "{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "komv2_plugin", "..\Plugins\komv2_plugin.csproj", "{F65ED5F5-0986-4EC1-909A-BA7D20EEBC61}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "komv3_plugin", "..\Plugins\komv3_plugin.csproj", "{6C0953F1-3ED9-4FB8-9C3B-2DC6A0A38649}"
@@ -20,10 +16,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0116DE95-C3D6-487A-9133-5D26B6CA09FB}.Release|x86.ActiveCfg = Release|x86
-		{0116DE95-C3D6-487A-9133-5D26B6CA09FB}.Release|x86.Build.0 = Release|x86
-		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|x86.ActiveCfg = Release|x86
-		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|x86.Build.0 = Release|x86
 		{F65ED5F5-0986-4EC1-909A-BA7D20EEBC61}.Release|x86.ActiveCfg = Release|x86
 		{F65ED5F5-0986-4EC1-909A-BA7D20EEBC61}.Release|x86.Build.0 = Release|x86
 		{6C0953F1-3ED9-4FB8-9C3B-2DC6A0A38649}.Release|x86.ActiveCfg = Release|x86
