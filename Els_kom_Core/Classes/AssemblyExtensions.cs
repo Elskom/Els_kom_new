@@ -46,7 +46,8 @@ namespace Els_kom_Core.Classes
                     "Assembly specified to load in ZipFile not found.");
             }
             SettingsFile.Settingsxml.ReopenFile();
-            bool LoadPDB = (bool)int.TryParse(SettingsFile.Settingsxml.Read("LoadPDB"));
+            int.TryParse(SettingsFile.Settingsxml.Read("LoadPDB"), out int tempint);
+            bool LoadPDB = (bool)tempint;
             return LoadPDB ? System.Reflection.Assembly.Load(asmbytes, pdbbytes) : System.Reflection.Assembly.Load(asmbytes);
         }
     }
