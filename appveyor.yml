@@ -53,7 +53,13 @@ build:
   verbosity: minimal
 after_build:
 - cmd: >-
-    msbuild Plugins\DefaultPlugins.sln /m /verbosity:minimal
+    cd Plugins
+
+    git clone -q https://github.com/Elskom/Els_kom_plugins.git
+
+    cd ..
+
+    msbuild Plugins\Els_kom_plugins\DefaultPlugins.sln /m /verbosity:minimal
 
     cd bin/x86/Release/
 
