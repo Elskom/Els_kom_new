@@ -32,13 +32,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Els_kom_Core\Els_kom_Core.csproj">
-      <Project>{8588ae1c-cd41-4a96-8c9a-cd48b311bb6e}</Project>
-      <Name>Els_kom_Core</Name>
+    <Reference Include="Els_kom.Core">
+      <HintPath>..\bin\$(Platform)\$(Configuration)\Els_kom.Core.dll</HintPath>
       <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
