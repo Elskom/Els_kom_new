@@ -25,8 +25,6 @@
 // by using the '*' as shown below:
 // <Assembly: AssemblyVersion("1.0.*")>
 
-#if !PLUGINS
 [assembly: System.Reflection.AssemblyVersion("1.4.9.8")]
 [assembly: System.Reflection.AssemblyFileVersion("1.4.9.8")]
-#endif
 [assembly: System.Resources.NeutralResourcesLanguage("en-US")]
