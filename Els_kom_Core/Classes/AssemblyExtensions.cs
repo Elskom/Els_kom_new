@@ -11,8 +11,10 @@ namespace Els_kom_Core.Classes
         {
             // check if the assembly is in the zip file.
             // If it is, get it’s bytes then load it.
-            // If not throw an exception.
+            // If not throw an exception. Also throw
+            // an exception if the pdb file is not found.
             bool found = false;
+            bool pdbfound = false;
             byte[] asmbytes = null;
             byte[] pdbbytes = null;
             string pdbFileName = AssemblyName.Replace("dll", "pdb");
@@ -31,6 +33,7 @@ namespace Els_kom_Core.Classes
                 }
                 else if (entry.FullName.Equals(pdbFileName))
                 {
+                    pdbfound = true;
                     System.IO.Stream strm = entry.Open();
                     System.IO.MemoryStream ms = new System.IO.MemoryStream();
                     strm.CopyTo(ms);
@@ -45,9 +48,17 @@ namespace Els_kom_Core.Classes
                 throw new System.Exception(
                     "Assembly specified to load in ZipFile not found.");
             }
+            if (!pdbfound)
+            {
+                throw new System.Exception(
+                    "pdb to Assembly specified to load in ZipFile not found.");
+            }
             SettingsFile.Settingsxml.ReopenFile();
             int.TryParse(SettingsFile.Settingsxml.Read("LoadPDB"), out int tempint);
-            bool LoadPDB = (bool)tempint;
+            // always load pdb when debugging.
+            // PDB should be automatically downloaded to zip file always
+            // and really *should* always be present.
+            bool LoadPDB = System.Convert.ToBoolean(tempint) ? System.Convert.ToBoolean(tempint) : System.Diagnostics.Debugger.IsAttached;
             return LoadPDB ? System.Reflection.Assembly.Load(asmbytes, pdbbytes) : System.Reflection.Assembly.Load(asmbytes);
         }
     }
