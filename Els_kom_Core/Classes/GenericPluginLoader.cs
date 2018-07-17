@@ -44,7 +44,7 @@ namespace Els_kom_Core.Classes
                 }
                 else
                 {
-                    System.IO.Compression.ZipArchive zipFile = System.IO.Compression.ZipFile.OpenRead(ZipFileName);
+                    System.IO.Compression.ZipArchive zipFile = System.IO.Compression.ZipFile.OpenRead(path);
                     foreach (var entry in zipFile.Entries)
                     {
                         // just lookup the dlls here. The LoadFromZip method will load the pdb’s if they are deemed needed.
