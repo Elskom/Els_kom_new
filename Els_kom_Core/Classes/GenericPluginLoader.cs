@@ -20,15 +20,41 @@ namespace Els_kom_Core.Classes
         internal static System.Collections.Generic.ICollection<T> LoadPlugins(string path)
         {
             string[] dllFileNames = null;
-            if(System.IO.Directory.Exists(path))
+            if (System.IO.Directory.Exists(path))
             {
                 dllFileNames = System.IO.Directory.GetFiles(path, "*.dll");
-                System.Collections.Generic.ICollection<System.Reflection.Assembly> assemblies = new System.Collections.Generic.List<System.Reflection.Assembly>(dllFileNames.Length);
-                foreach(string dllFile in dllFileNames)
+            }
+            else
+            {
+                // try to load from a zip instead then.
+                path += ".zip";
+            }
+            // handle when path points to a zip file.
+            if (System.IO.Directory.Exists(path) || System.IO.File.Exists(path))
+            {
+                System.Collections.Generic.ICollection<System.Reflection.Assembly> assemblies = new System.Collections.Generic.List<System.Reflection.Assembly>();
+                if (dllFileNames != null)
                 {
-                    System.Reflection.AssemblyName an = System.Reflection.AssemblyName.GetAssemblyName(dllFile);
-                    System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(an);
-                    assemblies.Add(assembly);
+                    foreach(string dllFile in dllFileNames)
+                    {
+                        System.Reflection.AssemblyName an = System.Reflection.AssemblyName.GetAssemblyName(dllFile);
+                        System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(an);
+                        assemblies.Add(assembly);
+                    }
+                }
+                else
+                {
+                    System.IO.Compression.ZipArchive zipFile = System.IO.Compression.ZipFile.OpenRead(ZipFileName);
+                    foreach (var entry in zipFile.Entries)
+                    {
+                        // just lookup the dlls here. The LoadFromZip method will load the pdb’s if they are deemed needed.
+                        if (entry.FullName.EndsWith(".dll"))
+                        {
+                            System.Reflection.Assembly assembly = AssemblyExtensions.LoadFromZip(path, entry.FullName);
+                            assemblies.Add(assembly);
+                        }
+                    }
+                    zipFile.Dispose();
                 }
                 System.Type pluginType = typeof(T);
                 System.Collections.Generic.ICollection<System.Type> pluginTypes = new System.Collections.Generic.List<System.Type>();
