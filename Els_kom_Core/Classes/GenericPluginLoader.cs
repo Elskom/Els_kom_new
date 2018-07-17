@@ -50,7 +50,9 @@ namespace Els_kom_Core.Classes
                         // just lookup the dlls here. The LoadFromZip method will load the pdb’s if they are deemed needed.
                         if (entry.FullName.EndsWith(".dll"))
                         {
-                            System.Reflection.Assembly assembly = AssemblyExtensions.LoadFromZip(path, entry.FullName);
+                            SettingsFile.Settingsxml.ReopenFile();
+                            int.TryParse(SettingsFile.Settingsxml.Read("LoadPDB"), out int tempint);
+                            System.Reflection.Assembly assembly = AssemblyExtensions.LoadFromZip(path, entry.FullName, System.Convert.ToBoolean(tempint));
                             assemblies.Add(assembly);
                         }
                     }

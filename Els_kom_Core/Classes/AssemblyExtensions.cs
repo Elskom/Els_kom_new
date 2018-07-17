@@ -7,7 +7,7 @@ namespace Els_kom_Core.Classes
 {
     internal static class AssemblyExtensions
     {
-        internal static System.Reflection.Assembly LoadFromZip(string ZipFileName, string AssemblyName)
+        internal static System.Reflection.Assembly LoadFromZip(string ZipFileName, string AssemblyName, bool LoadPDBFile)
         {
             // check if the assembly is in the zip file.
             // If it is, get it’s bytes then load it.
@@ -53,12 +53,10 @@ namespace Els_kom_Core.Classes
                 throw new System.Exception(
                     "pdb to Assembly specified to load in ZipFile not found.");
             }
-            SettingsFile.Settingsxml.ReopenFile();
-            int.TryParse(SettingsFile.Settingsxml.Read("LoadPDB"), out int tempint);
             // always load pdb when debugging.
             // PDB should be automatically downloaded to zip file always
             // and really *should* always be present.
-            bool LoadPDB = System.Convert.ToBoolean(tempint) ? System.Convert.ToBoolean(tempint) : System.Diagnostics.Debugger.IsAttached;
+            bool LoadPDB = LoadPDBFile ? LoadPDBFile : System.Diagnostics.Debugger.IsAttached;
             return LoadPDB ? System.Reflection.Assembly.Load(asmbytes, pdbbytes) : System.Reflection.Assembly.Load(asmbytes);
         }
     }
