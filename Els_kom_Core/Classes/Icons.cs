@@ -24,7 +24,8 @@ namespace Els_kom_Core.Classes
                 }
                 else
                 {
-                    // load from elsewhere like from a resx file.
+                    // load from elsewhere like from a resx file
+                    // or embedded entry application resources.
                     return null;
                 }
             }
@@ -45,7 +46,8 @@ namespace Els_kom_Core.Classes
                 }
                 else
                 {
-                    // load from elsewhere like from a resx file.
+                    // load from elsewhere like from a resx file
+                    // or embedded entry application resources.
                     return null;
                 }
             }
