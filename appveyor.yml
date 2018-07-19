@@ -5,8 +5,7 @@ image:
 - Visual Studio 2017 Preview
 configuration: Release
 platform: x86
-cache:
-- externals/newsmake
+cache: externals/newsmake
 before_build:
 - ps: >-
     Set-Location -Path externals
@@ -88,6 +87,7 @@ deploy:
     secure: oHqKZpK6huL4v9LT6ifeFb/MA3vI1NRlN66jP+qbI7DiGhV0ZF3L7xmTeJR+OEFG
   repository: Elskom/Els_kom_builds
   artifact: myartifact
+  prerelease: false
   force_update: true
   on:
     platform: x86
