@@ -19,3 +19,9 @@ Els_kom/Resources/els_kom.resx
 *.diff
 externals
 !externals/README.md
+Plugins
+!Plugins/README.md
+# build profiling files.
+*.diagsession
+# zip files.
+*.zip

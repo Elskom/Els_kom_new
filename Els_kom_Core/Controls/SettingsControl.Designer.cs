@@ -33,6 +33,7 @@ namespace Els_kom_Core.Controls
         /// </summary>
         private void InitializeComponent()
         {
+            // TODO: Add "Load Debug Symbols with plugins." setting on General tab.
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("General");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Plugins");
             this.Panel1 = new System.Windows.Forms.Panel();

@@ -1,40 +1,87 @@
 version: 1.4.9.8a{build}
-skip_branch_with_pr: true
+branches:
+  except:
+  - next
 max_jobs: 15
-image: Visual Studio 2017
+image:
+- Visual Studio 2017
+- Visual Studio 2017 Preview
 configuration: Release
 platform: x86
+cache: externals/newsmake
 before_build:
-- cmd: >-
-    cd externals
+- ps: >-
+    Set-Location -Path externals
 
-    git clone https://github.com/Elskom/newsmake.git
+    $env:nsmkpth = Join-Path (Get-Location) newsmake
 
-    cd newsmake/build
+    if(!(Test-Path -Path $env:nsmkpth)) {
+
+    git clone -q https://github.com/Elskom/newsmake.git
+
+    Set-Location -Path newsmake/build
 
     cmake ..
 
+    Set-Location -Path ../..
+
+    } else {
+
+    Set-Location -Path newsmake
+
+    git pull -q
+
+    Set-Location -Path ..
+
+    }
+
+    Set-Location -Path newsmake/build
+
     msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
 
-    cd ../../
+    Set-Location -Path ../../
 
-    git clone https://github.com/Elskom/ZLIB.NET.git --branch patches
+    git clone -q https://github.com/Elskom/ZLIB.NET.git --branch patches
 
-    cd ../Misc/NEWS
+    Set-Location -Path ../Misc/NEWS
 
     "../../externals/newsmake/build/Release/newsmake"
 
-    cd ../..
+    Set-Location -Path ../..
 build:
   project: PCbuild\pcbuild.sln
   parallel: true
   verbosity: minimal
+after_build:
+- cmd: >-
+    cd Plugins
+
+    git clone -q https://github.com/Elskom/Els_kom_plugins.git
+
+    cd ..
+
+    msbuild Plugins\Els_kom_plugins\DefaultPlugins.sln /m /verbosity:minimal
+
+    cd bin/x86/Release/
+
+    "Els_kom" -p ./Els_kom_new.zip
+
+    "Els_kom" -d ./Symbols.zip
+
+    cd ../../..
 test: off
 artifacts:
 - path: bin/$(platform)/$(configuration)/*.zip
   name: myartifact
 before_deploy:
-- ps: IF ($env:APPVEYOR_REPO_TAG -eq "false") {$env:APPVEYOR_REPO_TAG_NAME = $env:APPVEYOR_BUILD_VERSION}
+- ps: >-
+    IF ($env:APPVEYOR_REPO_TAG -eq "false") {
+
+    $env:APPVEYOR_REPO_TAG_NAME = "v" + $env:APPVEYOR_BUILD_VERSION
+
+    }
+
+    $env:APPVEYOR_CACHE_ENTRY_ZIP_ARGS = "-t7z -m0=lzma -mx=9"
 deploy:
 - provider: GitHub
   release: $(APPVEYOR_REPO_TAG_NAME)
@@ -43,6 +90,20 @@ deploy:
     secure: oHqKZpK6huL4v9LT6ifeFb/MA3vI1NRlN66jP+qbI7DiGhV0ZF3L7xmTeJR+OEFG
   repository: Elskom/Els_kom_builds
   artifact: myartifact
+  prerelease: false
   force_update: true
   on:
     platform: x86
+    APPVEYOR_REPO_TAG: true
+- provider: GitHub
+  release: $(APPVEYOR_REPO_TAG_NAME)
+  description: '$(APPVEYOR_REPO_COMMIT_MESSAGE) - $(APPVEYOR_REPO_BRANCH)'
+  auth_token:
+    secure: oHqKZpK6huL4v9LT6ifeFb/MA3vI1NRlN66jP+qbI7DiGhV0ZF3L7xmTeJR+OEFG
+  repository: Elskom/Els_kom_builds
+  artifact: myartifact
+  prerelease: true
+  force_update: true
+  on:
+    platform: x86
+    APPVEYOR_REPO_TAG: false

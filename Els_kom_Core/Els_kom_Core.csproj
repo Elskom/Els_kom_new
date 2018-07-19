@@ -9,7 +9,7 @@
     <AssemblyName>Els_kom.Core</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <NoWin32Manifest>False</NoWin32Manifest>
     <SignAssembly>True</SignAssembly>
@@ -29,6 +29,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -44,6 +46,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AssemblyExtensions.cs" />
     <Compile Include="Classes\BlowFish.cs" />
     <Compile Include="Classes\EntryVer.cs" />
     <Compile Include="Classes\ExecutionManager.cs" />
@@ -132,6 +135,9 @@
     <Compile Include="interfaces\IEncryptionPlugin.cs" />
     <Compile Include="interfaces\IKomPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\PCbuild\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="gitbuildinfo" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">

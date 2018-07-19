@@ -93,13 +93,20 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Writes the KOM File entry to file.
         /// </summary>
-        public void WriteOutput(System.IO.BinaryReader reader, string out_path, EntryVer entry, int version)
+        public void WriteOutput(System.IO.BinaryReader reader, string out_path, EntryVer entry, int version, string xmldata)
         {
             if (version > 2)
             {
                 if (!System.IO.Directory.Exists(out_path))
                 {
                     System.IO.Directory.CreateDirectory(out_path);
+                }
+                byte[] xmldatabuffer = System.Text.Encoding.ASCII.GetBytes(xmldata);
+                if (!System.IO.File.Exists(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml"))
+                {
+                    System.IO.FileStream fs = System.IO.File.Create(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml");
+                    fs.Write(xmldatabuffer, 0, xmldatabuffer.Length);
+                    fs.Dispose();
                 }
                 byte[] entrydata = reader.ReadBytes(entry.compressed_size);
                 if (entry.algorithm == 0)
@@ -190,6 +197,89 @@ namespace Els_kom_Core.Classes
         /// </summary>
         public override void Close()
         {
+        }
+
+        internal int GetCRCVersion(string xmldata)
+        {
+            var xml = System.Xml.Linq.XElement.Parse(xmldata);
+            if (xml.Element("File") != null)
+            {
+                // version 3 or 4.
+                foreach (var fileElement in xml.Elements("File"))
+                {
+                    var MappedIDAttribute = fileElement.Attribute("MappedID");
+                    if (MappedIDAttribute != null)
+                    {
+                        return 4;
+                    }
+                    return 3;
+                }
+            }
+            else
+            {
+                return 2;
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// Converts the KOM crc.xml file to the provided version,
+        /// if it is not already that version.
+        /// </summary>
+        public void ConvertCRC(int toVersion, string crcpath)
+        {
+            if (System.IO.File.Exists(crcpath))
+            {
+                int crcversion = GetCRCVersion(System.Text.Encoding.ASCII.GetString(System.IO.File.ReadAllBytes(crcpath)));
+                if (crcversion != toVersion)
+                {
+                    foreach (var plugin in KOMManager.komplugins)
+                    {
+                        if (toVersion == plugin.SupportedKOMVersion)
+                        {
+                            plugin.ConvertCRC(crcversion, crcpath);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the crc.xml file if the folder has new files
+        /// not in the crc.xml, or removes files listed in crc.xml that
+        /// no longer in the folder.
+        /// </summary>
+        public void UpdateCRC(int crcversion, string crcpath, string checkpath)
+        {
+            System.IO.FileInfo crcfile = new System.IO.FileInfo(crcpath);
+            System.IO.DirectoryInfo di1 = new System.IO.DirectoryInfo(checkpath);
+            foreach (var fi1 in di1.GetFiles())
+            {
+                if (!fi1.Name.Equals(crcfile.Name))
+                {
+                    bool found = false;
+                    // lookup the file entry in the crc.xml.
+                    string xmldata = System.Text.Encoding.UTF8.GetString(
+                       System.IO.File.ReadAllBytes(crcpath));
+                    var xml = System.Xml.Linq.XElement.Parse(xmldata);
+                    foreach (var fileElement in xml.Elements("File"))
+                    {
+                        var nameAttribute = fileElement.Attribute("Name");
+                        var name = nameAttribute?.Value ?? "no value";
+                        if (name.Equals(fi1.Name))
+                        {
+                            found = true;
+                        }
+                    }
+                    if (!found)
+                    {
+                        // backup original crc.xml.
+                        // modify crc.xml object.
+                        // save xml object.
+                        // manually compare the 2 files later when debugging.
+                    }
+                }
+            }
         }
 
         /// <summary>

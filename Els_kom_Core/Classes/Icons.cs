@@ -17,7 +17,17 @@ namespace Els_kom_Core.Classes
         {
             get
             {
-                return LoadResources.GetIconResource("#1");
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                    System.Runtime.InteropServices.OSPlatform.Windows))
+                {
+                    return LoadResources.GetIconResource("#1");
+                }
+                else
+                {
+                    // load from elsewhere like from a resx file
+                    // or embedded entry application resources.
+                    return null;
+                }
             }
         }
 
@@ -29,7 +39,17 @@ namespace Els_kom_Core.Classes
         {
             get
             {
-                return LoadResources.GetImageResource("#1", 48, 48);
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                    System.Runtime.InteropServices.OSPlatform.Windows))
+                {
+                    return LoadResources.GetImageResource("#1", 48, 48);
+                }
+                else
+                {
+                    // load from elsewhere like from a resx file
+                    // or embedded entry application resources.
+                    return null;
+                }
             }
         }
     }

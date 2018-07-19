@@ -14,13 +14,26 @@ namespace Els_kom_Core.Classes
         /// Compresses data using the default compression level.
         /// </summary>
         /// <exception cref="Zlib.ZStreamException">Thrown when the stream Errors in any way.</exception>
+        public static void CompressData(byte[] inData, out byte[] outData, out int _adler32) => CompressData(inData, out outData, Zlib.zlibConst.Z_DEFAULT_COMPRESSION, out _adler32);
+
+        /// <summary>
+        /// Compresses data using the default compression level.
+        /// </summary>
+        /// <exception cref="Zlib.ZStreamException">Thrown when the stream Errors in any way.</exception>
         public static void CompressData(byte[] inData, out byte[] outData) => CompressData(inData, out outData, Zlib.zlibConst.Z_DEFAULT_COMPRESSION);
 
         /// <summary>
         /// Compresses data using an specific compression level.
         /// </summary>
         /// <exception cref="Zlib.ZStreamException">Thrown when the stream Errors in any way.</exception>
-        public static void CompressData(byte[] inData, out byte[] outData, int level)
+        // discard returned adler32. The caller does not want it.
+        public static void CompressData(byte[] inData, out byte[] outData, int level) => CompressData(inData, out outData, level, out int _adler32);
+
+        /// <summary>
+        /// Compresses data using an specific compression level.
+        /// </summary>
+        /// <exception cref="Zlib.ZStreamException">Thrown when the stream Errors in any way.</exception>
+        public static void CompressData(byte[] inData, out byte[] outData, int level, out int _adler32)
         {
             System.IO.MemoryStream outMemoryStream = new System.IO.MemoryStream();
             Zlib.ZOutputStream outZStream = new Zlib.ZOutputStream(outMemoryStream, level);
@@ -43,6 +56,7 @@ namespace Els_kom_Core.Classes
                 throw;
             }
             outData = outMemoryStream.ToArray();
+            _adler32 = (int)(outZStream.z.adler & 0xffff);
             outZStream.Dispose();
             inMemoryStream.Dispose();
         }
