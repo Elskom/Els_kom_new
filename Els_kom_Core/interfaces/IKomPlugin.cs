@@ -51,5 +51,12 @@ namespace Els_kom_Core.interfaces
         /// <param name="in_path">The input path to delete.</param>
         /// <param name="folder">Denotes if the input path is an file or folder.</param>
         void Delete(string in_path, bool folder);
+        /// <summary>
+        /// Converts the crc.xml file to the format supported
+        /// by this version of KOM files.
+        /// </summary>
+        /// <param name="crcversion">The current version of crc.xml.</param>
+        /// <param name="crcpath">The path to the crc.xml file to convert (if needed).</param>
+        void ConvertCRC(int crcversion, string crcpath);
     }
 }
