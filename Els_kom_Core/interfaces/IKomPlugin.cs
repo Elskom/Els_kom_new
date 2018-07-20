@@ -58,5 +58,12 @@ namespace Els_kom_Core.interfaces
         /// <param name="crcversion">The current version of crc.xml.</param>
         /// <param name="crcpath">The path to the crc.xml file to convert (if needed).</param>
         void ConvertCRC(int crcversion, string crcpath);
+        /// <summary>
+        /// Updates the crc.xml file to the format supported
+        /// by this version of KOM files.
+        /// </summary>
+        /// <param name="crcpath">The path to the crc.xml file to update (if needed).</param>
+        /// <param name="backuppath">The ath to save the backup crc.xml file to.</param>
+        void UpdateCRC(string crcpath, string backuppath);
     }
 }

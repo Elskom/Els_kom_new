@@ -246,7 +246,7 @@ namespace Els_kom_Core.Classes
 
         /// <summary>
         /// Updates the crc.xml file if the folder has new files
-        /// not in the crc.xml, or removes files listed in crc.xml that
+        /// not in the crc.xml, or removes files listed in crc.xml that are
         /// no longer in the folder.
         /// </summary>
         public void UpdateCRC(int crcversion, string crcpath, string checkpath)
@@ -262,21 +262,31 @@ namespace Els_kom_Core.Classes
                     string xmldata = System.Text.Encoding.UTF8.GetString(
                        System.IO.File.ReadAllBytes(crcpath));
                     var xml = System.Xml.Linq.XElement.Parse(xmldata);
-                    foreach (var fileElement in xml.Elements("File"))
+                    if (crcversion > 2)
                     {
-                        var nameAttribute = fileElement.Attribute("Name");
-                        var name = nameAttribute?.Value ?? "no value";
-                        if (name.Equals(fi1.Name))
+                        foreach (var fileElement in xml.Elements("File"))
                         {
-                            found = true;
+                            var nameAttribute = fileElement.Attribute("Name");
+                            var name = nameAttribute?.Value ?? "no value";
+                            if (name.Equals(fi1.Name))
+                            {
+                                found = true;
+                            }
                         }
+                    }
+                    else
+                    {
+                        // TODO: Iterate through every entry in the kom v2 crc.xml file.
                     }
                     if (!found)
                     {
-                        // backup original crc.xml.
-                        // modify crc.xml object.
-                        // save xml object.
-                        // manually compare the 2 files later when debugging.
+                        foreach (var plugin in KOMManager.komplugins)
+                        {
+                            if (crcversion == plugin.SupportedKOMVersion)
+                            {
+                                plugin.UpdateCRC(crcpath, checkpath);
+                            }
+                        }
                     }
                 }
             }
