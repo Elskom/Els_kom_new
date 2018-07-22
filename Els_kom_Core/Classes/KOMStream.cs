@@ -147,10 +147,19 @@ namespace Els_kom_Core.Classes
                     if (entry.algorithm == 3)
                     {
                         // algorithm 3 code.
+#if VERSION_0x01050000
+                        ZlibHelper.DecompressData(entrydata, out byte[] dec_entrydata);
+                        // Decrypt the data from a decryption plugin.
+#endif
                     }
                     else
                     {
                         // algorithm 2 code.
+#if VERSION_0x01050000
+                        // Decrypt the data from a decryption plugin.
+                        // TODO: Take the decrypted output, then decompress it.
+                        ZlibHelper.DecompressData(entrydata, out byte[] dec_entrydata);
+#endif
                     }
                     // for now until I can decompress this crap.
                     entryfile.Write(entrydata, 0, entry.compressed_size);
