@@ -10,7 +10,9 @@ image:
 - Visual Studio 2017
 - Visual Studio 2017 Preview
 configuration: Release
-platform: x86
+platform:
+- x86
+- x64
 cache: externals/newsmake
 before_build:
 - ps: >-
@@ -67,9 +69,9 @@ after_build:
 
     cd bin/x86/Release/
 
-    "Els_kom" -p "./Els_kom_new-%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
+    "Els_kom" -p "./Els_kom_new.%PLATFORM%.%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
 
-    "Els_kom" -d "./Symbols-%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
+    "Els_kom" -d "./Symbols.%PLATFORM%.%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
 
     cd ../../..
 test: off
