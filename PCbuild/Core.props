@@ -30,8 +30,17 @@ With this file it requires Visual Studio 2017 at least.
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <LangVersion>latest</LangVersion>
-    <OutputPath>..\bin\x86\Release\</OutputPath>
-    <DocumentationFile>..\bin\x86\Release\Els_kom.Core.xml</DocumentationFile>
+    <OutputPath>..\bin\$(Platform)\$(Configuration)\</OutputPath>
+    <DocumentationFile>..\bin\$(Platform)\$(Configuration)\Els_kom.Core.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <LangVersion>latest</LangVersion>
+    <OutputPath>..\bin\$(Platform)\$(Configuration)\</OutputPath>
+    <DocumentationFile>..\bin\$(Platform)\$(Configuration)\Els_kom.Core.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <DebugType>full</DebugType>
