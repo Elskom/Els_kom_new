@@ -28,6 +28,12 @@ With this file it requires Visual Studio 2017 at least.
     <BaseAddress>4194304</BaseAddress>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <BaseAddress>4194304</BaseAddress>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <LangVersion>latest</LangVersion>
     <OutputPath>..\bin\$(Platform)\$(Configuration)\</OutputPath>
