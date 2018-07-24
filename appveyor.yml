@@ -67,9 +67,9 @@ after_build:
 
     cd bin/x86/Release/
 
-    "Els_kom" -p ./Els_kom_new.zip
+    "Els_kom" -p "./Els_kom_new-%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
 
-    "Els_kom" -d ./Symbols.zip
+    "Els_kom" -d "./Symbols-%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
 
     cd ../../..
 test: off
