@@ -51,22 +51,6 @@ before_build:
     "../../externals/newsmake/build/Release/newsmake"
 
     Set-Location -Path ../..
-
-    git checkout -q master
-
-    git reset -q HEAD^ --hard
-
-    git push -q origin -f
-
-    if(!($env:APPVEYOR_PULL_REQUEST_NUMBER -eq "")) {
-
-    git checkout -q $env:APPVEYOR_REPO_COMMIT
-
-    } else {
-
-    git checkout -q $env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT
-
-    }
 build:
   project: PCbuild\pcbuild.sln
   parallel: true
