@@ -26,6 +26,12 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>ELS_KOM_CORE_BUILD</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>ELS_KOM_CORE_BUILD</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
