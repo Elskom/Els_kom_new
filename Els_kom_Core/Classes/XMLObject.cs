@@ -161,7 +161,6 @@ namespace Els_kom_Core.Classes
         ///
         /// If Element does not exist yet it will be created automatically with an empty value.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Thrown if element does not exist yet in the XMLObject.</exception>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
         public string Read(string elementname)
         {
