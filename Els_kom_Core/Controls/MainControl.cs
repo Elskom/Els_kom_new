@@ -270,17 +270,9 @@ namespace Els_kom_Core.Controls
             }
             else
             {
-                if (System.IO.File.Exists(Classes.SettingsFile.Path))
-                {
-                    Classes.SettingsFile.Settingsxml = new Classes.XMLObject(Classes.SettingsFile.Path, "<Settings></Settings>");
-                    ElsDir = Classes.SettingsFile.Settingsxml.Read("ElsDir");
-                    if (ElsDir.Length < 1)
-                    {
-                        Classes.MessageManager.ShowInfo("Welcome to Els_kom." + System.Environment.NewLine + "Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops." + System.Environment.NewLine + "Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!");
-                        ConfigForm?.Invoke(this, new System.EventArgs());
-                    }
-                }
-                else
+                Classes.SettingsFile.Settingsxml = new Classes.XMLObject(Classes.SettingsFile.Path, "<Settings></Settings>");
+                ElsDir = Classes.SettingsFile.Settingsxml.Read("ElsDir");
+                if (ElsDir.Length < 1)
                 {
                     Classes.MessageManager.ShowInfo("Welcome to Els_kom." + System.Environment.NewLine + "Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops." + System.Environment.NewLine + "Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!");
                     ConfigForm?.Invoke(this, new System.EventArgs());
