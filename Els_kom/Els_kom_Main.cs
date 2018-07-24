@@ -16,18 +16,23 @@ internal static class Els_kom_Main
             string outfilename = "";
             if (args[1].StartsWith(".\\"))
             {
-                outfilename = args[1];
+                // Replace spaces with periods.
+                outfilename = args[1].Replace(" ", ".");
+                args[1] = args[1].Replace(" ", ".");
                 args[1] = args[1].Replace(".\\", System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar);
             }
             else if (args[1].StartsWith("./"))
             {
-                outfilename = args[1];
+                // Replace spaces with periods.
+                outfilename = args[1].Replace(" ", ".");
+                args[1] = args[1].Replace(" ", ".");
                 args[1] = args[1].Replace("./", System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar);
             }
             else
             {
-                outfilename = args[1];
-                args[1] = System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + args[1];
+                // Replace spaces with periods.
+                outfilename = args[1].Replace(" ", ".");
+                args[1] = System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + args[1].Replace(" ", ".");
             }
             if (args[0].Equals("-p"))
             {
