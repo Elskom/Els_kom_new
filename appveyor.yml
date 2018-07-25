@@ -15,19 +15,19 @@ platform:
 - x64
 cache: externals/newsmake
 before_build:
-- ps: update-newsmake.ps1
+- ps: ./update-newsmake.ps1
 build:
   project: PCbuild\pcbuild.sln
   parallel: true
   verbosity: minimal
 after_build:
-- cmd: package-release.cmd
+- cmd: ./package-release.cmd
 test: off
 artifacts:
 - path: bin/$(platform)/$(configuration)/*.zip
   name: myartifact
 before_deploy:
-- ps: appveyor-deploy.ps1
+- ps: ./appveyor-deploy.ps1
 deploy:
 - provider: GitHub
   release: $(APPVEYOR_REPO_TAG_NAME)
