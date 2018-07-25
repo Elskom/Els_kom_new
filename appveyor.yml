@@ -115,9 +115,9 @@ after_build:
 
     Set-Location -Path bin/$env:PLATFORM/$env:CONFIGURATION/
 
-    Els_kom -p Els_kom_new.$env:PLATFORM.$env:CONFIGURATION.$env:APPVEYOR_BUILD_WORKER_IMAGE.zip
+    ./Els_kom -p Els_kom_new.$env:PLATFORM.$env:CONFIGURATION.$env:APPVEYOR_BUILD_WORKER_IMAGE.zip
 
-    Els_kom -d Symbols.$env:PLATFORM.$env:CONFIGURATION.$env:APPVEYOR_BUILD_WORKER_IMAGE.zip
+    ./Els_kom -d Symbols.$env:PLATFORM.$env:CONFIGURATION.$env:APPVEYOR_BUILD_WORKER_IMAGE.zip
 
     Set-Location -Path ../../..
 test: off
