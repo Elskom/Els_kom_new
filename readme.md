@@ -26,7 +26,7 @@ cd ../Misc/NEWS
 cd ../..
 ```
 
-To build the changelog (optional but recommended). Make sure that msbuild from your VS2017 install is in your global path environment variable first before these commands.
+To build the changelog (optional but recommended). Make sure that msbuild from your VS2017 install is in your global path environment variable first before these commands. If newsmake is already cloned before this command you could run ``update-newsmake.ps1`` this will pull changes and automatically build them if needed.
 
 3. Open the ``PCbuild/pcbuild.sln`` solution file in Visual Studio 2017 and then select ``Release``, ``x86`` or ``x64`` and hit ``Build Solution``. Alternatively you can use the same msbuild command above but change ``Win32`` to ``x86`` or ``x64``, and ``newsmake.sln`` to ``PCbuild/pcbuild.sln``.
 4. Get a cup of Tea. Build might take a bit.
