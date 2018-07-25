@@ -104,22 +104,22 @@ build:
   parallel: true
   verbosity: minimal
 after_build:
-- cmd: >-
-    cd Plugins
+- ps: >-
+    Set-Location -Path Plugins
 
     git clone -q https://github.com/Elskom/Els_kom_plugins.git
 
-    cd ..
+    Set-Location -Path ..
 
     msbuild Plugins\Els_kom_plugins\DefaultPlugins.sln /m /verbosity:minimal
 
-    cd "bin/%PLATFORM%/%CONFIGURATION%/"
+    Set-Location -Path bin/$env:PLATFORM/$env:CONFIGURATION/
 
-    "Els_kom" -p "./Els_kom_new.%PLATFORM%.%CONFIGURATION%.%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
+    Els_kom -p Els_kom_new.$env:PLATFORM.$env:CONFIGURATION.$env:APPVEYOR_BUILD_WORKER_IMAGE.zip
 
-    "Els_kom" -d "./Symbols.%PLATFORM%.%CONFIGURATION%.%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
+    Els_kom -d Symbols.$env:PLATFORM.$env:CONFIGURATION.$env:APPVEYOR_BUILD_WORKER_IMAGE.zip
 
-    cd ../../..
+    Set-Location -Path ../../..
 test: off
 artifacts:
 - path: bin/$(platform)/$(configuration)/*.zip
