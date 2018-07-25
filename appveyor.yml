@@ -10,7 +10,9 @@ image:
 - Visual Studio 2017
 - Visual Studio 2017 Preview
 configuration: Release
-platform: x86
+platform:
+- x86
+- x64
 cache: externals/newsmake
 before_build:
 - ps: >-
@@ -65,11 +67,11 @@ after_build:
 
     msbuild Plugins\Els_kom_plugins\DefaultPlugins.sln /m /verbosity:minimal
 
-    cd bin/x86/Release/
+    cd "bin/%PLATFORM%/%CONFIGURATION%/"
 
-    "Els_kom" -p "./Els_kom_new-%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
+    "Els_kom" -p "./Els_kom_new.%PLATFORM%.%CONFIGURATION%.%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
 
-    "Els_kom" -d "./Symbols-%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
+    "Els_kom" -d "./Symbols.%PLATFORM%.%CONFIGURATION%.%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
 
     cd ../../..
 test: off

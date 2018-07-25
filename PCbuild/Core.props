@@ -28,10 +28,25 @@ With this file it requires Visual Studio 2017 at least.
     <BaseAddress>4194304</BaseAddress>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <BaseAddress>4194304</BaseAddress>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <LangVersion>latest</LangVersion>
-    <OutputPath>..\bin\x86\Release\</OutputPath>
-    <DocumentationFile>..\bin\x86\Release\Els_kom.Core.xml</DocumentationFile>
+    <OutputPath>..\bin\$(Platform)\$(Configuration)\</OutputPath>
+    <DocumentationFile>..\bin\$(Platform)\$(Configuration)\Els_kom.Core.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <LangVersion>latest</LangVersion>
+    <OutputPath>..\bin\$(Platform)\$(Configuration)\</OutputPath>
+    <DocumentationFile>..\bin\$(Platform)\$(Configuration)\Els_kom.Core.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <DebugType>full</DebugType>
