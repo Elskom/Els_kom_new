@@ -5,6 +5,8 @@ branches:
 skip_commits:
   files:
     - Misc/NEWS/
+    - '**/*.md'
+    - .github/CODEOWNERS
 max_jobs: 15
 image:
 - Visual Studio 2017
@@ -15,124 +17,19 @@ platform:
 - x64
 cache: externals/newsmake
 before_build:
-- ps: >-
-    Set-Location -Path externals
-
-    Set-Location -Path newsmake
-
-    try
-
-    {
-
-    $env:NEWSMAKE_REPO_HEAD = Join-Path (Get-Location) .git/HEAD
-
-    $stream = [System.IO.StreamReader]::new($env:NEWSMAKE_REPO_HEAD)
-
-    $env:NEWSMAKE_CURRENT_COMMIT_ID = $stream.ReadLine()
-
-    }
-
-    finally
-
-    {
-
-    $stream.close()
-
-    }
-
-    Set-Location -Path ..
-
-    $env:nsmkpth = Join-Path (Get-Location) newsmake
-
-    if(!(Test-Path -Path $env:nsmkpth)) {
-
-    git clone -q https://github.com/Elskom/newsmake.git
-
-    Set-Location -Path newsmake/build
-
-    cmake ..
-
-    Set-Location -Path ../..
-
-    } else {
-
-    Set-Location -Path newsmake
-
-    git pull -q
-
-    Set-Location -Path ..
-
-    }
-
-    Set-Location -Path newsmake/build
-
-    try
-
-    {
-
-    $stream = [System.IO.StreamReader]::new($env:NEWSMAKE_REPO_HEAD)
-
-    $env:NEWSMAKE_NEW_COMMIT_ID = $stream.ReadLine()
-
-    }
-
-    finally
-
-    {
-
-    $stream.close()
-
-    }
-
-    if (!($env:NEWSMAKE_NEW_COMMIT_ID -eq $env:NEWSMAKE_CURRENT_COMMIT_ID)) {
-
-    msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
-
-    }
-
-    Set-Location -Path ../../
-
-    git clone -q https://github.com/Elskom/ZLIB.NET.git --branch patches
-
-    Set-Location -Path ../Misc/NEWS
-
-    "../../externals/newsmake/build/Release/newsmake"
-
-    Set-Location -Path ../..
+- ps: ./update-newsmake.ps1
 build:
   project: PCbuild\pcbuild.sln
   parallel: true
   verbosity: minimal
 after_build:
-- cmd: >-
-    cd Plugins
-
-    git clone -q https://github.com/Elskom/Els_kom_plugins.git
-
-    cd ..
-
-    msbuild Plugins\Els_kom_plugins\DefaultPlugins.sln /m /verbosity:minimal
-
-    cd "bin/%PLATFORM%/%CONFIGURATION%/"
-
-    "Els_kom" -p "./Els_kom_new.%PLATFORM%.%CONFIGURATION%.%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
-
-    "Els_kom" -d "./Symbols.%PLATFORM%.%CONFIGURATION%.%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
-
-    cd ../../..
+- cmd: ./package-release.cmd
 test: off
 artifacts:
 - path: bin/$(platform)/$(configuration)/*.zip
   name: myartifact
 before_deploy:
-- ps: >-
-    IF ($env:APPVEYOR_REPO_TAG -eq "false") {
-
-    $env:APPVEYOR_REPO_TAG_NAME = "v" + $env:APPVEYOR_BUILD_VERSION
-
-    }
-
-    $env:APPVEYOR_CACHE_ENTRY_ZIP_ARGS = "-t7z -m0=lzma -mx=9"
+- ps: ./appveyor-deploy.ps1
 deploy:
 - provider: GitHub
   release: $(APPVEYOR_REPO_TAG_NAME)

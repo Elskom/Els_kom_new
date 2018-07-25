@@ -12,21 +12,7 @@ This is a version of Els_kom for Elsword and Grand Chase KOM Files.
 ## To Build
 
 1. Run ``git clone https://github.com/Elskom/Els_kom_new.git``. Do not download the master branch as a zip file or build might fail or crash Visual Studio 2017.
-2. Run:
-```cmd
-cd externals
-git clone https://github.com/Elskom/newsmake.git
-cd newsmake/build
-cmake ..
-msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
-cd ../../
-git clone https://github.com/Elskom/ZLIB.NET.git --branch patches
-cd ../Misc/NEWS
-"../../externals/newsmake/build/Release/newsmake"
-cd ../..
-```
-
-To build the changelog (optional but recommended). Make sure that msbuild from your VS2017 install is in your global path environment variable first before these commands.
+2. Run ``update-newsmake.ps1`` to build the changelog (optional but recommended). Make sure that msbuild from your VS2017 install is in your global path environment variable first before running this. This will also pull changes and automatically rebuild newsmake.
 
 3. Open the ``PCbuild/pcbuild.sln`` solution file in Visual Studio 2017 and then select ``Release``, ``x86`` or ``x64`` and hit ``Build Solution``. Alternatively you can use the same msbuild command above but change ``Win32`` to ``x86`` or ``x64``, and ``newsmake.sln`` to ``PCbuild/pcbuild.sln``.
 4. Get a cup of Tea. Build might take a bit.

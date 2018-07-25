@@ -1,1 +1,3 @@
 .github/* linguist-vendored
+*.ps1 linguist-vendored
+*.cmd linguist-vendored
