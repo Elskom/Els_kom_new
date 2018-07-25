@@ -146,7 +146,6 @@ deploy:
   prerelease: false
   force_update: true
   on:
-    platform: x86
     APPVEYOR_REPO_TAG: true
 - provider: GitHub
   release: $(APPVEYOR_REPO_TAG_NAME)
@@ -158,5 +157,4 @@ deploy:
   prerelease: true
   force_update: true
   on:
-    platform: x86
     APPVEYOR_REPO_TAG: false
