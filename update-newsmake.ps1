@@ -40,7 +40,17 @@ if (!($env:NEWSMAKE_NEW_COMMIT_ID -eq $env:NEWSMAKE_CURRENT_COMMIT_ID))
     msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
 }
 Set-Location -Path ../../
-git clone -q https://github.com/Elskom/ZLIB.NET.git --branch patches
+$env:zlibnetpth = Join-Path (Get-Location) ZLIB.NET
+if(!(Test-Path -Path $env:zlibnetpth))
+{
+    git clone -q https://github.com/Elskom/ZLIB.NET.git --branch patches
+}
+else
+{
+    # reclone to ensure up to date.
+    rmdir ZLIB.NET
+    git clone -q https://github.com/Elskom/ZLIB.NET.git --branch patches
+}
 Set-Location -Path ../Misc/NEWS
 "../../externals/newsmake/build/Release/newsmake"
 Set-Location -Path ../..
