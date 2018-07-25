@@ -5,7 +5,7 @@ branches:
 skip_commits:
   files:
     - Misc/NEWS/
-    - **/*.md
+    - '**/*.md'
     - .github/CODEOWNERS
 max_jobs: 15
 image:
