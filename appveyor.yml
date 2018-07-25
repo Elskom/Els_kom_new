@@ -26,8 +26,6 @@ before_build:
 
     $env:NEWSMAKE_REPO_HEAD = Join-Path (Get-Location) .git/HEAD
 
-    Write-Output $env:NEWSMAKE_REPO_HEAD
-
     $stream = [System.IO.StreamReader]::new($env:NEWSMAKE_REPO_HEAD)
 
     $env:NEWSMAKE_CURRENT_COMMIT_ID = $stream.ReadLine()
