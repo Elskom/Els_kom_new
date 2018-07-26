@@ -1,16 +1,4 @@
 Set-Location -Path externals
-Set-Location -Path newsmake
-try
-{
-    $env:NEWSMAKE_REPO_HEAD = Join-Path (Get-Location) .git/HEAD
-    $stream = [System.IO.StreamReader]::new($env:NEWSMAKE_REPO_HEAD)
-    $env:NEWSMAKE_CURRENT_COMMIT_ID = $stream.ReadLine()
-}
-finally
-{
-    $stream.close()
-}
-Set-Location -Path ..
 $env:nsmkpth = Join-Path (Get-Location) newsmake
 if(!(Test-Path -Path $env:nsmkpth))
 {
@@ -22,24 +10,34 @@ if(!(Test-Path -Path $env:nsmkpth))
 else
 {
     Set-Location -Path newsmake
+    try
+    {
+        $env:NEWSMAKE_REPO_HEAD = Join-Path (Get-Location) .git/HEAD
+        $stream = [System.IO.StreamReader]::new($env:NEWSMAKE_REPO_HEAD)
+        $env:NEWSMAKE_CURRENT_COMMIT_ID = $stream.ReadLine()
+    }
+    finally
+    {
+        $stream.close()
+    }
     git pull -q
+    try
+    {
+        $stream = [System.IO.StreamReader]::new($env:NEWSMAKE_REPO_HEAD)
+        $env:NEWSMAKE_NEW_COMMIT_ID = $stream.ReadLine()
+    }
+    finally
+    {
+        $stream.close()
+    }
     Set-Location -Path ..
-}
-Set-Location -Path newsmake/build
-try
-{
-    $stream = [System.IO.StreamReader]::new($env:NEWSMAKE_REPO_HEAD)
-    $env:NEWSMAKE_NEW_COMMIT_ID = $stream.ReadLine()
-}
-finally
-{
-    $stream.close()
 }
 if (!($env:NEWSMAKE_NEW_COMMIT_ID -eq $env:NEWSMAKE_CURRENT_COMMIT_ID))
 {
+    Set-Location -Path newsmake/build
     msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
+    Set-Location -Path ../../
 }
-Set-Location -Path ../../
 $env:zlibnetpth = Join-Path (Get-Location) ZLIB.NET
 if(!(Test-Path -Path $env:zlibnetpth))
 {
