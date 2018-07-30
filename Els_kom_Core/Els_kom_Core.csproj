@@ -127,6 +127,12 @@
     <Compile Include="Controls\MainControl.Designer.cs">
       <DependentUpon>MainControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PluginsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PluginsControl.Designer.cs">
+      <DependentUpon>PluginsControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
