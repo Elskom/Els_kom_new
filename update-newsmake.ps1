@@ -49,17 +49,6 @@ else
     rmdir ZLIB.NET
     git clone -q https://github.com/Elskom/ZLIB.NET.git --branch patches
 }
-$env:newsmakeprogpth = Join-Path (Get-Location) externals/newsmake/build/Release/newsmake
 Set-Location -Path ../Misc/NEWS
-$proc = [System.Diagnostics.Process]::new()
-$proc.StartInfo.FileName = $env:newsmakeprogpth
-$proc.StartInfo.Arguments = ""
-$proc.StartInfo.RedirectStandardOutput = true
-$proc.StartInfo.UseShellExecute = false
-$proc.StartInfo.CreateNoWindow = true
-$proc.Start()
-$newsmake_out = $proc.StandardOutput.ReadToEnd()
-$proc.WaitForExit()
-$proc.Dispose()
-Write-Output $newsmake_out
+"../../externals/newsmake/build/Release/newsmake"
 Set-Location -Path ../..
