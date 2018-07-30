@@ -49,7 +49,7 @@ else
     rmdir ZLIB.NET
     git clone -q https://github.com/Elskom/ZLIB.NET.git --branch patches
 }
+$env:newsmakeprogpth = Join-Path (Get-Location) externals/newsmake/build/Release/newsmake
 Set-Location -Path ../Misc/NEWS
-$env:newsmakeprogpth = Join-Path (Get-Location) ../../externals/newsmake/build/Release/newsmake
 Start-Process -FilePath $env:newsmakeprogpth -Wait -NoNewWindow
 Set-Location -Path ../..
