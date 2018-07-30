@@ -40,7 +40,7 @@ namespace Els_kom_Core.Controls
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "PluginsControl";
-            this.Size = new System.Drawing.Size(382, 207);
+            this.Size = new System.Drawing.Size(510, 207);
             this.ResumeLayout(false);
             this.PerformLayout();
 
