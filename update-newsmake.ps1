@@ -57,7 +57,7 @@ $proc.StartInfo.Arguments = ""
 $proc.StartInfo.RedirectStandardOutput = true
 $proc.StartInfo.UseShellExecute = false
 $proc.StartInfo.CreateNoWindow = true
-proc.Start()
+$proc.Start()
 $newsmake_out = $proc.StandardOutput.ReadToEnd()
 $proc.WaitForExit()
 $proc.Dispose()
