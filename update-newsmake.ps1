@@ -51,5 +51,5 @@ else
 }
 $env:newsmakeprogpth = Join-Path (Get-Location) externals/newsmake/build/Release/newsmake
 Set-Location -Path ../Misc/NEWS
-Execute-Process -Path "$env:newsmakeprogpth" -Wait -WindowStyle ‘Hidden’
+$env:newsmakeprogpth
 Set-Location -Path ../..
