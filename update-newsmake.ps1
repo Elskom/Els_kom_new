@@ -51,5 +51,5 @@ else
 }
 Set-Location -Path ../Misc/NEWS
 $env:newsmakeprogpth = Join-Path (Get-Location) ../../externals/newsmake/build/Release/newsmake
-Start-Process -FilePath $env:newsmakeprogpth -Wait -NoNewWindow -Verb runAs
+Start-Process -FilePath "$env:newsmakeprogpth" -Wait -NoNewWindow -Verb runAs
 Set-Location -Path ../..
