@@ -50,5 +50,5 @@ else
     git clone -q https://github.com/Elskom/ZLIB.NET.git --branch patches
 }
 Set-Location -Path ../Misc/NEWS
-"../../externals/newsmake/build/Release/newsmake"
+[System.Diagnostics.Process]::Start("../../externals/newsmake/build/Release/newsmake")
 Set-Location -Path ../..
