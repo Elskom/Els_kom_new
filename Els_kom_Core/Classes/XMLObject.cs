@@ -242,7 +242,6 @@ namespace Els_kom_Core.Classes
                 {
                     Save();
                 }
-                doc.Dispose();
                 doc = null;
                 cached_xmlfilename = string.Empty;
                 disposedValue = true;
