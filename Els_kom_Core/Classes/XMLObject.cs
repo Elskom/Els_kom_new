@@ -74,15 +74,11 @@ namespace Els_kom_Core.Classes
         /// </summary>
         public void ReopenFile()
         {
-            if (Has_changed())
-            {
-                Save();
-                byte[] xmldata = System.IO.File.ReadAllBytes(cached_xmlfilename);
-                System.IO.MemoryStream xmlDataStream = new System.IO.MemoryStream(xmldata, true);
-                doc = System.Xml.Linq.XDocument.Load(xmlDataStream);
-                xmlDataStream.Dispose();
-            }
             Save();
+            byte[] xmldata = System.IO.File.ReadAllBytes(cached_xmlfilename);
+            System.IO.MemoryStream xmlDataStream = new System.IO.MemoryStream(xmldata, true);
+            doc = System.Xml.Linq.XDocument.Load(xmlDataStream);
+            xmlDataStream.Dispose();
         }
 
         /// <summary>
@@ -184,28 +180,31 @@ namespace Els_kom_Core.Classes
         /// Gets if the xml file has changed.
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
-        private bool Has_changed()
+        private bool HasChanged
         {
-            if (disposedValue)
+            get
             {
-                throw new System.ObjectDisposedException("XMLOblect is disposed.");
-            }
-            System.IO.MemoryStream outxmlData = new System.IO.MemoryStream();
-            doc.Save(outxmlData);
-            byte[] OutXmlBytes = outxmlData.ToArray();
-            if (System.IO.File.Exists(cached_xmlfilename))
-            {
-                byte[] dataOnFile = System.IO.File.ReadAllBytes(cached_xmlfilename);
-                if (!System.Linq.Enumerable.SequenceEqual(dataOnFile, OutXmlBytes))
+                if (disposedValue)
+                {
+                    throw new System.ObjectDisposedException("XMLOblect is disposed.");
+                }
+                System.IO.MemoryStream outxmlData = new System.IO.MemoryStream();
+                doc.Save(outxmlData);
+                byte[] OutXmlBytes = outxmlData.ToArray();
+                if (System.IO.File.Exists(cached_xmlfilename))
+                {
+                    byte[] dataOnFile = System.IO.File.ReadAllBytes(cached_xmlfilename);
+                    if (!System.Linq.Enumerable.SequenceEqual(dataOnFile, OutXmlBytes))
+                    {
+                        return true;
+                    }
+                }
+                else
                 {
                     return true;
                 }
+                return false;
             }
-            else
-            {
-                return true;
-            }
-            return false;
         }
 
         /// <summary>
@@ -223,7 +222,7 @@ namespace Els_kom_Core.Classes
                 System.IO.MemoryStream outxmlData = new System.IO.MemoryStream();
                 doc.Save(outxmlData);
                 byte[] OutXmlBytes = outxmlData.ToArray();
-                if (Has_changed())
+                if (HasChanged)
                 {
                     System.IO.FileStream fstream = System.IO.File.Create(cached_xmlfilename);
                     fstream.Write(OutXmlBytes, 0, OutXmlBytes.Length);
@@ -243,6 +242,7 @@ namespace Els_kom_Core.Classes
                 {
                     Save();
                 }
+                doc.Dispose();
                 doc = null;
                 cached_xmlfilename = string.Empty;
                 disposedValue = true;
