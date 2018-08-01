@@ -50,5 +50,6 @@ else
     git clone -q https://github.com/Elskom/ZLIB.NET.git --branch patches
 }
 Set-Location -Path ../Misc/NEWS
-[System.Diagnostics.Process]::Start("../../externals/newsmake/build/Release/newsmake")
+$env:newsmakeprogpth = Join-Path (Get-Location) ../../externals/newsmake/build/Release/newsmake
+Start-Process -FilePath $env:newsmakeprogpth -Wait -NoNewWindow -Verb runAs
 Set-Location -Path ../..
