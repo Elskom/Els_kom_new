@@ -52,7 +52,7 @@ namespace Els_kom_Core.Classes
             {
                 fileinfo = new System.IO.FileInfo(xmlfilename);
             }
-            catch (var ex)
+            catch (System.Exception ex)
             {
                 throw ex;
             }
