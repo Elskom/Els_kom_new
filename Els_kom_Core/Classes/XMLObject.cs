@@ -47,24 +47,8 @@ namespace Els_kom_Core.Classes
                 }
             }
             cached_xmlfilename = xmlfilename;
-            if (System.IO.File.Exists(xmlfilename))
-            {
-                byte[] xmldata = System.IO.File.ReadAllBytes(xmlfilename);
-                if (xmldata.Length > 0)
-                {
-                    System.IO.MemoryStream xmlDataStream = new System.IO.MemoryStream(xmldata, true);
-                    doc = System.Xml.Linq.XDocument.Load(xmlDataStream);
-                    xmlDataStream.Dispose();
-                }
-                else
-                {
-                    doc = System.Xml.Linq.XDocument.Parse(fallbackxmlcontent);
-                }
-            }
-            else
-            {
-                doc = System.Xml.Linq.XDocument.Parse(fallbackxmlcontent);
-            }
+            System.IO.FileInfo fileinfo = new System.IO.FileInfo(xmlfilename);
+            doc = (System.IO.File.Exists(xmlfilename) && fileinfo.Length > 0) ? System.Xml.Linq.XDocument.Load(xmlfilename) : System.Xml.Linq.XDocument.Parse(fallbackxmlcontent);
         }
 
         /// <summary>
@@ -75,10 +59,7 @@ namespace Els_kom_Core.Classes
         public void ReopenFile()
         {
             Save();
-            byte[] xmldata = System.IO.File.ReadAllBytes(cached_xmlfilename);
-            System.IO.MemoryStream xmlDataStream = new System.IO.MemoryStream(xmldata, true);
-            doc = System.Xml.Linq.XDocument.Load(xmlDataStream);
-            xmlDataStream.Dispose();
+            doc = System.Xml.Linq.XDocument.Load(cached_xmlfilename);
         }
 
         /// <summary>
