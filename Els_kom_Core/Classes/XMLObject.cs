@@ -191,6 +191,7 @@ namespace Els_kom_Core.Classes
                 System.IO.MemoryStream outxmlData = new System.IO.MemoryStream();
                 doc.Save(outxmlData);
                 byte[] OutXmlBytes = outxmlData.ToArray();
+                outxmlData.Dispose();
                 if (System.IO.File.Exists(cached_xmlfilename))
                 {
                     byte[] dataOnFile = System.IO.File.ReadAllBytes(cached_xmlfilename);
@@ -219,14 +220,15 @@ namespace Els_kom_Core.Classes
                 {
                     throw new System.ObjectDisposedException("XMLOblect is disposed.");
                 }
-                System.IO.MemoryStream outxmlData = new System.IO.MemoryStream();
-                doc.Save(outxmlData);
-                byte[] OutXmlBytes = outxmlData.ToArray();
+                // System.IO.MemoryStream outxmlData = new System.IO.MemoryStream();
+                // doc.Save(outxmlData);
+                // byte[] OutXmlBytes = outxmlData.ToArray();
                 if (HasChanged)
                 {
-                    System.IO.FileStream fstream = System.IO.File.Create(cached_xmlfilename);
-                    fstream.Write(OutXmlBytes, 0, OutXmlBytes.Length);
-                    fstream.Dispose();
+                    doc.Save();
+                    // System.IO.FileStream fstream = System.IO.File.Create(cached_xmlfilename);
+                    // fstream.Write(OutXmlBytes, 0, OutXmlBytes.Length);
+                    // fstream.Dispose();
                 }
             }
         }
