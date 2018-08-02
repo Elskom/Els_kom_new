@@ -220,15 +220,21 @@ namespace Els_kom_Core.Classes
                 {
                     throw new System.ObjectDisposedException("XMLOblect is disposed.");
                 }
-                // System.IO.MemoryStream outxmlData = new System.IO.MemoryStream();
-                // doc.Save(outxmlData);
-                // byte[] OutXmlBytes = outxmlData.ToArray();
+                // Check for external changes then
+                // set doc to the new content.
+                // but how this class is currently it
+                // would mean having all edits possibly
+                // in a Dictionary of some sort then use the
+                // provided element name as the key to look in it
+                // if it is not part of the xml or was updated.
+                // for this a list of added and updated keys should
+                // also be created I think so that everything
+                // works properly. And then upon saving any external
+                // edits would be applied before any edits in program
+                // by this class.
                 if (HasChanged)
                 {
-                    doc.Save();
-                    // System.IO.FileStream fstream = System.IO.File.Create(cached_xmlfilename);
-                    // fstream.Write(OutXmlBytes, 0, OutXmlBytes.Length);
-                    // fstream.Dispose();
+                    doc.Save(cached_xmlfilename);
                 }
             }
         }
