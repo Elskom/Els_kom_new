@@ -47,8 +47,16 @@ namespace Els_kom_Core.Classes
                 }
             }
             cached_xmlfilename = xmlfilename;
-            System.IO.FileInfo fileinfo = new System.IO.FileInfo(xmlfilename);
-            doc = (System.IO.File.Exists(xmlfilename) && fileinfo.Length > 0) ? System.Xml.Linq.XDocument.Load(xmlfilename) : System.Xml.Linq.XDocument.Parse(fallbackxmlcontent);
+            System.IO.FileInfo fileinfo = null;
+            try
+            {
+                fileinfo = new System.IO.FileInfo(xmlfilename);
+            }
+            catch (var ex)
+            {
+                throw ex;
+            }
+            doc = (System.IO.File.Exists(xmlfilename) && fileinfo?.Length > 0) ? System.Xml.Linq.XDocument.Load(xmlfilename) : System.Xml.Linq.XDocument.Parse(fallbackxmlcontent);
         }
 
         /// <summary>
