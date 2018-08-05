@@ -27,5 +27,11 @@ namespace Els_kom.Forms
             Label1 = "0";
             settingsControl1.SaveSettings();
         }
+
+        private void settingsControl1_OpenPluginsForm(object sender, System.EventArgs e)
+        {
+            PluginsForm pluginsForm = new PluginsForm();
+            pluginsForm.ShowDialog();
+        }
     }
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="$(SolutionDir)\Core.props" Condition="Exists('$(SolutionDir)\Core.props')" />
@@ -70,7 +70,8 @@
     <Compile Include="Classes\SettingsFile.cs" />
     <Compile Include="Classes\ShowTaskbarEvent.cs" />
     <Compile Include="Classes\UnpackingError.cs" />
-    <Compile Include="Classes\Version.cs" />
+    <Compile Include="structs\XMLAttributeData.cs" />
+    <Compile Include="structs\XMLElementData.cs" />
     <Compile Include="Classes\XMLObject.cs" />
     <Compile Include="Classes\ZlibHelper.cs" />
     <Compile Include="..\externals\ZLIB.NET\Adler32.cs">
@@ -141,6 +142,7 @@
     </Compile>
     <Compile Include="Enums\LoadImagefuLoad.cs" />
     <Compile Include="Enums\LoadImageTypes.cs" />
+    <Compile Include="structs\MINIDUMP_EXCEPTION_INFORMATION.cs" />
     <Compile Include="Enums\SYSCOMMANDS.cs" />
     <Compile Include="Enums\MINIDUMP_TYPE.cs" />
     <Compile Include="interfaces\ICallbackPlugin.cs" />
@@ -160,8 +162,7 @@
       <OutputFile2 Required="true" />
     </ParameterGroup>
     <Task>
-      <Code Type="Fragment" Language="cs">
-        <![CDATA[
+      <Code Type="Fragment" Language="cs"><![CDATA[
         Log.LogMessage(MessageImportance.High, "Getting build info from git");
         string git_out1;
         System.Diagnostics.Process pro1 = new System.Diagnostics.Process();
@@ -291,8 +292,7 @@
         System.IO.StreamWriter fstream2 = new System.IO.StreamWriter(OutputFile2, false, new System.Text.UTF8Encoding(false));
         fstream2.Write(outputResourcesData.ToCharArray(), 0, outputResourcesData.Length);
         fstream2.Dispose();
-]]>
-      </Code>
+]]></Code>
     </Task>
   </UsingTask>
   <UsingTask TaskName="FindRCExe" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
@@ -300,8 +300,7 @@
       <SolutionDir Required="true" />
     </ParameterGroup>
     <Task>
-      <Code Type="Fragment" Language="cs">
-        <![CDATA[
+      <Code Type="Fragment" Language="cs"><![CDATA[
         // to find only the newest rc.exe available on the system.
         string WindowsKitsDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles);
         WindowsKitsDir += System.IO.Path.DirectorySeparatorChar + "Windows Kits";
@@ -366,8 +365,7 @@
         {
         }
         proc.Dispose();
-]]>
-      </Code>
+]]></Code>
     </Task>
   </UsingTask>
   <Target Name="BeforeBuild">

@@ -67,7 +67,7 @@ namespace Els_kom.Forms
         private void MainForm_Load(object sender, System.EventArgs e)
         {
             this.Hide();
-            if (this.MainControl1.VersionCheck("1.4.9.8"))
+            if (this.MainControl1.VersionCheck())
             {
                 this.MainControl1.LoadControl();
             }

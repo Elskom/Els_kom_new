@@ -13,7 +13,7 @@ namespace Els_kom_Core.Classes
         /* required to see if we are packing or unpacking. Default to false. */
         private static bool is_packing = false;
         private static bool is_unpacking = false;
-        internal static System.Collections.Generic.List<interfaces.IKomPlugin> komplugins;
+        internal static System.Collections.Generic.List<interfaces.IKomPlugin> komplugins = new System.Collections.Generic.List<interfaces.IKomPlugin>();
 
         /// <summary>
         /// Gets the current state on packing KOM files.

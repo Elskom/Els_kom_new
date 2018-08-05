@@ -349,9 +349,9 @@ namespace Els_kom_Core.Controls
         /// <summary>
         /// Shows the Version Error message and closes the main form if the checked version is not the same.
         /// </summary>
-        public bool VersionCheck(string version)
+        public bool VersionCheck()
         {
-            if (Classes.Version.version != version)
+            if (typeof(MainControl).Assembly.GetName().Version.ToString() != System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString())
             {
                 Classes.MessageManager.ShowError("Sorry, you cannot use Els_kom.exe from this version with a newer or older Core. Please update the executable as well.", "Error!");
                 CloseForm?.Invoke(this, new System.EventArgs());

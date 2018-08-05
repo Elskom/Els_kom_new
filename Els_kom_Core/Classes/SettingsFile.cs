@@ -15,7 +15,7 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// The path to the Els_kom Settings file.
         ///
-        /// Creates the folder and settings file if needed.
+        /// Creates the folder if needed.
         /// </summary>
         public static string Path
         {
@@ -32,11 +32,10 @@ namespace Els_kom_Core.Classes
                 {
                     System.IO.Directory.CreateDirectory(localPath);
                 }
+                // do not create settings file, just pass this path to XMLObject.
+                // if we create it ourselves the new optimized class will fail
+                // to work right if it is empty.
                 localPath += "\\Settings.xml";
-                if (!System.IO.File.Exists(localPath))
-                {
-                    System.IO.File.Create(localPath).Dispose();
-                }
                 return localPath;
             }
         }

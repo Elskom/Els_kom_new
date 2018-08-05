@@ -5,7 +5,7 @@
 
 namespace Els_kom.Forms
 {
-    partial class SettingsForm
+    partial class PluginsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -33,41 +33,37 @@ namespace Els_kom.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.settingsControl1 = new Els_kom_Core.Controls.SettingsControl();
+            this.pluginsControl1 = new Els_kom_Core.Controls.PluginsControl();
             this.SuspendLayout();
             // 
-            // settingsControl1
+            // pluginsControl1
             // 
-            this.settingsControl1.Location = new System.Drawing.Point(12, 10);
-            this.settingsControl1.Name = "settingsControl1";
-            this.settingsControl1.Size = new System.Drawing.Size(510, 157);
-            this.settingsControl1.TabIndex = 10;
-            this.settingsControl1.ParentForm = this;
-            this.settingsControl1.OpenPluginsForm += this.settingsControl1_OpenPluginsForm;
+            this.pluginsControl1.Location = new System.Drawing.Point(0, 0);
+            this.pluginsControl1.Name = "pluginsControl1";
+            this.pluginsControl1.Size = new System.Drawing.Size(359, 249);
+            this.pluginsControl1.TabIndex = 0;
             // 
-            // SettingsForm
+            // PluginsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(531, 177);
-            this.Controls.Add(this.settingsControl1);
+            this.ClientSize = new System.Drawing.Size(359, 249);
+            this.Controls.Add(this.pluginsControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.HelpButton = true;
             this.Icon = Els_kom_Core.Classes.Icons.FormIcon;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "SettingsForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Settings";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
-            this.Load += new System.EventHandler(this.SettingsForm_Load);
+            this.Name = "PluginsForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Plugins Installer, Updater, and Uninstaller";
+            this.Load += new System.EventHandler(this.PluginsForm_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
-        private Els_kom_Core.Controls.SettingsControl settingsControl1;
         #endregion
 
+        private Els_kom_Core.Controls.PluginsControl pluginsControl1;
     }
 }

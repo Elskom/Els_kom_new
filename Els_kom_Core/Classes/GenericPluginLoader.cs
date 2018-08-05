@@ -29,6 +29,7 @@ namespace Els_kom_Core.Classes
                 // try to load from a zip instead then.
                 path += ".zip";
             }
+            System.Collections.Generic.ICollection<T> plugins = new System.Collections.Generic.List<T>();
             // handle when path points to a zip file.
             if (System.IO.Directory.Exists(path) || System.IO.File.Exists(path))
             {
@@ -81,7 +82,6 @@ namespace Els_kom_Core.Classes
                         }
                     }
                 }
-                System.Collections.Generic.ICollection<T> plugins = new System.Collections.Generic.List<T>(pluginTypes.Count);
                 foreach(System.Type type in pluginTypes)
                 {
                     T plugin = (T)System.Activator.CreateInstance(type);
@@ -89,7 +89,7 @@ namespace Els_kom_Core.Classes
                 }
                 return plugins;
             }
-            return null;
+            return plugins;
         }
     }
 }

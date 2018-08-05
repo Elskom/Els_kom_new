@@ -14,7 +14,7 @@ namespace Els_kom_Core.Classes
         private static bool RunningElsword = false;
         private static bool RunningElswordDirectly = false;
         private static bool ExecutingElsword = false;
-        internal static System.Collections.Generic.List<interfaces.ICallbackPlugin> callbackplugins;
+        internal static System.Collections.Generic.List<interfaces.ICallbackPlugin> callbackplugins = new System.Collections.Generic.List<interfaces.ICallbackPlugin>();
 
         /// <summary>
         /// Gets if the launcher to Elsword is running.

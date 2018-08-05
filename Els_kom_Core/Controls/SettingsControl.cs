@@ -21,6 +21,8 @@ namespace Els_kom_Core.Controls
         private string curvalue;
         private string curvalue2;
         private string curvalue3;
+        private int curvalue4;
+        private int curvalue5;
         private string Label4 = "...";
         private string Label5 = "...";
 
@@ -28,6 +30,10 @@ namespace Els_kom_Core.Controls
         /// Parrent Form that the control is on.
         /// </summary>
         public new System.Windows.Forms.Form ParentForm;
+        /// <summary>
+        /// Plugins Installer/Updating form opening event.
+        /// </summary>
+        public event System.EventHandler OpenPluginsForm;
 
         /// <summary>
         /// Saves the Settings that changed in this Control's buffers.
@@ -35,6 +41,9 @@ namespace Els_kom_Core.Controls
         public void SaveSettings()
         {
             Classes.SettingsFile.Settingsxml.ReopenFile();
+            curvalue3 = Classes.SettingsFile.Settingsxml.Read("ElsDir");
+            curvalue = Classes.SettingsFile.Settingsxml.Read("IconWhileElsNotRunning");
+            curvalue2 = Classes.SettingsFile.Settingsxml.Read("IconWhileElsRunning");
             if (!string.Equals(TextBox1.Text, curvalue3))
             {
                 if (TextBox1.Text.Length > 0)
@@ -68,10 +77,13 @@ namespace Els_kom_Core.Controls
                     Classes.SettingsFile.Settingsxml.Write("IconWhileElsRunning", Label5);
                 }
             }
+            Classes.SettingsFile.Settingsxml.Write("LoadPDB", curvalue4.ToString());
+            Classes.SettingsFile.Settingsxml.Write("SaveToZip", curvalue5.ToString());
+            // TODO: Save Configured Plugin Sources URL's in ListView2.
             Classes.SettingsFile.Settingsxml.Save();
         }
 
-        void Button1_Click(object sender, System.EventArgs e)
+        private void Button1_Click(object sender, System.EventArgs e)
         {
             System.Windows.Forms.FolderBrowserDialog FolderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog
             {
@@ -89,12 +101,12 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        void Button2_Click(object sender, System.EventArgs e)
+        private void Button2_Click(object sender, System.EventArgs e)
         {
-            ParentForm.Close();
+            ParentForm?.Close();
         }
 
-        void RadioButton1_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton1_CheckedChanged(object sender, System.EventArgs e)
         {
             if (RadioButton1.Checked)
             {
@@ -110,7 +122,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        void RadioButton2_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton2_CheckedChanged(object sender, System.EventArgs e)
         {
             if (RadioButton2.Checked)
             {
@@ -126,7 +138,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        void RadioButton3_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton3_CheckedChanged(object sender, System.EventArgs e)
         {
             if (RadioButton3.Checked)
             {
@@ -142,7 +154,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        void RadioButton4_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton4_CheckedChanged(object sender, System.EventArgs e)
         {
             if (RadioButton4.Checked)
             {
@@ -158,7 +170,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        void RadioButton5_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton5_CheckedChanged(object sender, System.EventArgs e)
         {
             if (RadioButton5.Checked)
             {
@@ -174,7 +186,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        void RadioButton6_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton6_CheckedChanged(object sender, System.EventArgs e)
         {
             if (RadioButton6.Checked)
             {
@@ -190,18 +202,27 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        void TreeView1_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
+        private void TreeView1_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
         {
             if (TreeView1.SelectedNode.Index == 0)
             {
                 Panel3.Visible = true;
                 Panel5.Visible = false;
+                Panel6.Visible = false;
                 TreeView1.Focus();
             }
             else if (TreeView1.SelectedNode.Index == 1)
             {
                 Panel3.Visible = false;
                 Panel5.Visible = true;
+                Panel6.Visible = false;
+                TreeView1.Focus();
+            }
+            else if (TreeView1.SelectedNode.Index == 2)
+            {
+                Panel3.Visible = false;
+                Panel5.Visible = false;
+                Panel6.Visible = true;
                 TreeView1.Focus();
             }
         }
@@ -248,17 +269,19 @@ namespace Els_kom_Core.Controls
         /// </summary>
         public void InitControl()
         {
-            if (System.IO.File.Exists(Classes.SettingsFile.Path))
-            {
-                Classes.SettingsFile.Settingsxml.ReopenFile();
-                curvalue3 = Classes.SettingsFile.Settingsxml.Read("ElsDir");
-                curvalue = Classes.SettingsFile.Settingsxml.Read("IconWhileElsNotRunning");
-                curvalue2 = Classes.SettingsFile.Settingsxml.Read("IconWhileElsRunning");
-                TextBox1.Text = curvalue3;
-                // set these to the values read above only if they are not empty.
-                Label4 = string.IsNullOrEmpty(curvalue) ? Label4 : curvalue;
-                Label5 = string.IsNullOrEmpty(curvalue2) ? Label5 : curvalue2;
-            }
+            Classes.SettingsFile.Settingsxml.ReopenFile();
+            curvalue3 = Classes.SettingsFile.Settingsxml.Read("ElsDir");
+            curvalue = Classes.SettingsFile.Settingsxml.Read("IconWhileElsNotRunning");
+            curvalue2 = Classes.SettingsFile.Settingsxml.Read("IconWhileElsRunning");
+            int.TryParse(Classes.SettingsFile.Settingsxml.Read("LoadPDB"), out curvalue4);
+            int.TryParse(Classes.SettingsFile.Settingsxml.Read("SaveToZip"), out curvalue5);
+            // TODO: Load Configured Plugin Sources URL's to ListView2.
+            TextBox1.Text = curvalue3;
+            // set these to the values read above only if they are not empty.
+            Label4 = string.IsNullOrEmpty(curvalue) ? Label4 : curvalue;
+            Label5 = string.IsNullOrEmpty(curvalue2) ? Label5 : curvalue2;
+            CheckBox1.Checked = System.Convert.ToBoolean(curvalue5);
+            CheckBox2.Checked = System.Convert.ToBoolean(curvalue4);
             System.Collections.Generic.List<System.Windows.Forms.ListViewItem> Entries = new System.Collections.Generic.List<System.Windows.Forms.ListViewItem>();
             foreach (var callbackplugin in Classes.ExecutionManager.callbackplugins)
             {
@@ -272,9 +295,9 @@ namespace Els_kom_Core.Controls
             }
             if (Entries.Count > 3)
             {
-                this.columnHeader1.Width -= 17;
+                this.ColumnHeader1.Width -= 17;
             }
-            listView1.Items.AddRange(Entries.ToArray());
+            ListView1.Items.AddRange(Entries.ToArray());
             SetRadios();
             TreeView1.SelectedNode = TreeView1.Nodes[0];
         }
@@ -285,11 +308,11 @@ namespace Els_kom_Core.Controls
             TreeView1.SelectedNode = TreeView1.Nodes[0];
         }
 
-        private void listView1_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void ListView1_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            for (int i = 0; i < (listView1.SelectedItems.Count); i++)
+            for (int i = 0; i < (ListView1.SelectedItems.Count); i++)
             {
-                System.Windows.Forms.ListViewItem selitem = listView1.SelectedItems[i];
+                System.Windows.Forms.ListViewItem selitem = ListView1.SelectedItems[i];
                 bool found = false;
                 foreach (var callbackplugin in Classes.ExecutionManager.callbackplugins)
                 {
@@ -303,20 +326,20 @@ namespace Els_kom_Core.Controls
                 }
                 if (!found)
                 {
-                    button3.Enabled = false;
+                    Button3.Enabled = false;
                 }
                 else
                 {
-                    button3.Enabled = true;
+                    Button3.Enabled = true;
                 }
             }
         }
 
-        private void button3_Click(object sender, System.EventArgs e)
+        private void Button3_Click(object sender, System.EventArgs e)
         {
-            for (int i = 0; i < (listView1.SelectedItems.Count); i++)
+            for (int i = 0; i < (ListView1.SelectedItems.Count); i++)
             {
-                System.Windows.Forms.ListViewItem selitem = listView1.SelectedItems[i];
+                System.Windows.Forms.ListViewItem selitem = ListView1.SelectedItems[i];
                 foreach (var callbackplugin in Classes.ExecutionManager.callbackplugins)
                 {
                     if (callbackplugin.PluginName.Equals(selitem.Text))
@@ -332,6 +355,82 @@ namespace Els_kom_Core.Controls
                     }
                 }
             }
+        }
+
+        private void Button5_Click(object sender, System.EventArgs e)
+        {
+            ListView2.Items.Add("Enter plugin source url here.");
+        }
+
+        private void Button6_Click(object sender, System.EventArgs e)
+        {
+            if (ListView2.SelectedItems.Count > 0)
+            {
+                ListView2.SelectedItems[0].Remove();
+            }
+        }
+
+        private void Button4_Click(object sender, System.EventArgs e)
+        {
+            OpenPluginsForm?.Invoke(this, new System.EventArgs());
+        }
+
+        private void CheckBox1_CheckedChanged(object sender, System.EventArgs e)
+        {
+            curvalue5 = System.Convert.ToInt32(CheckBox1.Checked);
+        }
+
+        private void CheckBox2_CheckedChanged(object sender, System.EventArgs e)
+        {
+            curvalue4 = System.Convert.ToInt32(CheckBox2.Checked);
+        }
+
+        // pople say use a DataGridView because they cant hack together a solution.
+        // well they were too stupid to hack a elegant soluion like this.
+        private void ListView2_DoubleClick(object sender, System.EventArgs e)
+        {
+            // seems to not place the box in the correct location and it shows under the listview...
+            System.Windows.Forms.TextBox textBox = new System.Windows.Forms.TextBox
+            {
+                Bounds = ListView2.SelectedItems[0].Bounds,
+                Text = ListView2.SelectedItems[0].Text,
+                Visible = true
+            };
+            textBox.Enter += (s, s1) =>
+            {
+                    // so the user can replace all the text in the listview item.
+                    textBox.SelectAll();
+            };
+            textBox.Leave += (s, e1) =>
+            {
+                ListView2.SelectedItems[0].Text = textBox.Text;
+                // do not forget to dispose this control.
+                ListView2.Controls.Remove(textBox);
+                textBox.Dispose();
+            };
+            textBox.KeyDown += (s, s1) =>
+            {
+                s1.Handled = true;
+                if (s1.KeyData == System.Windows.Forms.Keys.Enter)
+                {
+                    ListView2.SelectedItems[0].Text = textBox.Text;
+                    // do not forget to dispose this control.
+                    ListView2.Controls.Remove(textBox);
+                    textBox.Dispose();
+                }
+                else if (s1.KeyData == System.Windows.Forms.Keys.Right)
+                {
+                    // remove selection.
+                    textBox.Select(0, 0);
+                }
+                else if (s1.KeyData == System.Windows.Forms.Keys.Left)
+                {
+                    // remove selection.
+                    textBox.Select(0, 0);
+                }
+            };
+            ListView2.Controls.Add(textBox);
+            ActiveControl = textBox;
         }
     }
 }
