@@ -18,7 +18,7 @@ namespace Els_kom_Core.Classes
         [System.Runtime.InteropServices.DllImport("user32.dll", SetLastError = true, CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
         internal static extern System.IntPtr LoadImage(System.IntPtr hInst, string lpszName, uint uType, int cxDesired, int cyDesired, uint fuLoad);
         [System.Runtime.InteropServices.DllImport("dbghelp.dll")]
-        internal static extern bool MiniDumpWriteDump(System.IntPtr hProcess, int ProcessId, System.IntPtr hFile, Enums.MINIDUMP_TYPE DumpType, System.IntPtr ExceptionParam, System.IntPtr UserStreamParam, System.IntPtr CallackParam);
+        internal static extern bool MiniDumpWriteDump(System.IntPtr hProcess, int ProcessId, System.IntPtr hFile, Enums.MINIDUMP_TYPE DumpType, Enums.MINIDUMP_EXCEPTION_INFORMATION ExceptionParam, System.IntPtr UserStreamParam, System.IntPtr CallackParam);
 
         private static string GetFileBaseName(string FileName)
         {

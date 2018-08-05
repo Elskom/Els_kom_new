@@ -24,10 +24,16 @@ namespace Els_kom_Core.Classes
             {
                 fsToDump = System.IO.File.Create(fileToDump);
             }
+            Enums.MINIDUMP_EXCEPTION_INFORMATION mINIDUMP_EXCEPTION_INFORMATION = new Enums.MINIDUMP_EXCEPTION_INFORMATION
+            {
+                ClientPointers = 1,
+                ExceptionPointers = System.Runtime.InteropServices.Marshal.GetExceptionPointers(),
+                ThreadId = System.Convert.ToUInt32(System.Threading.Thread.CurrentThread.ManagedThreadId)
+            };
             System.Diagnostics.Process thisProcess = System.Diagnostics.Process.GetCurrentProcess();
             SafeNativeMethods.MiniDumpWriteDump(thisProcess.Handle, thisProcess.Id,
                 fsToDump.SafeFileHandle.DangerousGetHandle(), Enums.MINIDUMP_TYPE.MiniDumpNormal,
-                System.IntPtr.Zero, System.IntPtr.Zero, System.IntPtr.Zero);
+                mINIDUMP_EXCEPTION_INFORMATION, System.IntPtr.Zero, System.IntPtr.Zero);
             thisProcess.Dispose();
             fsToDump.Dispose();
         }
@@ -46,6 +52,12 @@ namespace Els_kom_Core.Classes
             {
                 fsToDump = System.IO.File.Create(fileToDump);
             }
+            Enums.MINIDUMP_EXCEPTION_INFORMATION mINIDUMP_EXCEPTION_INFORMATION = new Enums.MINIDUMP_EXCEPTION_INFORMATION
+            {
+                ClientPointers = 1,
+                ExceptionPointers = System.Runtime.InteropServices.Marshal.GetExceptionPointers(),
+                ThreadId = System.Convert.ToUInt32(System.Threading.Thread.CurrentThread.ManagedThreadId)
+            };
             System.Diagnostics.Process thisProcess = System.Diagnostics.Process.GetCurrentProcess();
             SafeNativeMethods.MiniDumpWriteDump(thisProcess.Handle, thisProcess.Id,
                 fsToDump.SafeFileHandle.DangerousGetHandle(), Enums.MINIDUMP_TYPE.MiniDumpWithDataSegs |
@@ -54,7 +66,7 @@ namespace Els_kom_Core.Classes
                 Enums.MINIDUMP_TYPE.MiniDumpWithFullMemoryInfo |
                 Enums.MINIDUMP_TYPE.MiniDumpWithThreadInfo |
                 Enums.MINIDUMP_TYPE.MiniDumpWithCodeSegs,
-                System.IntPtr.Zero, System.IntPtr.Zero, System.IntPtr.Zero);
+                mINIDUMP_EXCEPTION_INFORMATION, System.IntPtr.Zero, System.IntPtr.Zero);
             thisProcess.Dispose();
             fsToDump.Dispose();
         }
