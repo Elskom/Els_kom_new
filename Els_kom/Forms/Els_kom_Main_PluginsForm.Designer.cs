@@ -33,22 +33,22 @@ namespace Els_kom.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.pluginsControl1 = new Els_kom_Core.Controls.PluginsControl();
+            this.PluginsControl1 = new Els_kom_Core.Controls.PluginsControl();
             this.SuspendLayout();
             // 
             // pluginsControl1
             // 
-            this.pluginsControl1.Location = new System.Drawing.Point(0, 0);
-            this.pluginsControl1.Name = "pluginsControl1";
-            this.pluginsControl1.Size = new System.Drawing.Size(359, 249);
-            this.pluginsControl1.TabIndex = 0;
+            this.PluginsControl1.Location = new System.Drawing.Point(0, 0);
+            this.PluginsControl1.Name = "PluginsControl1";
+            this.PluginsControl1.Size = new System.Drawing.Size(359, 249);
+            this.PluginsControl1.TabIndex = 0;
             // 
             // PluginsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(359, 249);
-            this.Controls.Add(this.pluginsControl1);
+            this.Controls.Add(this.PluginsControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = Els_kom_Core.Classes.Icons.FormIcon;
             this.MaximizeBox = false;
@@ -64,6 +64,6 @@ namespace Els_kom.Forms
 
         #endregion
 
-        private Els_kom_Core.Controls.PluginsControl pluginsControl1;
+        private Els_kom_Core.Controls.PluginsControl PluginsControl1;
     }
 }

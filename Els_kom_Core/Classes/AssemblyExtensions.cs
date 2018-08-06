@@ -13,19 +13,19 @@ namespace Els_kom_Core.Classes
             // If it is, get it’s bytes then load it.
             // If not throw an exception. Also throw
             // an exception if the pdb file is not found.
-            bool found = false;
-            bool pdbfound = false;
+            var found = false;
+            var pdbfound = false;
             byte[] asmbytes = null;
             byte[] pdbbytes = null;
-            string pdbFileName = AssemblyName.Replace("dll", "pdb");
-            System.IO.Compression.ZipArchive zipFile = System.IO.Compression.ZipFile.OpenRead(ZipFileName);
+            var pdbFileName = AssemblyName.Replace("dll", "pdb");
+            var zipFile = System.IO.Compression.ZipFile.OpenRead(ZipFileName);
             foreach (var entry in zipFile.Entries)
             {
                 if (entry.FullName.Equals(AssemblyName))
                 {
                     found = true;
-                    System.IO.Stream strm = entry.Open();
-                    System.IO.MemoryStream ms = new System.IO.MemoryStream();
+                    var strm = entry.Open();
+                    var ms = new System.IO.MemoryStream();
                     strm.CopyTo(ms);
                     asmbytes = ms.ToArray();
                     ms.Dispose();
@@ -34,8 +34,8 @@ namespace Els_kom_Core.Classes
                 else if (entry.FullName.Equals(pdbFileName))
                 {
                     pdbfound = true;
-                    System.IO.Stream strm = entry.Open();
-                    System.IO.MemoryStream ms = new System.IO.MemoryStream();
+                    var strm = entry.Open();
+                    var ms = new System.IO.MemoryStream();
                     strm.CopyTo(ms);
                     pdbbytes = ms.ToArray();
                     ms.Dispose();
@@ -56,7 +56,7 @@ namespace Els_kom_Core.Classes
             // always load pdb when debugging.
             // PDB should be automatically downloaded to zip file always
             // and really *should* always be present.
-            bool LoadPDB = LoadPDBFile ? LoadPDBFile : System.Diagnostics.Debugger.IsAttached;
+            var LoadPDB = LoadPDBFile ? LoadPDBFile : System.Diagnostics.Debugger.IsAttached;
             return LoadPDB ? System.Reflection.Assembly.Load(asmbytes, pdbbytes) : System.Reflection.Assembly.Load(asmbytes);
         }
     }

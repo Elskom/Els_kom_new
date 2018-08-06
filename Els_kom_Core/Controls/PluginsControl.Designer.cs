@@ -8,11 +8,6 @@ namespace Els_kom_Core.Controls
     partial class PluginsControl
     {
         /// <summary>
-        /// Parrent Form that the control is on.
-        /// </summary>
-        public new System.Windows.Forms.Form ParentForm;
-
-        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;

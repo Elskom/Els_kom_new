@@ -15,31 +15,30 @@ namespace Els_kom.Forms
         private bool Enablehandlers;
         private System.Windows.Forms.Form aboutfrm;
         private System.Windows.Forms.Form settingsfrm;
-        internal static bool _closable = false;
 
         internal MainForm() => InitializeComponent();
 
         protected override void WndProc(ref System.Windows.Forms.Message m)
         {
-            if (Enablehandlers && m.Msg == this.MainControl1.GetSysCommand())
+            if (Enablehandlers && m.Msg == MainControl1.GetSysCommand())
             {
-                if (m.WParam.ToInt32() == this.MainControl1.GetMinimizeCommand())
+                if (m.WParam.ToInt32() == MainControl1.GetMinimizeCommand())
                 {
-                    this.Hide();
+                    Hide();
                     m.Result = System.IntPtr.Zero;
                     return;
                 }
-                else if (m.WParam.ToInt32() == this.MainControl1.GetMaximizeCommand())
+                else if (m.WParam.ToInt32() == MainControl1.GetMaximizeCommand())
                 {
-                    this.Show();
-                    this.Activate();
+                    Show();
+                    Activate();
                     m.Result = System.IntPtr.Zero;
                     return;
                 }
-                else if (m.WParam.ToInt32() == this.MainControl1.GetRestoreCommand())
+                else if (m.WParam.ToInt32() == MainControl1.GetRestoreCommand())
                 {
-                    this.Show();
-                    this.Activate();
+                    Show();
+                    Activate();
                     m.Result = System.IntPtr.Zero;
                     return;
                 }
@@ -49,9 +48,9 @@ namespace Els_kom.Forms
 
         private void MainForm_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
-            bool Cancel = e.Cancel;
+            var Cancel = e.Cancel;
             // CloseReason UnloadMode = e->CloseReason; <-- Removed because not used.
-            if (!this.MainControl1.AbleToClose() && !_closable)
+            if (!MainControl1.AbleToClose() && !Els_kom_Core.Controls.MainControl._closable)
             {
                 Cancel = true;
                 System.Windows.Forms.MessageBox.Show("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
@@ -59,66 +58,59 @@ namespace Els_kom.Forms
             if (!Cancel)
             {
                 Els_kom_Core.Classes.SettingsFile.Settingsxml?.Dispose();
-                this.MainControl1.end_settings_loop = true;
+                MainControl1.end_settings_loop = true;
             }
             e.Cancel = Cancel;
         }
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-            this.Hide();
-            if (this.MainControl1.VersionCheck())
+            Hide();
+            if (MainControl1.VersionCheck())
             {
-                this.MainControl1.LoadControl();
+                MainControl1.LoadControl();
             }
         }
 
-        private void MainForm_MouseLeave(object sender, System.EventArgs e) => this.MainControl1.Label1.Text = "";
+        private void MainForm_MouseLeave(object sender, System.EventArgs e) => MainControl1.Label1.Text = "";
 
         private void MainControl1_CloseForm(object sender, System.EventArgs e)
         {
             aboutfrm?.Close();
             settingsfrm?.Close();
-            this.Close();
+            Close();
         }
 
         private void MainControl1_MinimizeForm(object sender, System.EventArgs e)
         {
-            if (!this.ShowInTaskbar)
+            if (!ShowInTaskbar)
             {
-                this.Hide();
+                Hide();
             }
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            WindowState = System.Windows.Forms.FormWindowState.Minimized;
         }
 
         private void MainControl1_TaskbarShow(object sender, Els_kom_Core.Classes.ShowTaskbarEvent e)
         {
             if (e.value == "0") // Taskbar only!!!
             {
-                this.MainControl1.NotifyIcon1.Visible = false;
-                this.ShowInTaskbar = true;
+                MainControl1.NotifyIcon1.Visible = false;
+                ShowInTaskbar = true;
             }
             if (e.value == "1") // Tray only!!!
             {
-                this.MainControl1.NotifyIcon1.Visible = true;
-                this.ShowInTaskbar = false;
+                MainControl1.NotifyIcon1.Visible = true;
+                ShowInTaskbar = false;
             }
             if (e.value == "2") // Both!!!
             {
-                this.MainControl1.NotifyIcon1.Visible = true;
-                this.ShowInTaskbar = true;
+                MainControl1.NotifyIcon1.Visible = true;
+                ShowInTaskbar = true;
             }
-            if (!this.ShowInTaskbar)
-            {
-                this.Enablehandlers = true;
-            }
-            else
-            {
-                this.Enablehandlers = false;
-            }
+            Enablehandlers = !ShowInTaskbar ? true : false;
         }
 
-        private void MainControl1_TrayNameChange(object sender, System.EventArgs e) => this.MainControl1.NotifyIcon1.Text = this.Text;
+        private void MainControl1_TrayNameChange(object sender, System.EventArgs e) => MainControl1.NotifyIcon1.Text = Text;
 
         private void MainControl1_TrayClick(object sender, System.Windows.Forms.MouseEventArgs e)
         {
@@ -130,29 +122,29 @@ namespace Els_kom.Forms
             {
                 if (e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
-                    if (this.ShowInTaskbar == true)
+                    if (ShowInTaskbar == true)
                     {
-                        if (this.WindowState == System.Windows.Forms.FormWindowState.Minimized)
+                        if (WindowState == System.Windows.Forms.FormWindowState.Minimized)
                         {
-                            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
-                            this.Activate();
+                            WindowState = System.Windows.Forms.FormWindowState.Normal;
+                            Activate();
                         }
                         else
                         {
-                            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+                            WindowState = System.Windows.Forms.FormWindowState.Minimized;
                         }
                     }
-                    else if (this.MainControl1.NotifyIcon1.Visible == true)
+                    else if (MainControl1.NotifyIcon1.Visible == true)
                     {
-                        if (this.WindowState == System.Windows.Forms.FormWindowState.Minimized)
+                        if (WindowState == System.Windows.Forms.FormWindowState.Minimized)
                         {
-                            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
-                            this.Show();
+                            WindowState = System.Windows.Forms.FormWindowState.Normal;
+                            Show();
                         }
                         else
                         {
-                            this.Hide();
-                            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+                            Hide();
+                            WindowState = System.Windows.Forms.FormWindowState.Minimized;
                         }
                     }
                 }
@@ -183,10 +175,10 @@ namespace Els_kom.Forms
 
         private void MainControl1_ShowForm(object sender, System.EventArgs e)
         {
-            this.MainControl1.NotifyIcon1.Icon = this.Icon;
-            this.MainControl1.NotifyIcon1.Text = this.Text;
-            this.MainControl1.NotifyIcon1.Visible = true;
-            this.Show();
+            MainControl1.NotifyIcon1.Icon = Icon;
+            MainControl1.NotifyIcon1.Text = Text;
+            MainControl1.NotifyIcon1.Visible = true;
+            Show();
         }
     }
 }

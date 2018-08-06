@@ -36,37 +36,37 @@ namespace Els_kom_Core.Classes
                 System.Collections.Generic.ICollection<System.Reflection.Assembly> assemblies = new System.Collections.Generic.List<System.Reflection.Assembly>();
                 if (dllFileNames != null)
                 {
-                    foreach(string dllFile in dllFileNames)
+                    foreach(var dllFile in dllFileNames)
                     {
-                        System.Reflection.AssemblyName an = System.Reflection.AssemblyName.GetAssemblyName(dllFile);
-                        System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(an);
+                        var an = System.Reflection.AssemblyName.GetAssemblyName(dllFile);
+                        var assembly = System.Reflection.Assembly.Load(an);
                         assemblies.Add(assembly);
                     }
                 }
                 else
                 {
-                    System.IO.Compression.ZipArchive zipFile = System.IO.Compression.ZipFile.OpenRead(path);
+                    var zipFile = System.IO.Compression.ZipFile.OpenRead(path);
                     foreach (var entry in zipFile.Entries)
                     {
                         // just lookup the dlls here. The LoadFromZip method will load the pdb’s if they are deemed needed.
                         if (entry.FullName.EndsWith(".dll"))
                         {
                             SettingsFile.Settingsxml.ReopenFile();
-                            int.TryParse(SettingsFile.Settingsxml.Read("LoadPDB"), out int tempint);
-                            System.Reflection.Assembly assembly = AssemblyExtensions.LoadFromZip(path, entry.FullName, System.Convert.ToBoolean(tempint));
+                            int.TryParse(SettingsFile.Settingsxml.Read("LoadPDB"), out var tempint);
+                            var assembly = AssemblyExtensions.LoadFromZip(path, entry.FullName, System.Convert.ToBoolean(tempint));
                             assemblies.Add(assembly);
                         }
                     }
                     zipFile.Dispose();
                 }
-                System.Type pluginType = typeof(T);
+                var pluginType = typeof(T);
                 System.Collections.Generic.ICollection<System.Type> pluginTypes = new System.Collections.Generic.List<System.Type>();
-                foreach(System.Reflection.Assembly assembly in assemblies)
+                foreach(var assembly in assemblies)
                 {
                     if(assembly != null)
                     {
-                        System.Type[] types = assembly.GetTypes();
-                        foreach(System.Type type in types)
+                        var types = assembly.GetTypes();
+                        foreach(var type in types)
                         {
                             if(type.IsInterface || type.IsAbstract)
                             {
@@ -82,9 +82,9 @@ namespace Els_kom_Core.Classes
                         }
                     }
                 }
-                foreach(System.Type type in pluginTypes)
+                foreach(var type in pluginTypes)
                 {
-                    T plugin = (T)System.Activator.CreateInstance(type);
+                    var plugin = (T)System.Activator.CreateInstance(type);
                     plugins.Add(plugin);
                 }
                 return plugins;

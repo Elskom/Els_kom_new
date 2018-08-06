@@ -7,14 +7,7 @@ namespace Els_kom.Forms
 {
     public partial class PluginsForm : System.Windows.Forms.Form
     {
-        public PluginsForm()
-        {
-            InitializeComponent();
-        }
-
-        private void PluginsForm_Load(object sender, System.EventArgs e)
-        {
-
-        }
+        public PluginsForm() => InitializeComponent();
+        private void PluginsForm_Load(object sender, System.EventArgs e) => PluginsControl1.InitControl();
     }
 }

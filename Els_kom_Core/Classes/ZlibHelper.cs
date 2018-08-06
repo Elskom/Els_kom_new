@@ -27,7 +27,7 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <exception cref="Zlib.ZStreamException">Thrown when the stream Errors in any way.</exception>
         // discard returned adler32. The caller does not want it.
-        public static void CompressData(byte[] inData, out byte[] outData, int level) => CompressData(inData, out outData, level, out int _adler32);
+        public static void CompressData(byte[] inData, out byte[] outData, int level) => CompressData(inData, out outData, level, out var _adler32);
 
         /// <summary>
         /// Compresses data using an specific compression level.
@@ -35,8 +35,8 @@ namespace Els_kom_Core.Classes
         /// <exception cref="Zlib.ZStreamException">Thrown when the stream Errors in any way.</exception>
         public static void CompressData(byte[] inData, out byte[] outData, int level, out int _adler32)
         {
-            System.IO.MemoryStream outMemoryStream = new System.IO.MemoryStream();
-            Zlib.ZOutputStream outZStream = new Zlib.ZOutputStream(outMemoryStream, level);
+            var outMemoryStream = new System.IO.MemoryStream();
+            var outZStream = new Zlib.ZOutputStream(outMemoryStream, level);
             System.IO.Stream inMemoryStream = new System.IO.MemoryStream(inData);
             try
             {
@@ -67,8 +67,8 @@ namespace Els_kom_Core.Classes
         /// <exception cref="Zlib.ZStreamException">Thrown when the stream Errors in any way.</exception>
         public static void DecompressData(byte[] inData, out byte[] outData)
         {
-            System.IO.MemoryStream outMemoryStream = new System.IO.MemoryStream();
-            Zlib.ZOutputStream outZStream = new Zlib.ZOutputStream(outMemoryStream);
+            var outMemoryStream = new System.IO.MemoryStream();
+            var outZStream = new Zlib.ZOutputStream(outMemoryStream);
             System.IO.Stream inMemoryStream = new System.IO.MemoryStream(inData);
             try
             {

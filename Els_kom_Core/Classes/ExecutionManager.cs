@@ -37,7 +37,7 @@ namespace Els_kom_Core.Classes
         internal static object Shell(string FileName, string Arguments, bool RedirectStandardOutput, bool RedirectStandardError, bool UseShellExecute, bool CreateNoWindow, System.Diagnostics.ProcessWindowStyle WindowStyle, string WorkingDirectory, bool WaitForProcessExit)
         {
             object ret = 0;
-            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            var proc = new System.Diagnostics.Process();
             proc.StartInfo.FileName = FileName;
             proc.StartInfo.Arguments = Arguments;
             proc.StartInfo.RedirectStandardOutput = RedirectStandardOutput;
@@ -74,7 +74,7 @@ namespace Els_kom_Core.Classes
         /// <returns>Boolean</returns>
         internal static bool IsElsKomRunning()
         {
-            System.Diagnostics.Process[] els_komexe = System.Diagnostics.Process.GetProcessesByName("Els_kom");
+            var els_komexe = System.Diagnostics.Process.GetProcessesByName("Els_kom");
             return System.Linq.Enumerable.Count(els_komexe) > 1;
         }
 
@@ -112,6 +112,8 @@ namespace Els_kom_Core.Classes
             {
                 MessageManager.ShowError("The Elsword Directory Setting is not set. Make sure to Set your Elsword Directory Setting and try to Test your mods Again!", "Error!");
             }
+            // avoid bad UI bug.
+            ExecutingElsword = ExecutingElsword ? false : ExecutingElsword;
         }
 
         /// <summary>
@@ -159,6 +161,8 @@ namespace Els_kom_Core.Classes
             {
                 MessageManager.ShowError("The Elsword Directory Setting is not set. Make sure to Set your Elsword Directory Setting and try to update Elsword Again!", "Error!");
             }
+            // avoid bad UI bug.
+            ExecutingElsword = ExecutingElsword ? false : ExecutingElsword;
         }
 
         /// <summary>

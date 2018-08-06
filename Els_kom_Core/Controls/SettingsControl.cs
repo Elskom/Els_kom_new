@@ -13,10 +13,7 @@ namespace Els_kom_Core.Controls
         /// <summary>
         /// SettingsControl constructor.
         /// </summary>
-        public SettingsControl()
-        {
-            InitializeComponent();
-        }
+        public SettingsControl() => InitializeComponent();
 
         private string curvalue;
         private string curvalue2;
@@ -26,10 +23,6 @@ namespace Els_kom_Core.Controls
         private string Label4 = "...";
         private string Label5 = "...";
 
-        /// <summary>
-        /// Parrent Form that the control is on.
-        /// </summary>
-        public new System.Windows.Forms.Form ParentForm;
         /// <summary>
         /// Plugins Installer/Updating form opening event.
         /// </summary>
@@ -85,13 +78,13 @@ namespace Els_kom_Core.Controls
 
         private void Button1_Click(object sender, System.EventArgs e)
         {
-            System.Windows.Forms.FolderBrowserDialog FolderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog
+            var FolderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog
             {
                 Description = "Select the Folder that Your Elsword Install is in (Must be the one that either elsword.exe or voidels.exe is in).",
                 RootFolder = System.Environment.SpecialFolder.MyComputer,
                 ShowNewFolderButton = false
             };
-            System.Windows.Forms.DialogResult res = FolderBrowserDialog1.ShowDialog();
+            var res = FolderBrowserDialog1.ShowDialog();
             if (res == System.Windows.Forms.DialogResult.OK)
             {
                 if (FolderBrowserDialog1.SelectedPath.Length > 0)
@@ -101,10 +94,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void Button2_Click(object sender, System.EventArgs e)
-        {
-            ParentForm?.Close();
-        }
+        private void Button2_Click(object sender, System.EventArgs e) => FindForm()?.Close();
 
         private void RadioButton1_CheckedChanged(object sender, System.EventArgs e)
         {
@@ -282,7 +272,7 @@ namespace Els_kom_Core.Controls
             Label5 = string.IsNullOrEmpty(curvalue2) ? Label5 : curvalue2;
             CheckBox1.Checked = System.Convert.ToBoolean(curvalue5);
             CheckBox2.Checked = System.Convert.ToBoolean(curvalue4);
-            System.Collections.Generic.List<System.Windows.Forms.ListViewItem> Entries = new System.Collections.Generic.List<System.Windows.Forms.ListViewItem>();
+            var Entries = new System.Collections.Generic.List<System.Windows.Forms.ListViewItem>();
             foreach (var callbackplugin in Classes.ExecutionManager.callbackplugins)
             {
                 Entries.Add(new System.Windows.Forms.ListViewItem(new string[] {
@@ -295,7 +285,7 @@ namespace Els_kom_Core.Controls
             }
             if (Entries.Count > 3)
             {
-                this.ColumnHeader1.Width -= 17;
+                ColumnHeader1.Width -= 17;
             }
             ListView1.Items.AddRange(Entries.ToArray());
             SetRadios();
@@ -310,10 +300,10 @@ namespace Els_kom_Core.Controls
 
         private void ListView1_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            for (int i = 0; i < (ListView1.SelectedItems.Count); i++)
+            for (var i = 0; i < ListView1.SelectedItems.Count; i++)
             {
-                System.Windows.Forms.ListViewItem selitem = ListView1.SelectedItems[i];
-                bool found = false;
+                var selitem = ListView1.SelectedItems[i];
+                var found = false;
                 foreach (var callbackplugin in Classes.ExecutionManager.callbackplugins)
                 {
                     if (callbackplugin.PluginName.Equals(selitem.Text))
@@ -324,27 +314,20 @@ namespace Els_kom_Core.Controls
                         }
                     }
                 }
-                if (!found)
-                {
-                    Button3.Enabled = false;
-                }
-                else
-                {
-                    Button3.Enabled = true;
-                }
+                Button3.Enabled = !found ? false : true;
             }
         }
 
         private void Button3_Click(object sender, System.EventArgs e)
         {
-            for (int i = 0; i < (ListView1.SelectedItems.Count); i++)
+            for (var i = 0; i < ListView1.SelectedItems.Count; i++)
             {
-                System.Windows.Forms.ListViewItem selitem = ListView1.SelectedItems[i];
+                var selitem = ListView1.SelectedItems[i];
                 foreach (var callbackplugin in Classes.ExecutionManager.callbackplugins)
                 {
                     if (callbackplugin.PluginName.Equals(selitem.Text))
                     {
-                        System.Windows.Forms.Form plugsettingfrm = callbackplugin.SettingsWindow;
+                        var plugsettingfrm = callbackplugin.SettingsWindow;
                         plugsettingfrm.ShowDialog();
                         // ensure disposed.
                         if (!plugsettingfrm.IsDisposed)
@@ -357,10 +340,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void Button5_Click(object sender, System.EventArgs e)
-        {
-            ListView2.Items.Add("Enter plugin source url here.");
-        }
+        private void Button5_Click(object sender, System.EventArgs e) => ListView2.Items.Add("Enter plugin source url here.");
 
         private void Button6_Click(object sender, System.EventArgs e)
         {
@@ -370,27 +350,18 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void Button4_Click(object sender, System.EventArgs e)
-        {
-            OpenPluginsForm?.Invoke(this, new System.EventArgs());
-        }
+        private void Button4_Click(object sender, System.EventArgs e) => OpenPluginsForm?.Invoke(this, new System.EventArgs());
 
-        private void CheckBox1_CheckedChanged(object sender, System.EventArgs e)
-        {
-            curvalue5 = System.Convert.ToInt32(CheckBox1.Checked);
-        }
+        private void CheckBox1_CheckedChanged(object sender, System.EventArgs e) => curvalue5 = System.Convert.ToInt32(CheckBox1.Checked);
 
-        private void CheckBox2_CheckedChanged(object sender, System.EventArgs e)
-        {
-            curvalue4 = System.Convert.ToInt32(CheckBox2.Checked);
-        }
+        private void CheckBox2_CheckedChanged(object sender, System.EventArgs e) => curvalue4 = System.Convert.ToInt32(CheckBox2.Checked);
 
         // pople say use a DataGridView because they cant hack together a solution.
         // well they were too stupid to hack a elegant soluion like this.
         private void ListView2_DoubleClick(object sender, System.EventArgs e)
         {
             // seems to not place the box in the correct location and it shows under the listview...
-            System.Windows.Forms.TextBox textBox = new System.Windows.Forms.TextBox
+            var textBox = new System.Windows.Forms.TextBox
             {
                 Bounds = ListView2.SelectedItems[0].Bounds,
                 Text = ListView2.SelectedItems[0].Text,

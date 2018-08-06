@@ -62,7 +62,9 @@ namespace Els_kom_Core.Classes
         public string Encrypt_CBC(string pt)
         {
             if (!IVSet)
+            {
                 SetRandomIV();
+            }
             return ByteToHex(InitVector) + ByteToHex(Encrypt_CBC(System.Text.Encoding.ASCII.GetBytes(pt)));
         }
 
@@ -83,10 +85,7 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <param name="ct">Ciphertext data to decrypt</param>
         /// <returns>Plaintext</returns>
-        public byte[] Decrypt_CBC(byte[] ct)
-        {
-            return Crypt_CBC(ct, true);
-        }
+        public byte[] Decrypt_CBC(byte[] ct) => Crypt_CBC(ct, true);
 
         /// <summary>
         /// Encrypts a byte array in CBC mode.
@@ -94,50 +93,35 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <param name="pt">Plaintext data to encrypt</param>
         /// <returns>Ciphertext</returns>
-        public byte[] Encrypt_CBC(byte[] pt)
-        {
-            return Crypt_CBC(pt, false);
-        }
+        public byte[] Encrypt_CBC(byte[] pt) => Crypt_CBC(pt, false);
 
         /// <summary>
         /// Encrypt a string in ECB mode
         /// </summary>
         /// <param name="pt">Plaintext to encrypt as ascii string</param>
         /// <returns>hex value of encrypted data</returns>
-        public string Encrypt_ECB(string pt)
-        {
-            return ByteToHex(Encrypt_ECB(System.Text.Encoding.ASCII.GetBytes(pt)));
-        }
+        public string Encrypt_ECB(string pt) => ByteToHex(Encrypt_ECB(System.Text.Encoding.ASCII.GetBytes(pt)));
 
         /// <summary>
         /// Decrypts a string (ECB)
         /// </summary>
         /// <param name="ct">hHex string of the ciphertext</param>
         /// <returns>Plaintext ascii string</returns>
-        public string Decrypt_ECB(string ct)
-        {
-            return System.Text.Encoding.ASCII.GetString(Decrypt_ECB(HexToByte(ct))).Replace("\0", "");
-        }
+        public string Decrypt_ECB(string ct) => System.Text.Encoding.ASCII.GetString(Decrypt_ECB(HexToByte(ct))).Replace("\0", "");
 
         /// <summary>
         /// Encrypts a byte array in ECB mode
         /// </summary>
         /// <param name="pt">Plaintext data</param>
         /// <returns>Ciphertext bytes</returns>
-        public byte[] Encrypt_ECB(byte[] pt)
-        {
-            return Crypt_ECB(pt, false);
-        }
+        public byte[] Encrypt_ECB(byte[] pt) => Crypt_ECB(pt, false);
 
         /// <summary>
         /// Decrypts a byte array (ECB)
         /// </summary>
         /// <param name="ct">Ciphertext byte array</param>
         /// <returns>Plaintext</returns>
-        private byte[] Decrypt_ECB(byte[] ct)
-        {
-            return Crypt_ECB(ct, true);
-        }
+        private byte[] Decrypt_ECB(byte[] ct) => Crypt_ECB(ct, true);
 
         /// <summary>
         /// Decrypts a byte array
@@ -162,7 +146,7 @@ namespace Els_kom_Core.Classes
         /// </summary>
         public byte[] IV
         {
-            get { return InitVector; }
+            get => InitVector;
             set
             {
                 if (value.Length == 8)
@@ -182,8 +166,8 @@ namespace Els_kom_Core.Classes
         /// </summary>
         public bool NonStandard
         {
-            get { return nonStandardMethod; }
-            set { nonStandardMethod = value; }
+            get => nonStandardMethod;
+            set => nonStandardMethod = value;
         }
 
         /// <summary>
@@ -220,44 +204,44 @@ namespace Els_kom_Core.Classes
             }
 
             System.Buffer.BlockCopy(cipherKey, 0, key, 0, cipherKey.Length);
-            int j = 0;
-            for (int i = 0; i < 18; i++)
+            var j = 0;
+            for (var i = 0; i < 18; i++)
             {
-                uint d = (uint)(((key[j % cipherKey.Length] * 256 + key[(j + 1) % cipherKey.Length]) * 256 + key[(j + 2) % cipherKey.Length]) * 256 + key[(j + 3) % cipherKey.Length]);
+                var d = (uint)((((((key[j % cipherKey.Length] * 256) + key[(j + 1) % cipherKey.Length]) * 256) + key[(j + 2) % cipherKey.Length]) * 256) + key[(j + 3) % cipherKey.Length]);
                 bf_P[i] ^= d;
                 j = (j + 4) % cipherKey.Length;
             }
 
             xl_par = 0;
             xr_par = 0;
-            for (int i = 0; i < 18; i += 2)
+            for (var i = 0; i < 18; i += 2)
             {
-                encipher();
+                Encipher();
                 bf_P[i] = xl_par;
                 bf_P[i + 1] = xr_par;
             }
 
-            for (int i = 0; i < 256; i += 2)
+            for (var i = 0; i < 256; i += 2)
             {
-                encipher();
+                Encipher();
                 bf_s0[i] = xl_par;
                 bf_s0[i + 1] = xr_par;
             }
-            for (int i = 0; i < 256; i += 2)
+            for (var i = 0; i < 256; i += 2)
             {
-                encipher();
+                Encipher();
                 bf_s1[i] = xl_par;
                 bf_s1[i + 1] = xr_par;
             }
-            for (int i = 0; i < 256; i += 2)
+            for (var i = 0; i < 256; i += 2)
             {
-                encipher();
+                Encipher();
                 bf_s2[i] = xl_par;
                 bf_s2[i + 1] = xr_par;
             }
-            for (int i = 0; i < 256; i += 2)
+            for (var i = 0; i < 256; i += 2)
             {
-                encipher();
+                Encipher();
                 bf_s3[i] = xl_par;
                 bf_s3[i + 1] = xr_par;
             }
@@ -271,11 +255,11 @@ namespace Els_kom_Core.Classes
         /// <returns>(En/De)crypted data</returns>
         private byte[] Crypt_ECB(byte[] text, bool decrypt)
         {
-            int paddedLen = (text.Length % 8 == 0 ? text.Length : text.Length + 8 - (text.Length % 8));
-            byte[] plainText = new byte[paddedLen];
+            var paddedLen = (text.Length % 8 == 0 ? text.Length : text.Length + 8 - (text.Length % 8));
+            var plainText = new byte[paddedLen];
             System.Buffer.BlockCopy(text, 0, plainText, 0, text.Length);
-            byte[] block = new byte[8];
-            for (int i = 0; i < plainText.Length; i += 8)
+            var block = new byte[8];
+            for (var i = 0; i < plainText.Length; i += 8)
             {
                 System.Buffer.BlockCopy(plainText, i, block, 0, 8);
                 if (decrypt)
@@ -303,16 +287,16 @@ namespace Els_kom_Core.Classes
             {
                 throw new System.Exception("IV not set.");
             }
-            int paddedLen = (text.Length % 8 == 0 ? text.Length : text.Length + 8 - (text.Length % 8));
-            byte[] plainText = new byte[paddedLen];
+            var paddedLen = (text.Length % 8 == 0 ? text.Length : text.Length + 8 - (text.Length % 8));
+            var plainText = new byte[paddedLen];
             System.Buffer.BlockCopy(text, 0, plainText, 0, text.Length);
-            byte[] block = new byte[8];
-            byte[] preblock = new byte[8];
-            byte[] iv = new byte[8];
+            var block = new byte[8];
+            var preblock = new byte[8];
+            var iv = new byte[8];
             System.Buffer.BlockCopy(InitVector, 0, iv, 0, 8);
             if (!decrypt)
             {
-                for (int i = 0; i < plainText.Length; i += 8)
+                for (var i = 0; i < plainText.Length; i += 8)
                 {
                     System.Buffer.BlockCopy(plainText, i, block, 0, 8);
                     XorBlock_private(ref block, iv);
@@ -323,7 +307,7 @@ namespace Els_kom_Core.Classes
             }
             else
             {
-                for (int i = 0; i < plainText.Length; i += 8)
+                for (var i = 0; i < plainText.Length; i += 8)
                 {
                     System.Buffer.BlockCopy(plainText, i, block, 0, 8);
 
@@ -345,7 +329,7 @@ namespace Els_kom_Core.Classes
         /// <param name="iv">8 bit block 2</param>
         private static void XorBlock_private(ref byte[] block, byte[] iv)
         {
-            for (int i = 0; i < block.Length; i++)
+            for (var i = 0; i < block.Length; i++)
             {
                 block[i] ^= iv[i];
             }
@@ -358,7 +342,7 @@ namespace Els_kom_Core.Classes
         /// <param name="iv">8 bit block 2</param>
         public static void XorBlock(ref byte[] block, byte[] iv)
         {
-            for (int i = 0; i < block.Length; i++)
+            for (var i = 0; i < block.Length; i++)
             {
                 block[i] ^= iv[i % iv.Length];
             }
@@ -371,7 +355,7 @@ namespace Els_kom_Core.Classes
         private void BlockEncrypt(ref byte[] block)
         {
             SetBlock(block);
-            encipher();
+            Encipher();
             GetBlock(ref block);
         }
 
@@ -382,7 +366,7 @@ namespace Els_kom_Core.Classes
         private void BlockDecrypt(ref byte[] block)
         {
             SetBlock(block);
-            decipher();
+            Decipher();
             GetBlock(ref block);
         }
 
@@ -392,8 +376,8 @@ namespace Els_kom_Core.Classes
         /// <param name="block">the 64 bit block to setup</param>
         private void SetBlock(byte[] block)
         {
-            byte[] block1 = new byte[4];
-            byte[] block2 = new byte[4];
+            var block1 = new byte[4];
+            var block2 = new byte[4];
             System.Buffer.BlockCopy(block, 0, block1, 0, 4);
             System.Buffer.BlockCopy(block, 4, block2, 0, 4);
             //split the block
@@ -418,8 +402,8 @@ namespace Els_kom_Core.Classes
         /// <param name="block">64 bit buffer to receive the block</param>
         private void GetBlock(ref byte[] block)
         {
-            byte[] block1 = new byte[4];
-            byte[] block2 = new byte[4];
+            var block1 = new byte[4];
+            var block2 = new byte[4];
             if (nonStandardMethod)
             {
                 block1 = System.BitConverter.GetBytes(xr_par);
@@ -442,18 +426,18 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Runs the blowfish algorithm (standard 16 rounds)
         /// </summary>
-        private void encipher()
+        private void Encipher()
         {
             xl_par ^= bf_P[0];
             for (uint i = 0; i < 16; i += 2)
             {
-                xr_par = round(xr_par, xl_par, i + 1);
-                xl_par = round(xl_par, xr_par, i + 2);
+                xr_par = Round(xr_par, xl_par, i + 1);
+                xl_par = Round(xl_par, xr_par, i + 2);
             }
             xr_par = xr_par ^ bf_P[17];
 
             //swap the blocks
-            uint swap = xl_par;
+            var swap = xl_par;
             xl_par = xr_par;
             xr_par = swap;
         }
@@ -461,18 +445,18 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Runs the blowfish algorithm in reverse (standard 16 rounds)
         /// </summary>
-        private void decipher()
+        private void Decipher()
         {
             xl_par ^= bf_P[17];
             for (uint i = 16; i > 0; i -= 2)
             {
-                xr_par = round(xr_par, xl_par, i);
-                xl_par = round(xl_par, xr_par, i - 1);
+                xr_par = Round(xr_par, xl_par, i);
+                xl_par = Round(xl_par, xr_par, i - 1);
             }
             xr_par = xr_par ^ bf_P[0];
 
             //swap the blocks
-            uint swap = xl_par;
+            var swap = xl_par;
             xl_par = xr_par;
             xr_par = swap;
         }
@@ -484,11 +468,11 @@ namespace Els_kom_Core.Classes
         /// <param name="B">See spec</param>
         /// <param name="n">See spec</param>
         /// <returns></returns>
-        private uint round(uint a, uint B, uint n)
+        private uint Round(uint a, uint B, uint n)
         {
-            uint x1 = (bf_s0[wordByte0(B)] + bf_s1[wordByte1(B)]) ^ bf_s2[wordByte2(B)];
-            uint x2 = x1 + bf_s3[this.wordByte3(B)];
-            uint x3 = x2 ^ bf_P[n];
+            var x1 = (bf_s0[WordByte0(B)] + bf_s1[WordByte1(B)]) ^ bf_s2[WordByte2(B)];
+            var x2 = x1 + bf_s3[WordByte3(B)];
+            var x3 = x2 ^ bf_P[n];
             return x3 ^ a;
         }
 
@@ -497,18 +481,13 @@ namespace Els_kom_Core.Classes
         #region SBLOCKS
         //SBLOCKS ARE THE HEX DIGITS OF PI. 
         //The amount of hex digits can be increased if you want to experiment with more rounds and longer key lengths
-        private uint[] SetupP()
-        {
-            return new uint[] {
+        private uint[] SetupP() => new uint[] {
                 0x243f6a88,0x85a308d3,0x13198a2e,0x03707344,0xa4093822,0x299f31d0,
                     0x082efa98,0xec4e6c89,0x452821e6,0x38d01377,0xbe5466cf,0x34e90c6c,
                     0xc0ac29b7,0xc97c50dd,0x3f84d5b5,0xb5470917,0x9216d5d9,0x8979fb1b
             };
-        }
 
-        private uint[] SetupS0()
-        {
-            return new uint[] {
+        private uint[] SetupS0() => new uint[] {
                     0xd1310ba6,0x98dfb5ac,0x2ffd72db,0xd01adfb7,0xb8e1afed,0x6a267e96,
                     0xba7c9045,0xf12c7f99,0x24a19947,0xb3916cf7,0x0801f2e2,0x858efc16,
                     0x636920d8,0x71574e69,0xa458fea3,0xf4933d7e,0x0d95748f,0x728eb658,
@@ -553,11 +532,8 @@ namespace Els_kom_Core.Classes
                     0xf296ec6b,0x2a0dd915,0xb6636521,0xe7b9f9b6,0xff34052e,0xc5855664,
                     0x53b02d5d,0xa99f8fa1,0x08ba4799,0x6e85076a
             };
-        }
 
-        private uint[] SetupS1()
-        {
-            return new uint[] {
+        private uint[] SetupS1() => new uint[] {
                 0x4b7a70e9,0xb5b32944,0xdb75092e,0xc4192623,0xad6ea6b0,0x49a7df7d,
                     0x9cee60b8,0x8fedb266,0xecaa8c71,0x699a17ff,0x5664526c,0xc2b19ee1,
                     0x193602a5,0x75094c29,0xa0591340,0xe4183a3e,0x3f54989a,0x5b429d65,
@@ -602,11 +578,8 @@ namespace Els_kom_Core.Classes
                     0x675fda79,0xe3674340,0xc5c43465,0x713e38d8,0x3d28f89e,0xf16dff20,
                     0x153e21e7,0x8fb03d4a,0xe6e39f2b,0xdb83adf7
             };
-        }
 
-        private uint[] SetupS2()
-        {
-            return new uint[] {
+        private uint[] SetupS2() => new uint[] {
                 0xe93d5a68,0x948140f7,0xf64c261c,0x94692934,0x411520f7,0x7602d4f7,
                     0xbcf46b2e,0xd4a20068,0xd4082471,0x3320f46a,0x43b7d4b7,0x500061af,
                     0x1e39f62e,0x97244546,0x14214f74,0xbf8b8840,0x4d95fc1d,0x96b591af,
@@ -651,11 +624,8 @@ namespace Els_kom_Core.Classes
                     0xa28514d9,0x6c51133c,0x6fd5c7e7,0x56e14ec4,0x362abfce,0xddc6c837,
                     0xd79a3234,0x92638212,0x670efa8e,0x406000e0
             };
-        }
 
-        private uint[] SetupS3()
-        {
-            return new uint[] {
+        private uint[] SetupS3() => new uint[] {
                     0x3a39ce37,0xd3faf5cf,0xabc27737,0x5ac52d1b,0x5cb0679e,0x4fa33742,
                     0xd3822740,0x99bc9bbe,0xd5118e9d,0xbf0f7315,0xd62d1c7e,0xc700c47b,
                     0xb78c1b6b,0x21a19045,0xb26eb1be,0x6a366eb4,0x5748ab2f,0xbc946e79,
@@ -700,54 +670,43 @@ namespace Els_kom_Core.Classes
                     0x01c36ae4,0xd6ebe1f9,0x90d4f869,0xa65cdea0,0x3f09252d,0xc208e69f,
                     0xb74e6132,0xce77e25b,0x578fdfe3,0x3ac372e6
             };
-        }
 
         #endregion
 
         #region Conversions
 
         //gets the first byte in a uint
-        private byte wordByte0(uint w)
-        {
-            return (byte)(w / 256 / 256 / 256 % 256);
-        }
+        private byte WordByte0(uint w) => (byte)(w / 256 / 256 / 256 % 256);
 
         //gets the second byte in a uint
-        private byte wordByte1(uint w)
-        {
-            return (byte)(w / 256 / 256 % 256);
-        }
+        private byte WordByte1(uint w) => (byte)(w / 256 / 256 % 256);
 
         //gets the third byte in a uint
-        private byte wordByte2(uint w)
-        {
-            return (byte)(w / 256 % 256);
-        }
+        private byte WordByte2(uint w) => (byte)(w / 256 % 256);
 
         //gets the fourth byte in a uint
-        private byte wordByte3(uint w)
-        {
-            return (byte)(w % 256);
-        }
+        private byte WordByte3(uint w) => (byte)(w % 256);
 
         //converts a byte array to a hex string
         private string ByteToHex(byte[] bytes)
         {
-            System.Text.StringBuilder s = new System.Text.StringBuilder();
-            foreach (byte b in bytes)
+            var s = new System.Text.StringBuilder();
+            foreach (var b in bytes)
+            {
                 s.Append(b.ToString("x2"));
+            }
             return s.ToString();
         }
 
         //converts a hex string to a byte array
         private byte[] HexToByte(string hex)
         {
-            byte[] r = new byte[hex.Length / 2];
-            for (int i = 0; i < hex.Length - 1; i += 2)
+            var r = new byte[hex.Length / 2];
+            for (var i = 0; i < hex.Length - 1; i += 2)
             {
-                byte a = GetHex(hex[i]);
-                byte B = GetHex(hex[i + 1]);
-                r[i / 2] = (byte)(a * 16 + B);
+                var a = GetHex(hex[i]);
+                var B = GetHex(hex[i + 1]);
+                r[i / 2] = (byte)((a * 16) + B);
             }
             return r;
         }
@@ -789,21 +748,12 @@ namespace Els_kom_Core.Classes
             }
         }
 
-        // ~BlowFish() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
-
         // This code added to correctly implement the disposable pattern.
+        // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
         /// <summary>
         /// Cleans up the Blowfish items.
         /// </summary>
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            // GC.SuppressFinalize(this);
-        }
+        public void Dispose() => Dispose(true);
 
         #endregion
     }

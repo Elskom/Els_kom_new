@@ -43,7 +43,6 @@ namespace Els_kom.Forms
             this.aboutControl1.picIcon.Image = Els_kom_Core.Classes.Icons.FormImage;
             this.aboutControl1.Size = new System.Drawing.Size(382, 220);
             this.aboutControl1.TabIndex = 13;
-            this.aboutControl1.ParentForm = this;
             // 
             // AboutForm
             // 

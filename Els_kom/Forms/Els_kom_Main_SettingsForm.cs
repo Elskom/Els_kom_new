@@ -17,20 +17,19 @@ namespace Els_kom.Forms
             // from the Settings XMLObject in Designer mode
             // (which contains no instance there anyway) that causes
             // the Designer to fail to load the form the control is on.
-            settingsControl1.InitControl();
-            settingsControl1.ParentForm = this;
+            SettingsControl1.InitControl();
             Label1 = "1";
         }
 
         private void SettingsForm_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
             Label1 = "0";
-            settingsControl1.SaveSettings();
+            SettingsControl1.SaveSettings();
         }
 
-        private void settingsControl1_OpenPluginsForm(object sender, System.EventArgs e)
+        private void SettingsControl1_OpenPluginsForm(object sender, System.EventArgs e)
         {
-            PluginsForm pluginsForm = new PluginsForm();
+            var pluginsForm = new PluginsForm();
             pluginsForm.ShowDialog();
         }
     }

@@ -60,18 +60,12 @@ namespace Els_kom_Core.Classes
         /// Reads specific amount of data from the Stream.
         /// Does nothing really.
         /// </summary>
-        public override int Read(byte[] buffer, int offset, int count)
-        {
-            return 0;
-        }
+        public override int Read(byte[] buffer, int offset, int count) => 0;
 
         /// <summary>
         /// The amount to seek to. Always at 0 as Seeks are not supported.
         /// </summary>
-        public override long Seek(long offset, System.IO.SeekOrigin origin)
-        {
-            return 0;
-        }
+        public override long Seek(long offset, System.IO.SeekOrigin origin) => 0;
 
         /// <summary>
         /// Sets the length of the Stream.
@@ -101,21 +95,21 @@ namespace Els_kom_Core.Classes
                 {
                     System.IO.Directory.CreateDirectory(out_path);
                 }
-                byte[] xmldatabuffer = System.Text.Encoding.ASCII.GetBytes(xmldata);
+                var xmldatabuffer = System.Text.Encoding.ASCII.GetBytes(xmldata);
                 if (!System.IO.File.Exists(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml"))
                 {
-                    System.IO.FileStream fs = System.IO.File.Create(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml");
+                    var fs = System.IO.File.Create(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml");
                     fs.Write(xmldatabuffer, 0, xmldatabuffer.Length);
                     fs.Dispose();
                 }
-                byte[] entrydata = reader.ReadBytes(entry.compressed_size);
+                var entrydata = reader.ReadBytes(entry.compressed_size);
                 if (entry.algorithm == 0)
                 {
-                    bool failure = false;
-                    System.IO.FileStream entryfile = System.IO.File.Create(out_path + "\\" + entry.name);
+                    var failure = false;
+                    var entryfile = System.IO.File.Create(out_path + "\\" + entry.name);
                     try
                     {
-                        ZlibHelper.DecompressData(entrydata, out byte[] dec_entrydata);
+                        ZlibHelper.DecompressData(entrydata, out var dec_entrydata);
                         entryfile.Write(dec_entrydata, 0, entry.uncompressed_size);
                     }
                     catch (System.ArgumentException)
@@ -173,8 +167,8 @@ namespace Els_kom_Core.Classes
                 {
                     System.IO.Directory.CreateDirectory(out_path);
                 }
-                byte[] entrydata = reader.ReadBytes(entry.compressed_size);
-                System.IO.FileStream entryfile = System.IO.File.Create(out_path + "\\" + entry.name);
+                var entrydata = reader.ReadBytes(entry.compressed_size);
+                var entryfile = System.IO.File.Create(out_path + "\\" + entry.name);
                 byte[] dec_entrydata;
                 try
                 {
@@ -183,7 +177,7 @@ namespace Els_kom_Core.Classes
                 catch (Zlib.ZStreamException)
                 {
                     // copyright symbols... Really funny xor key...
-                    byte[] xorkey = System.Text.Encoding.UTF8.GetBytes("\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9");
+                    var xorkey = System.Text.Encoding.UTF8.GetBytes("\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9");
                     // xor this shit then try again...
                     BlowFish.XorBlock(ref entrydata, xorkey);
                     try
@@ -217,11 +211,7 @@ namespace Els_kom_Core.Classes
                 foreach (var fileElement in xml.Elements("File"))
                 {
                     var MappedIDAttribute = fileElement.Attribute("MappedID");
-                    if (MappedIDAttribute != null)
-                    {
-                        return 4;
-                    }
-                    return 3;
+                    return MappedIDAttribute != null ? 4 : 3;
                 }
             }
             else
@@ -239,7 +229,7 @@ namespace Els_kom_Core.Classes
         {
             if (System.IO.File.Exists(crcpath))
             {
-                int crcversion = GetCRCVersion(System.Text.Encoding.ASCII.GetString(System.IO.File.ReadAllBytes(crcpath)));
+                var crcversion = GetCRCVersion(System.Text.Encoding.ASCII.GetString(System.IO.File.ReadAllBytes(crcpath)));
                 if (crcversion != toVersion)
                 {
                     foreach (var plugin in KOMManager.komplugins)
@@ -260,15 +250,15 @@ namespace Els_kom_Core.Classes
         /// </summary>
         public void UpdateCRC(int crcversion, string crcpath, string checkpath)
         {
-            System.IO.FileInfo crcfile = new System.IO.FileInfo(crcpath);
-            System.IO.DirectoryInfo di1 = new System.IO.DirectoryInfo(checkpath);
+            var crcfile = new System.IO.FileInfo(crcpath);
+            var di1 = new System.IO.DirectoryInfo(checkpath);
             foreach (var fi1 in di1.GetFiles())
             {
                 if (!fi1.Name.Equals(crcfile.Name))
                 {
-                    bool found = false;
+                    var found = false;
                     // lookup the file entry in the crc.xml.
-                    string xmldata = System.Text.Encoding.UTF8.GetString(
+                    var xmldata = System.Text.Encoding.UTF8.GetString(
                        System.IO.File.ReadAllBytes(crcpath));
                     var xml = System.Xml.Linq.XElement.Parse(xmldata);
                     if (crcversion > 2)

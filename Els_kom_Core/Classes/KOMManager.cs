@@ -99,13 +99,13 @@ namespace Els_kom_Core.Classes
         /// </summary>
         private static int GetHeaderVersion(string komfile)
         {
-            int ret = 0;
-            System.IO.BinaryReader reader = new System.IO.BinaryReader(System.IO.File.OpenRead(System.Windows.Forms.Application.StartupPath + "\\koms\\" + komfile), System.Text.Encoding.ASCII);
-            byte[] headerbuffer = new byte[27];
+            var ret = 0;
+            var reader = new System.IO.BinaryReader(System.IO.File.OpenRead(System.Windows.Forms.Application.StartupPath + "\\koms\\" + komfile), System.Text.Encoding.ASCII);
+            var headerbuffer = new byte[27];
             // 27 is the size of the header string denoting the KOM file version number.
-            int offset = 0;
+            var offset = 0;
             reader.Read(headerbuffer, offset, 27);
-            string headerstring = System.Text.Encoding.UTF8.GetString(headerbuffer);
+            var headerstring = System.Text.Encoding.UTF8.GetString(headerbuffer);
             reader.Dispose();
             foreach (var komplugin in komplugins)
             {
@@ -128,7 +128,7 @@ namespace Els_kom_Core.Classes
         /// </summary>
         private static int CheckFolderVersion(string datafolder)
         {
-            int ret = 0;
+            var ret = 0;
             foreach (var komplugin in komplugins)
             {
                 if (komplugin.SupportedKOMVersion != 0)
@@ -156,15 +156,15 @@ namespace Els_kom_Core.Classes
         internal static void UnpackKoms()
         {
             is_unpacking = true;
-            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(System.Windows.Forms.Application.StartupPath + "\\koms");
+            var di = new System.IO.DirectoryInfo(System.Windows.Forms.Application.StartupPath + "\\koms");
             foreach (var fi in di.GetFiles("*.kom"))
             {
-                string _kom_file = fi.Name;
-                int kom_ver = GetHeaderVersion(_kom_file);
+                var _kom_file = fi.Name;
+                var kom_ver = GetHeaderVersion(_kom_file);
                 if (kom_ver != 0)
                 {
                     // remove ".kom" on end of string.
-                    string _kom_data_folder = System.IO.Path.GetFileNameWithoutExtension(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_file);
+                    var _kom_data_folder = System.IO.Path.GetFileNameWithoutExtension(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_file);
                     foreach (var komplugin in komplugins)
                     {
                         try
@@ -215,14 +215,14 @@ namespace Els_kom_Core.Classes
         internal static void PackKoms()
         {
             is_packing = true;
-            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(System.Windows.Forms.Application.StartupPath + "\\koms");
+            var di = new System.IO.DirectoryInfo(System.Windows.Forms.Application.StartupPath + "\\koms");
             foreach (var dri in di.GetDirectories())
             {
-                string _kom_data_folder = dri.Name;
-                int kom_ver = CheckFolderVersion(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_data_folder);
+                var _kom_data_folder = dri.Name;
+                var kom_ver = CheckFolderVersion(System.Windows.Forms.Application.StartupPath + "\\koms\\" + _kom_data_folder);
                 if (kom_ver != 0)
                 {
-                    string _kom_file = _kom_data_folder + ".kom";
+                    var _kom_file = _kom_data_folder + ".kom";
                     // pack kom based on the version of kom supplied.
                     if (kom_ver != -1)
                     {
