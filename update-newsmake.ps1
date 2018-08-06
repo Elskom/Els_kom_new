@@ -5,6 +5,7 @@ if(!(Test-Path -Path $env:nsmkpth))
     git clone -q https://github.com/Elskom/newsmake.git
     Set-Location -Path newsmake/build
     cmake ..
+    msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
     Set-Location -Path ../..
 }
 else
@@ -51,5 +52,6 @@ else
 }
 Set-Location -Path ../Misc/NEWS
 $env:newsmakeprogpth = Join-Path (Get-Location) ../../externals/newsmake/build/Release/newsmake
-Start-Process -FilePath "$env:newsmakeprogpth" -Wait -NoNewWindow -Verb runAs
+# works locally. Why the hell does this not work on AppVeyor.
+Start-Process -FilePath $env:newsmakeprogpth -Wait -NoNewWindow
 Set-Location -Path ../..
