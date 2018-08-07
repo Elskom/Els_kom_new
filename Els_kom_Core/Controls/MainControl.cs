@@ -29,6 +29,7 @@ namespace Els_kom_Core.Controls
         private string showintaskbar_tempvalue;
         private string showintaskbar_tempvalue2;
         private string ElsDir_temp;
+        private string iconVal;
         private System.Windows.Forms.Timer SettingsTmr;
         private System.Windows.Forms.Timer PackingTmr;
         private System.Windows.Forms.Timer UnpackingTmr;
@@ -246,6 +247,8 @@ namespace Els_kom_Core.Controls
             {
                 Classes.SettingsFile.Settingsxml = new Classes.XMLObject(Classes.SettingsFile.Path, "<Settings></Settings>");
                 ElsDir = Classes.SettingsFile.Settingsxml.Read("ElsDir");
+                var tmpiconVal = Classes.SettingsFile.Settingsxml.Read("WindowIcon");
+                iconVal = string.IsNullOrEmpty(tmpiconVal) ? "0" : tmpiconVal;
                 if (ElsDir.Length < 1)
                 {
                     Classes.MessageManager.ShowInfo("Welcome to Els_kom." + System.Environment.NewLine + "Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops." + System.Environment.NewLine + "Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!");
@@ -605,6 +608,13 @@ namespace Els_kom_Core.Controls
                     showintaskbar_tempvalue = Classes.SettingsFile.Settingsxml.Read("IconWhileElsNotRunning");
                     showintaskbar_tempvalue2 = Classes.SettingsFile.Settingsxml.Read("IconWhileElsRunning");
                     ElsDir_temp = Classes.SettingsFile.Settingsxml.Read("ElsDir");
+                    var tmpiconVal = Classes.SettingsFile.Settingsxml.Read("WindowIcon");
+                    if (!iconVal.Equals(tmpiconVal))
+                    {
+                        iconVal = tmpiconVal;
+                        // this seem to not update the form icon at runtime...
+                        FindForm().Icon = Classes.Icons.FormIcon;
+                    }
                     if (!string.Equals(ElsDir, ElsDir_temp))
                     {
                         ElsDir = ElsDir_temp;

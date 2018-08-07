@@ -58,20 +58,41 @@ namespace Els_kom_Core.Classes
             {
                 // Forms Designer hack.
                 // Load from a *.resx if it exists, otherwise make one.
+                var iconfiles = new string[] {
+                    ResourcesDir.iconpath,
+                    ResourcesDir.iconpath.Replace("els_kom", "YR"),
+                    ResourcesDir.iconpath.Replace("els_kom", "VP_Trans")
+                };
+                var iconfile = string.Empty;
+                if (resource.Equals("#1"))
+                {
+                    iconfile = iconfiles[0];
+                }
+                else if (resource.Equals("#2"))
+                {
+                    iconfile = iconfiles[1];
+                }
+                else if (resource.Equals("#3"))
+                {
+                    iconfile = iconfiles[2];
+                }
                 if (!System.IO.File.Exists(ResourcesDir.resourcespath))
                 {
                     var resx = new System.Resources.ResXResourceWriter(ResourcesDir.resourcespath);
-                    var iconstream = new System.IO.MemoryStream(System.IO.File.ReadAllBytes(ResourcesDir.iconpath));
-                    var icon2Dump = new System.Drawing.Icon(iconstream);
-                    resx.AddResource(GetFileBaseName(ResourcesDir.iconpath).Trim(".ico".ToCharArray()), icon2Dump);
-                    icon2Dump.Dispose();
+                    foreach (var iconFile in iconfiles)
+                    {
+                        var iconstream = new System.IO.MemoryStream(System.IO.File.ReadAllBytes(iconFile));
+                        var icon2Dump = new System.Drawing.Icon(iconstream);
+                        resx.AddResource(GetFileBaseName(iconFile).Trim(".ico".ToCharArray()), icon2Dump);
+                        icon2Dump.Dispose();
+                    }
                     // write resource file.
                     resx.Dispose();
                 }
                 // now read it.
                 var resxSet = new System.Resources.ResXResourceSet(ResourcesDir.resourcespath);
                 // hopefully this works.
-                var iconold = (System.Drawing.Icon)resxSet.GetObject(GetFileBaseName(ResourcesDir.iconpath).Trim(".ico".ToCharArray()));
+                var iconold = (System.Drawing.Icon)resxSet.GetObject(GetFileBaseName(iconfile).Trim(".ico".ToCharArray()));
                 retIcon = new System.Drawing.Icon(iconold, Width, Height);
                 hIcon = retIcon.Handle;
                 resxSet.Dispose();

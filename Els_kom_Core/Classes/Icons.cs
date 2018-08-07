@@ -20,7 +20,30 @@ namespace Els_kom_Core.Classes
                 if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
                     System.Runtime.InteropServices.OSPlatform.Windows))
                 {
-                    return LoadResources.GetIconResource("#1");
+                    var iconVal = string.Empty;
+                    XMLObject Settingsxml = null;
+                    if (SettingsFile.Settingsxml == null)
+                    {
+                        Settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
+                        iconVal = Settingsxml.Read("WindowIcon");
+                    }
+                    else
+                    {
+                        SettingsFile.Settingsxml.ReopenFile();
+                        iconVal = SettingsFile.Settingsxml.Read("WindowIcon");
+                    }
+                    // dispose this temporary object.
+                    Settingsxml?.Dispose();
+                    var resource = "#1";
+                    if (iconVal.Equals("1"))
+                    {
+                        resource = "#3";
+                    }
+                    else if (iconVal.Equals("2"))
+                    {
+                        resource = "#2";
+                    }
+                    return LoadResources.GetIconResource(resource);
                 }
                 else
                 {
@@ -42,7 +65,30 @@ namespace Els_kom_Core.Classes
                 if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
                     System.Runtime.InteropServices.OSPlatform.Windows))
                 {
-                    return LoadResources.GetImageResource("#1", 48, 48);
+                    var iconVal = string.Empty;
+                    XMLObject Settingsxml = null;
+                    if (SettingsFile.Settingsxml == null)
+                    {
+                        Settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
+                        iconVal = Settingsxml.Read("WindowIcon");
+                    }
+                    else
+                    {
+                        SettingsFile.Settingsxml.ReopenFile();
+                        iconVal = SettingsFile.Settingsxml.Read("WindowIcon");
+                    }
+                    // dispose this temporary object.
+                    Settingsxml?.Dispose();
+                    var resource = "#1";
+                    if (iconVal.Equals("1"))
+                    {
+                        resource = "#3";
+                    }
+                    else if (iconVal.Equals("2"))
+                    {
+                        resource = "#2";
+                    }
+                    return LoadResources.GetImageResource(resource, 48, 48);
                 }
                 else
                 {
