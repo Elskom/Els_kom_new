@@ -262,10 +262,13 @@ namespace Els_kom_Core.Classes
             if (elem != null || _elements_added.ContainsKey(elementname))
             {
             }
+            else
+            {
+            }
         }
 
         /// <summary>
-        /// Writes an arrar of elements to the parrent element or updates them based
+        /// Writes an array of elements to the parrent element or updates them based
         /// upon the element name.
         ///
         /// If Elements do not exist yet they will be created automatically.
@@ -323,6 +326,31 @@ namespace Els_kom_Core.Classes
             }
             // until this is done.
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Reads and returns an array of values set for an particular XML Element's subelements.
+        ///
+        /// If Parent Element does not exist yet it will be created automatically
+        /// with an empty value. In that case an empty string array is returned.
+        /// </summary>
+        /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
+        public string[] Read(string parentelementname, string elementname, object trash = null)
+        {
+            if (disposedValue)
+            {
+                throw new System.ObjectDisposedException("XMLOblect is disposed.");
+            }
+            var elem = doc.Root.Element(elementname);
+            if (elem != null)
+            {
+            }
+            else
+            {
+                Write(elementname, string.Empty);
+            }
+            // TODO: Read the subelements.
+            return new string[] { };
         }
 
         /// <summary>
