@@ -14,18 +14,18 @@ namespace Els_kom_Core.Classes
         // TODO: Finish Read(string elementname, string attributename) and
         // Write(string elementname, string attributename, object attributevalue)
         // shortcut methods.
-        // TODO: Add ways of adding elements within elements.
+        // TODO: Add ways of adding, editing, and deleting elements within elements.
         private System.Xml.Linq.XDocument doc;
         private string cached_xmlfilename;
         private bool _exists = false;
         private bool _changed = false;
         // Pending XML Element Addictions (excluding only adding attributes to an already existing element).
-        private System.Collections.Generic.Dictionary<string, structs.XMLElementData> _elements_added = new System.Collections.Generic.Dictionary<string, structs.XMLElementData>();
+        private System.Collections.Generic.Dictionary<string, XMLElementData> _elements_added = new System.Collections.Generic.Dictionary<string, XMLElementData>();
         // Pending XML Element edits (any value edits, added attributes, or edited attributes).
-        private System.Collections.Generic.Dictionary<string, structs.XMLElementData> _elements_edits = new System.Collections.Generic.Dictionary<string, structs.XMLElementData>();
+        private System.Collections.Generic.Dictionary<string, XMLElementData> _elements_edits = new System.Collections.Generic.Dictionary<string, XMLElementData>();
         // Pending XML Element Attribute Deletions. If Element was made at runtime and not in the xml file,
         // remove it from the _elements_changed Dictionary instead.
-        private System.Collections.Generic.Dictionary<string, structs.XMLElementData> _element_attributes_deleted = new System.Collections.Generic.Dictionary<string, structs.XMLElementData>();
+        private System.Collections.Generic.Dictionary<string, XMLElementData> _element_attributes_deleted = new System.Collections.Generic.Dictionary<string, XMLElementData>();
         // Pending XML Element Deletions.
         private System.Collections.Generic.List<string> _elements_deleted = new System.Collections.Generic.List<string>();
         // Lock Saves so normal System.IO.File.ReadAllBytes
@@ -122,18 +122,18 @@ namespace Els_kom_Core.Classes
             }
             if (_elements_added.ContainsKey(elementname))
             {
-                var xMLAttributeData = new structs.XMLAttributeData
+                var xMLAttributeData = new XMLAttributeData
                 {
                     AttributeName = attributename,
                     value = attributevalue.ToString()
                 };
                 var xmleldata = _elements_added[elementname];
-                xmleldata.Attributes = xmleldata.Attributes ?? new System.Collections.Generic.List<structs.XMLAttributeData>();
+                xmleldata.Attributes = xmleldata.Attributes ?? new System.Collections.Generic.List<XMLAttributeData>();
                 xmleldata.Attributes.Add(xMLAttributeData);
             }
             else if (_elements_edits.ContainsKey(elementname))
             {
-                structs.XMLAttributeData xMLAttributeData;
+                XMLAttributeData xMLAttributeData;
                 var edit = false;
                 var attributeIndex = 0;
                 var xmleldata = _elements_edits[elementname];
@@ -145,12 +145,12 @@ namespace Els_kom_Core.Classes
                         attributeIndex = xmleldata.Attributes.IndexOf(attribute);
                     }
                 }
-                xMLAttributeData = new structs.XMLAttributeData
+                xMLAttributeData = new XMLAttributeData
                 {
                     AttributeName = attributename,
                     value = attributevalue.ToString()
                 };
-                xmleldata.Attributes = xmleldata.Attributes ?? new System.Collections.Generic.List<structs.XMLAttributeData>();
+                xmleldata.Attributes = xmleldata.Attributes ?? new System.Collections.Generic.List<XMLAttributeData>();
                 if (!edit && attributevalue != null)
                 {
                     xmleldata.Attributes.Add(xMLAttributeData);
@@ -185,7 +185,7 @@ namespace Els_kom_Core.Classes
             var elem = doc.Root.Element(elementname);
             if (elem == null || !_elements_added.ContainsKey(elementname))
             {
-                var xMLElementData = new structs.XMLElementData
+                var xMLElementData = new XMLElementData
                 {
                     Attributes = null,
                     value = value
@@ -215,7 +215,7 @@ namespace Els_kom_Core.Classes
             var elem = doc.Root.Element(elementname);
             if (elem != null || _elements_added.ContainsKey(elementname))
             {
-                var xMLElementData = new structs.XMLElementData
+                var xMLElementData = new XMLElementData
                 {
                     Attributes = _elements_added.ContainsKey(elementname) ? _elements_added[elementname].Attributes : (_elements_edits.ContainsKey(elementname) ? _elements_edits[elementname].Attributes : null),
                     value = value
@@ -253,6 +253,25 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
         public void Write(string elementname, string attributename, string attributevalue)
+        {
+            if (disposedValue)
+            {
+                throw new System.ObjectDisposedException("XMLOblect is disposed.");
+            }
+            var elem = doc.Root.Element(elementname);
+            if (elem != null || _elements_added.ContainsKey(elementname))
+            {
+            }
+        }
+
+        /// <summary>
+        /// Writes an arrar of elements to the parrent element or updates them based
+        /// upon the element name.
+        ///
+        /// If Elements do not exist yet they will be created automatically.
+        /// </summary>
+        /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
+        public void Write(string parentelementname, string elementname, string[] values)
         {
         }
 
@@ -431,6 +450,11 @@ namespace Els_kom_Core.Classes
                             foreach (var attributes in added_elements.Value.Attributes)
                             {
                                 elem.SetAttributeValue(attributes.AttributeName, attributes.value);
+                            }
+                            // add subelements and their attributes.
+                            foreach (var element in added_elements.Value.Subelements)
+                            {
+                                // TODO: Add subelements to xml.
                             }
                         }
                     }

@@ -33,9 +33,9 @@ namespace Els_kom_Core.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("General");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Plugins");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Other");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("General");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Plugins");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Other");
             this.Panel1 = new System.Windows.Forms.Panel();
             this.Label1 = new System.Windows.Forms.Label();
             this.Button1 = new System.Windows.Forms.Button();
@@ -58,6 +58,10 @@ namespace Els_kom_Core.Controls
             this.ListView1 = new System.Windows.Forms.ListView();
             this.ColumnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Panel6 = new System.Windows.Forms.Panel();
+            this.Label7 = new System.Windows.Forms.Label();
+            this.RadioButton9 = new System.Windows.Forms.RadioButton();
+            this.RadioButton8 = new System.Windows.Forms.RadioButton();
+            this.RadioButton7 = new System.Windows.Forms.RadioButton();
             this.Label6 = new System.Windows.Forms.Label();
             this.Button6 = new System.Windows.Forms.Button();
             this.Button5 = new System.Windows.Forms.Button();
@@ -124,16 +128,16 @@ namespace Els_kom_Core.Controls
             // 
             this.TreeView1.Location = new System.Drawing.Point(0, 0);
             this.TreeView1.Name = "TreeView1";
-            treeNode1.Name = "Node0";
-            treeNode1.Text = "General";
-            treeNode2.Name = "Node1";
-            treeNode2.Text = "Plugins";
-            treeNode3.Name = "Node2";
-            treeNode3.Text = "Other";
+            treeNode7.Name = "Node0";
+            treeNode7.Text = "General";
+            treeNode8.Name = "Node1";
+            treeNode8.Text = "Plugins";
+            treeNode9.Name = "Node2";
+            treeNode9.Text = "Other";
             this.TreeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode7,
+            treeNode8,
+            treeNode9});
             this.TreeView1.Scrollable = false;
             this.TreeView1.Size = new System.Drawing.Size(96, 127);
             this.TreeView1.TabIndex = 6;
@@ -311,6 +315,10 @@ namespace Els_kom_Core.Controls
             // 
             this.Panel6.AutoScroll = true;
             this.Panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Panel6.Controls.Add(this.Label7);
+            this.Panel6.Controls.Add(this.RadioButton9);
+            this.Panel6.Controls.Add(this.RadioButton8);
+            this.Panel6.Controls.Add(this.RadioButton7);
             this.Panel6.Controls.Add(this.Label6);
             this.Panel6.Controls.Add(this.Button6);
             this.Panel6.Controls.Add(this.Button5);
@@ -323,6 +331,48 @@ namespace Els_kom_Core.Controls
             this.Panel6.Size = new System.Drawing.Size(415, 127);
             this.Panel6.TabIndex = 7;
             this.Panel6.Visible = false;
+            // 
+            // Label7
+            // 
+            this.Label7.AutoSize = true;
+            this.Label7.Location = new System.Drawing.Point(12, 169);
+            this.Label7.Name = "Label7";
+            this.Label7.Size = new System.Drawing.Size(87, 13);
+            this.Label7.TabIndex = 11;
+            this.Label7.Text = "Icon to Use in UI";
+            // 
+            // RadioButton9
+            // 
+            this.RadioButton9.AutoSize = true;
+            this.RadioButton9.Location = new System.Drawing.Point(184, 186);
+            this.RadioButton9.Name = "RadioButton9";
+            this.RadioButton9.Size = new System.Drawing.Size(65, 17);
+            this.RadioButton9.TabIndex = 10;
+            this.RadioButton9.Text = "YR (Ara)";
+            this.RadioButton9.UseVisualStyleBackColor = true;
+            this.RadioButton9.CheckedChanged += new System.EventHandler(this.RadioButton9_CheckedChanged);
+            // 
+            // RadioButton8
+            // 
+            this.RadioButton8.AutoSize = true;
+            this.RadioButton8.Location = new System.Drawing.Point(90, 186);
+            this.RadioButton8.Name = "RadioButton8";
+            this.RadioButton8.Size = new System.Drawing.Size(78, 17);
+            this.RadioButton8.TabIndex = 9;
+            this.RadioButton8.Text = "VP Transc.";
+            this.RadioButton8.UseVisualStyleBackColor = true;
+            this.RadioButton8.CheckedChanged += new System.EventHandler(this.RadioButton8_CheckedChanged);
+            // 
+            // RadioButton7
+            // 
+            this.RadioButton7.AutoSize = true;
+            this.RadioButton7.Location = new System.Drawing.Point(15, 186);
+            this.RadioButton7.Name = "RadioButton7";
+            this.RadioButton7.Size = new System.Drawing.Size(59, 17);
+            this.RadioButton7.TabIndex = 8;
+            this.RadioButton7.Text = "Default";
+            this.RadioButton7.UseVisualStyleBackColor = true;
+            this.RadioButton7.CheckedChanged += new System.EventHandler(this.RadioButton7_CheckedChanged);
             // 
             // Label6
             // 
@@ -414,9 +464,9 @@ namespace Els_kom_Core.Controls
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.TreeView1);
             this.Controls.Add(this.Button2);
-            this.Controls.Add(this.Panel3);
             this.Controls.Add(this.Panel6);
             this.Controls.Add(this.Panel5);
+            this.Controls.Add(this.Panel3);
             this.Name = "SettingsControl";
             this.Size = new System.Drawing.Size(510, 160);
             this.Load += new System.EventHandler(this.SettingsControl_Load);
@@ -466,5 +516,10 @@ namespace Els_kom_Core.Controls
         private System.Windows.Forms.Button Button4;
 
         #endregion
+
+        private System.Windows.Forms.Label Label7;
+        private System.Windows.Forms.RadioButton RadioButton9;
+        private System.Windows.Forms.RadioButton RadioButton8;
+        private System.Windows.Forms.RadioButton RadioButton7;
     }
 }

@@ -3,9 +3,9 @@
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
-namespace Els_kom_Core.structs
+namespace Els_kom_Core.Classes
 {
-    internal struct XMLAttributeData
+    internal class XMLAttributeData
     {
         internal string AttributeName;
         internal string value;

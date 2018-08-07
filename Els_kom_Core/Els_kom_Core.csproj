@@ -71,8 +71,8 @@
     <Compile Include="Classes\SettingsFile.cs" />
     <Compile Include="Classes\ShowTaskbarEvent.cs" />
     <Compile Include="Classes\UnpackingError.cs" />
-    <Compile Include="structs\XMLAttributeData.cs" />
-    <Compile Include="structs\XMLElementData.cs" />
+    <Compile Include="Classes\XMLAttributeData.cs" />
+    <Compile Include="Classes\XMLElementData.cs" />
     <Compile Include="Classes\XMLObject.cs" />
     <Compile Include="Classes\ZlibHelper.cs" />
     <Compile Include="..\externals\ZLIB.NET\Adler32.cs">

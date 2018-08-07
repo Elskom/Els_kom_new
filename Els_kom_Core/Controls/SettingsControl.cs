@@ -20,8 +20,10 @@ namespace Els_kom_Core.Controls
         private string curvalue3;
         private int curvalue4;
         private int curvalue5;
+        private string curvalue6;
         private string Label4 = "...";
         private string Label5 = "...";
+        private string Label8 = "...";
 
         /// <summary>
         /// Plugins Installer/Updating form opening event.
@@ -70,6 +72,17 @@ namespace Els_kom_Core.Controls
                     Classes.SettingsFile.Settingsxml.Write("IconWhileElsRunning", Label5);
                 }
             }
+            if (!string.Equals(Label8, curvalue6))
+            {
+                if (Label8 == "...")
+                {
+                    Classes.SettingsFile.Settingsxml.Write("WindowIcon", "0");
+                }
+                else
+                {
+                    Classes.SettingsFile.Settingsxml.Write("WindowIcon", Label8);
+                }
+            }
             Classes.SettingsFile.Settingsxml.Write("LoadPDB", curvalue4.ToString());
             Classes.SettingsFile.Settingsxml.Write("SaveToZip", curvalue5.ToString());
             // TODO: Save Configured Plugin Sources URL's in ListView2.
@@ -101,14 +114,6 @@ namespace Els_kom_Core.Controls
             if (RadioButton1.Checked)
             {
                 Label4 = "0";
-                if (RadioButton2.Checked)
-                {
-                    RadioButton2.Checked = false;
-                }
-                if (RadioButton3.Checked)
-                {
-                    RadioButton3.Checked = false;
-                }
             }
         }
 
@@ -117,14 +122,6 @@ namespace Els_kom_Core.Controls
             if (RadioButton2.Checked)
             {
                 Label4 = "1";
-                if (RadioButton1.Checked)
-                {
-                    RadioButton1.Checked = false;
-                }
-                if (RadioButton3.Checked)
-                {
-                    RadioButton3.Checked = false;
-                }
             }
         }
 
@@ -133,14 +130,6 @@ namespace Els_kom_Core.Controls
             if (RadioButton3.Checked)
             {
                 Label4 = "2";
-                if (RadioButton1.Checked)
-                {
-                    RadioButton1.Checked = false;
-                }
-                if (RadioButton2.Checked)
-                {
-                    RadioButton2.Checked = false;
-                }
             }
         }
 
@@ -149,14 +138,6 @@ namespace Els_kom_Core.Controls
             if (RadioButton4.Checked)
             {
                 Label5 = "0";
-                if (RadioButton5.Checked)
-                {
-                    RadioButton5.Checked = false;
-                }
-                if (RadioButton6.Checked)
-                {
-                    RadioButton6.Checked = false;
-                }
             }
         }
 
@@ -165,14 +146,6 @@ namespace Els_kom_Core.Controls
             if (RadioButton5.Checked)
             {
                 Label5 = "1";
-                if (RadioButton4.Checked)
-                {
-                    RadioButton4.Checked = false;
-                }
-                if (RadioButton6.Checked)
-                {
-                    RadioButton6.Checked = false;
-                }
             }
         }
 
@@ -181,14 +154,6 @@ namespace Els_kom_Core.Controls
             if (RadioButton6.Checked)
             {
                 Label5 = "2";
-                if (RadioButton4.Checked)
-                {
-                    RadioButton4.Checked = false;
-                }
-                if (RadioButton5.Checked)
-                {
-                    RadioButton5.Checked = false;
-                }
             }
         }
 
@@ -227,11 +192,7 @@ namespace Els_kom_Core.Controls
             {
                 RadioButton2.Checked = true;
             }
-            else if (Label4 == "2")
-            {
-                RadioButton3.Checked = true;
-            }
-            else if (Label4 == "...")
+            else if (Label4 == "2" || Label4 == "...")
             {
                 RadioButton3.Checked = true;
             }
@@ -239,7 +200,7 @@ namespace Els_kom_Core.Controls
             {
                 RadioButton4.Checked = true;
             }
-            else if (Label5 == "1")
+            else if (Label5 == "1" || Label5 == "...")
             {
                 RadioButton5.Checked = true;
             }
@@ -247,11 +208,18 @@ namespace Els_kom_Core.Controls
             {
                 RadioButton6.Checked = true;
             }
-            else if (Label5 == "...")
+            if (Label8 == "0" || Label8 == "...")
             {
-                RadioButton5.Checked = true;
+                RadioButton7.Checked = true;
             }
-
+            else if (Label8 == "1")
+            {
+                RadioButton8.Checked = true;
+            }
+            else if (Label8 == "2")
+            {
+                RadioButton9.Checked = true;
+            }
         }
 
         /// <summary>
@@ -263,6 +231,7 @@ namespace Els_kom_Core.Controls
             curvalue3 = Classes.SettingsFile.Settingsxml.Read("ElsDir");
             curvalue = Classes.SettingsFile.Settingsxml.Read("IconWhileElsNotRunning");
             curvalue2 = Classes.SettingsFile.Settingsxml.Read("IconWhileElsRunning");
+            curvalue6 = Classes.SettingsFile.Settingsxml.Read("WindowIcon");
             int.TryParse(Classes.SettingsFile.Settingsxml.Read("LoadPDB"), out curvalue4);
             int.TryParse(Classes.SettingsFile.Settingsxml.Read("SaveToZip"), out curvalue5);
             // TODO: Load Configured Plugin Sources URL's to ListView2.
@@ -270,6 +239,7 @@ namespace Els_kom_Core.Controls
             // set these to the values read above only if they are not empty.
             Label4 = string.IsNullOrEmpty(curvalue) ? Label4 : curvalue;
             Label5 = string.IsNullOrEmpty(curvalue2) ? Label5 : curvalue2;
+            Label8 = string.IsNullOrEmpty(curvalue6) ? Label8 : curvalue6;
             CheckBox1.Checked = System.Convert.ToBoolean(curvalue5);
             CheckBox2.Checked = System.Convert.ToBoolean(curvalue4);
             var Entries = new System.Collections.Generic.List<System.Windows.Forms.ListViewItem>();
@@ -402,6 +372,30 @@ namespace Els_kom_Core.Controls
             };
             ListView2.Controls.Add(textBox);
             ActiveControl = textBox;
+        }
+
+        private void RadioButton7_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (RadioButton7.Checked)
+            {
+                Label8 = "0";
+            }
+        }
+
+        private void RadioButton8_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (RadioButton8.Checked)
+            {
+                Label8 = "1";
+            }
+        }
+
+        private void RadioButton9_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (RadioButton9.Checked)
+            {
+                Label8 = "2";
+            }
         }
     }
 }

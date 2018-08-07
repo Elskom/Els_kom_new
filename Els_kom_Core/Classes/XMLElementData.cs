@@ -3,10 +3,12 @@
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
-namespace Els_kom_Core.structs
+namespace Els_kom_Core.Classes
 {
-    internal struct XMLElementData
+    internal class XMLElementData
     {
+        internal string name = string.Empty;
+        internal XMLElementData[] Subelements = null;
         // xml attributes to check for in the Dictionary, if it has any.
         internal System.Collections.Generic.List<XMLAttributeData> Attributes;
         // element value.
