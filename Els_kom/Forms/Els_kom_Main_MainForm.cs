@@ -20,6 +20,7 @@ namespace Els_kom.Forms
 
         protected override void WndProc(ref System.Windows.Forms.Message m)
         {
+            Enablehandlers = !ShowInTaskbar ? true : false;
             if (Enablehandlers && m.Msg == MainControl1.GetSysCommand())
             {
                 if (m.WParam.ToInt32() == MainControl1.GetMinimizeCommand())
@@ -81,35 +82,6 @@ namespace Els_kom.Forms
             Close();
         }
 
-        private void MainControl1_MinimizeForm(object sender, System.EventArgs e)
-        {
-            if (!ShowInTaskbar)
-            {
-                Hide();
-            }
-            WindowState = System.Windows.Forms.FormWindowState.Minimized;
-        }
-
-        private void MainControl1_TaskbarShow(object sender, Els_kom_Core.Classes.ShowTaskbarEvent e)
-        {
-            if (e.value == "0") // Taskbar only!!!
-            {
-                MainControl1.NotifyIcon1.Visible = false;
-                ShowInTaskbar = true;
-            }
-            if (e.value == "1") // Tray only!!!
-            {
-                MainControl1.NotifyIcon1.Visible = true;
-                ShowInTaskbar = false;
-            }
-            if (e.value == "2") // Both!!!
-            {
-                MainControl1.NotifyIcon1.Visible = true;
-                ShowInTaskbar = true;
-            }
-            Enablehandlers = !ShowInTaskbar ? true : false;
-        }
-
         private void MainControl1_TrayNameChange(object sender, System.EventArgs e) => MainControl1.NotifyIcon1.Text = Text;
 
         private void MainControl1_TrayClick(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -122,7 +94,7 @@ namespace Els_kom.Forms
             {
                 if (e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
-                    if (ShowInTaskbar == true)
+                    if (ShowInTaskbar)
                     {
                         if (WindowState == System.Windows.Forms.FormWindowState.Minimized)
                         {
@@ -134,7 +106,7 @@ namespace Els_kom.Forms
                             WindowState = System.Windows.Forms.FormWindowState.Minimized;
                         }
                     }
-                    else if (MainControl1.NotifyIcon1.Visible == true)
+                    else if (MainControl1.NotifyIcon1.Visible)
                     {
                         if (WindowState == System.Windows.Forms.FormWindowState.Minimized)
                         {
@@ -171,14 +143,6 @@ namespace Els_kom.Forms
                 settingsfrm.ShowDialog();
                 settingsfrm = null;
             }
-        }
-
-        private void MainControl1_ShowForm(object sender, System.EventArgs e)
-        {
-            MainControl1.NotifyIcon1.Icon = Icon;
-            MainControl1.NotifyIcon1.Text = Text;
-            MainControl1.NotifyIcon1.Visible = true;
-            Show();
         }
     }
 }

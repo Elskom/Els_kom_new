@@ -42,14 +42,11 @@ namespace Els_kom.Forms
             this.MainControl1.Name = "MainControl1";
             this.MainControl1.Size = new System.Drawing.Size(304, 166);
             this.MainControl1.TabIndex = 8;
-            this.MainControl1.MinimizeForm += new System.EventHandler(this.MainControl1_MinimizeForm);
             this.MainControl1.CloseForm += new System.EventHandler(this.MainControl1_CloseForm);
             this.MainControl1.TrayNameChange += new System.EventHandler(this.MainControl1_TrayNameChange);
-            this.MainControl1.TaskbarShow += new System.EventHandler<Els_kom_Core.Classes.ShowTaskbarEvent>(this.MainControl1_TaskbarShow);
             this.MainControl1.TrayClick += new System.EventHandler<System.Windows.Forms.MouseEventArgs>(this.MainControl1_TrayClick);
             this.MainControl1.ConfigForm += new System.EventHandler(this.MainControl1_ConfigForm);
             this.MainControl1.AboutForm += new System.EventHandler(this.MainControl1_AboutForm);
-            this.MainControl1.ShowForm += new System.EventHandler(this.MainControl1_ShowForm);
             // 
             // MainForm
             // 

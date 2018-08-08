@@ -59,10 +59,6 @@ namespace Els_kom_Core.Controls
         internal System.Windows.Forms.ToolStripSeparator ToolStripMenuSep1;
 
         /// <summary>
-        /// Event that the control fires that Minimizes the Form it is on.
-        /// </summary>
-        public event System.EventHandler MinimizeForm;
-        /// <summary>
         /// Event that the control fires that Closes the Form it is on.
         /// </summary>
         public event System.EventHandler CloseForm;
@@ -70,10 +66,6 @@ namespace Els_kom_Core.Controls
         /// Event that the control fires that tells the Form that the Tray Icon name changed.
         /// </summary>
         public event System.EventHandler TrayNameChange;
-        /// <summary>
-        /// Event that the control fires that Shows the Form it is on in the Taskbar.
-        /// </summary>
-        public event System.EventHandler<Classes.ShowTaskbarEvent> TaskbarShow;
         /// <summary>
         /// Event that the control fires when the tray icon is clicked by the mouse.
         /// </summary>
@@ -86,10 +78,6 @@ namespace Els_kom_Core.Controls
         /// Event that is Fired that Allows the Form it is on to open up it's About Form.
         /// </summary>
         public event System.EventHandler AboutForm;
-        /// <summary>
-        /// Event that is Fired that Allows the Form to show.
-        /// </summary>
-        public event System.EventHandler ShowForm;
 
         private void Command1_Click(object sender, System.EventArgs e)
         {
@@ -128,7 +116,7 @@ namespace Els_kom_Core.Controls
         private void Command4_Click(object sender, System.EventArgs e)
         {
             Label1.Text = "";
-            MinimizeForm?.Invoke(this, new System.EventArgs());
+            FindForm().WindowState = System.Windows.Forms.FormWindowState.Minimized;
             TestMods();
         }
 
@@ -137,7 +125,7 @@ namespace Els_kom_Core.Controls
         private void Command5_Click(object sender, System.EventArgs e)
         {
             Label1.Text = "";
-            MinimizeForm?.Invoke(this, new System.EventArgs());
+            FindForm().WindowState = System.Windows.Forms.FormWindowState.Minimized;
             var tr4 = new System.Threading.Thread(Classes.ExecutionManager.RunElswordLauncher)
             {
                 Name = "Classes.ExecutionManager.RunElswordLauncher"
@@ -177,7 +165,7 @@ namespace Els_kom_Core.Controls
         private void LauncherToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             Label1.Text = "";
-            MinimizeForm?.Invoke(this, new System.EventArgs());
+            FindForm().WindowState = System.Windows.Forms.FormWindowState.Minimized;
             var tr4 = new System.Threading.Thread(Classes.ExecutionManager.RunElswordLauncher)
             {
                 Name = "Classes.ExecutionManager.RunElswordLauncher"
@@ -199,7 +187,7 @@ namespace Els_kom_Core.Controls
         private void TestModsToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             Label1.Text = "";
-            MinimizeForm?.Invoke(this, new System.EventArgs());
+            FindForm().WindowState = System.Windows.Forms.FormWindowState.Minimized;
             TestMods();
         }
 
@@ -314,7 +302,10 @@ namespace Els_kom_Core.Controls
                     Interval = 1
                 };
                 LauncherTmr.Tick += new System.EventHandler(Launcher);
-                ShowForm?.Invoke(this, new System.EventArgs());
+                NotifyIcon1.Icon = FindForm().Icon;
+                NotifyIcon1.Text = FindForm().Text;
+                NotifyIcon1.Visible = true;
+                FindForm().Show();
             }
             else
             {
@@ -526,6 +517,8 @@ namespace Els_kom_Core.Controls
                     TestModsToolStripMenuItem.Enabled = true;
                     LauncherToolStripMenuItem.Enabled = true;
                     Label2.Text = "";
+                    // restore window state from before testing mods.
+                    FindForm().WindowState = System.Windows.Forms.FormWindowState.Normal;
                     TestModsTmr.Enabled = false;
                 }
             }
@@ -589,6 +582,8 @@ namespace Els_kom_Core.Controls
                     TestModsToolStripMenuItem.Enabled = true;
                     LauncherToolStripMenuItem.Enabled = true;
                     Label2.Text = "";
+                    // restore window state from before updating the game.
+                    FindForm().WindowState = System.Windows.Forms.FormWindowState.Normal;
                     LauncherTmr.Enabled = false;
                 }
             }
@@ -625,7 +620,21 @@ namespace Els_kom_Core.Controls
                         {
                             showintaskbar_value = showintaskbar_tempvalue;
                         }
-                        TaskbarShow?.Invoke(this, new Classes.ShowTaskbarEvent(showintaskbar_value));
+                        if (showintaskbar_value.Equals("0")) // Taskbar only!!!
+                        {
+                            NotifyIcon1.Visible = false;
+                            FindForm().ShowInTaskbar = true;
+                        }
+                        if (showintaskbar_value.Equals("1")) // Tray only!!!
+                        {
+                            NotifyIcon1.Visible = true;
+                            FindForm().ShowInTaskbar = false;
+                        }
+                        if (showintaskbar_value.Equals("2")) // Both!!!
+                        {
+                            NotifyIcon1.Visible = true;
+                            FindForm().ShowInTaskbar = true;
+                        }
                     }
                     else
                     {
@@ -633,7 +642,21 @@ namespace Els_kom_Core.Controls
                         {
                             showintaskbar_value2 = showintaskbar_tempvalue2;
                         }
-                        TaskbarShow?.Invoke(this, new Classes.ShowTaskbarEvent(showintaskbar_value));
+                        if (showintaskbar_value2.Equals("0")) // Taskbar only!!!
+                        {
+                            NotifyIcon1.Visible = false;
+                            FindForm().ShowInTaskbar = true;
+                        }
+                        if (showintaskbar_value2.Equals("1")) // Tray only!!!
+                        {
+                            NotifyIcon1.Visible = true;
+                            FindForm().ShowInTaskbar = false;
+                        }
+                        if (showintaskbar_value2.Equals("2")) // Both!!!
+                        {
+                            NotifyIcon1.Visible = true;
+                            FindForm().ShowInTaskbar = true;
+                        }
                     }
                 }
             }

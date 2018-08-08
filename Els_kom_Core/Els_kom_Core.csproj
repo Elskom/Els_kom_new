@@ -69,7 +69,6 @@
     <Compile Include="Classes\ResourcesDir.cs" />
     <Compile Include="Classes\SafeNativeMethods.cs" />
     <Compile Include="Classes\SettingsFile.cs" />
-    <Compile Include="Classes\ShowTaskbarEvent.cs" />
     <Compile Include="Classes\UnpackingError.cs" />
     <Compile Include="Classes\XMLAttributeData.cs" />
     <Compile Include="Classes\XMLElementData.cs" />
