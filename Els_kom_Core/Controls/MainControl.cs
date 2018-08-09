@@ -3,25 +3,17 @@
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
-// If the thread control invoke delegates was not present to change
-// the controls on the main thread The Visual Studio Debugger when
-// Running Els_kom in Debug mode to Debug plugins will yell at you
-// throwing an System.InvalidOperationException exception and
-// saying 'Cross-thread operation not valid: Control
-// '%s' accessed from a thread other than the thread it was
-// created on.'.
-
 namespace Els_kom_Core.Controls
 {
     /// <summary>
     /// MainControl control for Els_kom's Main form.
     /// </summary>
-    public partial class MainControl : System.Windows.Forms.UserControl
+    internal partial class MainControl : System.Windows.Forms.UserControl
     {
         /// <summary>
         /// MainControl constructor.
         /// </summary>
-        public MainControl() => InitializeComponent();
+        internal MainControl() => InitializeComponent();
 
         private string ElsDir;
         private string showintaskbar_value;

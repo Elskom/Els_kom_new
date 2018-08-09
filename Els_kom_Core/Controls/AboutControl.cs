@@ -8,12 +8,12 @@ namespace Els_kom_Core.Controls
     /// <summary>
     /// AboutControl control for Els_kom's About form.
     /// </summary>
-    public partial class AboutControl : System.Windows.Forms.UserControl
+    internal partial class AboutControl : System.Windows.Forms.UserControl
     {
         /// <summary>
         /// AboutControl constructor.
         /// </summary>
-        public AboutControl() => InitializeComponent();
+        internal AboutControl() => InitializeComponent();
 
         private void CmdOK_Click(object sender, System.EventArgs e) => FindForm()?.Close();
 

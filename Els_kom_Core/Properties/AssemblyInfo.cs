@@ -16,3 +16,4 @@
 //The following GUID is for the ID of the typelib if this project is exposed to COM
 
 [assembly: System.Runtime.InteropServices.Guid("872ba43f-1c77-4f44-9fdc-7622cae00431")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Els_kom", AllInternalsVisible = true)]

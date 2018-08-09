@@ -20,7 +20,7 @@ namespace Els_kom_Core.Classes
         [System.Runtime.InteropServices.DllImport("dbghelp.dll")]
         internal static extern bool MiniDumpWriteDump(System.IntPtr hProcess, int ProcessId, System.IntPtr hFile, Enums.MINIDUMP_TYPE DumpType, ref structs.MINIDUMP_EXCEPTION_INFORMATION ExceptionParam, System.IntPtr UserStreamParam, System.IntPtr CallackParam);
 
-        private static string GetFileBaseName(string FileName)
+        internal static string GetFileBaseName(string FileName)
         {
             var fi = new System.IO.FileInfo(FileName);
             // return file base name without path to file.

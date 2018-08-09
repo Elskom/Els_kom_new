@@ -17,10 +17,11 @@ namespace Els_kom_Core.Classes
         public PackingError() : base()
         {
         }
+
         /// <summary>
         /// constructor of KOM file Packing failure error with an string argrument.
         /// </summary>
-        public PackingError(System.String s) : base(s)
+        public PackingError(string s) : base(s)
         {
         }
     }

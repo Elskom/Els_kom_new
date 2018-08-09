@@ -31,9 +31,6 @@ namespace Els_kom_Core.Classes
         private byte[] InitVector;
         private bool IVSet;
 
-        //COMPATIBILITY WITH javascript CRYPTO LIBRARY
-        private bool nonStandardMethod;
-
         /// <summary>
         /// Constructor for hex key
         /// </summary>
@@ -164,11 +161,7 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// For non standard blowfish mode.
         /// </summary>
-        public bool NonStandard
-        {
-            get => nonStandardMethod;
-            set => nonStandardMethod = value;
-        }
+        public bool NonStandard { get; set; }
 
         /// <summary>
         /// Creates and sets a random initialization vector.
@@ -381,7 +374,7 @@ namespace Els_kom_Core.Classes
             System.Buffer.BlockCopy(block, 0, block1, 0, 4);
             System.Buffer.BlockCopy(block, 4, block2, 0, 4);
             //split the block
-            if (nonStandardMethod)
+            if (NonStandard)
             {
                 xr_par = System.BitConverter.ToUInt32(block1, 0);
                 xl_par = System.BitConverter.ToUInt32(block2, 0);
@@ -404,7 +397,7 @@ namespace Els_kom_Core.Classes
         {
             var block1 = new byte[4];
             var block2 = new byte[4];
-            if (nonStandardMethod)
+            if (NonStandard)
             {
                 block1 = System.BitConverter.GetBytes(xr_par);
                 block2 = System.BitConverter.GetBytes(xl_par);

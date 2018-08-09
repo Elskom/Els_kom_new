@@ -87,7 +87,7 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Writes the KOM File entry to file.
         /// </summary>
-        public void WriteOutput(System.IO.BinaryReader reader, string out_path, EntryVer entry, int version, string xmldata)
+        public void WriteOutput(System.IO.BinaryReader reader, string out_path, EntryVer entry, int version, string xmldata, string KOMFileName)
         {
             if (version > 2)
             {
@@ -138,26 +138,65 @@ namespace Els_kom_Core.Classes
                         // data was not decompressed properly so lets just dump it as is.
                         entryfile = System.IO.File.Create(out_path + "\\" + entry.name + "." + entry.uncompressed_size + "." + entry.algorithm);
                     }
+#if VERSION_0x01050000
+                    byte[] dec_entrydata = null;
+                    var failure = false;
                     if (entry.algorithm == 3)
                     {
                         // algorithm 3 code.
-#if VERSION_0x01050000
-                        ZlibHelper.DecompressData(entrydata, out byte[] dec_entrydata);
-                        // Decrypt the data from a decryption plugin.
-#endif
+                        byte[] zdec_entrydata = null;
+                        try
+                        {
+                            ZlibHelper.DecompressData(entrydata, out zdec_entrydata);
+                        }
+                        catch (System.ArgumentException)
+                        {
+                            throw new UnpackingError("Something failed...");
+                        }
+                        catch (Zlib.ZStreamException)
+                        {
+                            throw new UnpackingError("decompression failed...");
+                        }
+                        // Decrypt the data from a encryption plugin.
+                        KOMManager.encryptionplugins[0].DecryptEntry(zdec_entrydata, out dec_entrydata, SafeNativeMethods.GetFileBaseName(KOMFileName), entry.algorithm);
                     }
                     else
                     {
                         // algorithm 2 code.
-#if VERSION_0x01050000
-                        // Decrypt the data from a decryption plugin.
-                        // TODO: Take the decrypted output, then decompress it.
-                        ZlibHelper.DecompressData(entrydata, out byte[] dec_entrydata);
-#endif
+                        // Decrypt the data from a encryption plugin.
+                        KOMManager.encryptionplugins[0].DecryptEntry(entrydata, out byte[] decr_entrydata, SafeNativeMethods.GetFileBaseName(KOMFileName), entry.algorithm);
+                        try
+                        {
+                            ZlibHelper.DecompressData(decr_entrydata, out dec_entrydata);
+                        }
+                        catch (System.ArgumentException)
+                        {
+                            throw new UnpackingError("Something failed...");
+                        }
+                        catch (Zlib.ZStreamException)
+                        {
+                            throw new UnpackingError("decompression failed...");
+                        }
+                    }
+                    entryfile.Write(dec_entrydata, 0, entry.uncompressed_size);
+                    entryfile.Dispose();
+                    if (failure)
+                    {
+                        System.IO.File.Move(out_path + "\\" + entry.name, out_path + "\\" + entry.name + "." + entry.uncompressed_size + "." + entry.algorithm);
+                    }
+#else
+                    if (entry.algorithm == 3)
+                    {
+                        // algorithm 3 code.
+                    }
+                    else
+                    {
+                        // algorithm 2 code.
                     }
                     // for now until I can decompress this crap.
                     entryfile.Write(entrydata, 0, entry.compressed_size);
                     entryfile.Dispose();
+#endif
                 }
             }
             else

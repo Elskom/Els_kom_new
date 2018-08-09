@@ -20,13 +20,24 @@ namespace Els_kom_Core.interfaces
         /// Name of the Encryption plugin.
         /// </summary>
         string PluginName { get; }
+
         /// <summary>
-        /// Decrypts an KOM file entry.
+        /// Decrypts an KOM file entry. If KOM file algorithm is not supported
+        /// throw <see cref="Classes.UnpackingError"/>.
         /// </summary>
+        /// <exception cref="Classes.UnpackingError">
+        /// When the KOM file algorith is not suppoted by the curently installed
+        /// encryption plugin.
+        /// </exception>
         void DecryptEntry(byte[] input, out byte[] output, string KOMFileName, int algorithm);
         /// <summary>
-        /// Encrypts an KOM file entry.
+        /// Encrypts an KOM file entry. If KOM file algorithm is not supported
+        /// throw <see cref="Classes.PackingError"/>.
         /// </summary>
+        /// <exception cref="Classes.PackingError">
+        /// When the KOM file algorith is not suppoted by the curently installed
+        /// encryption plugin.
+        /// </exception>
         void EncryptEntry(byte[] input, out byte[] output, string KOMFileName, int algorithm);
     }
 }

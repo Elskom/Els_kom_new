@@ -10,8 +10,6 @@ namespace Els_kom_Core.Classes
     /// </summary>
     public static class SettingsFile
     {
-        private static XMLObject _settingsxml;
-
         /// <summary>
         /// The path to the Els_kom Settings file.
         ///
@@ -65,11 +63,7 @@ namespace Els_kom_Core.Classes
         /// This is designed so there is globally only
         /// a single instance to save time, and memory.
         /// </summary>
-        public static XMLObject Settingsxml
-        {
-            get => _settingsxml;
-            set => _settingsxml = value;
-        }
+        public static XMLObject Settingsxml { get; set; }
 
         /// <summary>
         /// The path to the Els_kom Mini-Dump file.

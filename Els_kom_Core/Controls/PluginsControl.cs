@@ -8,12 +8,12 @@ namespace Els_kom_Core.Controls
     /// <summary>
     /// PluginsControl control for Els_kom's Plugins installer/updater form.
     /// </summary>
-    public partial class PluginsControl : System.Windows.Forms.UserControl
+    internal partial class PluginsControl : System.Windows.Forms.UserControl
     {
         /// <summary>
         /// PluginsControl constructor.
         /// </summary>
-        public PluginsControl() => InitializeComponent();
+        internal PluginsControl() => InitializeComponent();
 
         /// <summary>
         /// Initializs the Plugins control for Els_kom's Plugins installer/updater form.

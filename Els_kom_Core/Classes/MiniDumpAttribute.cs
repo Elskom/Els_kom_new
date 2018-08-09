@@ -13,7 +13,7 @@ namespace Els_kom_Core.Classes
     /// handlers to do it.
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Class)]
-    public class MiniDumpAttribute : System.Attribute
+    internal class MiniDumpAttribute : System.Attribute
     {
         private readonly string text;
         /// <summary>
@@ -29,7 +29,7 @@ namespace Els_kom_Core.Classes
         /// Creates a new instance of MiniDumpAttribute.
         /// </summary>
         [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, Flags = System.Security.Permissions.SecurityPermissionFlag.ControlAppDomain)]
-        public MiniDumpAttribute(string text)
+        internal MiniDumpAttribute(string text)
         {
             this.text = text;
             var currentDomain = System.AppDomain.CurrentDomain;
