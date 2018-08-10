@@ -55,3 +55,8 @@ $env:newsmakeprogpth = Join-Path (Get-Location) ../../externals/newsmake/build/R
 # works locally. Why the hell does this not work on AppVeyor.
 Start-Process -FilePath $env:newsmakeprogpth -Wait -NoNewWindow
 Set-Location -Path ../..
+if ($env:PLATFORM -eq "x64")
+{
+  # ensure file is present in 64 bit build.
+  Move-Item -Path bin\x86\Release\news.txt -Destination bin\x64\Release\news.txt
+}
