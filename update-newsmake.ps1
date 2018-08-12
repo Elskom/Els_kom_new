@@ -5,40 +5,16 @@ if(!(Test-Path -Path $env:nsmkpth))
     git clone -q https://github.com/Elskom/newsmake.git
     Set-Location -Path newsmake/build
     cmake ..
-    msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
-    Set-Location -Path ../..
 }
 else
 {
     Set-Location -Path newsmake
-    try
-    {
-        $env:NEWSMAKE_REPO_HEAD = Join-Path (Get-Location) .git/HEAD
-        $stream = [System.IO.StreamReader]::new($env:NEWSMAKE_REPO_HEAD)
-        $env:NEWSMAKE_CURRENT_COMMIT_ID = $stream.ReadLine()
-    }
-    finally
-    {
-        $stream.close()
-    }
     git pull -q
-    try
-    {
-        $stream = [System.IO.StreamReader]::new($env:NEWSMAKE_REPO_HEAD)
-        $env:NEWSMAKE_NEW_COMMIT_ID = $stream.ReadLine()
-    }
-    finally
-    {
-        $stream.close()
-    }
     Set-Location -Path ..
 }
-if (!($env:NEWSMAKE_NEW_COMMIT_ID -eq $env:NEWSMAKE_CURRENT_COMMIT_ID))
-{
-    Set-Location -Path newsmake/build
-    msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
-    Set-Location -Path ../../
-}
+Set-Location -Path newsmake/build
+msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
+Set-Location -Path ../../
 $env:zlibnetpth = Join-Path (Get-Location) ZLIB.NET
 if(!(Test-Path -Path $env:zlibnetpth))
 {
@@ -57,6 +33,10 @@ Start-Process -FilePath $env:newsmakeprogpth -Wait -NoNewWindow
 Set-Location -Path ../..
 if ($env:PLATFORM -eq "x64")
 {
-  # ensure file is present in 64 bit build.
-  Move-Item -Path bin\x86\Release\news.txt -Destination bin\x64\Release\news.txt
+    # ensure file is present in 64 bit build.
+    if(!(Test-Path -Path bin/x64/Release))
+    {
+        mkdir bin/x64/Release
+    }
+    Move-Item -Path bin\x86\Release\news.txt -Destination bin\x64\Release\news.txt
 }

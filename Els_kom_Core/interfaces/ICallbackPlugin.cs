@@ -19,6 +19,10 @@ namespace Els_kom_Core.interfaces
         /// </summary>
         bool SupportsSettings { get; }
         /// <summary>
+        /// Gets if the form should be shown as Modal Dialog Window.
+        /// </summary>
+        bool ShowModal { get; }
+        /// <summary>
         /// Returns the plugin's actual settings window for showing from Els_kom's core at runtime.
         ///
         /// Note: Create instance before returning.

@@ -7,6 +7,7 @@ namespace Els_kom_Core.Classes
 {
     internal class XMLElementData
     {
+        // name for any subelemets.
         internal string name = string.Empty;
         internal XMLElementData[] Subelements = null;
         // xml attributes to check for in the Dictionary, if it has any.

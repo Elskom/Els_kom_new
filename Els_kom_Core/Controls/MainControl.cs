@@ -601,6 +601,7 @@ namespace Els_kom_Core.Controls
                         iconVal = tmpiconVal;
                         // this seem to not update the form icon at runtime...
                         FindForm().Icon = Classes.Icons.FormIcon;
+                        NotifyIcon1.Icon = FindForm().Icon;
                     }
                     if (!string.Equals(ElsDir, ElsDir_temp))
                     {

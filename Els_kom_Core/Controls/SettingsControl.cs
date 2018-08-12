@@ -85,7 +85,14 @@ namespace Els_kom_Core.Controls
             }
             Classes.SettingsFile.Settingsxml.Write("LoadPDB", curvalue4.ToString());
             Classes.SettingsFile.Settingsxml.Write("SaveToZip", curvalue5.ToString());
-            // TODO: Save Configured Plugin Sources URL's in ListView2.
+            var sources = new System.Collections.Generic.List<string>();
+            for (var i = 0; i < ListView2.Items.Count; i++)
+            {
+                sources.Add(ListView2.Items[i].Text);
+            }
+            Classes.SettingsFile.Settingsxml.Write("Sources", "Source", sources.ToArray());
+            sources.Clear();
+            // write to file.
             Classes.SettingsFile.Settingsxml.Save();
         }
 
@@ -234,7 +241,11 @@ namespace Els_kom_Core.Controls
             curvalue6 = Classes.SettingsFile.Settingsxml.Read("WindowIcon");
             int.TryParse(Classes.SettingsFile.Settingsxml.Read("LoadPDB"), out curvalue4);
             int.TryParse(Classes.SettingsFile.Settingsxml.Read("SaveToZip"), out curvalue5);
-            // TODO: Load Configured Plugin Sources URL's to ListView2.
+            var sources = Classes.SettingsFile.Settingsxml.Read("Sources", "Source", null);
+            foreach (var source in sources)
+            {
+                ListView2.Items.Add(source);
+            }
             TextBox1.Text = curvalue3;
             // set these to the values read above only if they are not empty.
             Label4 = string.IsNullOrEmpty(curvalue) ? Label4 : curvalue;
@@ -288,6 +299,16 @@ namespace Els_kom_Core.Controls
             }
         }
 
+        private void OpenPluginSettings(System.Windows.Forms.Form plugsettingfrm)
+        {
+            plugsettingfrm.ShowDialog();
+            if (!plugsettingfrm.IsDisposed)
+            {
+                plugsettingfrm.Dispose();
+            }
+            plugsettingfrm = null;
+        }
+
         private void Button3_Click(object sender, System.EventArgs e)
         {
             for (var i = 0; i < ListView1.SelectedItems.Count; i++)
@@ -298,13 +319,20 @@ namespace Els_kom_Core.Controls
                     if (callbackplugin.PluginName.Equals(selitem.Text))
                     {
                         var plugsettingfrm = callbackplugin.SettingsWindow;
-                        plugsettingfrm.ShowDialog();
-                        // ensure disposed.
-                        if (!plugsettingfrm.IsDisposed)
+                        if (callbackplugin.ShowModal)
                         {
-                            plugsettingfrm.Dispose();
+                            plugsettingfrm.ShowDialog();
+                            if (!plugsettingfrm.IsDisposed)
+                            {
+                                plugsettingfrm.Dispose();
+                            }
+                            plugsettingfrm = null;
                         }
-                        plugsettingfrm = null;
+                        else
+                        {
+                            System.Threading.Tasks.Task.Factory.StartNew(
+                                () => OpenPluginSettings(plugsettingfrm)).Dispose();
+                        }
                     }
                 }
             }
@@ -326,7 +354,7 @@ namespace Els_kom_Core.Controls
 
         private void CheckBox2_CheckedChanged(object sender, System.EventArgs e) => curvalue4 = System.Convert.ToInt32(CheckBox2.Checked);
 
-        // pople say use a DataGridView because they cant hack together a solution.
+        // people say use a DataGridView because they cant hack together a solution.
         // well they were too stupid to hack a elegant soluion like this.
         private void ListView2_DoubleClick(object sender, System.EventArgs e)
         {

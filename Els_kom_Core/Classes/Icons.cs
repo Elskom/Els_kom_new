@@ -17,24 +17,24 @@ namespace Els_kom_Core.Classes
         {
             get
             {
-                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
-                    System.Runtime.InteropServices.OSPlatform.Windows))
+                var iconVal = string.Empty;
+                var resource = string.Empty;
+                XMLObject Settingsxml = null;
+                if (SettingsFile.Settingsxml == null)
                 {
-                    var iconVal = string.Empty;
-                    XMLObject Settingsxml = null;
-                    if (SettingsFile.Settingsxml == null)
-                    {
-                        Settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
-                        iconVal = Settingsxml.Read("WindowIcon");
-                    }
-                    else
-                    {
-                        SettingsFile.Settingsxml.ReopenFile();
-                        iconVal = SettingsFile.Settingsxml.Read("WindowIcon");
-                    }
-                    // dispose this temporary object.
-                    Settingsxml?.Dispose();
-                    var resource = "#1";
+                    Settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
+                    iconVal = Settingsxml.Read("WindowIcon");
+                }
+                else
+                {
+                    SettingsFile.Settingsxml.ReopenFile();
+                    iconVal = SettingsFile.Settingsxml.Read("WindowIcon");
+                }
+                // dispose this temporary object.
+                Settingsxml?.Dispose();
+                if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
+                {
+                    resource = "#1";
                     if (iconVal.Equals("1"))
                     {
                         resource = "#3";
@@ -45,12 +45,20 @@ namespace Els_kom_Core.Classes
                     }
                     return LoadResources.GetIconResource(resource);
                 }
-                else
+                resource = "els_kom";
+                if (iconVal.Equals("1"))
                 {
-                    // load from elsewhere like from a resx file
-                    // or embedded entry application resources.
-                    return null;
+                    resource = "VP_Trans";
                 }
+                else if (iconVal.Equals("2"))
+                {
+                    resource = "YR";
+                }
+                var assembly = System.Reflection.Assembly.GetEntryAssembly();
+                var type = assembly.GetType("Els_kom.Properties.Resources", true);
+                var property = type.GetProperty(resource);
+                var methodinfo = property.GetGetMethod();
+                return (System.Drawing.Icon)methodinfo.Invoke(null, null);
             }
         }
 
@@ -62,24 +70,24 @@ namespace Els_kom_Core.Classes
         {
             get
             {
-                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
-                    System.Runtime.InteropServices.OSPlatform.Windows))
+                var iconVal = string.Empty;
+                var resource = string.Empty;
+                XMLObject Settingsxml = null;
+                if (SettingsFile.Settingsxml == null)
                 {
-                    var iconVal = string.Empty;
-                    XMLObject Settingsxml = null;
-                    if (SettingsFile.Settingsxml == null)
-                    {
-                        Settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
-                        iconVal = Settingsxml.Read("WindowIcon");
-                    }
-                    else
-                    {
-                        SettingsFile.Settingsxml.ReopenFile();
-                        iconVal = SettingsFile.Settingsxml.Read("WindowIcon");
-                    }
-                    // dispose this temporary object.
-                    Settingsxml?.Dispose();
-                    var resource = "#1";
+                    Settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
+                    iconVal = Settingsxml.Read("WindowIcon");
+                }
+                else
+                {
+                    SettingsFile.Settingsxml.ReopenFile();
+                    iconVal = SettingsFile.Settingsxml.Read("WindowIcon");
+                }
+                // dispose this temporary object.
+                Settingsxml?.Dispose();
+                if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
+                {
+                    resource = "#1";
                     if (iconVal.Equals("1"))
                     {
                         resource = "#3";
@@ -90,12 +98,22 @@ namespace Els_kom_Core.Classes
                     }
                     return LoadResources.GetImageResource(resource, 48, 48);
                 }
-                else
+                resource = "els_kom";
+                if (iconVal.Equals("1"))
                 {
-                    // load from elsewhere like from a resx file
-                    // or embedded entry application resources.
-                    return null;
+                    resource = "VP_Trans";
                 }
+                else if (iconVal.Equals("2"))
+                {
+                    resource = "YR";
+                }
+                var assembly = System.Reflection.Assembly.GetEntryAssembly();
+                var type = assembly.GetType("Els_kom.Properties.Resources", true);
+                var property = type.GetProperty(resource);
+                var methodinfo = property.GetGetMethod();
+                var oldicon = (System.Drawing.Icon)methodinfo.Invoke(null, null);
+                var newicon = new System.Drawing.Icon(oldicon, 48, 48);
+                return newicon?.ToBitmap();
             }
         }
     }

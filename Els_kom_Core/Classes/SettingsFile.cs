@@ -43,7 +43,7 @@ namespace Els_kom_Core.Classes
         ///
         /// Creates the Error Log file if needed.
         /// </summary>
-        public static string ErrorLogPath
+        internal static string ErrorLogPath
         {
             get
             {

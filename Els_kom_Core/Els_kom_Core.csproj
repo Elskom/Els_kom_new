@@ -296,83 +296,11 @@
 ]]></Code>
     </Task>
   </UsingTask>
-  <UsingTask TaskName="FindRCExe" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
-    <ParameterGroup>
-      <SolutionDir Required="true" />
-    </ParameterGroup>
-    <Task>
-      <Code Type="Fragment" Language="cs"><![CDATA[
-        // to find only the newest rc.exe available on the system.
-        string WindowsKitsDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles);
-        WindowsKitsDir += System.IO.Path.DirectorySeparatorChar + "Windows Kits";
-        System.IO.DirectoryInfo di1 = new System.IO.DirectoryInfo(WindowsKitsDir);
-        string rcexepath = string.Empty;
-        bool found = false;
-        foreach (var di2 in di1.GetDirectories())
-        {
-          if (found)
-          {
-            found = false;
-          }
-          foreach (var di3 in di2.GetDirectories())
-          {
-            foreach (var di4 in di3.GetDirectories())
-            {
-              foreach (var fi1 in di4.GetFiles("*.exe"))
-              {
-                string _exe_file = fi1.Name;
-                if (_exe_file.Equals("rc.exe"))
-                {
-                  rcexepath = WindowsKitsDir + System.IO.Path.DirectorySeparatorChar + di2.Name;
-                  rcexepath += System.IO.Path.DirectorySeparatorChar + di3.Name + System.IO.Path.DirectorySeparatorChar;
-                  rcexepath += di4.Name + System.IO.Path.DirectorySeparatorChar + _exe_file;
-                  found = true;
-                }
-              }
-              if (!found)
-              {
-                foreach (var di5 in di4.GetDirectories())
-                {
-                  foreach (var fi1 in di5.GetFiles("*.exe"))
-                  {
-                    string _exe_file = fi1.Name;
-                    if (_exe_file.Equals("rc.exe"))
-                    {
-                      rcexepath = WindowsKitsDir + System.IO.Path.DirectorySeparatorChar + di2.Name;
-                      rcexepath += System.IO.Path.DirectorySeparatorChar + di3.Name + System.IO.Path.DirectorySeparatorChar;
-                      rcexepath += di4.Name + System.IO.Path.DirectorySeparatorChar + di5.Name;
-                      rcexepath += System.IO.Path.DirectorySeparatorChar + _exe_file;
-                      found = true;
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        Log.LogMessage(MessageImportance.High, "Compiling els_kom.rc...");
-        System.Diagnostics.Process proc = new System.Diagnostics.Process();
-        proc.StartInfo.FileName = rcexepath;
-        proc.StartInfo.Arguments = "/nologo /r \"" + SolutionDir + "..\\Els_kom\\Resources\\els_kom.rc\"";
-        proc.StartInfo.RedirectStandardOutput = false;
-        proc.StartInfo.UseShellExecute = false;
-        proc.StartInfo.CreateNoWindow = true;
-        try
-        {
-          proc.Start();
-          proc.WaitForExit();
-        }
-        catch (System.ComponentModel.Win32Exception)
-        {
-        }
-        proc.Dispose();
-]]></Code>
-    </Task>
-  </UsingTask>
   <Target Name="BeforeBuild">
     <gitbuildinfo OutputFile1="$(ProjectDir)\Classes\Git.cs" TargetNamespace="Els_kom_Core.Classes" SolutionDir="$(SolutionDir)" OutputFile2="$(ProjectDir)\Classes\ResourcesDir.cs" />
   </Target>
+  <!--
   <Target Name="AfterBuild">
-    <FindRCExe SolutionDir="$(SolutionDir)" />
   </Target>
+  -->
 </Project>

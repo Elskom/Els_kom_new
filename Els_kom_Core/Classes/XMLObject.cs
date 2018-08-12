@@ -357,7 +357,7 @@ namespace Els_kom_Core.Classes
         /// Deletes an xml element using the element name.
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
-        /// <exception cref="System.ArgumentException">elementname does not exist in the xml.</exception>
+        /// <exception cref="System.ArgumentException">elementname does not exist in the xml or in pending edits.</exception>
         public void Delete(string elementname)
         {
             // before deleting the node (if it exists in xml), check if in any
@@ -368,10 +368,10 @@ namespace Els_kom_Core.Classes
         /// Removes an xml attribute using the element name and the name of the attribute.
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
-        /// <exception cref="System.ArgumentException">elementname or attributename does not exist in the xml.</exception>
+        /// <exception cref="System.ArgumentException">elementname or attributename does not exist in the xml or in pending edits.</exception>
         public void Delete(string elementname, string attributename)
         {
-            // before deleting the node (if it exists in xml), check if in any
+            // before deleting the attribute (if it exists in xml), check if in any
             // of the dictionaries then add it to the dictionary for deleting values.
         }
 
@@ -449,6 +449,33 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
+        /// Writes Added subelements to the XML file.
+        /// </summary>
+        private void SaveAddedSubelements(System.Xml.Linq.XElement xElement, XMLElementData elemdata)
+        {
+            if (elemdata.name != string.Empty)
+            {
+                var elem = new System.Xml.Linq.XElement(elemdata.name, elemdata.value);
+                xElement.Add(elem);
+                if (elemdata.Attributes != null)
+                {
+                    foreach (var attributes in elemdata.Attributes)
+                    {
+                        elem.SetAttributeValue(attributes.AttributeName, attributes.value);
+                    }
+                }
+                if (elemdata.Subelements != null)
+                {
+                    // recursively add each subelement of these subelements.
+                    foreach (var element in elemdata.Subelements)
+                    {
+                        SaveAddedSubelements(elem, element);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Saves the underlying XML file if it changed.
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
@@ -482,7 +509,7 @@ namespace Els_kom_Core.Classes
                             // add subelements and their attributes.
                             foreach (var element in added_elements.Value.Subelements)
                             {
-                                // TODO: Add subelements to xml.
+                                SaveAddedSubelements(elem, element);
                             }
                         }
                     }

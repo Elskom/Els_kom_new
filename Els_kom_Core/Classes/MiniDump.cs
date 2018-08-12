@@ -15,21 +15,25 @@ namespace Els_kom_Core.Classes
         /// </summary>
         internal static void MiniDumpToFile(string fileToDump)
         {
-            var fsToDump = System.IO.File.Exists(fileToDump)
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                System.Runtime.InteropServices.OSPlatform.Windows))
+            {
+                var fsToDump = System.IO.File.Exists(fileToDump)
                 ? System.IO.File.Open(fileToDump, System.IO.FileMode.Append)
                 : System.IO.File.Create(fileToDump);
-            var mINIDUMP_EXCEPTION_INFORMATION = new structs.MINIDUMP_EXCEPTION_INFORMATION
-            {
-                ClientPointers = 1,
-                ExceptionPointers = System.Runtime.InteropServices.Marshal.GetExceptionPointers(),
-                ThreadId = System.Convert.ToUInt32(System.Threading.Thread.CurrentThread.ManagedThreadId)
-            };
-            var thisProcess = System.Diagnostics.Process.GetCurrentProcess();
-            SafeNativeMethods.MiniDumpWriteDump(thisProcess.Handle, thisProcess.Id,
-                fsToDump.SafeFileHandle.DangerousGetHandle(), Enums.MINIDUMP_TYPE.MiniDumpNormal,
-                ref mINIDUMP_EXCEPTION_INFORMATION, System.IntPtr.Zero, System.IntPtr.Zero);
-            thisProcess.Dispose();
-            fsToDump.Dispose();
+                var mINIDUMP_EXCEPTION_INFORMATION = new structs.MINIDUMP_EXCEPTION_INFORMATION
+                {
+                    ClientPointers = 1,
+                    ExceptionPointers = System.Runtime.InteropServices.Marshal.GetExceptionPointers(),
+                    ThreadId = System.Convert.ToUInt32(System.Threading.Thread.CurrentThread.ManagedThreadId)
+                };
+                var thisProcess = System.Diagnostics.Process.GetCurrentProcess();
+                SafeNativeMethods.MiniDumpWriteDump(thisProcess.Handle, thisProcess.Id,
+                    fsToDump.SafeFileHandle.DangerousGetHandle(), Enums.MINIDUMP_TYPE.MiniDumpNormal,
+                    ref mINIDUMP_EXCEPTION_INFORMATION, System.IntPtr.Zero, System.IntPtr.Zero);
+                thisProcess.Dispose();
+                fsToDump.Dispose();
+            }
         }
 
         /// <summary>
@@ -37,26 +41,30 @@ namespace Els_kom_Core.Classes
         /// </summary>
         internal static void FullMiniDumpToFile(string fileToDump)
         {
-            var fsToDump = System.IO.File.Exists(fileToDump)
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                System.Runtime.InteropServices.OSPlatform.Windows))
+            {
+                var fsToDump = System.IO.File.Exists(fileToDump)
                 ? System.IO.File.Open(fileToDump, System.IO.FileMode.Append)
                 : System.IO.File.Create(fileToDump);
-            var mINIDUMP_EXCEPTION_INFORMATION = new structs.MINIDUMP_EXCEPTION_INFORMATION
-            {
-                ClientPointers = 1,
-                ExceptionPointers = System.Runtime.InteropServices.Marshal.GetExceptionPointers(),
-                ThreadId = System.Convert.ToUInt32(System.Threading.Thread.CurrentThread.ManagedThreadId)
-            };
-            var thisProcess = System.Diagnostics.Process.GetCurrentProcess();
-            SafeNativeMethods.MiniDumpWriteDump(thisProcess.Handle, thisProcess.Id,
-                fsToDump.SafeFileHandle.DangerousGetHandle(), Enums.MINIDUMP_TYPE.MiniDumpWithDataSegs |
-                Enums.MINIDUMP_TYPE.MiniDumpWithFullMemory |
-                Enums.MINIDUMP_TYPE.MiniDumpWithProcessThreadData |
-                Enums.MINIDUMP_TYPE.MiniDumpWithFullMemoryInfo |
-                Enums.MINIDUMP_TYPE.MiniDumpWithThreadInfo |
-                Enums.MINIDUMP_TYPE.MiniDumpWithCodeSegs,
-                ref mINIDUMP_EXCEPTION_INFORMATION, System.IntPtr.Zero, System.IntPtr.Zero);
-            thisProcess.Dispose();
-            fsToDump.Dispose();
+                var mINIDUMP_EXCEPTION_INFORMATION = new structs.MINIDUMP_EXCEPTION_INFORMATION
+                {
+                    ClientPointers = 1,
+                    ExceptionPointers = System.Runtime.InteropServices.Marshal.GetExceptionPointers(),
+                    ThreadId = System.Convert.ToUInt32(System.Threading.Thread.CurrentThread.ManagedThreadId)
+                };
+                var thisProcess = System.Diagnostics.Process.GetCurrentProcess();
+                SafeNativeMethods.MiniDumpWriteDump(thisProcess.Handle, thisProcess.Id,
+                    fsToDump.SafeFileHandle.DangerousGetHandle(), Enums.MINIDUMP_TYPE.MiniDumpWithDataSegs |
+                    Enums.MINIDUMP_TYPE.MiniDumpWithFullMemory |
+                    Enums.MINIDUMP_TYPE.MiniDumpWithProcessThreadData |
+                    Enums.MINIDUMP_TYPE.MiniDumpWithFullMemoryInfo |
+                    Enums.MINIDUMP_TYPE.MiniDumpWithThreadInfo |
+                    Enums.MINIDUMP_TYPE.MiniDumpWithCodeSegs,
+                    ref mINIDUMP_EXCEPTION_INFORMATION, System.IntPtr.Zero, System.IntPtr.Zero);
+                thisProcess.Dispose();
+                fsToDump.Dispose();
+            }
         }
     };
 }
