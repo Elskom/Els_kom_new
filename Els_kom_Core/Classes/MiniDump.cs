@@ -28,7 +28,7 @@ namespace Els_kom_Core.Classes
                 {
                     ClientPointers = false,
                     ExceptionPointers = System.Runtime.InteropServices.Marshal.GetExceptionPointers(),
-                    ThreadId = System.Convert.ToUInt32(System.Threading.Thread.CurrentThread.ManagedThreadId)
+                    ThreadId = SafeNativeMethods.GetCurrentThreadId()
                 };
                 var thisProcess = System.Diagnostics.Process.GetCurrentProcess();
                 SafeNativeMethods.MiniDumpWriteDump(thisProcess.Handle, thisProcess.Id,
@@ -63,7 +63,7 @@ namespace Els_kom_Core.Classes
                 {
                     ClientPointers = false,
                     ExceptionPointers = System.Runtime.InteropServices.Marshal.GetExceptionPointers(),
-                    ThreadId = System.Convert.ToUInt32(System.Threading.Thread.CurrentThread.ManagedThreadId)
+                    ThreadId = SafeNativeMethods.GetCurrentThreadId()
                 };
                 var thisProcess = System.Diagnostics.Process.GetCurrentProcess();
                 SafeNativeMethods.MiniDumpWriteDump(thisProcess.Handle, thisProcess.Id,

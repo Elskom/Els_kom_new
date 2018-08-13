@@ -333,8 +333,12 @@ namespace Els_kom_Core.Controls
                         }
                         else
                         {
-                            System.Threading.Tasks.Task.Factory.StartNew(
-                                () => OpenPluginSettings(plugsettingfrm)).Dispose();
+                            var task = System.Threading.Tasks.Task.Factory.StartNew(
+                                () => OpenPluginSettings(plugsettingfrm));
+                            if (task.IsCompleted || task.IsFaulted || task.IsCanceled)
+                            {
+                                task.Dispose();
+                            }
                         }
                     }
                 }

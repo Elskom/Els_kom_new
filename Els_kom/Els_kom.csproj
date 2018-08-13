@@ -86,8 +86,6 @@
   <ItemGroup>
     <None Include="Resources\els_kom.manifest" />
     <None Include="Resources\els_kom.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\VP_Trans.ico" />
     <None Include="Resources\YR.ico" />
   </ItemGroup>

@@ -15,7 +15,7 @@ namespace Els_kom_Core.Classes
         ///
         /// Creates the folder if needed.
         /// </summary>
-        public static string Path
+        internal static string Path
         {
             get
             {
@@ -76,7 +76,7 @@ namespace Els_kom_Core.Classes
                     System.Environment.SpecialFolder.LocalApplicationData);
                 localPath += "\\Els_kom";
                 var thisProcess = System.Diagnostics.Process.GetCurrentProcess();
-                localPath += "\\" + thisProcess.ProcessName + "-" + thisProcess.Id.ToString() + ".mdmp";
+                localPath += System.IO.Path.DirectorySeparatorChar + thisProcess.ProcessName + "-" + thisProcess.Id.ToString() + ".mdmp";
                 thisProcess.Dispose();
                 return localPath;
             }
