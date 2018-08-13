@@ -35,65 +35,68 @@ namespace Els_kom_Core.Controls
         /// </summary>
         public void SaveSettings()
         {
-            Classes.SettingsFile.Settingsxml.ReopenFile();
-            curvalue3 = Classes.SettingsFile.Settingsxml.Read("ElsDir");
-            curvalue = Classes.SettingsFile.Settingsxml.Read("IconWhileElsNotRunning");
-            curvalue2 = Classes.SettingsFile.Settingsxml.Read("IconWhileElsRunning");
-            if (!string.Equals(TextBox1.Text, curvalue3))
+            if (!Classes.SettingsFile.Settingsxml.IsDisposed)
             {
-                if (TextBox1.Text.Length > 0)
+                Classes.SettingsFile.Settingsxml?.ReopenFile();
+                curvalue3 = Classes.SettingsFile.Settingsxml?.Read("ElsDir");
+                curvalue = Classes.SettingsFile.Settingsxml?.Read("IconWhileElsNotRunning");
+                curvalue2 = Classes.SettingsFile.Settingsxml?.Read("IconWhileElsRunning");
+                if (!string.Equals(TextBox1.Text, curvalue3))
                 {
-                    Classes.SettingsFile.Settingsxml.Write("ElsDir", TextBox1.Text);
+                    if (TextBox1.Text.Length > 0)
+                    {
+                        Classes.SettingsFile.Settingsxml?.Write("ElsDir", TextBox1.Text);
+                    }
+                    else
+                    {
+                        Classes.MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!");
+                    }
                 }
-                else
+                if (!string.Equals(Label4, curvalue))
                 {
-                    Classes.MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!");
+                    if (Label5 == "...")
+                    {
+                        Classes.SettingsFile.Settingsxml?.Write("IconWhileElsNotRunning", "2");
+                    }
+                    else
+                    {
+                        Classes.SettingsFile.Settingsxml?.Write("IconWhileElsNotRunning", Label4);
+                    }
                 }
+                if (!string.Equals(Label5, curvalue2))
+                {
+                    if (Label5 == "...")
+                    {
+                        Classes.SettingsFile.Settingsxml?.Write("IconWhileElsRunning", "1");
+                    }
+                    else
+                    {
+                        Classes.SettingsFile.Settingsxml?.Write("IconWhileElsRunning", Label5);
+                    }
+                }
+                if (!string.Equals(Label8, curvalue6))
+                {
+                    if (Label8 == "...")
+                    {
+                        Classes.SettingsFile.Settingsxml?.Write("WindowIcon", "0");
+                    }
+                    else
+                    {
+                        Classes.SettingsFile.Settingsxml?.Write("WindowIcon", Label8);
+                    }
+                }
+                Classes.SettingsFile.Settingsxml?.Write("LoadPDB", curvalue4.ToString());
+                Classes.SettingsFile.Settingsxml?.Write("SaveToZip", curvalue5.ToString());
+                var sources = new System.Collections.Generic.List<string>();
+                for (var i = 0; i < ListView2.Items.Count; i++)
+                {
+                    sources.Add(ListView2.Items[i].Text);
+                }
+                Classes.SettingsFile.Settingsxml?.Write("Sources", "Source", sources.ToArray());
+                sources.Clear();
+                // write to file.
+                Classes.SettingsFile.Settingsxml?.Save();
             }
-            if (!string.Equals(Label4, curvalue))
-            {
-                if (Label5 == "...")
-                {
-                    Classes.SettingsFile.Settingsxml.Write("IconWhileElsNotRunning", "2");
-                }
-                else
-                {
-                    Classes.SettingsFile.Settingsxml.Write("IconWhileElsNotRunning", Label4);
-                }
-            }
-            if (!string.Equals(Label5, curvalue2))
-            {
-                if (Label5 == "...")
-                {
-                    Classes.SettingsFile.Settingsxml.Write("IconWhileElsRunning", "1");
-                }
-                else
-                {
-                    Classes.SettingsFile.Settingsxml.Write("IconWhileElsRunning", Label5);
-                }
-            }
-            if (!string.Equals(Label8, curvalue6))
-            {
-                if (Label8 == "...")
-                {
-                    Classes.SettingsFile.Settingsxml.Write("WindowIcon", "0");
-                }
-                else
-                {
-                    Classes.SettingsFile.Settingsxml.Write("WindowIcon", Label8);
-                }
-            }
-            Classes.SettingsFile.Settingsxml.Write("LoadPDB", curvalue4.ToString());
-            Classes.SettingsFile.Settingsxml.Write("SaveToZip", curvalue5.ToString());
-            var sources = new System.Collections.Generic.List<string>();
-            for (var i = 0; i < ListView2.Items.Count; i++)
-            {
-                sources.Add(ListView2.Items[i].Text);
-            }
-            Classes.SettingsFile.Settingsxml.Write("Sources", "Source", sources.ToArray());
-            sources.Clear();
-            // write to file.
-            Classes.SettingsFile.Settingsxml.Save();
         }
 
         private void Button1_Click(object sender, System.EventArgs e)
@@ -234,14 +237,14 @@ namespace Els_kom_Core.Controls
         /// </summary>
         public void InitControl()
         {
-            Classes.SettingsFile.Settingsxml.ReopenFile();
-            curvalue3 = Classes.SettingsFile.Settingsxml.Read("ElsDir");
-            curvalue = Classes.SettingsFile.Settingsxml.Read("IconWhileElsNotRunning");
-            curvalue2 = Classes.SettingsFile.Settingsxml.Read("IconWhileElsRunning");
-            curvalue6 = Classes.SettingsFile.Settingsxml.Read("WindowIcon");
-            int.TryParse(Classes.SettingsFile.Settingsxml.Read("LoadPDB"), out curvalue4);
-            int.TryParse(Classes.SettingsFile.Settingsxml.Read("SaveToZip"), out curvalue5);
-            var sources = Classes.SettingsFile.Settingsxml.Read("Sources", "Source", null);
+            Classes.SettingsFile.Settingsxml?.ReopenFile();
+            curvalue3 = Classes.SettingsFile.Settingsxml?.Read("ElsDir");
+            curvalue = Classes.SettingsFile.Settingsxml?.Read("IconWhileElsNotRunning");
+            curvalue2 = Classes.SettingsFile.Settingsxml?.Read("IconWhileElsRunning");
+            curvalue6 = Classes.SettingsFile.Settingsxml?.Read("WindowIcon");
+            int.TryParse(Classes.SettingsFile.Settingsxml?.Read("LoadPDB"), out curvalue4);
+            int.TryParse(Classes.SettingsFile.Settingsxml?.Read("SaveToZip"), out curvalue5);
+            var sources = Classes.SettingsFile.Settingsxml?.Read("Sources", "Source", null);
             foreach (var source in sources)
             {
                 ListView2.Items.Add(source);

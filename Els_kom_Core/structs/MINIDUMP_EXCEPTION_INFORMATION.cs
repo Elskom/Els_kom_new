@@ -5,17 +5,12 @@
 
 namespace Els_kom_Core.structs
 {
-    internal struct MINIDUMP_EXCEPTION_INFORMATION : System.IDisposable
+    [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Pack = 4)]  // Pack=4 is important! So it works also for x64!
+    internal struct MINIDUMP_EXCEPTION_INFORMATION
     {
         internal uint ThreadId;
         internal System.IntPtr ExceptionPointers;
-        internal int ClientPointers;
-
-        public void Dispose()
-        {
-            ThreadId = 0;
-            ExceptionPointers = System.IntPtr.Zero;
-            ClientPointers = 0;
-        }
+        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)]
+        internal bool ClientPointers;
     }
 }

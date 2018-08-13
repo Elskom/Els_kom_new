@@ -111,7 +111,7 @@ namespace Els_kom_Core.Classes
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
         public void AddAttribute(string elementname, string attributename, object attributevalue)
         {
-            if (disposedValue)
+            if (IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
@@ -178,7 +178,7 @@ namespace Els_kom_Core.Classes
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
         private void AddElement(string elementname, string value)
         {
-            if (disposedValue)
+            if (IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
@@ -208,7 +208,7 @@ namespace Els_kom_Core.Classes
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
         public void Write(string elementname, string value)
         {
-            if (disposedValue)
+            if (IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
@@ -254,7 +254,7 @@ namespace Els_kom_Core.Classes
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
         public void Write(string elementname, string attributename, string attributevalue)
         {
-            if (disposedValue)
+            if (IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
@@ -276,6 +276,11 @@ namespace Els_kom_Core.Classes
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
         public void Write(string parentelementname, string elementname, string[] values)
         {
+            if (IsDisposed)
+            {
+                throw new System.ObjectDisposedException("XMLOblect is disposed.");
+            }
+            var elem = doc.Root.Element(elementname);
         }
 
         /// <summary>
@@ -286,7 +291,7 @@ namespace Els_kom_Core.Classes
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
         public string Read(string elementname)
         {
-            if (disposedValue)
+            if (IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
@@ -315,7 +320,7 @@ namespace Els_kom_Core.Classes
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
         public string Read(string elementname, string attributename)
         {
-            if (disposedValue)
+            if (IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
@@ -337,7 +342,7 @@ namespace Els_kom_Core.Classes
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
         public string[] Read(string parentelementname, string elementname, object trash = null)
         {
-            if (disposedValue)
+            if (IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
@@ -347,7 +352,7 @@ namespace Els_kom_Core.Classes
             }
             else
             {
-                Write(elementname, string.Empty);
+                Write(parentelementname, string.Empty);
             }
             // TODO: Read the subelements.
             return new string[] { };
@@ -386,7 +391,7 @@ namespace Els_kom_Core.Classes
         {
             get
             {
-                if (disposedValue)
+                if (IsDisposed)
                 {
                     throw new System.ObjectDisposedException("XMLOblect is disposed.");
                 }
@@ -394,7 +399,7 @@ namespace Els_kom_Core.Classes
             }
             set
             {
-                if (disposedValue)
+                if (IsDisposed)
                 {
                     throw new System.ObjectDisposedException("XMLOblect is disposed.");
                 }
@@ -410,7 +415,7 @@ namespace Els_kom_Core.Classes
         {
             get
             {
-                if (disposedValue)
+                if (IsDisposed)
                 {
                     throw new System.ObjectDisposedException("XMLOblect is disposed.");
                 }
@@ -439,7 +444,7 @@ namespace Els_kom_Core.Classes
         {
             get
             {
-                if (disposedValue)
+                if (IsDisposed)
                 {
                     throw new System.ObjectDisposedException("XMLOblect is disposed.");
                 }
@@ -483,7 +488,7 @@ namespace Els_kom_Core.Classes
         {
             lock (objLock)
             {
-                if (disposedValue)
+                if (IsDisposed)
                 {
                     throw new System.ObjectDisposedException("XMLOblect is disposed.");
                 }
@@ -552,11 +557,14 @@ namespace Els_kom_Core.Classes
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        /// <summary>
+        /// Gets if the XMLObject is disposed.
+        /// </summary>
+        public bool IsDisposed { get; private set; } = false; // To detect redundant calls
 
         void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!IsDisposed)
             {
                 if (disposing)
                 {
@@ -571,7 +579,7 @@ namespace Els_kom_Core.Classes
                 _elements_deleted = null;
                 doc = null;
                 cached_xmlfilename = string.Empty;
-                disposedValue = true;
+                IsDisposed = true;
             }
         }
 

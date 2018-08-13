@@ -34,9 +34,9 @@ namespace Els_kom_Core.Classes
         /// It must be a String but can be variables that returns strings.
         /// </summary>
         /// <returns>0, process stdout data, process stderr data</returns>
-        internal static object Shell(string FileName, string Arguments, bool RedirectStandardOutput, bool RedirectStandardError, bool UseShellExecute, bool CreateNoWindow, System.Diagnostics.ProcessWindowStyle WindowStyle, string WorkingDirectory, bool WaitForProcessExit)
+        internal static string Shell(string FileName, string Arguments, bool RedirectStandardOutput, bool RedirectStandardError, bool UseShellExecute, bool CreateNoWindow, System.Diagnostics.ProcessWindowStyle WindowStyle, string WorkingDirectory, bool WaitForProcessExit)
         {
-            object ret = 0;
+            var ret = string.Empty;
             var proc = new System.Diagnostics.Process();
             proc.StartInfo.FileName = FileName;
             proc.StartInfo.Arguments = Arguments;
@@ -88,8 +88,8 @@ namespace Els_kom_Core.Classes
             ExecutingElsword = true;
             if (System.IO.File.Exists(SettingsFile.Path))
             {
-                SettingsFile.Settingsxml.ReopenFile();
-                ElsDir = SettingsFile.Settingsxml.Read("ElsDir");
+                SettingsFile.Settingsxml?.ReopenFile();
+                ElsDir = SettingsFile.Settingsxml?.Read("ElsDir");
                 if (ElsDir.Length > 0)
                 {
                     if (System.IO.File.Exists(ElsDir + "\\data\\x2.exe"))
@@ -128,8 +128,8 @@ namespace Els_kom_Core.Classes
             ExecutingElsword = true;
             if (System.IO.File.Exists(SettingsFile.Path))
             {
-                SettingsFile.Settingsxml.ReopenFile();
-                ElsDir = SettingsFile.Settingsxml.Read("ElsDir");
+                SettingsFile.Settingsxml?.ReopenFile();
+                ElsDir = SettingsFile.Settingsxml?.Read("ElsDir");
                 if (ElsDir.Length > 0)
                 {
                     if (System.IO.File.Exists(ElsDir + "\\voidels.exe"))

@@ -5,7 +5,7 @@
 
 namespace Els_kom_Core.Classes
 {
-    // do not use this attribute for anything but methods.
+    // do not use this attribute for anything but classes.
     /// <summary>
     /// Attribute for creating MiniDumps.
     ///
