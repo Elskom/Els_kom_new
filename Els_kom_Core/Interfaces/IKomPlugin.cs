@@ -3,7 +3,7 @@
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
-namespace Els_kom_Core.interfaces
+namespace Els_kom_Core.Interfaces
 {
     /// <summary>
     /// Interface for Els_kom plugins for some optional add-ons to internal workings.
@@ -15,15 +15,17 @@ namespace Els_kom_Core.interfaces
     public interface IKomPlugin
     {
         /// <summary>
-        /// Name of the KOM plugin.
+        /// Gets name of the KOM plugin.
         /// </summary>
         string PluginName { get; }
+
         /// <summary>
-        /// List of KOM File header string constant for this plugin's supported KOM version.
+        /// Gets the KOM File header string constant for this plugin's supported KOM version.
         /// </summary>
         string KOMHeaderString { get; }
+
         /// <summary>
-        /// Returns the supported KOM version for packing/unpacking.
+        /// Gets the supported KOM version for packing/unpacking.
         /// </summary>
         int SupportedKOMVersion { get; }
 
@@ -32,25 +34,28 @@ namespace Els_kom_Core.interfaces
         /// </summary>
         /// <param name="in_path">input path.</param>
         /// <param name="out_path">output (target) path.</param>
-        /// <param name="KOMFileName">KOM File name to use internally for unpacking files.</param>
+        /// <param name="kOMFileName">KOM File name to use internally for unpacking files.</param>
         /// <exception cref="Classes.UnpackingError">Thrown when unpacking fails badly.</exception>
         /// <exception cref="System.NotImplementedException">Thrown when an plugin does not have this implemented yet.</exception>
-        void Unpack(string in_path, string out_path, string KOMFileName);
+        void Unpack(string in_path, string out_path, string kOMFileName);
+
         /// <summary>
         /// Packer for the KOM Version this plugin supports.
         /// </summary>
         /// <param name="in_path">input path.</param>
         /// <param name="out_path">output (target) path.</param>
-        /// <param name="KOMFileName">KOM File name to use internally for packing files.</param>
+        /// <param name="kOMFileName">KOM File name to use internally for packing files.</param>
         /// <exception cref="Classes.PackingError">Thrown when packing fails badly.</exception>
         /// <exception cref="System.NotImplementedException">Thrown when an plugin does not have this implemented yet.</exception>
-        void Pack(string in_path, string out_path, string KOMFileName);
+        void Pack(string in_path, string out_path, string kOMFileName);
+
         /// <summary>
         /// Deletes the File or Folder that the plugin supports with processing.
         /// </summary>
         /// <param name="in_path">The input path to delete.</param>
         /// <param name="folder">Denotes if the input path is an file or folder.</param>
         void Delete(string in_path, bool folder);
+
         /// <summary>
         /// Converts the crc.xml file to the format supported
         /// by this version of KOM files.
@@ -58,6 +63,7 @@ namespace Els_kom_Core.interfaces
         /// <param name="crcversion">The current version of crc.xml.</param>
         /// <param name="crcpath">The path to the crc.xml file to convert (if needed).</param>
         void ConvertCRC(int crcversion, string crcpath);
+
         /// <summary>
         /// Updates the crc.xml file to the format supported
         /// by this version of KOM files.

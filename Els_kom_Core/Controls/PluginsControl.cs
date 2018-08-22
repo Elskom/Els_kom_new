@@ -11,9 +11,9 @@ namespace Els_kom_Core.Controls
     internal partial class PluginsControl : System.Windows.Forms.UserControl
     {
         /// <summary>
-        /// PluginsControl constructor.
+        /// Initializes a new instance of the <see cref="PluginsControl"/> class.
         /// </summary>
-        internal PluginsControl() => InitializeComponent();
+        internal PluginsControl() => this.InitializeComponent();
 
         /// <summary>
         /// Initializs the Plugins control for Els_kom's Plugins installer/updater form.
@@ -29,11 +29,11 @@ namespace Els_kom_Core.Controls
             // install the selected plugin.
             // TODO: Add plugin install code here.
             // first check if plugin is installed already, then uninstall the old version. before installing.
-            Classes.MessageManager.ShowInfo(ListView1.SelectedItems[0].SubItems[0].Text, "Debug!");
-            Classes.MessageManager.ShowInfo(ListView1.SelectedItems[0].SubItems[1].Text, "Debug!");
+            Classes.MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[0].Text, "Debug!");
+            Classes.MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[1].Text, "Debug!");
         }
 
-        private void OkButton_Click(object sender, System.EventArgs e) => FindForm()?.Close();
+        private void OkButton_Click(object sender, System.EventArgs e) => this.FindForm()?.Close();
 
         private void UninstallButton_Click(object sender, System.EventArgs e)
         {
@@ -42,7 +42,7 @@ namespace Els_kom_Core.Controls
             // first verify plugin is installed though.
         }
 
-        private void PluginsControl_Paint(object sender, System.Windows.Forms.PaintEventArgs e) => Label1.Text = "Select Plugins to install from the list Below. "
+        private void PluginsControl_Paint(object sender, System.Windows.Forms.PaintEventArgs e) => this.Label1.Text = "Select Plugins to install from the list Below. "
                 + "If a Plugin you expect is not shown Configure a Plugin "
                 + "Source Repository to look in for Plugins to install from."
                 + System.Environment.NewLine + System.Environment.NewLine

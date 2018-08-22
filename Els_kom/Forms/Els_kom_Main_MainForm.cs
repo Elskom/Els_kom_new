@@ -7,116 +7,116 @@ namespace Els_kom.Forms
 {
     internal partial class MainForm : System.Windows.Forms.Form
     {
-        /// <summary>
-        /// Allows the user to enable or disable their event
-        /// handler at will if they only want it to sometimes
-        /// fire.
-        /// </summary>
-        private bool Enablehandlers;
         private System.Windows.Forms.Form aboutfrm;
         private System.Windows.Forms.Form settingsfrm;
 
-        internal MainForm() => InitializeComponent();
+        internal MainForm() => this.InitializeComponent();
+
+        private bool Enablehandlers { get; set; }
 
         protected override void WndProc(ref System.Windows.Forms.Message m)
         {
-            Enablehandlers = !ShowInTaskbar ? true : false;
-            if (Enablehandlers && m.Msg == MainControl1.GetSysCommand())
+            this.Enablehandlers = !this.ShowInTaskbar ? true : false;
+            if (this.Enablehandlers && m.Msg == this.MainControl1.GetSysCommand())
             {
-                if (m.WParam.ToInt32() == MainControl1.GetMinimizeCommand())
+                if (m.WParam.ToInt32() == this.MainControl1.GetMinimizeCommand())
                 {
-                    Hide();
+                    this.Hide();
                     m.Result = System.IntPtr.Zero;
                     return;
                 }
-                else if (m.WParam.ToInt32() == MainControl1.GetMaximizeCommand())
+                else if (m.WParam.ToInt32() == this.MainControl1.GetMaximizeCommand())
                 {
-                    Show();
-                    Activate();
+                    this.Show();
+                    this.Activate();
                     m.Result = System.IntPtr.Zero;
                     return;
                 }
-                else if (m.WParam.ToInt32() == MainControl1.GetRestoreCommand())
+                else if (m.WParam.ToInt32() == this.MainControl1.GetRestoreCommand())
                 {
-                    Show();
-                    Activate();
+                    this.Show();
+                    this.Activate();
                     m.Result = System.IntPtr.Zero;
                     return;
                 }
             }
+
             base.WndProc(ref m);
         }
 
         private void MainForm_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
-            var Cancel = e.Cancel;
+            var cancel = e.Cancel;
+
             // CloseReason UnloadMode = e->CloseReason; <-- Removed because not used.
-            if (!MainControl1.AbleToClose() && !Els_kom_Core.Controls.MainControl._closable)
+            if (!this.MainControl1.AbleToClose() && !Els_kom_Core.Controls.MainControl.Closable)
             {
-                Cancel = true;
+                cancel = true;
                 System.Windows.Forms.MessageBox.Show("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
             }
-            if (!Cancel)
+
+            if (!cancel)
             {
                 Els_kom_Core.Classes.SettingsFile.Settingsxml?.Dispose();
-                MainControl1.end_settings_loop = true;
+                this.MainControl1.End_settings_loop = true;
             }
-            e.Cancel = Cancel;
+
+            e.Cancel = cancel;
         }
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-            Hide();
-            if (MainControl1.VersionCheck())
+            this.Hide();
+            if (this.MainControl1.VersionCheck())
             {
-                MainControl1.LoadControl();
+                this.MainControl1.LoadControl();
             }
         }
 
-        private void MainForm_MouseLeave(object sender, System.EventArgs e) => MainControl1.Label1.Text = "";
+        private void MainForm_MouseLeave(object sender, System.EventArgs e) => this.MainControl1.Label1.Text = string.Empty;
 
         private void MainControl1_CloseForm(object sender, System.EventArgs e)
         {
-            aboutfrm?.Close();
-            settingsfrm?.Close();
-            Close();
+            this.aboutfrm?.Close();
+            this.settingsfrm?.Close();
+            this.Close();
         }
 
-        private void MainControl1_TrayNameChange(object sender, System.EventArgs e) => MainControl1.NotifyIcon1.Text = Text;
+        private void MainControl1_TrayNameChange(object sender, System.EventArgs e) => this.MainControl1.NotifyIcon1.Text = this.Text;
 
         private void MainControl1_TrayClick(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if ((AboutForm.Label1 != null && AboutForm.Label1 == "1") || (SettingsForm.Label1 != null && SettingsForm.Label1 == "1"))
             {
-                //I have to Sadly disable left button on the Notify Icon to prevent a bug with AboutForm Randomly Unloading or not reshowing.
+                // I have to Sadly disable left button on the Notify Icon to prevent a bug with AboutForm Randomly Unloading or not reshowing.
             }
             else
             {
                 if (e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
-                    if (ShowInTaskbar)
+                    if (this.ShowInTaskbar)
                     {
-                        if (WindowState == System.Windows.Forms.FormWindowState.Minimized)
+                        if (this.WindowState == System.Windows.Forms.FormWindowState.Minimized)
                         {
-                            WindowState = System.Windows.Forms.FormWindowState.Normal;
-                            Activate();
+                            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
+                            this.Activate();
                         }
                         else
                         {
-                            WindowState = System.Windows.Forms.FormWindowState.Minimized;
+                            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
                         }
                     }
-                    else if (MainControl1.NotifyIcon1.Visible)
+                    else if (this.MainControl1.NotifyIcon1.Visible)
                     {
-                        if (WindowState == System.Windows.Forms.FormWindowState.Minimized)
+                        if (this.WindowState == System.Windows.Forms.FormWindowState.Minimized)
                         {
-                            WindowState = System.Windows.Forms.FormWindowState.Normal;
-                            Show();
+                            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
+                            this.Show();
                         }
                         else
                         {
-                            Hide();
-                            WindowState = System.Windows.Forms.FormWindowState.Minimized;
+                            this.Hide();
+                            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
                         }
                     }
                 }
@@ -126,22 +126,22 @@ namespace Els_kom.Forms
         private void MainControl1_AboutForm(object sender, System.EventArgs e)
         {
             // prevent from having multiple about forms opening at the same time in case as well.
-            if (aboutfrm == null && settingsfrm == null)
+            if (this.aboutfrm == null && this.settingsfrm == null)
             {
-                aboutfrm = new AboutForm();
-                aboutfrm.ShowDialog();
-                aboutfrm = null;
+                this.aboutfrm = new AboutForm();
+                this.aboutfrm.ShowDialog();
+                this.aboutfrm = null;
             }
         }
 
         private void MainControl1_ConfigForm(object sender, System.EventArgs e)
         {
             // avoids an issue where more than 1 settings form can be opened at the same time.
-            if (settingsfrm == null && aboutfrm == null)
+            if (this.settingsfrm == null && this.aboutfrm == null)
             {
-                settingsfrm = new SettingsForm();
-                settingsfrm.ShowDialog();
-                settingsfrm = null;
+                this.settingsfrm = new SettingsForm();
+                this.settingsfrm.ShowDialog();
+                this.settingsfrm = null;
             }
         }
     }

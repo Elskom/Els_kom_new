@@ -5,7 +5,7 @@
 
 /* 0x01050000 = v1.5.0.0 */
 #if VERSION_0x01050000
-namespace Els_kom_Core.interfaces
+namespace Els_kom_Core.Interfaces
 {
     /// <summary>
     /// Interface for Els_kom kom entry Encryption and Decryption plugins (Version 1.5.0.0 or newer).

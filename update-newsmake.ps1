@@ -18,13 +18,13 @@ Set-Location -Path ../../
 $env:zlibnetpth = Join-Path (Get-Location) ZLIB.NET
 if(!(Test-Path -Path $env:zlibnetpth))
 {
-    git clone -q https://github.com/Elskom/ZLIB.NET.git --branch patches
+    git clone -q https://github.com/Elskom/ZLIB.NET.git
 }
 else
 {
     # reclone to ensure up to date.
     rmdir ZLIB.NET
-    git clone -q https://github.com/Elskom/ZLIB.NET.git --branch patches
+    git clone -q https://github.com/Elskom/ZLIB.NET.git
 }
 Set-Location -Path ../Misc/NEWS
 $env:newsmakeprogpth = Join-Path (Get-Location) ../../externals/newsmake/build/Release/newsmake

@@ -11,7 +11,15 @@ namespace Els_kom_Core.Classes
     public static class SettingsFile
     {
         /// <summary>
-        /// The path to the Els_kom Settings file.
+        /// Gets or sets the settings file XMLObject instance.
+        ///
+        /// This is designed so there is globally only
+        /// a single instance to save time, and memory.
+        /// </summary>
+        public static XMLObject Settingsxml { get; set; }
+
+        /// <summary>
+        /// Gets the path to the Els_kom Settings file.
         ///
         /// Creates the folder if needed.
         /// </summary>
@@ -30,6 +38,7 @@ namespace Els_kom_Core.Classes
                 {
                     System.IO.Directory.CreateDirectory(localPath);
                 }
+
                 // do not create settings file, just pass this path to XMLObject.
                 // if we create it ourselves the new optimized class will fail
                 // to work right if it is empty.
@@ -39,7 +48,7 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
-        /// The path to the Els_kom Error Log file.
+        /// Gets the path to the Els_kom Error Log file.
         ///
         /// Creates the Error Log file if needed.
         /// </summary>
@@ -58,15 +67,7 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
-        /// Gets the settings file XMLObject instance.
-        ///
-        /// This is designed so there is globally only
-        /// a single instance to save time, and memory.
-        /// </summary>
-        public static XMLObject Settingsxml { get; set; }
-
-        /// <summary>
-        /// The path to the Els_kom Mini-Dump file.
+        /// Gets the path to the Els_kom Mini-Dump file.
         /// </summary>
         internal static string MiniDumpPath
         {

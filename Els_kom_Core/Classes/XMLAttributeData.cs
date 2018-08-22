@@ -5,9 +5,19 @@
 
 namespace Els_kom_Core.Classes
 {
+    /// <summary>
+    /// XML Attribute stuff.
+    /// </summary>
     internal class XMLAttributeData
     {
-        internal string AttributeName;
-        internal string value;
+        /// <summary>
+        /// Gets or sets the name of this attribute.
+        /// </summary>
+        internal string AttributeName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the value of this attribute.
+        /// </summary>
+        internal string Value { get; set; } = string.Empty;
     }
 }

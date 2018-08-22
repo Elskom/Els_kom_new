@@ -12,9 +12,10 @@ internal static class Els_kom_Main
     [System.STAThread]
     internal static int Main(string[] args)
     {
-        var Class = typeof(Els_kom_Main);
+        var classType = typeof(Els_kom_Main);
+
         // execute our attribute.
-        Class.GetCustomAttributes(false);
+        classType.GetCustomAttributes(false);
         if ((args.Length - 1) > -1)
         {
             Els_kom_Core.Classes.ReleasePackaging.PackageRelease(args);
@@ -25,6 +26,7 @@ internal static class Els_kom_Main
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
             System.Windows.Forms.Application.Run(new Els_kom.Forms.MainForm());
         }
+
         return 0;
     }
 }

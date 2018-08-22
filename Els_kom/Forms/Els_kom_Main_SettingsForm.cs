@@ -7,8 +7,24 @@ namespace Els_kom.Forms
 {
     internal partial class SettingsForm : System.Windows.Forms.Form
     {
-        internal static string Label1 = "0";
-        internal SettingsForm() => InitializeComponent();
+        private static string label1 = string.Empty;
+
+        internal SettingsForm() => this.InitializeComponent();
+
+        internal static string Label1
+        {
+            get
+            {
+                if (label1 == string.Empty)
+                {
+                    label1 = "0";
+                }
+
+                return label1;
+            }
+
+            private set => label1 = value;
+        }
 
         private void SettingsForm_Load(object sender, System.EventArgs e)
         {
@@ -17,14 +33,14 @@ namespace Els_kom.Forms
             // from the Settings XMLObject in Designer mode
             // (which contains no instance there anyway) that causes
             // the Designer to fail to load the form the control is on.
-            SettingsControl1.InitControl();
+            this.SettingsControl1.InitControl();
             Label1 = "1";
         }
 
         private void SettingsForm_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
             Label1 = "0";
-            SettingsControl1.SaveSettings();
+            this.SettingsControl1.SaveSettings();
         }
 
         private void SettingsControl1_OpenPluginsForm(object sender, System.EventArgs e)

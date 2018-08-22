@@ -16,6 +16,7 @@
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <BaseIntermediateOutputPath>..\obj\$(Platform)\$(Configuration)\$(ProjectName)</BaseIntermediateOutputPath>
     <IntermediateOutputPath>..\obj\$(Platform)\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <NoStdLib>False</NoStdLib>
@@ -23,14 +24,24 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>..\PCbuild\Els_kom.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <DefineConstants>ELS_KOM_CORE_BUILD</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DefineConstants>ELS_KOM_CORE_BUILD</DefineConstants>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>..\PCbuild\Els_kom.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DefineConstants>ELS_KOM_CORE_BUILD</DefineConstants>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\externals\ZLIB.NET\zlib.net.csproj">
+      <Project>{0c89b7a2-a218-49e4-b545-5b044a45f977}</Project>
+      <Name>zlib.net</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -74,48 +85,6 @@
     <Compile Include="Classes\XMLElementData.cs" />
     <Compile Include="Classes\XMLObject.cs" />
     <Compile Include="Classes\ZlibHelper.cs" />
-    <Compile Include="..\externals\ZLIB.NET\Adler32.cs">
-      <Link>Classes\Zlib\Adler32.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\Deflate.cs">
-      <Link>Classes\Zlib\Deflate.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\InfBlocks.cs">
-      <Link>Classes\Zlib\InfBlocks.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\InfCodes.cs">
-      <Link>Classes\Zlib\InfCodes.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\Inflate.cs">
-      <Link>Classes\Zlib\Inflate.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\InfTree.cs">
-      <Link>Classes\Zlib\InfTree.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\StaticTree.cs">
-      <Link>Classes\Zlib\StaticTree.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\SupportClass.cs">
-      <Link>Classes\Zlib\SupportClass.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\Tree.cs">
-      <Link>Classes\Zlib\Tree.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\ZInputStream.cs">
-      <Link>Classes\Zlib\ZInputStream.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\Zlib.cs">
-      <Link>Classes\Zlib\Zlib.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\ZOutputStream.cs">
-      <Link>Classes\Zlib\ZOutputStream.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\ZStream.cs">
-      <Link>Classes\Zlib\ZStream.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\ZStreamException.cs">
-      <Link>Classes\Zlib\ZStreamException.cs</Link>
-    </Compile>
     <Compile Include="Controls\AboutControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -142,16 +111,22 @@
     </Compile>
     <Compile Include="Enums\LoadImagefuLoad.cs" />
     <Compile Include="Enums\LoadImageTypes.cs" />
-    <Compile Include="structs\MINIDUMP_EXCEPTION_INFORMATION.cs" />
+    <Compile Include="Structs\MINIDUMP_EXCEPTION_INFORMATION.cs" />
     <Compile Include="Enums\SYSCOMMANDS.cs" />
     <Compile Include="Enums\MINIDUMP_TYPE.cs" />
-    <Compile Include="interfaces\ICallbackPlugin.cs" />
-    <Compile Include="interfaces\IEncryptionPlugin.cs" />
-    <Compile Include="interfaces\IKomPlugin.cs" />
+    <Compile Include="Interfaces\ICallbackPlugin.cs" />
+    <Compile Include="Interfaces\IEncryptionPlugin.cs" />
+    <Compile Include="Interfaces\IKomPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\PCbuild\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="gitbuildinfo" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
@@ -235,25 +210,26 @@
         outputData += "    /// </summary>" + System.Environment.NewLine;
         outputData += "    internal static class Git" + System.Environment.NewLine;
         outputData += "    {" + System.Environment.NewLine;
-        outputData += "        private static string headdesc = \"" + git_out1 + "\";" + System.Environment.NewLine;
+        outputData += "        private static string headdesc = \"" + git_out1 + "\";" + System.Environment.NewLine + System.Environment.NewLine;
         outputData += "        /// <summary>" + System.Environment.NewLine;
-        outputData += "        /// The git commit hash as formated by git rev-parse." + System.Environment.NewLine;
+        outputData += "        /// Gets the git commit hash as formated by git rev-parse." + System.Environment.NewLine;
         outputData += "        /// </summary>" + System.Environment.NewLine;
-        outputData += "        internal static string commit = \"" + git_out2 + "\";" + System.Environment.NewLine;
+        outputData += "        internal static string Commit => \"" + git_out2 + "\";" + System.Environment.NewLine + System.Environment.NewLine;
         outputData += "        /// <summary>" + System.Environment.NewLine;
-        outputData += "        /// The git branch name as formated by git name-rev." + System.Environment.NewLine;
+        outputData += "        /// Gets the git branch name as formated by git name-rev." + System.Environment.NewLine;
         outputData += "        /// </summary>" + System.Environment.NewLine;
-        outputData += "        internal static string branchname = \"" + git_out3 + "\";" + System.Environment.NewLine;
+        outputData += "        internal static string Branchname => \"" + git_out3 + "\";" + System.Environment.NewLine + System.Environment.NewLine;
         outputData += "        /// <summary>" + System.Environment.NewLine;
-        outputData += "        /// Gets if the branch is dirty or clean based upon" + System.Environment.NewLine;
-        outputData += "        /// the string constructed by git describe." + System.Environment.NewLine;
+        outputData += "        /// Gets a value indicating whether the branch is dirty or" + System.Environment.NewLine;
+        outputData += "        /// clean based upon the string constructed by git describe." + System.Environment.NewLine;
         outputData += "        /// </summary>" + System.Environment.NewLine;
-        outputData += "        internal static bool IsDirty => headdesc.EndsWith(\"-dirty\");" + System.Environment.NewLine;
+        outputData += "        internal static bool IsDirty => headdesc.EndsWith(\"-dirty\");" + System.Environment.NewLine + System.Environment.NewLine;
         outputData += "        /// <summary>" + System.Environment.NewLine;
-        outputData += "        /// Gets if the branch is the master branch or not" + System.Environment.NewLine;
-        outputData += "        /// based upon the string constructed by git name-rev." + System.Environment.NewLine;
+        outputData += "        /// Gets a value indicating whether the branch is the master" + System.Environment.NewLine;
+        outputData += "        /// branch or not based upon the string constructed by" + System.Environment.NewLine;
+        outputData += "        /// git name-rev." + System.Environment.NewLine;
         outputData += "        /// </summary>" + System.Environment.NewLine;
-        outputData += "        internal static bool IsMaster => branchname.Equals(\"master\");" + System.Environment.NewLine;
+        outputData += "        internal static bool IsMaster => Branchname.Equals(\"master\");" + System.Environment.NewLine;
         outputData += "    }" + System.Environment.NewLine;
         outputData += "}" + System.Environment.NewLine;
         System.IO.StreamWriter fstream = new System.IO.StreamWriter(OutputFile1, false, new System.Text.UTF8Encoding(false));
@@ -275,18 +251,21 @@
         outputResourcesData += System.Environment.NewLine;
         outputResourcesData += "namespace " + TargetNamespace + System.Environment.NewLine;
         outputResourcesData += "{" + System.Environment.NewLine;
+        outputResourcesData += "    /// <summary>" + System.Environment.NewLine;
+        outputResourcesData += "    /// Resources stuff." + System.Environment.NewLine;
+        outputResourcesData += "    /// </summary>" + System.Environment.NewLine;
         outputResourcesData += "    internal static class ResourcesDir" + System.Environment.NewLine;
         outputResourcesData += "    {" + System.Environment.NewLine;
         outputResourcesData += "        /// <summary>" + System.Environment.NewLine;
-        outputResourcesData += "        /// Path to the resources file to create/read it." + System.Environment.NewLine;
+        outputResourcesData += "        /// Gets the path to the resources file to create/read it." + System.Environment.NewLine;
         outputResourcesData += "        /// </summary>" + System.Environment.NewLine;
         resourcespath = resourcespath.Replace("\\", "\\\\");
-        outputResourcesData += "        internal static string resourcespath = \"" + resourcespath + "\";" + System.Environment.NewLine;
+        outputResourcesData += "        internal static string Resourcespath => \"" + resourcespath + "\";" + System.Environment.NewLine + System.Environment.NewLine;
         outputResourcesData += "        /// <summary>" + System.Environment.NewLine;
-        outputResourcesData += "        /// Path to the Icon file to place in the resources file." + System.Environment.NewLine;
+        outputResourcesData += "        /// Gets the path to the Icon file to place in the resources file." + System.Environment.NewLine;
         outputResourcesData += "        /// </summary>" + System.Environment.NewLine;
         iconpath = iconpath.Replace("\\", "\\\\");
-        outputResourcesData += "        internal static string iconpath = \"" + iconpath + "\";" + System.Environment.NewLine;
+        outputResourcesData += "        internal static string Iconpath => \"" + iconpath + "\";" + System.Environment.NewLine;
         outputResourcesData += "    }" + System.Environment.NewLine;
         outputResourcesData += "}" + System.Environment.NewLine;
         System.IO.StreamWriter fstream2 = new System.IO.StreamWriter(OutputFile2, false, new System.Text.UTF8Encoding(false));

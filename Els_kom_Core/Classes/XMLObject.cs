@@ -8,32 +8,37 @@ namespace Els_kom_Core.Classes
     /// <summary>
     /// Class in the Core that allows Reading and Writing of XML Files.
     /// </summary>
-    public sealed class XMLObject: System.IDisposable
+    public sealed class XMLObject : System.IDisposable
     {
         // TODO: Add functions to remove XML Entries and Attributes too.
         // TODO: Finish Read(string elementname, string attributename) and
         // Write(string elementname, string attributename, object attributevalue)
         // shortcut methods.
         // TODO: Add ways of adding, editing, and deleting elements within elements.
-        private System.Xml.Linq.XDocument doc;
-        private string cached_xmlfilename;
-        private bool _exists = false;
-        private bool _changed = false;
-        // Pending XML Element Addictions (excluding only adding attributes to an already existing element).
-        private System.Collections.Generic.Dictionary<string, XMLElementData> _elements_added = new System.Collections.Generic.Dictionary<string, XMLElementData>();
-        // Pending XML Element edits (any value edits, added attributes, or edited attributes).
-        private System.Collections.Generic.Dictionary<string, XMLElementData> _elements_edits = new System.Collections.Generic.Dictionary<string, XMLElementData>();
-        // Pending XML Element Attribute Deletions. If Element was made at runtime and not in the xml file,
-        // remove it from the _elements_changed Dictionary instead.
-        private System.Collections.Generic.Dictionary<string, XMLElementData> _element_attributes_deleted = new System.Collections.Generic.Dictionary<string, XMLElementData>();
-        // Pending XML Element Deletions.
-        private System.Collections.Generic.List<string> _elements_deleted = new System.Collections.Generic.List<string>();
         // Lock Saves so normal System.IO.File.ReadAllBytes
         // does not fail.
         private readonly object objLock = new object();
+        private System.Xml.Linq.XDocument doc;
+        private string cachedXmlfilename;
+        private bool exists = false;
+        private bool changed = false;
+
+        // Pending XML Element Addictions (excluding only adding attributes to an already existing element).
+        private System.Collections.Generic.Dictionary<string, XMLElementData> elementsAdded = new System.Collections.Generic.Dictionary<string, XMLElementData>();
+
+        // Pending XML Element edits (any value edits, added attributes, or edited attributes).
+        private System.Collections.Generic.Dictionary<string, XMLElementData> elementsEdits = new System.Collections.Generic.Dictionary<string, XMLElementData>();
+
+        // Pending XML Element Attribute Deletions. If Element was made at runtime and not in the xml file,
+        // remove it from the _elements_changed Dictionary instead.
+        private System.Collections.Generic.Dictionary<string, XMLElementData> elementAttributesDeleted = new System.Collections.Generic.Dictionary<string, XMLElementData>();
+
+        // Pending XML Element Deletions.
+        private System.Collections.Generic.List<string> elementsDeleted = new System.Collections.Generic.List<string>();
 
         /// <summary>
-        /// Creates the XMLObject for reading and/or writing.
+        /// Initializes a new instance of the <see cref="XMLObject"/> class
+        /// for reading and/or writing.
         ///
         /// If the file does not exists it will be created.
         /// </summary>
@@ -46,16 +51,17 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
-        /// Creates the XMLObject for reading and/or writing.
+        /// Initializes a new instance of the <see cref="XMLObject"/> class
+        /// for reading and/or writing.
         ///
         /// If the file does not exists it will be created.
         /// </summary>
         /// <param name="xmlfilename">The name of the XML File to load into the XMLObject.</param>
         /// <param name="fallbackxmlcontent">The fallback content string to write into the fallback XML File if the file does not exist or if the file is empty.</param>
-        /// <param name="SaveToAppStartFolder">Controls weather to save the file to the xmlfilename param string if it is the full path or to the Application Startup Path if it supplies file name only.</param>
-        public XMLObject(string xmlfilename, string fallbackxmlcontent, bool SaveToAppStartFolder)
+        /// <param name="saveToAppStartFolder">Controls weather to save the file to the xmlfilename param string if it is the full path or to the Application Startup Path if it supplies file name only.</param>
+        public XMLObject(string xmlfilename, string fallbackxmlcontent, bool saveToAppStartFolder)
         {
-            if (SaveToAppStartFolder)
+            if (saveToAppStartFolder)
             {
                 if (!xmlfilename.Contains(System.Windows.Forms.Application.StartupPath))
                 {
@@ -63,16 +69,18 @@ namespace Els_kom_Core.Classes
                     xmlfilename = newstr;
                 }
             }
+
             if (!fallbackxmlcontent.Contains("<?xml version=\"1.0\" encoding=\"utf-8\" ?>"))
             {
                 // insert root element at begginning of string data.
                 fallbackxmlcontent = fallbackxmlcontent.Insert(0, "<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
             }
-            cached_xmlfilename = xmlfilename;
-            Exists = System.IO.File.Exists(xmlfilename);
-            HasChanged = !Exists;
+
+            this.cachedXmlfilename = xmlfilename;
+            this.Exists = System.IO.File.Exists(xmlfilename);
+            this.HasChanged = !this.Exists;
             long fileSize = 0;
-            if (Exists)
+            if (this.Exists)
             {
                 System.IO.FileInfo fileinfo = null;
                 try
@@ -83,9 +91,97 @@ namespace Els_kom_Core.Classes
                 {
                     throw;
                 }
+
                 fileSize = fileinfo.Length;
             }
-            doc = (fileSize > 0) ? System.Xml.Linq.XDocument.Load(xmlfilename) : System.Xml.Linq.XDocument.Parse(fallbackxmlcontent);
+
+            this.doc = (fileSize > 0) ? System.Xml.Linq.XDocument.Load(xmlfilename) : System.Xml.Linq.XDocument.Parse(fallbackxmlcontent);
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the XMLObject is disposed.
+        /// </summary>
+        public bool IsDisposed { get; private set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the XML file existed when this object was created.
+        ///
+        /// This is just a property to minimize saving code on checking
+        /// if the xml file changed externally.
+        /// </summary>
+        /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
+        private bool Exists
+        {
+            get
+            {
+                if (this.IsDisposed)
+                {
+                    throw new System.ObjectDisposedException("XMLOblect is disposed.");
+                }
+
+                return this.exists;
+            }
+
+            set
+            {
+                if (this.IsDisposed)
+                {
+                    throw new System.ObjectDisposedException("XMLOblect is disposed.");
+                }
+
+                this.exists = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the XML file was externally edited.
+        /// </summary>
+        /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
+        private bool HasChangedExternally
+        {
+            get
+            {
+                if (this.IsDisposed)
+                {
+                    throw new System.ObjectDisposedException("XMLOblect is disposed.");
+                }
+
+                var outxmlData = new System.IO.MemoryStream();
+                this.doc.Save(outxmlData);
+                var outXmlBytes = outxmlData.ToArray();
+                outxmlData.Dispose();
+
+                // ensure file length is not 0.
+                if (this.Exists != (System.IO.File.Exists(this.cachedXmlfilename) && System.Text.Encoding.UTF8.GetString(System.IO.File.ReadAllBytes(this.cachedXmlfilename)).Length > 0))
+                {
+                    // refresh Exists so it always works.
+                    this.Exists = System.IO.File.Exists(this.cachedXmlfilename);
+                }
+
+                var dataOnFile = this.Exists ? System.IO.File.ReadAllBytes(this.cachedXmlfilename) : null;
+
+                // cannot change externally if it does not exist on file yet.
+                return dataOnFile == null ? false : !System.Linq.Enumerable.SequenceEqual(dataOnFile, outXmlBytes) ? true : false;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the internal data in this class has changed, e.g.
+        /// pending edits, deletions, or additions to the xml file.
+        /// </summary>
+        /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
+        private bool HasChanged
+        {
+            get
+            {
+                if (this.IsDisposed)
+                {
+                    throw new System.ObjectDisposedException("XMLOblect is disposed.");
+                }
+
+                return this.changed;
+            }
+            set => this.changed = value;
         }
 
         /// <summary>
@@ -95,8 +191,8 @@ namespace Els_kom_Core.Classes
         /// </summary>
         public void ReopenFile()
         {
-            Save();
-            doc = System.Xml.Linq.XDocument.Load(cached_xmlfilename);
+            this.Save();
+            this.doc = System.Xml.Linq.XDocument.Load(this.cachedXmlfilename);
         }
 
         /// <summary>
@@ -109,34 +205,39 @@ namespace Els_kom_Core.Classes
         /// pre-added before calling this function.
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
+        /// <param name="elementname">The name of the element to add a attribute to.</param>
+        /// <param name="attributename">The name of the attribute to add.</param>
+        /// <param name="attributevalue">The value of the attribute.</param>
         public void AddAttribute(string elementname, string attributename, object attributevalue)
         {
-            if (IsDisposed)
+            if (this.IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
-            var elem = doc.Root.Element(elementname);
+
+            var elem = this.doc.Root.Element(elementname);
             if (elem == null)
             {
-                Write(elementname, null);
+                this.Write(elementname, null);
             }
-            if (_elements_added.ContainsKey(elementname))
+
+            if (this.elementsAdded.ContainsKey(elementname))
             {
                 var xMLAttributeData = new XMLAttributeData
                 {
                     AttributeName = attributename,
-                    value = attributevalue.ToString()
+                    Value = attributevalue.ToString()
                 };
-                var xmleldata = _elements_added[elementname];
+                var xmleldata = this.elementsAdded[elementname];
                 xmleldata.Attributes = xmleldata.Attributes ?? new System.Collections.Generic.List<XMLAttributeData>();
                 xmleldata.Attributes.Add(xMLAttributeData);
             }
-            else if (_elements_edits.ContainsKey(elementname))
+            else if (this.elementsEdits.ContainsKey(elementname))
             {
                 XMLAttributeData xMLAttributeData;
                 var edit = false;
                 var attributeIndex = 0;
-                var xmleldata = _elements_edits[elementname];
+                var xmleldata = this.elementsEdits[elementname];
                 foreach (var attribute in xmleldata.Attributes)
                 {
                     if (attribute.AttributeName.Equals(attributename))
@@ -145,10 +246,11 @@ namespace Els_kom_Core.Classes
                         attributeIndex = xmleldata.Attributes.IndexOf(attribute);
                     }
                 }
+
                 xMLAttributeData = new XMLAttributeData
                 {
                     AttributeName = attributename,
-                    value = attributevalue.ToString()
+                    Value = attributevalue.ToString()
                 };
                 xmleldata.Attributes = xmleldata.Attributes ?? new System.Collections.Generic.List<XMLAttributeData>();
                 if (!edit && attributevalue != null)
@@ -158,7 +260,7 @@ namespace Els_kom_Core.Classes
                 else
                 {
                     xMLAttributeData = xmleldata.Attributes[attributeIndex];
-                    xMLAttributeData.value = attributevalue.ToString();
+                    xMLAttributeData.Value = attributevalue.ToString();
                 }
             }
             else
@@ -168,35 +270,8 @@ namespace Els_kom_Core.Classes
                 {
                 }
             }
-            HasChanged = true;
-        }
 
-        /// <summary>
-        /// Adds an Element to the XMLObject but verifies it does not exist first.
-        /// </summary>
-        /// <exception cref="System.Exception">Thrown if element already exists in the XMLObject.</exception>
-        /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
-        private void AddElement(string elementname, string value)
-        {
-            if (IsDisposed)
-            {
-                throw new System.ObjectDisposedException("XMLOblect is disposed.");
-            }
-            var elem = doc.Root.Element(elementname);
-            if (elem == null || !_elements_added.ContainsKey(elementname))
-            {
-                var xMLElementData = new XMLElementData
-                {
-                    Attributes = null,
-                    value = value
-                };
-                _elements_added.Add(elementname, xMLElementData);
-                HasChanged = true;
-            }
-            else
-            {
-                throw new System.Exception("Element already exists.");
-            }
+            this.HasChanged = true;
         }
 
         /// <summary>
@@ -206,42 +281,46 @@ namespace Els_kom_Core.Classes
         /// If Element does not exist yet it will be created automatically.
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
+        /// <param name="elementname">The name of the element to write to or create.</param>
+        /// <param name="value">The value for the element.</param>
         public void Write(string elementname, string value)
         {
-            if (IsDisposed)
+            if (this.IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
-            var elem = doc.Root.Element(elementname);
-            if (elem != null || _elements_added.ContainsKey(elementname))
+
+            var elem = this.doc.Root.Element(elementname);
+            if (elem != null || this.elementsAdded.ContainsKey(elementname))
             {
                 var xMLElementData = new XMLElementData
                 {
-                    Attributes = _elements_added.ContainsKey(elementname) ? _elements_added[elementname].Attributes : (_elements_edits.ContainsKey(elementname) ? _elements_edits[elementname].Attributes : null),
-                    value = value
+                    Attributes = this.elementsAdded.ContainsKey(elementname) ? this.elementsAdded[elementname].Attributes : (this.elementsEdits.ContainsKey(elementname) ? this.elementsEdits[elementname].Attributes : null),
+                    Value = value
                 };
-                if (_elements_added.ContainsKey(elementname))
+                if (this.elementsAdded.ContainsKey(elementname))
                 {
                     // modify this key, do not put into _elements_edits dictonary.
-                    _elements_added[elementname] = xMLElementData;
+                    this.elementsAdded[elementname] = xMLElementData;
                 }
                 else
                 {
-                    if (_elements_edits.ContainsKey(elementname))
+                    if (this.elementsEdits.ContainsKey(elementname))
                     {
                         // edit the collection whenever this changes.
-                        _elements_edits[elementname] = xMLElementData;
+                        this.elementsEdits[elementname] = xMLElementData;
                     }
                     else
                     {
-                        _elements_edits.Add(elementname, xMLElementData);
+                        this.elementsEdits.Add(elementname, xMLElementData);
                     }
                 }
-                HasChanged = true;
+
+                this.HasChanged = true;
             }
             else
             {
-                AddElement(elementname, value);
+                this.AddElement(elementname, value);
             }
         }
 
@@ -252,14 +331,21 @@ namespace Els_kom_Core.Classes
         /// If Element does not exist yet it will be created automatically.
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
+        /// <param name="elementname">
+        /// The name of the element to create an attribute or set an
+        /// attribute in or to create with the attribute.
+        /// </param>
+        /// <param name="attributename">The attribute name to change the value or to create.</param>
+        /// <param name="attributevalue">The value of the attribute to use.</param>
         public void Write(string elementname, string attributename, string attributevalue)
         {
-            if (IsDisposed)
+            if (this.IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
-            var elem = doc.Root.Element(elementname);
-            if (elem != null || _elements_added.ContainsKey(elementname))
+
+            var elem = this.doc.Root.Element(elementname);
+            if (elem != null || this.elementsAdded.ContainsKey(elementname))
             {
             }
             else
@@ -274,13 +360,17 @@ namespace Els_kom_Core.Classes
         /// If Elements do not exist yet they will be created automatically.
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
+        /// <param name="parentelementname">parrent element name of the subelement.</param>
+        /// <param name="elementname">The name to use when writing subelement(s).</param>
+        /// <param name="values">The array of values to use for the subelement(s).</param>
         public void Write(string parentelementname, string elementname, string[] values)
         {
-            if (IsDisposed)
+            if (this.IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
-            var elem = doc.Root.Element(elementname);
+
+            var elem = this.doc.Root.Element(elementname);
         }
 
         /// <summary>
@@ -289,24 +379,28 @@ namespace Els_kom_Core.Classes
         /// If Element does not exist yet it will be created automatically with an empty value.
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
+        /// <param name="elementname">The element name to read the value from.</param>
+        /// <returns>The value of the input element or <see cref="string.Empty"/>.</returns>
         public string Read(string elementname)
         {
-            if (IsDisposed)
+            if (this.IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
-            var elem = doc.Root.Element(elementname);
+
+            var elem = this.doc.Root.Element(elementname);
             if (elem != null)
             {
                 // do not dare to look in _elements_deleted.
-                return elem != null ? elem.Value : (_elements_edits.ContainsKey(elementname) ? _elements_edits[elementname].value : string.Empty);
+                return elem != null ? elem.Value : (this.elementsEdits.ContainsKey(elementname) ? this.elementsEdits[elementname].Value : string.Empty);
             }
             else
             {
-                Write(elementname, string.Empty);
-                var output = _elements_added.ContainsKey(elementname) ? _elements_added[elementname].value : string.Empty;
+                this.Write(elementname, string.Empty);
+                var output = this.elementsAdded.ContainsKey(elementname) ? this.elementsAdded[elementname].Value : string.Empty;
+
                 // if elementwas added before but was edited.
-                output = (_elements_edits.ContainsKey(elementname) && output == string.Empty) ? _elements_edits[elementname].value : output;
+                output = (this.elementsEdits.ContainsKey(elementname) && output == string.Empty) ? this.elementsEdits[elementname].Value : output;
                 return output;
             }
         }
@@ -318,17 +412,22 @@ namespace Els_kom_Core.Classes
         /// with an empty value.
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
+        /// <param name="elementname">The element name to get the value of a attribute.</param>
+        /// <param name="attributename">The name of the attribute to get the value of.</param>
+        /// <returns>The value of the input element or <see cref="string.Empty"/>.</returns>
         public string Read(string elementname, string attributename)
         {
-            if (IsDisposed)
+            if (this.IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
-            var elem = doc.Root.Element(elementname);
+
+            var elem = this.doc.Root.Element(elementname);
             if (elem != null)
             {
-                Write(elementname, attributename, string.Empty);
+                this.Write(elementname, attributename, string.Empty);
             }
+
             // until this is done.
             return string.Empty;
         }
@@ -340,20 +439,31 @@ namespace Els_kom_Core.Classes
         /// with an empty value. In that case an empty string array is returned.
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
-        public string[] Read(string parentelementname, string elementname, object trash = null)
+        /// <param name="parentelementname">The name of the parrent element of the subelement(s)</param>
+        /// <param name="elementname">The name of the subelements to get their values.</param>
+        /// <param name="unused">
+        /// A unused paramiter to avoid a compiler error from this overload.
+        /// </param>
+        /// <returns>
+        /// A array of values or a empty array of strings if
+        /// there is no subelements to this element.
+        /// </returns>
+        public string[] Read(string parentelementname, string elementname, object unused = null)
         {
-            if (IsDisposed)
+            if (this.IsDisposed)
             {
                 throw new System.ObjectDisposedException("XMLOblect is disposed.");
             }
-            var elem = doc.Root.Element(elementname);
+
+            var elem = this.doc.Root.Element(elementname);
             if (elem != null)
             {
             }
             else
             {
-                Write(parentelementname, string.Empty);
+                this.Write(parentelementname, string.Empty);
             }
+
             // TODO: Read the subelements.
             return new string[] { };
         }
@@ -363,6 +473,7 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
         /// <exception cref="System.ArgumentException">elementname does not exist in the xml or in pending edits.</exception>
+        /// <param name="elementname">The element name of the element to delete.</param>
         public void Delete(string elementname)
         {
             // before deleting the node (if it exists in xml), check if in any
@@ -374,110 +485,12 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
         /// <exception cref="System.ArgumentException">elementname or attributename does not exist in the xml or in pending edits.</exception>
+        /// <param name="elementname">The element name that has the attribute to delete.</param>
+        /// <param name="attributename">The name of the attribute to delete.</param>
         public void Delete(string elementname, string attributename)
         {
             // before deleting the attribute (if it exists in xml), check if in any
             // of the dictionaries then add it to the dictionary for deleting values.
-        }
-
-        /// <summary>
-        /// Gets if the XML file existed when this object was created.
-        ///
-        /// This is just a property to minimize saving code on checking
-        /// if the xml file changed externally.
-        /// </summary>
-        /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
-        private bool Exists
-        {
-            get
-            {
-                if (IsDisposed)
-                {
-                    throw new System.ObjectDisposedException("XMLOblect is disposed.");
-                }
-                return _exists;
-            }
-            set
-            {
-                if (IsDisposed)
-                {
-                    throw new System.ObjectDisposedException("XMLOblect is disposed.");
-                }
-                _exists = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets if the XML file was externally edited.
-        /// </summary>
-        /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
-        private bool HasChangedExternally
-        {
-            get
-            {
-                if (IsDisposed)
-                {
-                    throw new System.ObjectDisposedException("XMLOblect is disposed.");
-                }
-                var outxmlData = new System.IO.MemoryStream();
-                doc.Save(outxmlData);
-                var OutXmlBytes = outxmlData.ToArray();
-                outxmlData.Dispose();
-                // ensure file length is not 0.
-                if (Exists != (System.IO.File.Exists(cached_xmlfilename) && System.Text.Encoding.UTF8.GetString(System.IO.File.ReadAllBytes(cached_xmlfilename)).Length > 0))
-                {
-                    // refresh Exists so it always works.
-                    Exists = System.IO.File.Exists(cached_xmlfilename);
-                }
-                var dataOnFile = Exists ? System.IO.File.ReadAllBytes(cached_xmlfilename) : null;
-                // cannot change externally if it does not exist on file yet.
-                return dataOnFile == null ? false : !System.Linq.Enumerable.SequenceEqual(dataOnFile, OutXmlBytes) ? true : false;
-            }
-        }
-
-        /// <summary>
-        /// if the internal data in this class has changed, e.g.
-        /// pending edits, deletions, or additions to the xml file.
-        /// </summary>
-        /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
-        private bool HasChanged
-        {
-            get
-            {
-                if (IsDisposed)
-                {
-                    throw new System.ObjectDisposedException("XMLOblect is disposed.");
-                }
-                return _changed;
-            }
-            set => _changed = value;
-        }
-
-        /// <summary>
-        /// Writes Added subelements to the XML file.
-        /// </summary>
-        private void SaveAddedSubelements(System.Xml.Linq.XElement xElement, XMLElementData elemdata)
-        {
-            if (elemdata.name != string.Empty)
-            {
-                var elem = new System.Xml.Linq.XElement(elemdata.name, elemdata.value);
-                xElement.Add(elem);
-                if (elemdata.Attributes != null)
-                {
-                    foreach (var attributes in elemdata.Attributes)
-                    {
-                        elem.SetAttributeValue(attributes.AttributeName, attributes.value);
-                    }
-                }
-                if (elemdata.Subelements != null)
-                {
-                    // recursively add each subelement of these subelements.
-                    foreach (var element in elemdata.Subelements)
-                    {
-                        SaveAddedSubelements(elem, element);
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -486,107 +499,169 @@ namespace Els_kom_Core.Classes
         /// <exception cref="System.ObjectDisposedException">XMLOblect is disposed.</exception>
         public void Save()
         {
-            lock (objLock)
+            lock (this.objLock)
             {
-                if (IsDisposed)
+                if (this.IsDisposed)
                 {
                     throw new System.ObjectDisposedException("XMLOblect is disposed.");
                 }
-                if (HasChangedExternally && Exists)
+
+                if (this.HasChangedExternally && this.Exists)
                 {
                     // reopen file to apply changes at runtime to it.
-                    doc = System.Xml.Linq.XDocument.Load(cached_xmlfilename);
+                    this.doc = System.Xml.Linq.XDocument.Load(this.cachedXmlfilename);
                 }
-                if (HasChanged)
+
+                if (this.HasChanged)
                 {
-                    foreach (var added_elements in _elements_added)
+                    foreach (var added_elements in this.elementsAdded)
                     {
                         // add elements to doc.
-                        doc.Root.Add(new System.Xml.Linq.XElement(added_elements.Key, added_elements.Value.value));
+                        this.doc.Root.Add(new System.Xml.Linq.XElement(added_elements.Key, added_elements.Value.Value));
                         if (added_elements.Value.Attributes != null)
                         {
                             // add attributes added to this element.
-                            var elem = doc.Root.Element(added_elements.Key);
+                            var elem = this.doc.Root.Element(added_elements.Key);
                             foreach (var attributes in added_elements.Value.Attributes)
                             {
-                                elem.SetAttributeValue(attributes.AttributeName, attributes.value);
+                                elem.SetAttributeValue(attributes.AttributeName, attributes.Value);
                             }
+
                             // add subelements and their attributes.
                             foreach (var element in added_elements.Value.Subelements)
                             {
-                                SaveAddedSubelements(elem, element);
+                                this.SaveAddedSubelements(elem, element);
                             }
                         }
                     }
-                    foreach (var edited_elements in _elements_edits)
+
+                    foreach (var edited_elements in this.elementsEdits)
                     {
-                        var elem = doc.Root.Element(edited_elements.Key);
-                        elem.Value = edited_elements.Value.value;
+                        var elem = this.doc.Root.Element(edited_elements.Key);
+                        elem.Value = edited_elements.Value.Value;
                         if (edited_elements.Value.Attributes != null)
                         {
                             // add/edit attributes added/edited to this element.
                             foreach (var attributes in edited_elements.Value.Attributes)
                             {
-                                elem.SetAttributeValue(attributes.AttributeName, attributes.value);
+                                elem.SetAttributeValue(attributes.AttributeName, attributes.Value);
                             }
                         }
                     }
-                    foreach (var attributes_deleted in _element_attributes_deleted)
+
+                    foreach (var attributes_deleted in this.elementAttributesDeleted)
                     {
-                        var elem = doc.Root.Element(attributes_deleted.Key);
+                        var elem = this.doc.Root.Element(attributes_deleted.Key);
+
                         // remove attributes on to this element.
                         foreach (var attributes in attributes_deleted.Value.Attributes)
                         {
-                            elem.SetAttributeValue(attributes.AttributeName, attributes.value);
+                            elem.SetAttributeValue(attributes.AttributeName, attributes.Value);
                         }
                     }
+
                     // hopefully this actually deletes the elements stored in this list.
-                    foreach (var deleted_elements in _elements_deleted)
+                    foreach (var deleted_elements in this.elementsDeleted)
                     {
-                        var elem = doc.Root.Element(deleted_elements);
+                        var elem = this.doc.Root.Element(deleted_elements);
                         elem.Remove();
                     }
+
                     // apply changes.
-                    doc.Save(cached_xmlfilename);
-                    _elements_added.Clear();
-                    _elements_edits.Clear();
-                    _element_attributes_deleted.Clear();
-                    _elements_deleted.Clear();
+                    this.doc.Save(this.cachedXmlfilename);
+                    this.elementsAdded.Clear();
+                    this.elementsEdits.Clear();
+                    this.elementAttributesDeleted.Clear();
+                    this.elementsDeleted.Clear();
                 }
-            }
-        }
-
-        #region IDisposable Support
-        /// <summary>
-        /// Gets if the XMLObject is disposed.
-        /// </summary>
-        public bool IsDisposed { get; private set; } = false; // To detect redundant calls
-
-        void Dispose(bool disposing)
-        {
-            if (!IsDisposed)
-            {
-                if (disposing)
-                {
-                    Save();
-                }
-                _exists = false;
-                _changed = false;
-                // remove everything from the Lists/Dictonaries then destroy them.
-                _elements_added = null;
-                _elements_edits = null;
-                _element_attributes_deleted = null;
-                _elements_deleted = null;
-                doc = null;
-                cached_xmlfilename = string.Empty;
-                IsDisposed = true;
             }
         }
 
         /// <summary>
         /// Disposes of the XMLObject and saves the underlying XML file if it changed.
         /// </summary>
-        public void Dispose() => Dispose(true);
-        #endregion
+        public void Dispose() => this.Dispose(true);
+
+        // Summary:
+        //   Adds an Element to the XMLObject but verifies it does not exist first.
+        //
+        // Exceptions:
+        //   System.Exception:
+        //     Thrown if element already exists in the XMLObject.
+        //   System.ObjectDisposedException
+        //     XMLOblect is disposed.
+        private void AddElement(string elementname, string value)
+        {
+            if (this.IsDisposed)
+            {
+                throw new System.ObjectDisposedException("XMLOblect is disposed.");
+            }
+
+            var elem = this.doc.Root.Element(elementname);
+            if (elem == null || !this.elementsAdded.ContainsKey(elementname))
+            {
+                var xMLElementData = new XMLElementData
+                {
+                    Attributes = null,
+                    Value = value
+                };
+                this.elementsAdded.Add(elementname, xMLElementData);
+                this.HasChanged = true;
+            }
+            else
+            {
+                throw new System.Exception("Element already exists.");
+            }
+        }
+
+        // Summary:
+        //   Writes Added subelements to the XML file.
+        private void SaveAddedSubelements(System.Xml.Linq.XElement xElement, XMLElementData elemdata)
+        {
+            if (elemdata.Name != string.Empty)
+            {
+                var elem = new System.Xml.Linq.XElement(elemdata.Name, elemdata.Value);
+                xElement.Add(elem);
+                if (elemdata.Attributes != null)
+                {
+                    foreach (var attributes in elemdata.Attributes)
+                    {
+                        elem.SetAttributeValue(attributes.AttributeName, attributes.Value);
+                    }
+                }
+
+                if (elemdata.Subelements != null)
+                {
+                    // recursively add each subelement of these subelements.
+                    foreach (var element in elemdata.Subelements)
+                    {
+                        this.SaveAddedSubelements(elem, element);
+                    }
+                }
+            }
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!this.IsDisposed)
+            {
+                if (disposing)
+                {
+                    this.Save();
+                }
+
+                this.exists = false;
+                this.changed = false;
+
+                // remove everything from the Lists/Dictonaries then destroy them.
+                this.elementsAdded = null;
+                this.elementsEdits = null;
+                this.elementAttributesDeleted = null;
+                this.elementsDeleted = null;
+                this.doc = null;
+                this.cachedXmlfilename = string.Empty;
+                this.IsDisposed = true;
+            }
+        }
     }
 }

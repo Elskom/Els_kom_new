@@ -13,11 +13,11 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Packages an Els_kom Release build to a zip file.
         /// </summary>
+        /// <param name="args">The command line arguments passed into Els_kom.exe.</param>
         internal static void PackageRelease(string[] args)
         {
             // files to exclude from Release zip.
-            var ExcludeFile = ".CodeAnalysisLog.xml";
-            var outfilename = "";
+            var outfilename = string.Empty;
             if (args[1].StartsWith(".\\"))
             {
                 // Replace spaces with periods.
@@ -38,6 +38,7 @@ namespace Els_kom_Core.Classes
                 outfilename = args[1].Replace(" ", ".");
                 args[1] = System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + args[1].Replace(" ", ".");
             }
+
             if (args[0].Equals("-p"))
             {
                 System.Console.WriteLine("Writing build files to " + outfilename + ".");
@@ -45,55 +46,64 @@ namespace Els_kom_Core.Classes
                 {
                     System.IO.File.Delete(args[1]);
                 }
+
                 var zipFile = System.IO.Compression.ZipFile.Open(args[1], System.IO.Compression.ZipArchiveMode.Update);
                 var di1 = new System.IO.DirectoryInfo(System.IO.Directory.GetCurrentDirectory());
                 foreach (var fi1 in di1.GetFiles("*.exe"))
                 {
-                    var _exe_file = fi1.Name;
-                    System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _exe_file, _exe_file);
+                    var exe_file = fi1.Name;
+                    System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, exe_file, exe_file);
                 }
+
                 foreach (var fi2 in di1.GetFiles("*.dll"))
                 {
-                    var _dll_file = fi2.Name;
-                    System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _dll_file, _dll_file);
+                    var dll_file = fi2.Name;
+                    System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, dll_file, dll_file);
                 }
+
                 foreach (var fi3 in di1.GetFiles("*.xml"))
                 {
-                    var _xml_file = fi3.Name;
-                    if (!_xml_file.EndsWith(ExcludeFile))
+                    var xml_file = fi3.Name;
+                    if (!xml_file.EndsWith(".CodeAnalysisLog.xml"))
                     {
-                        System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _xml_file, _xml_file);
+                        System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, xml_file, xml_file);
                     }
                 }
+
                 foreach (var fi4 in di1.GetFiles("*.txt"))
                 {
-                    var _txt_file = fi4.Name;
-                    System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _txt_file, _txt_file);
+                    var txt_file = fi4.Name;
+                    System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, txt_file, txt_file);
                 }
+
                 foreach (var di2 in di1.GetDirectories())
                 {
                     foreach (var fi5 in di2.GetFiles("*.dll"))
                     {
-                        var _dll_file = fi5.Name;
-                        System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + _dll_file, di2.Name + System.IO.Path.DirectorySeparatorChar + _dll_file);
+                        var dll_file1 = fi5.Name;
+                        System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + dll_file1, di2.Name + System.IO.Path.DirectorySeparatorChar + dll_file1);
                     }
+
                     foreach (var fi6 in di2.GetFiles("*.xml"))
                     {
-                        var _xml_file = fi6.Name;
-                        if (!_xml_file.EndsWith(ExcludeFile))
+                        var xml_file1 = fi6.Name;
+                        if (!xml_file1.EndsWith(".CodeAnalysisLog.xml"))
                         {
-                            System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + _xml_file, di2.Name + System.IO.Path.DirectorySeparatorChar + _xml_file);
+                            System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + xml_file1, di2.Name + System.IO.Path.DirectorySeparatorChar + xml_file1);
                         }
                     }
+
                     foreach (var fi7 in di2.GetFiles("*.txt"))
                     {
-                        var _txt_file = fi7.Name;
-                        System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + _txt_file, di2.Name + System.IO.Path.DirectorySeparatorChar + _txt_file);
+                        var txt_file1 = fi7.Name;
+                        System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + txt_file1, di2.Name + System.IO.Path.DirectorySeparatorChar + txt_file1);
                     }
                 }
+
                 zipFile.CreateEntry("koms\\");
                 zipFile.Dispose();
             }
+
             // make a zip with pdb's only.
             else if (args[0].Equals("-d"))
             {
@@ -102,21 +112,24 @@ namespace Els_kom_Core.Classes
                 {
                     System.IO.File.Delete(args[1]);
                 }
+
                 var zipFile = System.IO.Compression.ZipFile.Open(args[1], System.IO.Compression.ZipArchiveMode.Update);
                 var di1 = new System.IO.DirectoryInfo(System.IO.Directory.GetCurrentDirectory());
                 foreach (var fi1 in di1.GetFiles("*.pdb"))
                 {
-                    var _pdb_file = fi1.Name;
-                    System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, _pdb_file, _pdb_file);
+                    var pdb_file = fi1.Name;
+                    System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, pdb_file, pdb_file);
                 }
+
                 foreach (var di2 in di1.GetDirectories())
                 {
                     foreach (var fi2 in di2.GetFiles("*.pdb"))
                     {
-                        var _pdb_file = fi2.Name;
-                        System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + _pdb_file, di2.Name + System.IO.Path.DirectorySeparatorChar + _pdb_file);
+                        var pdb_file1 = fi2.Name;
+                        System.IO.Compression.ZipFileExtensions.CreateEntryFromFile(zipFile, di2.Name + System.IO.Path.DirectorySeparatorChar + pdb_file1, di2.Name + System.IO.Path.DirectorySeparatorChar + pdb_file1);
                     }
                 }
+
                 zipFile.Dispose();
             }
         }

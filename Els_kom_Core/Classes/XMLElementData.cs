@@ -5,14 +5,29 @@
 
 namespace Els_kom_Core.Classes
 {
+    /// <summary>
+    /// XML Element data stuff.
+    /// </summary>
     internal class XMLElementData
     {
-        // name for any subelemets.
-        internal string name = string.Empty;
-        internal XMLElementData[] Subelements = null;
-        // xml attributes to check for in the Dictionary, if it has any.
-        internal System.Collections.Generic.List<XMLAttributeData> Attributes;
-        // element value.
-        internal string value;
+        /// <summary>
+        /// Gets or sets the name of any subelemets (if this element has any).
+        /// </summary>
+        internal string Name { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the array of subelements with the Name above.
+        /// </summary>
+        internal XMLElementData[] Subelements { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the xml attributes to check for in the Dictionary, if it has any.
+        /// </summary>
+        internal System.Collections.Generic.List<XMLAttributeData> Attributes { get; set; } = new System.Collections.Generic.List<XMLAttributeData>();
+
+        /// <summary>
+        /// Gets or sets the value of the element.
+        /// </summary>
+        internal string Value { get; set; } = string.Empty;
     }
 }

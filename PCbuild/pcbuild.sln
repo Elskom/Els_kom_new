@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Els_kom", "..\Els_kom\Els_k
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Els_kom_Core", "..\Els_kom_Core\Els_kom_Core.csproj", "{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zlib.net", "..\externals\ZLIB.NET\zlib.net.csproj", "{0C89B7A2-A218-49E4-B545-5B044A45F977}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|x64 = Release|x64
@@ -21,6 +23,10 @@ Global
 		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|x64.Build.0 = Release|x64
 		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|x86.ActiveCfg = Release|x86
 		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|x86.Build.0 = Release|x86
+		{0C89B7A2-A218-49E4-B545-5B044A45F977}.Release|x64.ActiveCfg = Release|x64
+		{0C89B7A2-A218-49E4-B545-5B044A45F977}.Release|x64.Build.0 = Release|x64
+		{0C89B7A2-A218-49E4-B545-5B044A45F977}.Release|x86.ActiveCfg = Release|x86
+		{0C89B7A2-A218-49E4-B545-5B044A45F977}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

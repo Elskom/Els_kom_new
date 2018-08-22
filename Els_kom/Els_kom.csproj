@@ -15,6 +15,7 @@
     <SignAssembly>true</SignAssembly>
     <DelaySign>False</DelaySign>
     <NoStdLib>False</NoStdLib>
+    <BaseIntermediateOutputPath>..\obj\$(Platform)\$(Configuration)\$(ProjectName)</BaseIntermediateOutputPath>
     <IntermediateOutputPath>..\obj\$(Platform)\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup>
@@ -22,10 +23,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>..\PCbuild\Els_kom.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\PCbuild\Els_kom.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\els_kom.ico</ApplicationIcon>
@@ -94,6 +99,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

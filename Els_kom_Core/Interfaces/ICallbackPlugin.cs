@@ -3,7 +3,7 @@
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
-namespace Els_kom_Core.interfaces
+namespace Els_kom_Core.Interfaces
 {
     /// <summary>
     /// Interface for Els_kom Test Mods callback plugins.
@@ -11,19 +11,22 @@ namespace Els_kom_Core.interfaces
     public interface ICallbackPlugin
     {
         /// <summary>
-        /// Name of the Test Mods Callback plugin.
+        /// Gets name of the Test Mods Callback plugin.
         /// </summary>
         string PluginName { get; }
+
         /// <summary>
-        /// Returns if this plugin has it's own settings window that should display from the settings window.
+        /// Gets a value indicating whether this plugin has it's own settings window that should display from the settings window.
         /// </summary>
         bool SupportsSettings { get; }
+
         /// <summary>
-        /// Gets if the form should be shown as Modal Dialog Window.
+        /// Gets a value indicating whether the form should be shown as Modal Dialog Window.
         /// </summary>
         bool ShowModal { get; }
+
         /// <summary>
-        /// Returns the plugin's actual settings window for showing from Els_kom's core at runtime.
+        /// Gets the plugin's actual settings window for showing from Els_kom's core at runtime.
         ///
         /// Note: Create instance before returning.
         /// </summary>

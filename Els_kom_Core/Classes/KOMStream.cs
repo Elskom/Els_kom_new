@@ -11,42 +11,47 @@ namespace Els_kom_Core.Classes
     public class KOMStream : System.IO.Stream
     {
         /// <summary>
-        /// Returns if the Stream can Read.
+        /// Initializes a new instance of the <see cref="KOMStream"/> class.
+        /// </summary>
+        public KOMStream()
+        {
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the Stream can Read.
         /// </summary>
         public override bool CanRead => false;
+
         /// <summary>
-        /// Returns if the Stream can Seek.
+        /// Gets a value indicating whether the Stream can Seek.
         /// </summary>
         public override bool CanSeek => false;
+
         /// <summary>
-        /// Returns if the Stream can Write.
+        /// Gets a value indicating whether the Stream can Write.
         /// </summary>
         public override bool CanWrite => false;
+
         /// <summary>
-        /// Returns if the Stream can Timeout.
+        /// Gets a value indicating whether the Stream can Timeout.
         /// </summary>
         public override bool CanTimeout => false;
+
         /// <summary>
-        /// The length of the stream.
+        /// Gets the length of the stream.
         /// Always 0 as no real stuff is supported.
         /// This is only to support extending this
         /// class for more kom plugins if needed.
         /// </summary>
         public override long Length => 0;
+
         /// <summary>
-        /// Changes the KOMStream Position.
+        /// Gets or sets the KOMStream Position.
         /// </summary>
         public override long Position
         {
             get => 0;
             set => throw new System.NotImplementedException();
-        }
-
-        /// <summary>
-        /// Creates a new KOM File format related stream.
-        /// </summary>
-        public KOMStream()
-        {
         }
 
         /// <summary>
@@ -60,18 +65,25 @@ namespace Els_kom_Core.Classes
         /// Reads specific amount of data from the Stream.
         /// Does nothing really.
         /// </summary>
+        /// <param name="buffer">The buffer to read into.</param>
+        /// <param name="offset">The offset to read into the buffer.</param>
+        /// <param name="count">The amount to read into the buffer.</param>
+        /// <returns>The amount read into the buffer.</returns>
         public override int Read(byte[] buffer, int offset, int count) => 0;
 
         /// <summary>
         /// The amount to seek to. Always at 0 as Seeks are not supported.
         /// </summary>
+        /// <param name="offset">The offset to seek to.</param>
+        /// <param name="origin">The origin option.</param>
+        /// <returns>The new position.</returns>
         public override long Seek(long offset, System.IO.SeekOrigin origin) => 0;
 
         /// <summary>
         /// Sets the length of the Stream.
         /// Does nothing really.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The new length of the stream.</param>
         public override void SetLength(long value)
         {
         }
@@ -80,6 +92,9 @@ namespace Els_kom_Core.Classes
         /// Writes specific amount of data to the Stream.
         /// Does nothing really.
         /// </summary>
+        /// <param name="buffer">The buffer to write.</param>
+        /// <param name="offset">The offset to write to.</param>
+        /// <param name="count">The amount from buffer to write.</param>
         public override void Write(byte[] buffer, int offset, int count)
         {
         }
@@ -87,7 +102,13 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Writes the KOM File entry to file.
         /// </summary>
-        public void WriteOutput(System.IO.BinaryReader reader, string out_path, EntryVer entry, int version, string xmldata, string KOMFileName)
+        /// <param name="reader">The reader for the kom file.</param>
+        /// <param name="out_path">The output folder for every entry in the kom file.</param>
+        /// <param name="entry">The kom file entry instance.</param>
+        /// <param name="version">The kom file version.</param>
+        /// <param name="xmldata">The crc.xml data to write.</param>
+        /// <param name="kOMFileName">The name of the kom file the entry is from.</param>
+        public void WriteOutput(System.IO.BinaryReader reader, string out_path, EntryVer entry, int version, string xmldata, string kOMFileName)
         {
             if (version > 2)
             {
@@ -95,6 +116,7 @@ namespace Els_kom_Core.Classes
                 {
                     System.IO.Directory.CreateDirectory(out_path);
                 }
+
                 var xmldatabuffer = System.Text.Encoding.ASCII.GetBytes(xmldata);
                 if (!System.IO.File.Exists(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml"))
                 {
@@ -102,46 +124,48 @@ namespace Els_kom_Core.Classes
                     fs.Write(xmldatabuffer, 0, xmldatabuffer.Length);
                     fs.Dispose();
                 }
-                var entrydata = reader.ReadBytes(entry.compressed_size);
-                if (entry.algorithm == 0)
+
+                var entrydata = reader.ReadBytes(entry.Compressed_size);
+                if (entry.Algorithm == 0)
                 {
                     var failure = false;
-                    var entryfile = System.IO.File.Create(out_path + "\\" + entry.name);
+                    var entryfile = System.IO.File.Create(out_path + "\\" + entry.Name);
                     try
                     {
                         ZlibHelper.DecompressData(entrydata, out var dec_entrydata);
-                        entryfile.Write(dec_entrydata, 0, entry.uncompressed_size);
+                        entryfile.Write(dec_entrydata, 0, entry.Uncompressed_size);
                     }
-                    catch (System.ArgumentException)
+                    catch (System.ArgumentException ex)
                     {
-                        throw new UnpackingError("Something failed...");
+                        throw new UnpackingError("Something failed...", ex);
                     }
-                    catch (Zlib.ZStreamException)
+                    catch (UnpackingError ex)
                     {
-                        throw new UnpackingError("decompression failed...");
+                        throw new UnpackingError("decompression failed...", ex);
                     }
+
                     entryfile.Dispose();
                     if (failure)
                     {
-                        System.IO.File.Move(out_path + "\\" + entry.name, out_path + "\\" + entry.name + "." + entry.uncompressed_size + "." + entry.algorithm);
+                        System.IO.File.Move(out_path + "\\" + entry.Name, out_path + "\\" + entry.Name + "." + entry.Uncompressed_size + "." + entry.Algorithm);
                     }
                 }
                 else
                 {
                     System.IO.FileStream entryfile;
-                    if (entrydata.Length == entry.uncompressed_size)
+                    if (entrydata.Length == entry.Uncompressed_size)
                     {
-                        entryfile = System.IO.File.Create(out_path + "\\" + entry.name);
+                        entryfile = System.IO.File.Create(out_path + "\\" + entry.Name);
                     }
                     else
                     {
                         // data was not decompressed properly so lets just dump it as is.
-                        entryfile = System.IO.File.Create(out_path + "\\" + entry.name + "." + entry.uncompressed_size + "." + entry.algorithm);
+                        entryfile = System.IO.File.Create(out_path + "\\" + entry.Name + "." + entry.Uncompressed_size + "." + entry.Algorithm);
                     }
 #if VERSION_0x01050000
                     byte[] dec_entrydata = null;
                     var failure = false;
-                    if (entry.algorithm == 3)
+                    if (entry.Algorithm == 3)
                     {
                         // algorithm 3 code.
                         byte[] zdec_entrydata = null;
@@ -149,43 +173,45 @@ namespace Els_kom_Core.Classes
                         {
                             ZlibHelper.DecompressData(entrydata, out zdec_entrydata);
                         }
-                        catch (System.ArgumentException)
+                        catch (System.ArgumentException ex)
                         {
-                            throw new UnpackingError("Something failed...");
+                            throw new UnpackingError("Something failed...", ex);
                         }
-                        catch (Zlib.ZStreamException)
+                        catch (UnpackingError ex)
                         {
-                            throw new UnpackingError("decompression failed...");
+                            throw new UnpackingError("decompression failed...", ex);
                         }
+
                         // Decrypt the data from a encryption plugin.
-                        KOMManager.encryptionplugins[0].DecryptEntry(zdec_entrydata, out dec_entrydata, SafeNativeMethods.GetFileBaseName(KOMFileName), entry.algorithm);
+                        KOMManager.encryptionplugins[0].DecryptEntry(zdec_entrydata, out dec_entrydata, LoadResources.GetFileBaseName(kOMFileName), entry.Algorithm);
                     }
                     else
                     {
                         // algorithm 2 code.
                         // Decrypt the data from a encryption plugin.
-                        KOMManager.encryptionplugins[0].DecryptEntry(entrydata, out byte[] decr_entrydata, SafeNativeMethods.GetFileBaseName(KOMFileName), entry.algorithm);
+                        KOMManager.encryptionplugins[0].DecryptEntry(entrydata, out byte[] decr_entrydata, LoadResources.GetFileBaseName(kOMFileName), entry.Algorithm);
                         try
                         {
                             ZlibHelper.DecompressData(decr_entrydata, out dec_entrydata);
                         }
-                        catch (System.ArgumentException)
+                        catch (System.ArgumentException ex)
                         {
-                            throw new UnpackingError("Something failed...");
+                            throw new UnpackingError("Something failed...", ex);
                         }
-                        catch (Zlib.ZStreamException)
+                        catch (UnpackingError ex)
                         {
-                            throw new UnpackingError("decompression failed...");
+                            throw new UnpackingError("decompression failed...", ex);
                         }
                     }
-                    entryfile.Write(dec_entrydata, 0, entry.uncompressed_size);
+
+                    entryfile.Write(dec_entrydata, 0, entry.Uncompressed_size);
                     entryfile.Dispose();
                     if (failure)
                     {
-                        System.IO.File.Move(out_path + "\\" + entry.name, out_path + "\\" + entry.name + "." + entry.uncompressed_size + "." + entry.algorithm);
+                        System.IO.File.Move(out_path + "\\" + entry.Name, out_path + "\\" + entry.Name + "." + entry.Uncompressed_size + "." + entry.Algorithm);
                     }
 #else
-                    if (entry.algorithm == 3)
+                    if (entry.Algorithm == 3)
                     {
                         // algorithm 3 code.
                     }
@@ -193,8 +219,9 @@ namespace Els_kom_Core.Classes
                     {
                         // algorithm 2 code.
                     }
+
                     // for now until I can decompress this crap.
-                    entryfile.Write(entrydata, 0, entry.compressed_size);
+                    entryfile.Write(entrydata, 0, entry.Compressed_size);
                     entryfile.Dispose();
 #endif
                 }
@@ -206,17 +233,19 @@ namespace Els_kom_Core.Classes
                 {
                     System.IO.Directory.CreateDirectory(out_path);
                 }
-                var entrydata = reader.ReadBytes(entry.compressed_size);
-                var entryfile = System.IO.File.Create(out_path + "\\" + entry.name);
+
+                var entrydata = reader.ReadBytes(entry.Compressed_size);
+                var entryfile = System.IO.File.Create(out_path + "\\" + entry.Name);
                 byte[] dec_entrydata;
                 try
                 {
                     ZlibHelper.DecompressData(entrydata, out dec_entrydata);
                 }
-                catch (Zlib.ZStreamException)
+                catch (UnpackingError)
                 {
                     // copyright symbols... Really funny xor key...
                     var xorkey = System.Text.Encoding.UTF8.GetBytes("\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9");
+
                     // xor this shit then try again...
                     BlowFish.XorBlock(ref entrydata, xorkey);
                     try
@@ -224,12 +253,13 @@ namespace Els_kom_Core.Classes
                         ZlibHelper.DecompressData(entrydata, out dec_entrydata);
                         System.IO.File.Create(out_path + "\\XoRNeeded.dummy").Dispose();
                     }
-                    catch (Zlib.ZStreamException)
+                    catch (UnpackingError ex)
                     {
-                        throw new UnpackingError("failed with zlib decompression of entries.");
+                        throw new UnpackingError("failed with zlib decompression of entries.", ex);
                     }
                 }
-                entryfile.Write(dec_entrydata, 0, entry.uncompressed_size);
+
+                entryfile.Write(dec_entrydata, 0, entry.Uncompressed_size);
                 entryfile.Dispose();
             }
         }
@@ -241,37 +271,20 @@ namespace Els_kom_Core.Classes
         {
         }
 
-        internal int GetCRCVersion(string xmldata)
-        {
-            var xml = System.Xml.Linq.XElement.Parse(xmldata);
-            if (xml.Element("File") != null)
-            {
-                // version 3 or 4.
-                foreach (var fileElement in xml.Elements("File"))
-                {
-                    var MappedIDAttribute = fileElement.Attribute("MappedID");
-                    return MappedIDAttribute != null ? 4 : 3;
-                }
-            }
-            else
-            {
-                return 2;
-            }
-            return 0;
-        }
-
         /// <summary>
         /// Converts the KOM crc.xml file to the provided version,
         /// if it is not already that version.
         /// </summary>
+        /// <param name="toVersion">The version to convert the CRC.xml file to.</param>
+        /// <param name="crcpath">The path to the crc.xml file.</param>
         public void ConvertCRC(int toVersion, string crcpath)
         {
             if (System.IO.File.Exists(crcpath))
             {
-                var crcversion = GetCRCVersion(System.Text.Encoding.ASCII.GetString(System.IO.File.ReadAllBytes(crcpath)));
+                var crcversion = this.GetCRCVersion(System.Text.Encoding.ASCII.GetString(System.IO.File.ReadAllBytes(crcpath)));
                 if (crcversion != toVersion)
                 {
-                    foreach (var plugin in KOMManager.komplugins)
+                    foreach (var plugin in KOMManager.Komplugins)
                     {
                         if (toVersion == plugin.SupportedKOMVersion)
                         {
@@ -287,6 +300,9 @@ namespace Els_kom_Core.Classes
         /// not in the crc.xml, or removes files listed in crc.xml that are
         /// no longer in the folder.
         /// </summary>
+        /// <param name="crcversion">The version of the crc.xml file.</param>
+        /// <param name="crcpath">The path to the crc.xml file.</param>
+        /// <param name="checkpath">The directry that contains the crc.xml file.</param>
         public void UpdateCRC(int crcversion, string crcpath, string checkpath)
         {
             var crcfile = new System.IO.FileInfo(crcpath);
@@ -296,6 +312,7 @@ namespace Els_kom_Core.Classes
                 if (!fi1.Name.Equals(crcfile.Name))
                 {
                     var found = false;
+
                     // lookup the file entry in the crc.xml.
                     var xmldata = System.Text.Encoding.UTF8.GetString(
                        System.IO.File.ReadAllBytes(crcpath));
@@ -316,9 +333,10 @@ namespace Els_kom_Core.Classes
                     {
                         // TODO: Iterate through every entry in the kom v2 crc.xml file.
                     }
+
                     if (!found)
                     {
-                        foreach (var plugin in KOMManager.komplugins)
+                        foreach (var plugin in KOMManager.Komplugins)
                         {
                             if (crcversion == plugin.SupportedKOMVersion)
                             {
@@ -331,9 +349,34 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
+        /// Gets the crc.xml file version.
+        /// </summary>
+        /// <param name="xmldata">The data in the crc.xml file.</param>
+        /// <returns>The version of the crc.xml file.</returns>
+        internal int GetCRCVersion(string xmldata)
+        {
+            var xml = System.Xml.Linq.XElement.Parse(xmldata);
+            if (xml.Element("File") != null)
+            {
+                // version 3 or 4.
+                foreach (var fileElement in xml.Elements("File"))
+                {
+                    var mappedIDAttribute = fileElement.Attribute("MappedID");
+                    return mappedIDAttribute != null ? 4 : 3;
+                }
+            }
+            else
+            {
+                return 2;
+            }
+
+            return 0;
+        }
+
+        /// <summary>
         /// Disposes the Stream.
         /// </summary>
-        /// <param name="disposing"></param>
+        /// <param name="disposing">determines if we should dispose native resources (if any at all).</param>
         protected override void Dispose(bool disposing)
         {
         }
