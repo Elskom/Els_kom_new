@@ -1,0 +1,8 @@
+[submodule "externals/ZLIB.NET"]
+	path = externals/ZLIB.NET
+	url = https://github.com/Elskom/ZLIB.NET.git
+	branch = master
+[submodule "externals/newsmake"]
+	path = externals/newsmake
+	url = https://github.com/Elskom/newsmake.git
+	branch = master

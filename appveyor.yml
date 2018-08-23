@@ -7,6 +7,8 @@ skip_commits:
     - Misc/NEWS/
     - '**/*.md'
     - .github/CODEOWNERS
+    - .gitmodules
+    - externals/
 max_jobs: 15
 image:
 - Visual Studio 2017
@@ -15,7 +17,6 @@ configuration: Release
 platform:
 - x86
 - x64
-cache: externals/newsmake
 before_build:
 - ps: ./update-newsmake.ps1
 build:
