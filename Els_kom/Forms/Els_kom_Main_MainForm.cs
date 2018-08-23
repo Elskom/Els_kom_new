@@ -144,5 +144,12 @@ namespace Els_kom.Forms
                 this.settingsfrm = null;
             }
         }
+
+        private void MainControl1_TrayIconChange(object sender, System.EventArgs e)
+        {
+            // this seem to not update the form icon at runtime...
+            this.Icon = Icons.FormIcon;
+            this.MainControl1.NotifyIcon1.Icon = this.Icon;
+        }
     }
 }

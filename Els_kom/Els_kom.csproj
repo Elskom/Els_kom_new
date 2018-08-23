@@ -64,6 +64,7 @@
     <Compile Include="Forms\Els_kom_Main_SettingsForm.Designer.cs">
       <DependentUpon>Els_kom_Main_SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Icons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\PCbuild\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>

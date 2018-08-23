@@ -68,7 +68,6 @@
     <Compile Include="Classes\ExecutionManager.cs" />
     <Compile Include="Classes\GenericPluginLoader.cs" />
     <Compile Include="Classes\Git.cs" />
-    <Compile Include="Classes\Icons.cs" />
     <Compile Include="Classes\KOMManager.cs" />
     <Compile Include="Classes\KOMStream.cs" />
     <Compile Include="Classes\LoadResources.cs" />

@@ -52,7 +52,7 @@ namespace Els_kom.Forms
             this.Controls.Add(this.SettingsControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
-            this.Icon = Els_kom_Core.Classes.Icons.FormIcon;
+            this.Icon = global::Els_kom.Icons.FormIcon;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";

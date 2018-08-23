@@ -8,7 +8,7 @@ namespace Els_kom_Core.Controls
     /// <summary>
     /// MainControl control for Els_kom's Main form.
     /// </summary>
-    internal partial class MainControl : System.Windows.Forms.UserControl
+    public partial class MainControl : System.Windows.Forms.UserControl
     {
         private string elsDir;
         private string showintaskbarValue;
@@ -32,7 +32,7 @@ namespace Els_kom_Core.Controls
         /// <summary>
         /// Initializes a new instance of the <see cref="MainControl"/> class.
         /// </summary>
-        internal MainControl() => this.InitializeComponent();
+        public MainControl() => this.InitializeComponent();
 
         /// <summary>
         /// Event that the control fires that Closes the Form it is on.
@@ -58,6 +58,11 @@ namespace Els_kom_Core.Controls
         /// Event that is Fired that Allows the Form it is on to open up it's About Form.
         /// </summary>
         public event System.EventHandler AboutForm;
+
+        /// <summary>
+        /// Event that is Fired when the Tray and form Icon needs changed.
+        /// </summary>
+        public event System.EventHandler TrayIconChange;
 
         /// <summary>
         /// Gets or sets a value indicating whether the
@@ -647,10 +652,7 @@ namespace Els_kom_Core.Controls
                     this.showintaskbarTempvalue = Classes.SettingsFile.Settingsxml?.Read("IconWhileElsNotRunning");
                     this.showintaskbarTempvalue2 = Classes.SettingsFile.Settingsxml?.Read("IconWhileElsRunning");
                     this.elsDirTemp = Classes.SettingsFile.Settingsxml?.Read("ElsDir");
-
-                    // this seem to not update the form icon at runtime...
-                    this.FindForm().Icon = Classes.Icons.FormIcon;
-                    this.NotifyIcon1.Icon = this.FindForm().Icon;
+                    this.TrayIconChange?.Invoke(this, new System.EventArgs());
                     if (!string.Equals(this.elsDir, this.elsDirTemp))
                     {
                         this.elsDir = this.elsDirTemp;

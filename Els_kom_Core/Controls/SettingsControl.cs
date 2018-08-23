@@ -8,7 +8,7 @@ namespace Els_kom_Core.Controls
     /// <summary>
     /// SettingsControl control for Els_kom's Settings form.
     /// </summary>
-    internal partial class SettingsControl : System.Windows.Forms.UserControl
+    public partial class SettingsControl : System.Windows.Forms.UserControl
     {
         private string curvalue;
         private string curvalue2;
@@ -23,7 +23,7 @@ namespace Els_kom_Core.Controls
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsControl"/> class.
         /// </summary>
-        internal SettingsControl() => this.InitializeComponent();
+        public SettingsControl() => this.InitializeComponent();
 
         /// <summary>
         /// Plugins Installer/Updating form opening event.

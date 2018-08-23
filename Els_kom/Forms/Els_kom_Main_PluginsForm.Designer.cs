@@ -50,7 +50,7 @@ namespace Els_kom.Forms
             this.ClientSize = new System.Drawing.Size(359, 249);
             this.Controls.Add(this.PluginsControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = Els_kom_Core.Classes.Icons.FormIcon;
+            this.Icon = global::Els_kom.Icons.FormIcon;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PluginsForm";
