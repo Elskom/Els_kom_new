@@ -1,3 +1,8 @@
+if ($env:APPVEYOR_REPO_TAG -eq "false" || $env:APPVEYOR_REPO_TAG -eq "true"))
+{
+    # for now we must initialize the submodules.
+    git submodule init
+}
 Set-Location -Path externals/newsmake/build
 cmake ..
 msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
