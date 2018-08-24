@@ -13,6 +13,7 @@
     <NoWin32Manifest>False</NoWin32Manifest>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
