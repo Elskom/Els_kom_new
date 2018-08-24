@@ -1,10 +1,10 @@
 if ($env:APPVEYOR_REPO_TAG -eq "false")
 {
-    git submodule update --init --recursive
+    git submodule update -q --init --recursive
 }
 if ($env:APPVEYOR_REPO_TAG -eq "true")
 {
-    git submodule update --init --recursive
+    git submodule update -q --init --recursive
 }
 Set-Location -Path externals/newsmake/build
 cmake ..
