@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="$(SolutionDir)\Core.props" Condition="Exists('$(SolutionDir)\Core.props')" />
   <PropertyGroup>
     <ProjectGuid>{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -13,29 +12,28 @@
     <NoWin32Manifest>False</NoWin32Manifest>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
+    <DefineTrace>false</DefineTrace>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
-    <BaseIntermediateOutputPath>..\obj\$(Platform)\$(Configuration)\$(ProjectName)</BaseIntermediateOutputPath>
-    <IntermediateOutputPath>..\obj\$(Platform)\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <BaseIntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <NoStdLib>False</NoStdLib>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <OutputPath>..\bin\$(Configuration)\</OutputPath>
+    <DocumentationFile>..\bin\$(Configuration)\Els_kom.Core.xml</DocumentationFile>
     <CodeAnalysisRuleSet>..\PCbuild\Els_kom.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <DefineConstants>ELS_KOM_CORE_BUILD</DefineConstants>
+    <Optimize>false</Optimize>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Prefer32Bit>false</Prefer32Bit>
-    <CodeAnalysisRuleSet>..\PCbuild\Els_kom.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
-    <DefineConstants>ELS_KOM_CORE_BUILD</DefineConstants>
+    <DefineConstants>TRACE;ELS_KOM_CORE_BUILD</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\externals\ZLIB.NET\zlib.net.csproj">
@@ -123,6 +121,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="NuGet.CommandLine">
+      <Version>4.7.1</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

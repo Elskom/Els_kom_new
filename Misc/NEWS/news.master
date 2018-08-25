@@ -1,6 +1,6 @@
 # global news or changelog configurations.
 projname = "Els_kom"
-genfilename = "../../bin/x86/Release/news.txt"
+genfilename = "../../bin/Release/news.txt"
 # tab or spaces for entries in generated section chunks.
 tabs = false
 # controls weather or not to delete the first imported folder with

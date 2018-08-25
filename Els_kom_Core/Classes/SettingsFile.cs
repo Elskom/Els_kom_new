@@ -23,7 +23,7 @@ namespace Els_kom_Core.Classes
         ///
         /// Creates the folder if needed.
         /// </summary>
-        internal static string Path
+        public static string Path
         {
             get
             {
