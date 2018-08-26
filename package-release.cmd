@@ -7,4 +7,4 @@ msbuild Plugins\Els_kom_plugins\DefaultPlugins.sln /m /verbosity:minimal
 cd "bin/%CONFIGURATION%/"
 "Els_kom" -p "./Els_kom_new.%CONFIGURATION%.%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
 "Els_kom" -d "./Symbols.%CONFIGURATION%.%APPVEYOR_BUILD_WORKER_IMAGE%.zip"
-cd ../../..
+cd ../..
