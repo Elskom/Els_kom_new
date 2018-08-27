@@ -86,11 +86,10 @@ namespace Els_kom_Core.Controls
         /// Gets if the Els_kom window can be closed or not.
         /// </summary>
         /// <returns>If Els_kom is ready to close or not.</returns>
-        public bool AbleToClose() => Classes.ExecutionManager.GetRunningElsword() ||
-                Classes.ExecutionManager.GetRunningElswordDirectly() ||
-                Classes.KOMManager.GetPackingState() ||
-                Classes.KOMManager.GetUnpackingState()
-                ? false
+        public bool AbleToClose() => Classes.ExecutionManager.RunningElsword ||
+                Classes.ExecutionManager.RunningElswordDirectly ||
+                Classes.KOMManager.PackingState ||
+                Classes.KOMManager.UnpackingState ? false
                 : true;
 
         /// <summary>
@@ -151,6 +150,7 @@ namespace Els_kom_Core.Controls
                     Enabled = true,
                     Interval = 1
                 };
+                this.settingsTmr.Tick += new System.EventHandler(this.CheckSettings);
                 this.packingTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = false,
@@ -297,7 +297,10 @@ namespace Els_kom_Core.Controls
         private void ExitToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             var cancel = false;
-            if (Classes.ExecutionManager.GetRunningElsword() || Classes.ExecutionManager.GetRunningElswordDirectly() || Classes.KOMManager.GetPackingState() || Classes.KOMManager.GetUnpackingState())
+            if (Classes.ExecutionManager.RunningElsword ||
+                Classes.ExecutionManager.RunningElswordDirectly ||
+                Classes.KOMManager.PackingState ||
+                Classes.KOMManager.UnpackingState)
             {
                 cancel = true;
                 Classes.MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!");
@@ -357,7 +360,7 @@ namespace Els_kom_Core.Controls
         // Handles Packing on the Main Form.
         private void Packing(object sender, System.EventArgs e)
         {
-            if (Classes.KOMManager.GetPackingState())
+            if (Classes.KOMManager.PackingState)
             {
                 if (this.Command1.Enabled)
                 {
@@ -428,7 +431,7 @@ namespace Els_kom_Core.Controls
         // Handles Unpacking on the Main Form.
         private void Unpacking(object sender, System.EventArgs e)
         {
-            if (Classes.KOMManager.GetUnpackingState())
+            if (Classes.KOMManager.UnpackingState)
             {
                 if (this.Command1.Enabled)
                 {
@@ -529,10 +532,10 @@ namespace Els_kom_Core.Controls
         // Handles Testing Mods on the Main Form (when Elsword (the game window) closes).
         private void TestMods2(object sender, System.EventArgs e)
         {
-            var executing = Classes.ExecutionManager.GetExecutingElsword();
+            var executing = Classes.ExecutionManager.ExecutingElsword;
             if (!executing)
             {
-                if (Classes.ExecutionManager.GetRunningElswordDirectly())
+                if (Classes.ExecutionManager.RunningElswordDirectly)
                 {
                     Classes.ExecutionManager.DeployCallBack();
                     if (string.Equals(this.Label2.Text, string.Empty))
@@ -570,9 +573,9 @@ namespace Els_kom_Core.Controls
         // packing, and testing mods.
         private void Launcher(object sender, System.EventArgs e)
         {
-            if (!Classes.ExecutionManager.GetExecutingElsword())
+            if (!Classes.ExecutionManager.ExecutingElsword)
             {
-                if (Classes.ExecutionManager.GetRunningElsword())
+                if (Classes.ExecutionManager.RunningElsword)
                 {
                     if (this.Command1.Enabled)
                     {
@@ -658,7 +661,7 @@ namespace Els_kom_Core.Controls
                         this.elsDir = this.elsDirTemp;
                     }
 
-                    if (!Classes.ExecutionManager.GetRunningElswordDirectly())
+                    if (!Classes.ExecutionManager.RunningElswordDirectly)
                     {
                         if (this.showintaskbarValue != this.showintaskbarTempvalue)
                         {

@@ -10,10 +10,6 @@ namespace Els_kom_Core.Classes
     /// </summary>
     internal static class ExecutionManager
     {
-        private static string elsDir;
-        private static bool runningElsword = false;
-        private static bool runningElswordDirectly = false;
-        private static bool executingElsword = false;
         private static System.Collections.Generic.List<Interfaces.ICallbackPlugin> callbackplugins;
 
         /// <summary>
@@ -33,22 +29,24 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
-        /// Gets if the launcher to Elsword is running.
+        /// Gets a value indicating whether the launcher to Elsword is running.
         /// </summary>
         /// <returns>A value indicating if Elsword is running.</returns>
-        internal static bool GetRunningElsword() => runningElsword;
+        internal static bool RunningElsword { get; private set; } = false;
 
         /// <summary>
-        /// Gets if Elsword is running Directly.
+        /// Gets a value indicating whether Elsword is running Directly.
         /// </summary>
         /// <returns>A value indicating if Elsword is running directly.</returns>
-        internal static bool GetRunningElswordDirectly() => runningElswordDirectly;
+        internal static bool RunningElswordDirectly { get; private set; } = false;
 
         /// <summary>
-        /// Gets if Elsword is still getting ready to execute. False if executing.
+        /// Gets a value indicating whether Elsword is still getting ready to execute. False if executing.
         /// </summary>
         /// <returns>A value indicating if Elsword is getting ready to execute.</returns>
-        internal static bool GetExecutingElsword() => executingElsword;
+        internal static bool ExecutingElsword { get; private set; } = false;
+
+        private static string ElsDir { get; set; }
 
         /// <summary>
         /// Overload for Shell() Function that Allows Overloading of the Working directory Variable.
@@ -79,9 +77,9 @@ namespace Els_kom_Core.Classes
             proc.Start();
 
             // so that way main form Test mods functionality actually works (Lame ass hack I think tbh)...
-            if (executingElsword)
+            if (ExecutingElsword)
             {
-                executingElsword = false;
+                ExecutingElsword = false;
             }
 
             if (redirectStandardError)
@@ -120,22 +118,22 @@ namespace Els_kom_Core.Classes
         /// </summary>
         internal static void RunElswordDirectly()
         {
-            executingElsword = true;
+            ExecutingElsword = true;
             if (System.IO.File.Exists(SettingsFile.Path))
             {
                 SettingsFile.Settingsxml?.ReopenFile();
-                elsDir = SettingsFile.Settingsxml?.Read("ElsDir");
-                if (elsDir.Length > 0)
+                ElsDir = SettingsFile.Settingsxml?.Read("ElsDir");
+                if (ElsDir.Length > 0)
                 {
-                    if (System.IO.File.Exists(elsDir + "\\data\\x2.exe"))
+                    if (System.IO.File.Exists(ElsDir + "\\data\\x2.exe"))
                     {
-                        runningElswordDirectly = true;
-                        Shell(elsDir + "\\data\\x2.exe", "pxk19slammsu286nfha02kpqnf729ck", false, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, elsDir + "\\data\\", true);
-                        runningElswordDirectly = false;
+                        RunningElswordDirectly = true;
+                        Shell(ElsDir + "\\data\\x2.exe", "pxk19slammsu286nfha02kpqnf729ck", false, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir + "\\data\\", true);
+                        RunningElswordDirectly = false;
                     }
                     else
                     {
-                        MessageManager.ShowError("Can't find '" + elsDir + "\\data\\x2.exe'. Make sure the File Exists and try to Test your mods Again!", "Error!");
+                        MessageManager.ShowError("Can't find '" + ElsDir + "\\data\\x2.exe'. Make sure the File Exists and try to Test your mods Again!", "Error!");
                     }
                 }
                 else
@@ -149,7 +147,7 @@ namespace Els_kom_Core.Classes
             }
 
             // avoid bad UI bug.
-            executingElsword = executingElsword ? false : executingElsword;
+            ExecutingElsword = ExecutingElsword ? false : ExecutingElsword;
         }
 
         /// <summary>
@@ -161,30 +159,30 @@ namespace Els_kom_Core.Classes
         {
             // for the sake of sanity and the need to disable the pack, unpack, and test mods
             // buttons in UI while updating game.
-            executingElsword = true;
+            ExecutingElsword = true;
             if (System.IO.File.Exists(SettingsFile.Path))
             {
                 SettingsFile.Settingsxml?.ReopenFile();
-                elsDir = SettingsFile.Settingsxml?.Read("ElsDir");
-                if (elsDir.Length > 0)
+                ElsDir = SettingsFile.Settingsxml?.Read("ElsDir");
+                if (ElsDir.Length > 0)
                 {
-                    if (System.IO.File.Exists(elsDir + "\\voidels.exe"))
+                    if (System.IO.File.Exists(ElsDir + "\\voidels.exe"))
                     {
-                        runningElsword = true;
-                        Shell(elsDir + "\\voidels.exe", string.Empty, false, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, elsDir, true);
-                        runningElsword = false;
+                        RunningElsword = true;
+                        Shell(ElsDir + "\\voidels.exe", string.Empty, false, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir, true);
+                        RunningElsword = false;
                     }
                     else
                     {
-                        if (System.IO.File.Exists(elsDir + "\\elsword.exe"))
+                        if (System.IO.File.Exists(ElsDir + "\\elsword.exe"))
                         {
-                            runningElsword = true;
-                            Shell(elsDir + "\\elsword.exe", string.Empty, false, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, elsDir, true);
-                            runningElsword = false;
+                            RunningElsword = true;
+                            Shell(ElsDir + "\\elsword.exe", string.Empty, false, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir, true);
+                            RunningElsword = false;
                         }
                         else
                         {
-                            MessageManager.ShowError("Can't find '" + elsDir + "\\elsword.exe'. Make sure the File Exists and try to update Elsword Again!", "Error!");
+                            MessageManager.ShowError("Can't find '" + ElsDir + "\\elsword.exe'. Make sure the File Exists and try to update Elsword Again!", "Error!");
                         }
                     }
                 }
@@ -199,7 +197,7 @@ namespace Els_kom_Core.Classes
             }
 
             // avoid bad UI bug.
-            executingElsword = executingElsword ? false : executingElsword;
+            ExecutingElsword = ExecutingElsword ? false : ExecutingElsword;
         }
 
         /// <summary>
@@ -209,7 +207,7 @@ namespace Els_kom_Core.Classes
         /// </summary>
         internal static void DeployCallBack()
         {
-            if (runningElswordDirectly)
+            if (RunningElswordDirectly)
             {
                 foreach (var plugin in Callbackplugins)
                 {

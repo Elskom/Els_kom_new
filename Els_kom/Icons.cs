@@ -21,7 +21,6 @@ namespace Els_kom
             get
             {
                 var iconVal = string.Empty;
-                System.Drawing.Icon retIcon = null;
                 Els_kom_Core.Classes.XMLObject settingsxml = null;
                 if (Els_kom_Core.Classes.SettingsFile.Settingsxml == null)
                 {
@@ -36,7 +35,7 @@ namespace Els_kom
 
                 // dispose this temporary object.
                 settingsxml?.Dispose();
-                retIcon = Properties.Resources.els_kom;
+                var retIcon = Properties.Resources.els_kom;
                 if (iconVal.Equals("1"))
                 {
                     retIcon = Properties.Resources.VP_Trans;
@@ -59,7 +58,6 @@ namespace Els_kom
             get
             {
                 var iconVal = string.Empty;
-                System.Drawing.Icon oldicon = null;
                 Els_kom_Core.Classes.XMLObject settingsxml = null;
                 if (Els_kom_Core.Classes.SettingsFile.Settingsxml == null)
                 {
@@ -74,7 +72,7 @@ namespace Els_kom
 
                 // dispose this temporary object.
                 settingsxml?.Dispose();
-                oldicon = Properties.Resources.els_kom;
+                var oldicon = Properties.Resources.els_kom;
                 if (iconVal.Equals("1"))
                 {
                     oldicon = Properties.Resources.VP_Trans;

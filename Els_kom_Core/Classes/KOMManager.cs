@@ -10,9 +10,6 @@ namespace Els_kom_Core.Classes
     /// </summary>
     internal static class KOMManager
     {
-        /* required to see if we are packing or unpacking. Default to false. */
-        private static bool isPacking = false;
-        private static bool isUnpacking = false;
         private static System.Collections.Generic.List<Interfaces.IKomPlugin> komplugins;
 
         /// <summary>
@@ -32,16 +29,16 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
-        /// Gets the current state on packing KOM files.
+        /// Gets a value indicating whether the current state on packing KOM files.
         /// </summary>
         /// <returns>The current state on packing KOM files.</returns>
-        internal static bool GetPackingState() => isPacking;
+        internal static bool PackingState { get; private set; } = false;
 
         /// <summary>
-        /// Gets the current state on unpacking KOM files.
+        /// Gets a value indicating whether the current state on unpacking KOM files.
         /// </summary>
         /// <returns>The current state on unpacking KOM files.</returns>
-        internal static bool GetUnpackingState() => isUnpacking;
+        internal static bool UnpackingState { get; private set; } = false;
 
         /// <summary>
         /// Copies Modified KOM files to the Elsword Directory that was Set in the Settings Dialog in Els_kom. Requires: File Name, Original Directory the File is in, And Destination Directory.
@@ -100,7 +97,7 @@ namespace Els_kom_Core.Classes
         /// </summary>
         internal static void UnpackKoms()
         {
-            isUnpacking = true;
+            UnpackingState = true;
             var di = new System.IO.DirectoryInfo(System.Windows.Forms.Application.StartupPath + "\\koms");
             foreach (var fi in di.GetFiles("*.kom"))
             {
@@ -154,7 +151,7 @@ namespace Els_kom_Core.Classes
                 }
             }
 
-            isUnpacking = false;
+            UnpackingState = false;
         }
 
         /// <summary>
@@ -162,7 +159,7 @@ namespace Els_kom_Core.Classes
         /// </summary>
         internal static void PackKoms()
         {
-            isPacking = true;
+            PackingState = true;
             var di = new System.IO.DirectoryInfo(System.Windows.Forms.Application.StartupPath + "\\koms");
             foreach (var dri in di.GetDirectories())
             {
@@ -211,7 +208,7 @@ namespace Els_kom_Core.Classes
                 }
             }
 
-            isPacking = false;
+            PackingState = false;
         }
 
         /// <summary>
