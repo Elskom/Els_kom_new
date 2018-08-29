@@ -5,10 +5,12 @@
 
 namespace Els_kom_Core.Enums
 {
+    using System;
+
     /// <summary>
     /// The flags for the type of mini-dumps to generate.
     /// </summary>
-    [System.Flags]
+    [Flags]
     internal enum MINIDUMP_TYPE
     {
         /// <summary>

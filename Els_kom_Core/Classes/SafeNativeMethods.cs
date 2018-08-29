@@ -5,6 +5,11 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System;
+    using System.Runtime.InteropServices;
+    using Els_kom_Core.Enums;
+    using Els_kom_Core.Structs;
+
     /// <summary>
     /// Windows Native Methods.
     /// </summary>
@@ -17,8 +22,8 @@ namespace Els_kom_Core.Classes
         /// <param name="lpName">The resource name as a pointer.</param>
         /// <param name="lpType">The resource type as a pointer.</param>
         /// <returns>The Resoruce information pointer.</returns>
-        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true, EntryPoint = "FindResourceW")]
-        internal static extern System.IntPtr FindResourceW(System.IntPtr hModule, System.IntPtr lpName, System.IntPtr lpType);
+        [DllImport("kernel32.dll", SetLastError = true, EntryPoint = "FindResourceW")]
+        internal static extern IntPtr FindResourceW(IntPtr hModule, IntPtr lpName, IntPtr lpType);
 
         /// <summary>
         /// Gets the size of the resource information.
@@ -26,8 +31,8 @@ namespace Els_kom_Core.Classes
         /// <param name="hModule">The Assembly handle.</param>
         /// <param name="hResInfo">The resource information.</param>
         /// <returns>The size of the resource entry.</returns>
-        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true, EntryPoint = "SizeofResource")]
-        internal static extern uint SizeofResource(System.IntPtr hModule, System.IntPtr hResInfo);
+        [DllImport("kernel32.dll", SetLastError = true, EntryPoint = "SizeofResource")]
+        internal static extern uint SizeofResource(IntPtr hModule, IntPtr hResInfo);
 
         /// <summary>
         /// Loads the Resource the resource information contains.
@@ -35,22 +40,22 @@ namespace Els_kom_Core.Classes
         /// <param name="hModule">The Assembly handle.</param>
         /// <param name="hResInfo">The resource information.</param>
         /// <returns>A pointer to the resource data.</returns>
-        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true, EntryPoint = "LoadResource")]
-        internal static extern System.IntPtr LoadResource(System.IntPtr hModule, System.IntPtr hResInfo);
+        [DllImport("kernel32.dll", SetLastError = true, EntryPoint = "LoadResource")]
+        internal static extern IntPtr LoadResource(IntPtr hModule, IntPtr hResInfo);
 
         /// <summary>
         /// Locks the Resource data to a value.
         /// </summary>
         /// <param name="hResData">The resource data pointer.</param>
         /// <returns>A pointer to the resource contents.</returns>
-        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true, EntryPoint = "LockResource")]
-        internal static extern System.IntPtr LockResource(System.IntPtr hResData);
+        [DllImport("kernel32.dll", SetLastError = true, EntryPoint = "LockResource")]
+        internal static extern IntPtr LockResource(IntPtr hResData);
 
         /// <summary>
         /// Gets the current thread.
         /// </summary>
         /// <returns>The current native thread id.</returns>
-        [System.Runtime.InteropServices.DllImport("kernel32.dll", EntryPoint = "GetCurrentThreadId", ExactSpelling = true)]
+        [DllImport("kernel32.dll", EntryPoint = "GetCurrentThreadId", ExactSpelling = true)]
         internal static extern uint GetCurrentThreadId();
 
         /// <summary>
@@ -64,7 +69,7 @@ namespace Els_kom_Core.Classes
         /// <param name="UserStreamParam">User stream stuff for the dumps.</param>
         /// <param name="CallackParam">Callback function pointer?</param>
         /// <returns>if the mini-dump worked or not?</returns>
-        [System.Runtime.InteropServices.DllImport("dbghelp.dll", EntryPoint = "MiniDumpWriteDump", CallingConvention = System.Runtime.InteropServices.CallingConvention.StdCall, CharSet = System.Runtime.InteropServices.CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
-        internal static extern bool MiniDumpWriteDump(System.IntPtr hProcess, int ProcessId, System.Runtime.InteropServices.SafeHandle hFile, Enums.MINIDUMP_TYPE DumpType, ref Structs.MINIDUMP_EXCEPTION_INFORMATION ExceptionParam, System.IntPtr UserStreamParam, System.IntPtr CallackParam);
+        [DllImport("dbghelp.dll", EntryPoint = "MiniDumpWriteDump", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
+        internal static extern bool MiniDumpWriteDump(IntPtr hProcess, int ProcessId, SafeHandle hFile, MINIDUMP_TYPE DumpType, ref MINIDUMP_EXCEPTION_INFORMATION ExceptionParam, IntPtr UserStreamParam, IntPtr CallackParam);
     }
 }

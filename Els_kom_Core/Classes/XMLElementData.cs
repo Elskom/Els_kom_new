@@ -5,6 +5,8 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// XML Element data stuff.
     /// </summary>
@@ -23,7 +25,7 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Gets or sets the xml attributes to check for in the Dictionary, if it has any.
         /// </summary>
-        internal System.Collections.Generic.List<XMLAttributeData> Attributes { get; set; } = new System.Collections.Generic.List<XMLAttributeData>();
+        internal List<XMLAttributeData> Attributes { get; set; } = new List<XMLAttributeData>();
 
         /// <summary>
         /// Gets or sets the value of the element.

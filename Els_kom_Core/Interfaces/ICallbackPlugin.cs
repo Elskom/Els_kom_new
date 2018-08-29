@@ -5,6 +5,9 @@
 
 namespace Els_kom_Core.Interfaces
 {
+    using System;
+    using System.Windows.Forms;
+
     /// <summary>
     /// Interface for Els_kom Test Mods callback plugins.
     /// </summary>
@@ -30,7 +33,7 @@ namespace Els_kom_Core.Interfaces
         ///
         /// Note: Create instance before returning.
         /// </summary>
-        System.Windows.Forms.Form SettingsWindow { get; }
+        Form SettingsWindow { get; }
 
         /// <summary>
         /// Test Mods Callback Function.
@@ -40,7 +43,7 @@ namespace Els_kom_Core.Interfaces
         /// game process is closed. However an for loop for every kom
         /// file to be spoofed or something is probably ok.
         /// </summary>
-        /// <exception cref="System.NotImplementedException">Thrown when a plugin does not have this implemented yet.</exception>
+        /// <exception cref="NotImplementedException">Thrown when a plugin does not have this implemented yet.</exception>
         void TestModsCallback();
     }
 }

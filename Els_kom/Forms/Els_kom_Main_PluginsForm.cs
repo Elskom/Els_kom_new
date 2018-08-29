@@ -5,10 +5,13 @@
 
 namespace Els_kom.Forms
 {
-    internal partial class PluginsForm : System.Windows.Forms.Form
+    using System;
+    using System.Windows.Forms;
+
+    internal partial class PluginsForm : Form
     {
         internal PluginsForm() => this.InitializeComponent();
 
-        private void PluginsForm_Load(object sender, System.EventArgs e) => this.PluginsControl1.InitControl();
+        private void PluginsForm_Load(object sender, EventArgs e) => this.PluginsControl1.InitControl();
     }
 }

@@ -93,7 +93,7 @@ namespace Els_kom_Core.Controls
             this.InstallButton.TabIndex = 2;
             this.InstallButton.Text = "Install";
             this.InstallButton.UseVisualStyleBackColor = true;
-            this.InstallButton.Visible = false;
+            this.InstallButton.Visible = true;
             this.InstallButton.Click += new System.EventHandler(this.InstallButton_Click);
             // 
             // OkButton
@@ -115,7 +115,7 @@ namespace Els_kom_Core.Controls
             this.UninstallButton.TabIndex = 4;
             this.UninstallButton.Text = "Uninstall";
             this.UninstallButton.UseVisualStyleBackColor = true;
-            this.UninstallButton.Visible = false;
+            this.UninstallButton.Visible = true;
             this.UninstallButton.Click += new System.EventHandler(this.UninstallButton_Click);
             // 
             // PluginsControl

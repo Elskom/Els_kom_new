@@ -42,7 +42,8 @@ namespace Els_kom.Forms
             this.SettingsControl1.Name = "SettingsControl1";
             this.SettingsControl1.Size = new System.Drawing.Size(510, 157);
             this.SettingsControl1.TabIndex = 10;
-            this.SettingsControl1.OpenPluginsForm += new System.EventHandler(SettingsControl1_OpenPluginsForm);
+            this.SettingsControl1.OpenPluginsForm += new System.EventHandler(this.SettingsControl1_OpenPluginsForm);
+            this.SettingsControl1.OpenPluginsSettings += new System.EventHandler(this.SettingsControl1_OpenPluginsSettings);
             // 
             // SettingsForm
             // 
@@ -52,7 +53,7 @@ namespace Els_kom.Forms
             this.Controls.Add(this.SettingsControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
-            this.Icon = global::Els_kom.Icons.FormIcon;
+            this.Icon = Icons.FormIcon;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";

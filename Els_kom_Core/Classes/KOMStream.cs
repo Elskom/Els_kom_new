@@ -5,10 +5,15 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System;
+    using System.IO;
+    using System.Text;
+    using System.Xml.Linq;
+
     /// <summary>
     /// KOM File format related stream.
     /// </summary>
-    public class KOMStream : System.IO.Stream
+    public class KOMStream : Stream
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="KOMStream"/> class.
@@ -51,7 +56,7 @@ namespace Els_kom_Core.Classes
         public override long Position
         {
             get => 0;
-            set => throw new System.NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
         /// <summary>
@@ -77,7 +82,7 @@ namespace Els_kom_Core.Classes
         /// <param name="offset">The offset to seek to.</param>
         /// <param name="origin">The origin option.</param>
         /// <returns>The new position.</returns>
-        public override long Seek(long offset, System.IO.SeekOrigin origin) => 0;
+        public override long Seek(long offset, SeekOrigin origin) => 0;
 
         /// <summary>
         /// Sets the length of the Stream.
@@ -108,19 +113,19 @@ namespace Els_kom_Core.Classes
         /// <param name="version">The kom file version.</param>
         /// <param name="xmldata">The crc.xml data to write.</param>
         /// <param name="kOMFileName">The name of the kom file the entry is from.</param>
-        public void WriteOutput(System.IO.BinaryReader reader, string out_path, EntryVer entry, int version, string xmldata, string kOMFileName)
+        public void WriteOutput(BinaryReader reader, string out_path, EntryVer entry, int version, string xmldata, string kOMFileName)
         {
             if (version > 2)
             {
-                if (!System.IO.Directory.Exists(out_path))
+                if (!Directory.Exists(out_path))
                 {
-                    System.IO.Directory.CreateDirectory(out_path);
+                    Directory.CreateDirectory(out_path);
                 }
 
-                var xmldatabuffer = System.Text.Encoding.ASCII.GetBytes(xmldata);
-                if (!System.IO.File.Exists(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml"))
+                var xmldatabuffer = Encoding.ASCII.GetBytes(xmldata);
+                if (!File.Exists(out_path + Path.DirectorySeparatorChar + "crc.xml"))
                 {
-                    var fs = System.IO.File.Create(out_path + System.IO.Path.DirectorySeparatorChar + "crc.xml");
+                    var fs = File.Create(out_path + Path.DirectorySeparatorChar + "crc.xml");
                     fs.Write(xmldatabuffer, 0, xmldatabuffer.Length);
                     fs.Dispose();
                 }
@@ -129,13 +134,13 @@ namespace Els_kom_Core.Classes
                 if (entry.Algorithm == 0)
                 {
                     var failure = false;
-                    var entryfile = System.IO.File.Create(out_path + "\\" + entry.Name);
+                    var entryfile = File.Create(out_path + "\\" + entry.Name);
                     try
                     {
                         ZlibHelper.DecompressData(entrydata, out var dec_entrydata);
                         entryfile.Write(dec_entrydata, 0, entry.Uncompressed_size);
                     }
-                    catch (System.ArgumentException ex)
+                    catch (ArgumentException ex)
                     {
                         throw new UnpackingError("Something failed...", ex);
                     }
@@ -147,20 +152,20 @@ namespace Els_kom_Core.Classes
                     entryfile.Dispose();
                     if (failure)
                     {
-                        System.IO.File.Move(out_path + "\\" + entry.Name, out_path + "\\" + entry.Name + "." + entry.Uncompressed_size + "." + entry.Algorithm);
+                        File.Move(out_path + "\\" + entry.Name, out_path + "\\" + entry.Name + "." + entry.Uncompressed_size + "." + entry.Algorithm);
                     }
                 }
                 else
                 {
-                    System.IO.FileStream entryfile;
+                    FileStream entryfile;
                     if (entrydata.Length == entry.Uncompressed_size)
                     {
-                        entryfile = System.IO.File.Create(out_path + "\\" + entry.Name);
+                        entryfile = File.Create(out_path + "\\" + entry.Name);
                     }
                     else
                     {
                         // data was not decompressed properly so lets just dump it as is.
-                        entryfile = System.IO.File.Create(out_path + "\\" + entry.Name + "." + entry.Uncompressed_size + "." + entry.Algorithm);
+                        entryfile = File.Create(out_path + "\\" + entry.Name + "." + entry.Uncompressed_size + "." + entry.Algorithm);
                     }
 #if VERSION_0x01050000
                     byte[] dec_entrydata = null;
@@ -173,7 +178,7 @@ namespace Els_kom_Core.Classes
                         {
                             ZlibHelper.DecompressData(entrydata, out zdec_entrydata);
                         }
-                        catch (System.ArgumentException ex)
+                        catch (ArgumentException ex)
                         {
                             throw new UnpackingError("Something failed...", ex);
                         }
@@ -194,7 +199,7 @@ namespace Els_kom_Core.Classes
                         {
                             ZlibHelper.DecompressData(decr_entrydata, out dec_entrydata);
                         }
-                        catch (System.ArgumentException ex)
+                        catch (ArgumentException ex)
                         {
                             throw new UnpackingError("Something failed...", ex);
                         }
@@ -208,7 +213,7 @@ namespace Els_kom_Core.Classes
                     entryfile.Dispose();
                     if (failure)
                     {
-                        System.IO.File.Move(out_path + "\\" + entry.Name, out_path + "\\" + entry.Name + "." + entry.Uncompressed_size + "." + entry.Algorithm);
+                        File.Move(out_path + "\\" + entry.Name, out_path + "\\" + entry.Name + "." + entry.Uncompressed_size + "." + entry.Algorithm);
                     }
 #else
                     if (entry.Algorithm == 3)
@@ -229,13 +234,13 @@ namespace Els_kom_Core.Classes
             else
             {
                 // Write KOM V2 output to file.
-                if (!System.IO.Directory.Exists(out_path))
+                if (!Directory.Exists(out_path))
                 {
-                    System.IO.Directory.CreateDirectory(out_path);
+                    Directory.CreateDirectory(out_path);
                 }
 
                 var entrydata = reader.ReadBytes(entry.Compressed_size);
-                var entryfile = System.IO.File.Create(out_path + "\\" + entry.Name);
+                var entryfile = File.Create(out_path + "\\" + entry.Name);
                 byte[] dec_entrydata;
                 try
                 {
@@ -244,14 +249,14 @@ namespace Els_kom_Core.Classes
                 catch (UnpackingError)
                 {
                     // copyright symbols... Really funny xor key...
-                    var xorkey = System.Text.Encoding.UTF8.GetBytes("\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9");
+                    var xorkey = Encoding.UTF8.GetBytes("\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9");
 
                     // xor this shit then try again...
                     BlowFish.XorBlock(ref entrydata, xorkey);
                     try
                     {
                         ZlibHelper.DecompressData(entrydata, out dec_entrydata);
-                        System.IO.File.Create(out_path + "\\XoRNeeded.dummy").Dispose();
+                        File.Create(out_path + "\\XoRNeeded.dummy").Dispose();
                     }
                     catch (UnpackingError ex)
                     {
@@ -279,9 +284,9 @@ namespace Els_kom_Core.Classes
         /// <param name="crcpath">The path to the crc.xml file.</param>
         public void ConvertCRC(int toVersion, string crcpath)
         {
-            if (System.IO.File.Exists(crcpath))
+            if (File.Exists(crcpath))
             {
-                var crcversion = this.GetCRCVersion(System.Text.Encoding.ASCII.GetString(System.IO.File.ReadAllBytes(crcpath)));
+                var crcversion = this.GetCRCVersion(Encoding.ASCII.GetString(File.ReadAllBytes(crcpath)));
                 if (crcversion != toVersion)
                 {
                     foreach (var plugin in KOMManager.Komplugins)
@@ -305,8 +310,8 @@ namespace Els_kom_Core.Classes
         /// <param name="checkpath">The directry that contains the crc.xml file.</param>
         public void UpdateCRC(int crcversion, string crcpath, string checkpath)
         {
-            var crcfile = new System.IO.FileInfo(crcpath);
-            var di1 = new System.IO.DirectoryInfo(checkpath);
+            var crcfile = new FileInfo(crcpath);
+            var di1 = new DirectoryInfo(checkpath);
             foreach (var fi1 in di1.GetFiles())
             {
                 if (!fi1.Name.Equals(crcfile.Name))
@@ -314,9 +319,8 @@ namespace Els_kom_Core.Classes
                     var found = false;
 
                     // lookup the file entry in the crc.xml.
-                    var xmldata = System.Text.Encoding.UTF8.GetString(
-                       System.IO.File.ReadAllBytes(crcpath));
-                    var xml = System.Xml.Linq.XElement.Parse(xmldata);
+                    var xmldata = Encoding.UTF8.GetString(File.ReadAllBytes(crcpath));
+                    var xml = XElement.Parse(xmldata);
                     if (crcversion > 2)
                     {
                         foreach (var fileElement in xml.Elements("File"))
@@ -355,7 +359,7 @@ namespace Els_kom_Core.Classes
         /// <returns>The version of the crc.xml file.</returns>
         internal int GetCRCVersion(string xmldata)
         {
-            var xml = System.Xml.Linq.XElement.Parse(xmldata);
+            var xml = XElement.Parse(xmldata);
             if (xml.Element("File") != null)
             {
                 // version 3 or 4.

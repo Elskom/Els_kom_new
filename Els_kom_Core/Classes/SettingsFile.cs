@@ -5,6 +5,10 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+
     /// <summary>
     /// Class that handles the settings for this Application.
     /// </summary>
@@ -31,12 +35,12 @@ namespace Els_kom_Core.Classes
                 // Create annoying folders, and throw annoying Exceptions making it harder to
                 // debug as it spams the debugger. Also then we would not need to Replace
                 // everything added to the path obtained from System.Environment.GetFolderPath.
-                var localPath = System.Environment.GetFolderPath(
-                    System.Environment.SpecialFolder.LocalApplicationData);
+                var localPath = Environment.GetFolderPath(
+                    Environment.SpecialFolder.LocalApplicationData);
                 localPath += "\\Els_kom";
-                if (!System.IO.Directory.Exists(localPath))
+                if (!Directory.Exists(localPath))
                 {
-                    System.IO.Directory.CreateDirectory(localPath);
+                    Directory.CreateDirectory(localPath);
                 }
 
                 // do not create settings file, just pass this path to XMLObject.
@@ -56,10 +60,10 @@ namespace Els_kom_Core.Classes
         {
             get
             {
-                var localPath = System.Environment.GetFolderPath(
-                    System.Environment.SpecialFolder.LocalApplicationData);
+                var localPath = Environment.GetFolderPath(
+                    Environment.SpecialFolder.LocalApplicationData);
                 localPath += "\\Els_kom";
-                var thisProcess = System.Diagnostics.Process.GetCurrentProcess();
+                var thisProcess = Process.GetCurrentProcess();
                 localPath += "\\" + thisProcess.ProcessName + "-" + thisProcess.Id.ToString() + ".log";
                 thisProcess.Dispose();
                 return localPath;
@@ -73,10 +77,10 @@ namespace Els_kom_Core.Classes
         {
             get
             {
-                var localPath = System.Environment.GetFolderPath(
-                    System.Environment.SpecialFolder.LocalApplicationData);
+                var localPath = Environment.GetFolderPath(
+                    Environment.SpecialFolder.LocalApplicationData);
                 localPath += "\\Els_kom";
-                var thisProcess = System.Diagnostics.Process.GetCurrentProcess();
+                var thisProcess = Process.GetCurrentProcess();
                 localPath += System.IO.Path.DirectorySeparatorChar + thisProcess.ProcessName + "-" + thisProcess.Id.ToString() + ".mdmp";
                 thisProcess.Dispose();
                 return localPath;

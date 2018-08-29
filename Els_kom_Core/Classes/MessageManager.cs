@@ -5,6 +5,8 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System.Windows.Forms;
+
     /// <summary>
     /// Els_kom's Generic MessageBox Manager.
     /// </summary>
@@ -15,23 +17,23 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <param name="text">The text on the messagebox.</param>
         /// <param name="caption">The title of the messagebox.</param>
-        /// <returns>A new <see cref="System.Windows.Forms.DialogResult"/>.</returns>
-        internal static System.Windows.Forms.DialogResult ShowError(string text, string caption) => System.Windows.Forms.MessageBox.Show(text, caption, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+        /// <returns>A new <see cref="DialogResult"/>.</returns>
+        internal static DialogResult ShowError(string text, string caption) => MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
         /// <summary>
         /// Shows an MessageBox that is for information.
         /// </summary>
         /// <param name="text">The text on the messagebox.</param>
         /// <param name="caption">The title of the messagebox.</param>
-        /// <returns>A new <see cref="System.Windows.Forms.DialogResult"/>.</returns>
-        internal static System.Windows.Forms.DialogResult ShowInfo(string text, string caption) => System.Windows.Forms.MessageBox.Show(text, caption, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+        /// <returns>A new <see cref="DialogResult"/>.</returns>
+        internal static DialogResult ShowInfo(string text, string caption) => MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         /// <summary>
         /// Shows an MessageBox that is for an Warning.
         /// </summary>
         /// <param name="text">The text on the messagebox.</param>
         /// <param name="caption">The title of the messagebox.</param>
-        /// <returns>A new <see cref="System.Windows.Forms.DialogResult"/>.</returns>
-        internal static System.Windows.Forms.DialogResult ShowWarning(string text, string caption) => System.Windows.Forms.MessageBox.Show(text, caption, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation);
+        /// <returns>A new <see cref="DialogResult"/>.</returns>
+        internal static DialogResult ShowWarning(string text, string caption) => MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
     }
 }

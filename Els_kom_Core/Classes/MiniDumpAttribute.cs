@@ -5,6 +5,15 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Security.Permissions;
+    using System.Text;
+    using System.Threading;
+    using System.Windows.Forms;
+    using Els_kom_Core.Controls;
+
     // do not use this attribute for anything but classes.
 
     /// <summary>
@@ -13,8 +22,8 @@ namespace Els_kom_Core.Classes
     /// This registers Thread and Unhandled exception
     /// handlers to do it.
     /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Class)]
-    internal class MiniDumpAttribute : System.Attribute
+    [AttributeUsage(AttributeTargets.Class)]
+    internal class MiniDumpAttribute : Attribute
     {
         private readonly string text;
 
@@ -22,13 +31,13 @@ namespace Els_kom_Core.Classes
         /// Initializes a new instance of the <see cref="MiniDumpAttribute"/> class.
         /// </summary>
         /// <param name="text">Exception message text.</param>
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, Flags = System.Security.Permissions.SecurityPermissionFlag.ControlAppDomain)]
+        [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.ControlAppDomain)]
         internal MiniDumpAttribute(string text)
         {
             this.text = text;
-            var currentDomain = System.AppDomain.CurrentDomain;
-            currentDomain.UnhandledException += new System.UnhandledExceptionEventHandler(this.ExceptionHandler);
-            System.Windows.Forms.Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(this.ThreadExceptionHandler);
+            var currentDomain = AppDomain.CurrentDomain;
+            currentDomain.UnhandledException += new UnhandledExceptionEventHandler(this.ExceptionHandler);
+            Application.ThreadException += new ThreadExceptionEventHandler(this.ThreadExceptionHandler);
         }
 
         /// <summary>
@@ -41,41 +50,41 @@ namespace Els_kom_Core.Classes
         /// </summary>
         public string ThreadExceptionTitle { get; set; }
 
-        private void ExceptionHandler(object sender, System.UnhandledExceptionEventArgs args)
+        private void ExceptionHandler(object sender, UnhandledExceptionEventArgs args)
         {
-            var e = (System.Exception)args.ExceptionObject;
-            var exceptionData = e.GetType().ToString() + ": " + e.Message + System.Environment.NewLine + e.StackTrace + System.Environment.NewLine;
-            var outputData = System.Text.Encoding.ASCII.GetBytes(exceptionData);
+            var e = (Exception)args.ExceptionObject;
+            var exceptionData = e.GetType().ToString() + ": " + e.Message + Environment.NewLine + e.StackTrace + Environment.NewLine;
+            var outputData = Encoding.ASCII.GetBytes(exceptionData);
 
             // do not dump or close if in a debugger.
-            if (!System.Diagnostics.Debugger.IsAttached)
+            if (!Debugger.IsAttached)
             {
-                Controls.MainControl.Closable = true;
-                var fileStream = System.IO.File.OpenWrite(SettingsFile.ErrorLogPath);
+                MainControl.Closable = true;
+                var fileStream = File.OpenWrite(SettingsFile.ErrorLogPath);
                 fileStream.Write(outputData, 0, outputData.Length);
                 fileStream.Dispose();
                 MiniDump.FullMiniDumpToFile(SettingsFile.MiniDumpPath);
                 MessageManager.ShowError(string.Format(this.text, SettingsFile.ErrorLogPath), this.ExceptionTitle);
-                System.Windows.Forms.Application.Exit();
+                Application.Exit();
             }
         }
 
-        private void ThreadExceptionHandler(object sender, System.Threading.ThreadExceptionEventArgs e)
+        private void ThreadExceptionHandler(object sender, ThreadExceptionEventArgs e)
         {
             var ex = e.Exception;
-            var exceptionData = ex.GetType().ToString() + ": " + ex.Message + System.Environment.NewLine + ex.StackTrace + System.Environment.NewLine;
-            var outputData = System.Text.Encoding.ASCII.GetBytes(exceptionData);
+            var exceptionData = ex.GetType().ToString() + ": " + ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine;
+            var outputData = Encoding.ASCII.GetBytes(exceptionData);
 
             // do not dump or close if in a debugger.
-            if (!System.Diagnostics.Debugger.IsAttached)
+            if (!Debugger.IsAttached)
             {
-                Controls.MainControl.Closable = true;
-                var fileStream = System.IO.File.OpenWrite(SettingsFile.ErrorLogPath);
+                MainControl.Closable = true;
+                var fileStream = File.OpenWrite(SettingsFile.ErrorLogPath);
                 fileStream.Write(outputData, 0, outputData.Length);
                 fileStream.Dispose();
                 MiniDump.FullMiniDumpToFile(SettingsFile.MiniDumpPath);
                 MessageManager.ShowError(string.Format(this.text, SettingsFile.ErrorLogPath), this.ThreadExceptionTitle);
-                System.Windows.Forms.Application.Exit();
+                Application.Exit();
             }
         }
     }

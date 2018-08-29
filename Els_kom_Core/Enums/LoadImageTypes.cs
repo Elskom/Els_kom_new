@@ -5,10 +5,12 @@
 
 namespace Els_kom_Core.Enums
 {
+    using System;
+
     /// <summary>
     /// Image loading types for images on native PE resource sections.
     /// </summary>
-    [System.Flags]
+    [Flags]
     internal enum LoadImageTypes
     {
         /// <summary>

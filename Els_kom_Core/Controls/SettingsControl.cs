@@ -5,10 +5,15 @@
 
 namespace Els_kom_Core.Controls
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Forms;
+    using Els_kom_Core.Classes;
+
     /// <summary>
     /// SettingsControl control for Els_kom's Settings form.
     /// </summary>
-    public partial class SettingsControl : System.Windows.Forms.UserControl
+    public partial class SettingsControl : UserControl
     {
         private string curvalue;
         private string curvalue2;
@@ -28,28 +33,33 @@ namespace Els_kom_Core.Controls
         /// <summary>
         /// Plugins Installer/Updating form opening event.
         /// </summary>
-        public event System.EventHandler OpenPluginsForm;
+        public event EventHandler OpenPluginsForm;
+
+        /// <summary>
+        /// Opening Settings form for Plugins settings event.
+        /// </summary>
+        public event EventHandler OpenPluginsSettings;
 
         /// <summary>
         /// Saves the Settings that changed in this Control's buffers.
         /// </summary>
         public void SaveSettings()
         {
-            if (!Classes.SettingsFile.Settingsxml.IsDisposed)
+            if (!SettingsFile.Settingsxml.IsDisposed)
             {
-                Classes.SettingsFile.Settingsxml?.ReopenFile();
-                this.curvalue3 = Classes.SettingsFile.Settingsxml?.Read("ElsDir");
-                this.curvalue = Classes.SettingsFile.Settingsxml?.Read("IconWhileElsNotRunning");
-                this.curvalue2 = Classes.SettingsFile.Settingsxml?.Read("IconWhileElsRunning");
+                SettingsFile.Settingsxml?.ReopenFile();
+                this.curvalue3 = SettingsFile.Settingsxml?.Read("ElsDir");
+                this.curvalue = SettingsFile.Settingsxml?.Read("IconWhileElsNotRunning");
+                this.curvalue2 = SettingsFile.Settingsxml?.Read("IconWhileElsRunning");
                 if (!string.Equals(this.TextBox1.Text, this.curvalue3))
                 {
                     if (this.TextBox1.Text.Length > 0)
                     {
-                        Classes.SettingsFile.Settingsxml?.Write("ElsDir", this.TextBox1.Text);
+                        SettingsFile.Settingsxml?.Write("ElsDir", this.TextBox1.Text);
                     }
                     else
                     {
-                        Classes.MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!");
+                        MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!");
                     }
                 }
 
@@ -57,11 +67,11 @@ namespace Els_kom_Core.Controls
                 {
                     if (this.label5 == "...")
                     {
-                        Classes.SettingsFile.Settingsxml?.Write("IconWhileElsNotRunning", "2");
+                        SettingsFile.Settingsxml?.Write("IconWhileElsNotRunning", "2");
                     }
                     else
                     {
-                        Classes.SettingsFile.Settingsxml?.Write("IconWhileElsNotRunning", this.label4);
+                        SettingsFile.Settingsxml?.Write("IconWhileElsNotRunning", this.label4);
                     }
                 }
 
@@ -69,11 +79,11 @@ namespace Els_kom_Core.Controls
                 {
                     if (this.label5 == "...")
                     {
-                        Classes.SettingsFile.Settingsxml?.Write("IconWhileElsRunning", "1");
+                        SettingsFile.Settingsxml?.Write("IconWhileElsRunning", "1");
                     }
                     else
                     {
-                        Classes.SettingsFile.Settingsxml?.Write("IconWhileElsRunning", this.label5);
+                        SettingsFile.Settingsxml?.Write("IconWhileElsRunning", this.label5);
                     }
                 }
 
@@ -81,27 +91,27 @@ namespace Els_kom_Core.Controls
                 {
                     if (this.label8 == "...")
                     {
-                        Classes.SettingsFile.Settingsxml?.Write("WindowIcon", "0");
+                        SettingsFile.Settingsxml?.Write("WindowIcon", "0");
                     }
                     else
                     {
-                        Classes.SettingsFile.Settingsxml?.Write("WindowIcon", this.label8);
+                        SettingsFile.Settingsxml?.Write("WindowIcon", this.label8);
                     }
                 }
 
-                Classes.SettingsFile.Settingsxml?.Write("LoadPDB", this.curvalue4.ToString());
-                Classes.SettingsFile.Settingsxml?.Write("SaveToZip", this.curvalue5.ToString());
-                var sources = new System.Collections.Generic.List<string>();
+                SettingsFile.Settingsxml?.Write("LoadPDB", this.curvalue4.ToString());
+                SettingsFile.Settingsxml?.Write("SaveToZip", this.curvalue5.ToString());
+                var sources = new List<string>();
                 for (var i = 0; i < this.ListView2.Items.Count; i++)
                 {
                     sources.Add(this.ListView2.Items[i].Text);
                 }
 
-                Classes.SettingsFile.Settingsxml?.Write("Sources", "Source", sources.ToArray());
+                SettingsFile.Settingsxml?.Write("Sources", "Source", sources.ToArray());
                 sources.Clear();
 
                 // write to file.
-                Classes.SettingsFile.Settingsxml?.Save();
+                SettingsFile.Settingsxml?.Save();
             }
         }
 
@@ -110,14 +120,14 @@ namespace Els_kom_Core.Controls
         /// </summary>
         public void InitControl()
         {
-            Classes.SettingsFile.Settingsxml?.ReopenFile();
-            this.curvalue3 = Classes.SettingsFile.Settingsxml?.Read("ElsDir");
-            this.curvalue = Classes.SettingsFile.Settingsxml?.Read("IconWhileElsNotRunning");
-            this.curvalue2 = Classes.SettingsFile.Settingsxml?.Read("IconWhileElsRunning");
-            this.curvalue6 = Classes.SettingsFile.Settingsxml?.Read("WindowIcon");
-            int.TryParse(Classes.SettingsFile.Settingsxml?.Read("LoadPDB"), out this.curvalue4);
-            int.TryParse(Classes.SettingsFile.Settingsxml?.Read("SaveToZip"), out this.curvalue5);
-            var sources = Classes.SettingsFile.Settingsxml?.Read("Sources", "Source", null);
+            SettingsFile.Settingsxml?.ReopenFile();
+            this.curvalue3 = SettingsFile.Settingsxml?.Read("ElsDir");
+            this.curvalue = SettingsFile.Settingsxml?.Read("IconWhileElsNotRunning");
+            this.curvalue2 = SettingsFile.Settingsxml?.Read("IconWhileElsRunning");
+            this.curvalue6 = SettingsFile.Settingsxml?.Read("WindowIcon");
+            int.TryParse(SettingsFile.Settingsxml?.Read("LoadPDB"), out this.curvalue4);
+            int.TryParse(SettingsFile.Settingsxml?.Read("SaveToZip"), out this.curvalue5);
+            var sources = SettingsFile.Settingsxml?.Read("Sources", "Source", null);
             foreach (var source in sources)
             {
                 this.ListView2.Items.Add(source);
@@ -129,21 +139,21 @@ namespace Els_kom_Core.Controls
             this.label4 = string.IsNullOrEmpty(this.curvalue) ? this.label4 : this.curvalue;
             this.label5 = string.IsNullOrEmpty(this.curvalue2) ? this.label5 : this.curvalue2;
             this.label8 = string.IsNullOrEmpty(this.curvalue6) ? this.label8 : this.curvalue6;
-            this.CheckBox1.Checked = System.Convert.ToBoolean(this.curvalue5);
-            this.CheckBox2.Checked = System.Convert.ToBoolean(this.curvalue4);
-            var entries = new System.Collections.Generic.List<System.Windows.Forms.ListViewItem>();
-            foreach (var callbackplugin in Classes.ExecutionManager.Callbackplugins)
+            this.CheckBox1.Checked = Convert.ToBoolean(this.curvalue5);
+            this.CheckBox2.Checked = Convert.ToBoolean(this.curvalue4);
+            var entries = new List<ListViewItem>();
+            foreach (var callbackplugin in ExecutionManager.Callbackplugins)
             {
-                entries.Add(new System.Windows.Forms.ListViewItem(
+                entries.Add(new ListViewItem(
                     new string[]
                     {
                         callbackplugin.PluginName
                     }, -1));
             }
 
-            foreach (var komplugin in Classes.KOMManager.Komplugins)
+            foreach (var komplugin in KOMManager.Komplugins)
             {
-                entries.Add(new System.Windows.Forms.ListViewItem(
+                entries.Add(new ListViewItem(
                     new string[]
                     {
                     komplugin.PluginName
@@ -160,16 +170,16 @@ namespace Els_kom_Core.Controls
             this.TreeView1.SelectedNode = this.TreeView1.Nodes[0];
         }
 
-        private void Button1_Click(object sender, System.EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
-            var folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog
+            var folderBrowserDialog1 = new FolderBrowserDialog
             {
                 Description = "Select the Folder that Your Elsword Install is in (Must be the one that either elsword.exe or voidels.exe is in).",
-                RootFolder = System.Environment.SpecialFolder.MyComputer,
+                RootFolder = Environment.SpecialFolder.MyComputer,
                 ShowNewFolderButton = false
             };
             var res = folderBrowserDialog1.ShowDialog();
-            if (res == System.Windows.Forms.DialogResult.OK)
+            if (res == DialogResult.OK)
             {
                 if (folderBrowserDialog1.SelectedPath.Length > 0)
                 {
@@ -178,9 +188,9 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void Button2_Click(object sender, System.EventArgs e) => this.FindForm()?.Close();
+        private void Button2_Click(object sender, EventArgs e) => this.FindForm()?.Close();
 
-        private void RadioButton1_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton1_CheckedChanged(object sender, EventArgs e)
         {
             if (this.RadioButton1.Checked)
             {
@@ -188,7 +198,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void RadioButton2_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton2_CheckedChanged(object sender, EventArgs e)
         {
             if (this.RadioButton2.Checked)
             {
@@ -196,7 +206,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void RadioButton3_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton3_CheckedChanged(object sender, EventArgs e)
         {
             if (this.RadioButton3.Checked)
             {
@@ -204,7 +214,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void RadioButton4_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton4_CheckedChanged(object sender, EventArgs e)
         {
             if (this.RadioButton4.Checked)
             {
@@ -212,7 +222,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void RadioButton5_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton5_CheckedChanged(object sender, EventArgs e)
         {
             if (this.RadioButton5.Checked)
             {
@@ -220,7 +230,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void RadioButton6_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton6_CheckedChanged(object sender, EventArgs e)
         {
             if (this.RadioButton6.Checked)
             {
@@ -228,7 +238,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void TreeView1_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
+        private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (this.TreeView1.SelectedNode.Index == 0)
             {
@@ -295,19 +305,19 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void SettingsControl_Load(object sender, System.EventArgs e)
+        private void SettingsControl_Load(object sender, EventArgs e)
         {
             this.SetRadios();
             this.TreeView1.SelectedNode = this.TreeView1.Nodes[0];
         }
 
-        private void ListView1_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             for (var i = 0; i < this.ListView1.SelectedItems.Count; i++)
             {
                 var selitem = this.ListView1.SelectedItems[i];
                 var found = false;
-                foreach (var callbackplugin in Classes.ExecutionManager.Callbackplugins)
+                foreach (var callbackplugin in ExecutionManager.Callbackplugins)
                 {
                     if (callbackplugin.PluginName.Equals(selitem.Text))
                     {
@@ -322,54 +332,11 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void OpenPluginSettings(System.Windows.Forms.Form plugsettingfrm)
-        {
-            plugsettingfrm.ShowDialog();
-            if (!plugsettingfrm.IsDisposed)
-            {
-                plugsettingfrm.Dispose();
-            }
+        private void Button3_Click(object sender, EventArgs e) => this.OpenPluginsSettings?.Invoke(this, new EventArgs());
 
-            plugsettingfrm = null;
-        }
+        private void Button5_Click(object sender, EventArgs e) => this.ListView2.Items.Add("Enter plugin source url here.");
 
-        private void Button3_Click(object sender, System.EventArgs e)
-        {
-            for (var i = 0; i < this.ListView1.SelectedItems.Count; i++)
-            {
-                var selitem = this.ListView1.SelectedItems[i];
-                foreach (var callbackplugin in Classes.ExecutionManager.Callbackplugins)
-                {
-                    if (callbackplugin.PluginName.Equals(selitem.Text))
-                    {
-                        var plugsettingfrm = callbackplugin.SettingsWindow;
-                        if (callbackplugin.ShowModal)
-                        {
-                            plugsettingfrm.ShowDialog();
-                            if (!plugsettingfrm.IsDisposed)
-                            {
-                                plugsettingfrm.Dispose();
-                            }
-
-                            plugsettingfrm = null;
-                        }
-                        else
-                        {
-                            var task = System.Threading.Tasks.Task.Factory.StartNew(
-                                () => this.OpenPluginSettings(plugsettingfrm));
-                            if (task.IsCompleted || task.IsFaulted || task.IsCanceled)
-                            {
-                                task.Dispose();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void Button5_Click(object sender, System.EventArgs e) => this.ListView2.Items.Add("Enter plugin source url here.");
-
-        private void Button6_Click(object sender, System.EventArgs e)
+        private void Button6_Click(object sender, EventArgs e)
         {
             if (this.ListView2.SelectedItems.Count > 0)
             {
@@ -377,18 +344,18 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void Button4_Click(object sender, System.EventArgs e) => this.OpenPluginsForm?.Invoke(this, new System.EventArgs());
+        private void Button4_Click(object sender, EventArgs e) => this.OpenPluginsForm?.Invoke(this, new EventArgs());
 
-        private void CheckBox1_CheckedChanged(object sender, System.EventArgs e) => this.curvalue5 = System.Convert.ToInt32(this.CheckBox1.Checked);
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e) => this.curvalue5 = Convert.ToInt32(this.CheckBox1.Checked);
 
-        private void CheckBox2_CheckedChanged(object sender, System.EventArgs e) => this.curvalue4 = System.Convert.ToInt32(this.CheckBox2.Checked);
+        private void CheckBox2_CheckedChanged(object sender, EventArgs e) => this.curvalue4 = Convert.ToInt32(this.CheckBox2.Checked);
 
         // people say use a DataGridView because they cant hack together a solution.
         // well they were too stupid to hack a elegant soluion like this.
-        private void ListView2_DoubleClick(object sender, System.EventArgs e)
+        private void ListView2_DoubleClick(object sender, EventArgs e)
         {
             // seems to not place the box in the correct location and it shows under the listview...
-            var textBox = new System.Windows.Forms.TextBox
+            var textBox = new TextBox
             {
                 Bounds = this.ListView2.SelectedItems[0].Bounds,
                 Text = this.ListView2.SelectedItems[0].Text,
@@ -410,7 +377,7 @@ namespace Els_kom_Core.Controls
             textBox.KeyDown += (s, s1) =>
             {
                 s1.Handled = true;
-                if (s1.KeyData == System.Windows.Forms.Keys.Enter)
+                if (s1.KeyData == Keys.Enter)
                 {
                     this.ListView2.SelectedItems[0].Text = textBox.Text;
 
@@ -418,12 +385,12 @@ namespace Els_kom_Core.Controls
                     this.ListView2.Controls.Remove(textBox);
                     textBox.Dispose();
                 }
-                else if (s1.KeyData == System.Windows.Forms.Keys.Right)
+                else if (s1.KeyData == Keys.Right)
                 {
                     // remove selection.
                     textBox.Select(0, 0);
                 }
-                else if (s1.KeyData == System.Windows.Forms.Keys.Left)
+                else if (s1.KeyData == Keys.Left)
                 {
                     // remove selection.
                     textBox.Select(0, 0);
@@ -433,7 +400,7 @@ namespace Els_kom_Core.Controls
             this.ActiveControl = textBox;
         }
 
-        private void RadioButton7_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton7_CheckedChanged(object sender, EventArgs e)
         {
             if (this.RadioButton7.Checked)
             {
@@ -441,7 +408,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void RadioButton8_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton8_CheckedChanged(object sender, EventArgs e)
         {
             if (this.RadioButton8.Checked)
             {
@@ -449,7 +416,7 @@ namespace Els_kom_Core.Controls
             }
         }
 
-        private void RadioButton9_CheckedChanged(object sender, System.EventArgs e)
+        private void RadioButton9_CheckedChanged(object sender, EventArgs e)
         {
             if (this.RadioButton9.Checked)
             {

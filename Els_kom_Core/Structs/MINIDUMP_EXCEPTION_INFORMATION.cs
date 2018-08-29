@@ -5,12 +5,15 @@
 
 namespace Els_kom_Core.Structs
 {
+    using System;
+    using System.Runtime.InteropServices;
+
     // Pack=4 is important! So it works also for x64!
 
     /// <summary>
     /// Minidump Exception information struct.
     /// </summary>
-    [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Pack = 4)]
+    [StructLayout(LayoutKind.Sequential, Pack = 4)]
     internal struct MINIDUMP_EXCEPTION_INFORMATION
     {
         /// <summary>
@@ -21,12 +24,12 @@ namespace Els_kom_Core.Structs
         /// <summary>
         /// Pointers to the exception(s).
         /// </summary>
-        internal System.IntPtr ExceptionPointers;
+        internal IntPtr ExceptionPointers;
 
         /// <summary>
         /// Some client pointers bool.
         /// </summary>
-        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)]
+        [MarshalAs(UnmanagedType.Bool)]
         internal bool ClientPointers;
     }
 }

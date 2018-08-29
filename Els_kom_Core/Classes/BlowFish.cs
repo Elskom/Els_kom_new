@@ -5,12 +5,16 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System;
+    using System.Security.Cryptography;
+    using System.Text;
+
     /// <summary>
     /// Blowfish encryption class.
     /// </summary>
-    public sealed class BlowFish : System.IDisposable
+    public sealed class BlowFish : IDisposable
     {
-        private System.Security.Cryptography.RNGCryptoServiceProvider randomSource;
+        private RNGCryptoServiceProvider randomSource;
 
         // SBLOCKS
         private uint[] bfS0;
@@ -36,7 +40,7 @@ namespace Els_kom_Core.Classes
         /// <param name="hexKey">Cipher key as a hex string</param>
         public BlowFish(string hexKey)
         {
-            this.randomSource = new System.Security.Cryptography.RNGCryptoServiceProvider();
+            this.randomSource = new RNGCryptoServiceProvider();
             this.SetupKey(this.HexToByte(hexKey));
         }
 
@@ -46,7 +50,7 @@ namespace Els_kom_Core.Classes
         /// <param name="cipherKey">Cipher key as a byte array</param>
         public BlowFish(byte[] cipherKey)
         {
-            this.randomSource = new System.Security.Cryptography.RNGCryptoServiceProvider();
+            this.randomSource = new RNGCryptoServiceProvider();
             this.SetupKey(cipherKey);
         }
 
@@ -70,7 +74,7 @@ namespace Els_kom_Core.Classes
                 }
                 else
                 {
-                    throw new System.Exception("Invalid IV size.");
+                    throw new Exception("Invalid IV size.");
                 }
             }
         }
@@ -105,7 +109,7 @@ namespace Els_kom_Core.Classes
                 this.SetRandomIV();
             }
 
-            return this.ByteToHex(this.initVector) + this.ByteToHex(this.Encrypt_CBC(System.Text.Encoding.ASCII.GetBytes(pt)));
+            return this.ByteToHex(this.initVector) + this.ByteToHex(this.Encrypt_CBC(Encoding.ASCII.GetBytes(pt)));
         }
 
         /// <summary>
@@ -116,7 +120,7 @@ namespace Els_kom_Core.Classes
         public string Decrypt_CBC(string ct)
         {
             this.IV = this.HexToByte(ct.Substring(0, 16));
-            return System.Text.Encoding.ASCII.GetString(this.Decrypt_CBC(this.HexToByte(ct.Substring(16)))).Replace("\0", string.Empty);
+            return Encoding.ASCII.GetString(this.Decrypt_CBC(this.HexToByte(ct.Substring(16)))).Replace("\0", string.Empty);
         }
 
         /// <summary>
@@ -140,14 +144,14 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <param name="pt">Plaintext to encrypt as ascii string</param>
         /// <returns>hex value of encrypted data</returns>
-        public string Encrypt_ECB(string pt) => this.ByteToHex(this.Encrypt_ECB(System.Text.Encoding.ASCII.GetBytes(pt)));
+        public string Encrypt_ECB(string pt) => this.ByteToHex(this.Encrypt_ECB(Encoding.ASCII.GetBytes(pt)));
 
         /// <summary>
         /// Decrypts a string (ECB)
         /// </summary>
         /// <param name="ct">hHex string of the ciphertext</param>
         /// <returns>Plaintext ascii string</returns>
-        public string Decrypt_ECB(string ct) => System.Text.Encoding.ASCII.GetString(this.Decrypt_ECB(this.HexToByte(ct))).Replace("\0", string.Empty);
+        public string Decrypt_ECB(string ct) => Encoding.ASCII.GetString(this.Decrypt_ECB(this.HexToByte(ct))).Replace("\0", string.Empty);
 
         /// <summary>
         /// Encrypts a byte array in ECB mode
@@ -162,11 +166,11 @@ namespace Els_kom_Core.Classes
         /// <param name="cipherText">Ciphertext byte array</param>
         /// <param name="mode">Cipher mode</param>
         /// <returns>Plaintext or null if moode is not CipherMode.ECB.</returns>
-        public byte[] Decrypt(byte[] cipherText, System.Security.Cryptography.CipherMode mode)
+        public byte[] Decrypt(byte[] cipherText, CipherMode mode)
         {
             switch (mode)
             {
-                case System.Security.Cryptography.CipherMode.ECB:
+                case CipherMode.ECB:
                     return this.Decrypt_ECB(cipherText);
 
                 default:
@@ -228,10 +232,10 @@ namespace Els_kom_Core.Classes
             this.key = new byte[cipherKey.Length]; // 448 bits
             if (cipherKey.Length > 56)
             {
-                throw new System.Exception("Key too long. 56 bytes required.");
+                throw new Exception("Key too long. 56 bytes required.");
             }
 
-            System.Buffer.BlockCopy(cipherKey, 0, this.key, 0, cipherKey.Length);
+            Buffer.BlockCopy(cipherKey, 0, this.key, 0, cipherKey.Length);
             var j = 0;
             for (var i = 0; i < 18; i++)
             {
@@ -288,11 +292,11 @@ namespace Els_kom_Core.Classes
         {
             var paddedLen = text.Length % 8 == 0 ? text.Length : text.Length + 8 - (text.Length % 8);
             var plainText = new byte[paddedLen];
-            System.Buffer.BlockCopy(text, 0, plainText, 0, text.Length);
+            Buffer.BlockCopy(text, 0, plainText, 0, text.Length);
             var block = new byte[8];
             for (var i = 0; i < plainText.Length; i += 8)
             {
-                System.Buffer.BlockCopy(plainText, i, block, 0, 8);
+                Buffer.BlockCopy(plainText, i, block, 0, 8);
                 if (decrypt)
                 {
                     this.BlockDecrypt(ref block);
@@ -302,7 +306,7 @@ namespace Els_kom_Core.Classes
                     this.BlockEncrypt(ref block);
                 }
 
-                System.Buffer.BlockCopy(block, 0, plainText, i, 8);
+                Buffer.BlockCopy(block, 0, plainText, i, 8);
             }
 
             return plainText;
@@ -318,39 +322,39 @@ namespace Els_kom_Core.Classes
         {
             if (!this.iVSet)
             {
-                throw new System.Exception("IV not set.");
+                throw new Exception("IV not set.");
             }
 
             var paddedLen = text.Length % 8 == 0 ? text.Length : text.Length + 8 - (text.Length % 8);
             var plainText = new byte[paddedLen];
-            System.Buffer.BlockCopy(text, 0, plainText, 0, text.Length);
+            Buffer.BlockCopy(text, 0, plainText, 0, text.Length);
             var block = new byte[8];
             var preblock = new byte[8];
             var iv = new byte[8];
-            System.Buffer.BlockCopy(this.initVector, 0, iv, 0, 8);
+            Buffer.BlockCopy(this.initVector, 0, iv, 0, 8);
             if (!decrypt)
             {
                 for (var i = 0; i < plainText.Length; i += 8)
                 {
-                    System.Buffer.BlockCopy(plainText, i, block, 0, 8);
+                    Buffer.BlockCopy(plainText, i, block, 0, 8);
                     XorBlock_private(ref block, iv);
                     this.BlockEncrypt(ref block);
-                    System.Buffer.BlockCopy(block, 0, iv, 0, 8);
-                    System.Buffer.BlockCopy(block, 0, plainText, i, 8);
+                    Buffer.BlockCopy(block, 0, iv, 0, 8);
+                    Buffer.BlockCopy(block, 0, plainText, i, 8);
                 }
             }
             else
             {
                 for (var i = 0; i < plainText.Length; i += 8)
                 {
-                    System.Buffer.BlockCopy(plainText, i, block, 0, 8);
+                    Buffer.BlockCopy(plainText, i, block, 0, 8);
 
-                    System.Buffer.BlockCopy(block, 0, preblock, 0, 8);
+                    Buffer.BlockCopy(block, 0, preblock, 0, 8);
                     this.BlockDecrypt(ref block);
                     XorBlock_private(ref block, iv);
-                    System.Buffer.BlockCopy(preblock, 0, iv, 0, 8);
+                    Buffer.BlockCopy(preblock, 0, iv, 0, 8);
 
-                    System.Buffer.BlockCopy(block, 0, plainText, i, 8);
+                    Buffer.BlockCopy(block, 0, plainText, i, 8);
                 }
             }
 
@@ -387,22 +391,22 @@ namespace Els_kom_Core.Classes
         {
             var block1 = new byte[4];
             var block2 = new byte[4];
-            System.Buffer.BlockCopy(block, 0, block1, 0, 4);
-            System.Buffer.BlockCopy(block, 4, block2, 0, 4);
+            Buffer.BlockCopy(block, 0, block1, 0, 4);
+            Buffer.BlockCopy(block, 4, block2, 0, 4);
 
             // split the block
             if (this.NonStandard)
             {
-                this.xrPar = System.BitConverter.ToUInt32(block1, 0);
-                this.xlPar = System.BitConverter.ToUInt32(block2, 0);
+                this.xrPar = BitConverter.ToUInt32(block1, 0);
+                this.xlPar = BitConverter.ToUInt32(block2, 0);
             }
             else
             {
                 // ToUInt32 requires the bytes in reverse order
-                System.Array.Reverse(block1);
-                System.Array.Reverse(block2);
-                this.xlPar = System.BitConverter.ToUInt32(block1, 0);
-                this.xrPar = System.BitConverter.ToUInt32(block2, 0);
+                Array.Reverse(block1);
+                Array.Reverse(block2);
+                this.xlPar = BitConverter.ToUInt32(block1, 0);
+                this.xrPar = BitConverter.ToUInt32(block2, 0);
             }
         }
 
@@ -416,22 +420,22 @@ namespace Els_kom_Core.Classes
             var block2 = new byte[4];
             if (this.NonStandard)
             {
-                block1 = System.BitConverter.GetBytes(this.xrPar);
-                block2 = System.BitConverter.GetBytes(this.xlPar);
+                block1 = BitConverter.GetBytes(this.xrPar);
+                block2 = BitConverter.GetBytes(this.xlPar);
             }
             else
             {
-                block1 = System.BitConverter.GetBytes(this.xlPar);
-                block2 = System.BitConverter.GetBytes(this.xrPar);
+                block1 = BitConverter.GetBytes(this.xlPar);
+                block2 = BitConverter.GetBytes(this.xrPar);
 
                 // GetBytes returns the bytes in reverse order
-                System.Array.Reverse(block1);
-                System.Array.Reverse(block2);
+                Array.Reverse(block1);
+                Array.Reverse(block2);
             }
 
             // join the block
-            System.Buffer.BlockCopy(block1, 0, block, 0, 4);
-            System.Buffer.BlockCopy(block2, 0, block, 4, 4);
+            Buffer.BlockCopy(block1, 0, block, 0, 4);
+            Buffer.BlockCopy(block2, 0, block, 4, 4);
         }
 
         /// <summary>
@@ -701,7 +705,7 @@ namespace Els_kom_Core.Classes
         // converts a byte array to a hex string
         private string ByteToHex(byte[] bytes)
         {
-            var s = new System.Text.StringBuilder();
+            var s = new StringBuilder();
             foreach (var b in bytes)
             {
                 s.Append(b.ToString("x2"));

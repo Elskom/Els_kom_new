@@ -5,7 +5,10 @@
 
 namespace Els_kom.Forms
 {
-    internal partial class AboutForm : System.Windows.Forms.Form
+    using System;
+    using System.Windows.Forms;
+
+    internal partial class AboutForm : Form
     {
         private static string label1 = string.Empty;
 
@@ -26,8 +29,8 @@ namespace Els_kom.Forms
             private set => label1 = value;
         }
 
-        private void AboutForm_Load(object sender, System.EventArgs e) => Label1 = "1";
+        private void AboutForm_Load(object sender, EventArgs e) => Label1 = "1";
 
-        private void AboutForm_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e) => Label1 = "0";
+        private void AboutForm_FormClosing(object sender, FormClosingEventArgs e) => Label1 = "0";
     }
 }

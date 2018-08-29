@@ -5,23 +5,29 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using Els_kom_Core.Interfaces;
+
     /// <summary>
     /// Class in the Core that allows executing Elsword directly or it's launcher.
     /// </summary>
     internal static class ExecutionManager
     {
-        private static System.Collections.Generic.List<Interfaces.ICallbackPlugin> callbackplugins;
+        private static List<ICallbackPlugin> callbackplugins;
 
         /// <summary>
         /// Gets the list of callback plugins.
         /// </summary>
-        internal static System.Collections.Generic.List<Interfaces.ICallbackPlugin> Callbackplugins
+        internal static List<ICallbackPlugin> Callbackplugins
         {
             get
             {
                 if (callbackplugins == null)
                 {
-                    callbackplugins = new System.Collections.Generic.List<Interfaces.ICallbackPlugin>();
+                    callbackplugins = new List<ICallbackPlugin>();
                 }
 
                 return callbackplugins;
@@ -62,10 +68,10 @@ namespace Els_kom_Core.Classes
         /// <param name="workingDirectory">Working directory for the target process.</param>
         /// <param name="waitForProcessExit">Waits for the target process to terminate.</param>
         /// <returns>empty string, process stdout data, process stderr data</returns>
-        internal static string Shell(string fileName, string arguments, bool redirectStandardOutput, bool redirectStandardError, bool useShellExecute, bool createNoWindow, System.Diagnostics.ProcessWindowStyle windowStyle, string workingDirectory, bool waitForProcessExit)
+        internal static string Shell(string fileName, string arguments, bool redirectStandardOutput, bool redirectStandardError, bool useShellExecute, bool createNoWindow, ProcessWindowStyle windowStyle, string workingDirectory, bool waitForProcessExit)
         {
             var ret = string.Empty;
-            var proc = new System.Diagnostics.Process();
+            var proc = new Process();
             proc.StartInfo.FileName = fileName;
             proc.StartInfo.Arguments = arguments;
             proc.StartInfo.RedirectStandardOutput = redirectStandardOutput;
@@ -107,8 +113,8 @@ namespace Els_kom_Core.Classes
         /// <returns>Boolean</returns>
         internal static bool IsElsKomRunning()
         {
-            var els_komexe = System.Diagnostics.Process.GetProcessesByName("Els_kom");
-            return System.Linq.Enumerable.Count(els_komexe) > 1;
+            var els_komexe = Process.GetProcessesByName("Els_kom");
+            return els_komexe.Count() > 1;
         }
 
         /// <summary>
@@ -119,16 +125,16 @@ namespace Els_kom_Core.Classes
         internal static void RunElswordDirectly()
         {
             ExecutingElsword = true;
-            if (System.IO.File.Exists(SettingsFile.Path))
+            if (File.Exists(SettingsFile.Path))
             {
                 SettingsFile.Settingsxml?.ReopenFile();
                 ElsDir = SettingsFile.Settingsxml?.Read("ElsDir");
                 if (ElsDir.Length > 0)
                 {
-                    if (System.IO.File.Exists(ElsDir + "\\data\\x2.exe"))
+                    if (File.Exists(ElsDir + "\\data\\x2.exe"))
                     {
                         RunningElswordDirectly = true;
-                        Shell(ElsDir + "\\data\\x2.exe", "pxk19slammsu286nfha02kpqnf729ck", false, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir + "\\data\\", true);
+                        Shell(ElsDir + "\\data\\x2.exe", "pxk19slammsu286nfha02kpqnf729ck", false, false, false, false, ProcessWindowStyle.Normal, ElsDir + "\\data\\", true);
                         RunningElswordDirectly = false;
                     }
                     else
@@ -160,24 +166,24 @@ namespace Els_kom_Core.Classes
             // for the sake of sanity and the need to disable the pack, unpack, and test mods
             // buttons in UI while updating game.
             ExecutingElsword = true;
-            if (System.IO.File.Exists(SettingsFile.Path))
+            if (File.Exists(SettingsFile.Path))
             {
                 SettingsFile.Settingsxml?.ReopenFile();
                 ElsDir = SettingsFile.Settingsxml?.Read("ElsDir");
                 if (ElsDir.Length > 0)
                 {
-                    if (System.IO.File.Exists(ElsDir + "\\voidels.exe"))
+                    if (File.Exists(ElsDir + "\\voidels.exe"))
                     {
                         RunningElsword = true;
-                        Shell(ElsDir + "\\voidels.exe", string.Empty, false, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir, true);
+                        Shell(ElsDir + "\\voidels.exe", string.Empty, false, false, false, false, ProcessWindowStyle.Normal, ElsDir, true);
                         RunningElsword = false;
                     }
                     else
                     {
-                        if (System.IO.File.Exists(ElsDir + "\\elsword.exe"))
+                        if (File.Exists(ElsDir + "\\elsword.exe"))
                         {
                             RunningElsword = true;
-                            Shell(ElsDir + "\\elsword.exe", string.Empty, false, false, false, false, System.Diagnostics.ProcessWindowStyle.Normal, ElsDir, true);
+                            Shell(ElsDir + "\\elsword.exe", string.Empty, false, false, false, false, ProcessWindowStyle.Normal, ElsDir, true);
                             RunningElsword = false;
                         }
                         else

@@ -264,6 +264,7 @@ namespace Els_kom_Core.Controls
         private void Command4_Click(object sender, System.EventArgs e)
         {
             this.Label1.Text = string.Empty;
+            this.FindForm().Hide();
             this.FindForm().WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.TestMods();
         }
@@ -273,6 +274,7 @@ namespace Els_kom_Core.Controls
         private void Command5_Click(object sender, System.EventArgs e)
         {
             this.Label1.Text = string.Empty;
+            this.FindForm().Hide();
             this.FindForm().WindowState = System.Windows.Forms.FormWindowState.Minimized;
             var tr4 = new System.Threading.Thread(Classes.ExecutionManager.RunElswordLauncher)
             {
@@ -317,6 +319,7 @@ namespace Els_kom_Core.Controls
         private void LauncherToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             this.Label1.Text = string.Empty;
+            this.FindForm().Hide();
             this.FindForm().WindowState = System.Windows.Forms.FormWindowState.Minimized;
             var tr4 = new System.Threading.Thread(Classes.ExecutionManager.RunElswordLauncher)
             {
@@ -339,6 +342,7 @@ namespace Els_kom_Core.Controls
         private void TestModsToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             this.Label1.Text = string.Empty;
+            this.FindForm().Hide();
             this.FindForm().WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.TestMods();
         }
@@ -564,6 +568,7 @@ namespace Els_kom_Core.Controls
 
                     // restore window state from before testing mods.
                     this.FindForm().WindowState = System.Windows.Forms.FormWindowState.Normal;
+                    this.FindForm().Show();
                     this.testModsTmr.Enabled = false;
                 }
             }
@@ -636,6 +641,7 @@ namespace Els_kom_Core.Controls
 
                     // restore window state from before updating the game.
                     this.FindForm().WindowState = System.Windows.Forms.FormWindowState.Normal;
+                    this.FindForm().Show();
                     this.launcherTmr.Enabled = false;
                 }
             }

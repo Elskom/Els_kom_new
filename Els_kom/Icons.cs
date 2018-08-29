@@ -5,6 +5,9 @@
 
 namespace Els_kom
 {
+    using System.Drawing;
+    using Els_kom_Core.Classes;
+
     // Forms designer cannot see these if they are "internal" but I wanted them Internal.
     // The WinForms team probably should base the Forms Designer off of Roslyn sometime?
 
@@ -16,21 +19,21 @@ namespace Els_kom
         /// <summary>
         /// Gets the form icon from the project's resources.
         /// </summary>
-        public static System.Drawing.Icon FormIcon
+        public static Icon FormIcon
         {
             get
             {
                 var iconVal = string.Empty;
-                Els_kom_Core.Classes.XMLObject settingsxml = null;
-                if (Els_kom_Core.Classes.SettingsFile.Settingsxml == null)
+                XMLObject settingsxml = null;
+                if (SettingsFile.Settingsxml == null)
                 {
-                    settingsxml = new Els_kom_Core.Classes.XMLObject(Els_kom_Core.Classes.SettingsFile.Path, "<Settings></Settings>");
+                    settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
                     iconVal = settingsxml.Read("WindowIcon");
                 }
                 else
                 {
-                    Els_kom_Core.Classes.SettingsFile.Settingsxml.ReopenFile();
-                    iconVal = Els_kom_Core.Classes.SettingsFile.Settingsxml.Read("WindowIcon");
+                    SettingsFile.Settingsxml.ReopenFile();
+                    iconVal = SettingsFile.Settingsxml.Read("WindowIcon");
                 }
 
                 // dispose this temporary object.
@@ -50,24 +53,24 @@ namespace Els_kom
         }
 
         /// <summary>
-        /// Gets a 48 x 48 sized <see cref="System.Drawing.Image"/>
+        /// Gets a 48 x 48 sized <see cref="Image"/>
         /// from a icon in the project's resources.
         /// </summary>
-        public static System.Drawing.Image FormImage
+        public static Image FormImage
         {
             get
             {
                 var iconVal = string.Empty;
-                Els_kom_Core.Classes.XMLObject settingsxml = null;
-                if (Els_kom_Core.Classes.SettingsFile.Settingsxml == null)
+                XMLObject settingsxml = null;
+                if (SettingsFile.Settingsxml == null)
                 {
-                    settingsxml = new Els_kom_Core.Classes.XMLObject(Els_kom_Core.Classes.SettingsFile.Path, "<Settings></Settings>");
+                    settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
                     iconVal = settingsxml.Read("WindowIcon");
                 }
                 else
                 {
-                    Els_kom_Core.Classes.SettingsFile.Settingsxml.ReopenFile();
-                    iconVal = Els_kom_Core.Classes.SettingsFile.Settingsxml.Read("WindowIcon");
+                    SettingsFile.Settingsxml.ReopenFile();
+                    iconVal = SettingsFile.Settingsxml.Read("WindowIcon");
                 }
 
                 // dispose this temporary object.
@@ -82,7 +85,7 @@ namespace Els_kom
                     oldicon = Properties.Resources.YR;
                 }
 
-                var newicon = new System.Drawing.Icon(oldicon, 48, 48);
+                var newicon = new Icon(oldicon, 48, 48);
                 return newicon?.ToBitmap();
             }
         }

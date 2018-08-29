@@ -9,6 +9,12 @@
 */
 namespace Els_kom_Core.Classes
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.IO.Compression;
+    using System.Reflection;
+
     /// <summary>
     /// Generic Els_kom plugin loader.
     /// </summary>
@@ -20,12 +26,12 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <param name="path">The path to look for plugins to load.</param>
         /// <returns>A list of plugins loaded that derive from the specified type.</returns>
-        internal static System.Collections.Generic.ICollection<T> LoadPlugins(string path)
+        internal static ICollection<T> LoadPlugins(string path)
         {
             string[] dllFileNames = null;
-            if (System.IO.Directory.Exists(path))
+            if (Directory.Exists(path))
             {
-                dllFileNames = System.IO.Directory.GetFiles(path, "*.dll");
+                dllFileNames = Directory.GetFiles(path, "*.dll");
             }
             else
             {
@@ -33,24 +39,24 @@ namespace Els_kom_Core.Classes
                 path += ".zip";
             }
 
-            System.Collections.Generic.ICollection<T> plugins = new System.Collections.Generic.List<T>();
+            ICollection<T> plugins = new List<T>();
 
             // handle when path points to a zip file.
-            if (System.IO.Directory.Exists(path) || System.IO.File.Exists(path))
+            if (Directory.Exists(path) || File.Exists(path))
             {
-                System.Collections.Generic.ICollection<System.Reflection.Assembly> assemblies = new System.Collections.Generic.List<System.Reflection.Assembly>();
+                ICollection<Assembly> assemblies = new List<Assembly>();
                 if (dllFileNames != null)
                 {
                     foreach (var dllFile in dllFileNames)
                     {
-                        var an = System.Reflection.AssemblyName.GetAssemblyName(dllFile);
-                        var assembly = System.Reflection.Assembly.Load(an);
+                        var an = AssemblyName.GetAssemblyName(dllFile);
+                        var assembly = Assembly.Load(an);
                         assemblies.Add(assembly);
                     }
                 }
                 else
                 {
-                    var zipFile = System.IO.Compression.ZipFile.OpenRead(path);
+                    var zipFile = ZipFile.OpenRead(path);
                     foreach (var entry in zipFile.Entries)
                     {
                         // just lookup the dlls here. The LoadFromZip method will load the pdb’s if they are deemed needed.
@@ -58,7 +64,7 @@ namespace Els_kom_Core.Classes
                         {
                             SettingsFile.Settingsxml?.ReopenFile();
                             int.TryParse(SettingsFile.Settingsxml?.Read("LoadPDB"), out var tempint);
-                            var assembly = AssemblyExtensions.LoadFromZip(path, entry.FullName, System.Convert.ToBoolean(tempint));
+                            var assembly = AssemblyExtensions.LoadFromZip(path, entry.FullName, Convert.ToBoolean(tempint));
                             assemblies.Add(assembly);
                         }
                     }
@@ -67,7 +73,7 @@ namespace Els_kom_Core.Classes
                 }
 
                 var pluginType = typeof(T);
-                System.Collections.Generic.ICollection<System.Type> pluginTypes = new System.Collections.Generic.List<System.Type>();
+                ICollection<Type> pluginTypes = new List<Type>();
                 foreach (var assembly in assemblies)
                 {
                     if (assembly != null)
@@ -92,7 +98,7 @@ namespace Els_kom_Core.Classes
 
                 foreach (var type in pluginTypes)
                 {
-                    var plugin = (T)System.Activator.CreateInstance(type);
+                    var plugin = (T)Activator.CreateInstance(type);
                     plugins.Add(plugin);
                 }
 

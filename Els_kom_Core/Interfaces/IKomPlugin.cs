@@ -5,6 +5,9 @@
 
 namespace Els_kom_Core.Interfaces
 {
+    using System;
+    using Els_kom_Core.Classes;
+
     /// <summary>
     /// Interface for Els_kom plugins for some optional add-ons to internal workings.
     ///
@@ -35,8 +38,8 @@ namespace Els_kom_Core.Interfaces
         /// <param name="in_path">input path.</param>
         /// <param name="out_path">output (target) path.</param>
         /// <param name="kOMFileName">KOM File name to use internally for unpacking files.</param>
-        /// <exception cref="Classes.UnpackingError">Thrown when unpacking fails badly.</exception>
-        /// <exception cref="System.NotImplementedException">Thrown when an plugin does not have this implemented yet.</exception>
+        /// <exception cref="UnpackingError">Thrown when unpacking fails badly.</exception>
+        /// <exception cref="NotImplementedException">Thrown when an plugin does not have this implemented yet.</exception>
         void Unpack(string in_path, string out_path, string kOMFileName);
 
         /// <summary>
@@ -45,8 +48,8 @@ namespace Els_kom_Core.Interfaces
         /// <param name="in_path">input path.</param>
         /// <param name="out_path">output (target) path.</param>
         /// <param name="kOMFileName">KOM File name to use internally for packing files.</param>
-        /// <exception cref="Classes.PackingError">Thrown when packing fails badly.</exception>
-        /// <exception cref="System.NotImplementedException">Thrown when an plugin does not have this implemented yet.</exception>
+        /// <exception cref="PackingError">Thrown when packing fails badly.</exception>
+        /// <exception cref="NotImplementedException">Thrown when an plugin does not have this implemented yet.</exception>
         void Pack(string in_path, string out_path, string kOMFileName);
 
         /// <summary>

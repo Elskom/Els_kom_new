@@ -23,6 +23,7 @@ namespace Els_kom_Core.Controls
         /// </summary>
         public void InitControl()
         {
+            Classes.SettingsFile.Settingsxml?.ReopenFile();
             this.sources = Classes.SettingsFile.Settingsxml?.Read("Sources", "Source", null);
             for (var i = 0; i < this.sources.Length; i++)
             {
@@ -76,6 +77,7 @@ namespace Els_kom_Core.Controls
             // TODO: Add plugin install code here.
             Classes.MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[0].Text, "Debug!");
             Classes.MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[1].Text, "Debug!");
+            Classes.MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[2].Text, "Debug!");
         }
 
         private void OkButton_Click(object sender, System.EventArgs e) => this.FindForm()?.Close();
