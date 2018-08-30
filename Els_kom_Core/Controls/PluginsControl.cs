@@ -5,13 +5,20 @@
 
 namespace Els_kom_Core.Controls
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Windows.Forms;
+    using System.Xml.Linq;
+    using Els_kom_Core.Classes;
+
     /// <summary>
     /// PluginsControl control for Els_kom's Plugins installer/updater form.
     /// </summary>
-    public partial class PluginsControl : System.Windows.Forms.UserControl
+    public partial class PluginsControl : UserControl
     {
         private string[] sources;
-        private System.Xml.Linq.XDocument doc;
+        private List<XDocument> doc;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginsControl"/> class.
@@ -23,8 +30,9 @@ namespace Els_kom_Core.Controls
         /// </summary>
         public void InitControl()
         {
-            Classes.SettingsFile.Settingsxml?.ReopenFile();
-            this.sources = Classes.SettingsFile.Settingsxml?.Read("Sources", "Source", null);
+            this.doc = new List<XDocument>();
+            SettingsFile.Settingsxml?.ReopenFile();
+            this.sources = SettingsFile.Settingsxml?.Read("Sources", "Source", null);
             for (var i = 0; i < this.sources.Length; i++)
             {
                 this.sources[i] = this.sources[i].Replace(
@@ -33,23 +41,17 @@ namespace Els_kom_Core.Controls
                     this.sources[i].EndsWith("/") ? "master/plugins.xml" : "/master/plugins.xml");
             }
 
+            var webClient = new WebClient();
             foreach (var source in this.sources)
             {
-                var request = System.Net.WebRequest.Create(source);
-                var response = request.GetResponse();
-                var dataStream = response.GetResponseStream();
-                var reader = new System.IO.StreamReader(dataStream);
-                var xmlResponse = reader.ReadToEnd();
-                reader.Dispose();
-                response.Dispose();
-                this.doc = System.Xml.Linq.XDocument.Parse(xmlResponse);
-                var elements = this.doc.Root.Elements("Plugin");
+                var doc = XDocument.Parse(webClient.DownloadString(source));
+                var elements = doc.Root.Elements("Plugin");
                 foreach (var element in elements)
                 {
                     var items = new string[3];
                     items[0] = element.Attribute("Name").Value;
                     items[1] = element.Attribute("Version").Value;
-                    foreach (var callbackplugin in Classes.ExecutionManager.Callbackplugins)
+                    foreach (var callbackplugin in ExecutionManager.Callbackplugins)
                     {
                         if (items[0].Equals(callbackplugin.GetType().Namespace))
                         {
@@ -57,7 +59,7 @@ namespace Els_kom_Core.Controls
                         }
                     }
 
-                    foreach (var komplugin in Classes.KOMManager.Komplugins)
+                    foreach (var komplugin in KOMManager.Komplugins)
                     {
                         if (items[0].Equals(komplugin.GetType().Namespace))
                         {
@@ -65,34 +67,38 @@ namespace Els_kom_Core.Controls
                         }
                     }
 
-                    this.ListView1.Items.Add(new System.Windows.Forms.ListViewItem(items));
+                    this.ListView1.Items.Add(new ListViewItem(items));
                 }
+
+                this.doc.Add(doc);
             }
+
+            webClient.Dispose();
         }
 
-        private void InstallButton_Click(object sender, System.EventArgs e)
+        private void InstallButton_Click(object sender, EventArgs e)
         {
             // first check if plugin is installed already, then uninstall the old version. before installing.
             // install the selected plugin.
             // TODO: Add plugin install code here.
-            Classes.MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[0].Text, "Debug!");
-            Classes.MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[1].Text, "Debug!");
-            Classes.MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[2].Text, "Debug!");
+            MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[0].Text, "Debug!");
+            MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[1].Text, "Debug!");
+            MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[2].Text, "Debug!");
         }
 
-        private void OkButton_Click(object sender, System.EventArgs e) => this.FindForm()?.Close();
+        private void OkButton_Click(object sender, EventArgs e) => this.FindForm()?.Close();
 
-        private void UninstallButton_Click(object sender, System.EventArgs e)
+        private void UninstallButton_Click(object sender, EventArgs e)
         {
             // first verify plugin is installed though.
             // uninstall the selected plugin.
             // TODO: Add plugin uninstall code here.
         }
 
-        private void PluginsControl_Paint(object sender, System.Windows.Forms.PaintEventArgs e) => this.Label1.Text = "Select Plugins to install from the list Below. "
+        private void PluginsControl_Paint(object sender, PaintEventArgs e) => this.Label1.Text = "Select Plugins to install from the list Below. "
                 + "If a Plugin you expect is not shown Configure a Plugin "
                 + "Source Repository to look in for Plugins to install from."
-                + System.Environment.NewLine + System.Environment.NewLine
+                + Environment.NewLine + Environment.NewLine
                 + "Note: Plugin Source Repsitories should only contain an "
                 + "Plugins.xml file which lists the version, Plugin Source "
                 + "Code GitHub Repository Releases url, and a list of files "

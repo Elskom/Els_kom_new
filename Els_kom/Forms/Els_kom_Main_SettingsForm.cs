@@ -7,6 +7,7 @@ namespace Els_kom.Forms
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using Els_kom_Core.Classes;
@@ -55,7 +56,7 @@ namespace Els_kom.Forms
             this.SettingsControl1.InitControl();
             Label1 = "1";
             this.tasks = new List<Task>();
-            this.components = this.components ?? new System.ComponentModel.Container();
+            this.components = this.components ?? new Container();
             this.taskTmr = new Timer(this.components)
             {
                 Enabled = true,
