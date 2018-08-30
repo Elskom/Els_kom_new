@@ -104,7 +104,6 @@ namespace Els_kom_Core.Classes
                     }
                 }
 
-                zipFile.CreateEntry("koms\\");
                 zipFile.Dispose();
             }
 
