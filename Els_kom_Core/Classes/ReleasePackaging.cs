@@ -45,7 +45,7 @@ namespace Els_kom_Core.Classes
 
             if (args[0].Equals("-p"))
             {
-                Console.WriteLine("Writing build files to " + outfilename + ".");
+                Console.WriteLine("Writing build files and debug symbol files to " + outfilename + ".");
                 if (File.Exists(args[1]))
                 {
                     File.Delete(args[1]);
@@ -80,56 +80,39 @@ namespace Els_kom_Core.Classes
                     zipFile.CreateEntryFromFile(txt_file, txt_file);
                 }
 
+                foreach (var fi5 in di1.GetFiles("*.pdb"))
+                {
+                    var pdb_file = fi5.Name;
+                    zipFile.CreateEntryFromFile(pdb_file, pdb_file);
+                }
+
                 foreach (var di2 in di1.GetDirectories())
                 {
-                    foreach (var fi5 in di2.GetFiles("*.dll"))
+                    foreach (var fi6 in di2.GetFiles("*.pdb"))
                     {
-                        var dll_file1 = fi5.Name;
+                        var pdb_file1 = fi6.Name;
+                        zipFile.CreateEntryFromFile(di2.Name + Path.DirectorySeparatorChar + pdb_file1, di2.Name + Path.DirectorySeparatorChar + pdb_file1);
+                    }
+
+                    foreach (var fi7 in di2.GetFiles("*.dll"))
+                    {
+                        var dll_file1 = fi7.Name;
                         zipFile.CreateEntryFromFile(di2.Name + Path.DirectorySeparatorChar + dll_file1, di2.Name + Path.DirectorySeparatorChar + dll_file1);
                     }
 
-                    foreach (var fi6 in di2.GetFiles("*.xml"))
+                    foreach (var fi8 in di2.GetFiles("*.xml"))
                     {
-                        var xml_file1 = fi6.Name;
+                        var xml_file1 = fi8.Name;
                         if (!xml_file1.EndsWith(".CodeAnalysisLog.xml"))
                         {
                             zipFile.CreateEntryFromFile(di2.Name + Path.DirectorySeparatorChar + xml_file1, di2.Name + Path.DirectorySeparatorChar + xml_file1);
                         }
                     }
 
-                    foreach (var fi7 in di2.GetFiles("*.txt"))
+                    foreach (var fi9 in di2.GetFiles("*.txt"))
                     {
-                        var txt_file1 = fi7.Name;
+                        var txt_file1 = fi9.Name;
                         zipFile.CreateEntryFromFile(di2.Name + Path.DirectorySeparatorChar + txt_file1, di2.Name + Path.DirectorySeparatorChar + txt_file1);
-                    }
-                }
-
-                zipFile.Dispose();
-            }
-
-            // make a zip with pdb's only.
-            else if (args[0].Equals("-d"))
-            {
-                Console.WriteLine("Writing debug symbol files to " + outfilename + ".");
-                if (File.Exists(args[1]))
-                {
-                    File.Delete(args[1]);
-                }
-
-                var zipFile = ZipFile.Open(args[1], ZipArchiveMode.Update);
-                var di1 = new DirectoryInfo(Directory.GetCurrentDirectory());
-                foreach (var fi1 in di1.GetFiles("*.pdb"))
-                {
-                    var pdb_file = fi1.Name;
-                    zipFile.CreateEntryFromFile(pdb_file, pdb_file);
-                }
-
-                foreach (var di2 in di1.GetDirectories())
-                {
-                    foreach (var fi2 in di2.GetFiles("*.pdb"))
-                    {
-                        var pdb_file1 = fi2.Name;
-                        zipFile.CreateEntryFromFile(di2.Name + Path.DirectorySeparatorChar + pdb_file1, di2.Name + Path.DirectorySeparatorChar + pdb_file1);
                     }
                 }
 
