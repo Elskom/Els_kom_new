@@ -11,6 +11,7 @@ namespace Els_kom_Core.Classes
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.IO.Compression;
     using System.Reflection;
@@ -49,8 +50,12 @@ namespace Els_kom_Core.Classes
                 {
                     foreach (var dllFile in dllFileNames)
                     {
-                        var an = AssemblyName.GetAssemblyName(dllFile);
-                        var assembly = Assembly.Load(an);
+                        SettingsFile.Settingsxml?.ReopenFile();
+                        int.TryParse(SettingsFile.Settingsxml?.Read("LoadPDB"), out var tempint);
+                        var loadPDB = Convert.ToBoolean(tempint) ? Convert.ToBoolean(tempint) : Debugger.IsAttached;
+                        var assembly = loadPDB ?
+                            Assembly.Load(File.ReadAllBytes(dllFile), File.ReadAllBytes(dllFile.Replace("dll", "pdb"))) :
+                            Assembly.Load(File.ReadAllBytes(dllFile));
                         assemblies.Add(assembly);
                     }
                 }

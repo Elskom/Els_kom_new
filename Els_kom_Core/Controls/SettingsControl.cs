@@ -363,8 +363,8 @@ namespace Els_kom_Core.Controls
             };
             textBox.Enter += (s, s1) =>
             {
-                    // so the user can replace all the text in the listview item.
-                    textBox.SelectAll();
+                // so the user can replace all the text in the listview item.
+                textBox.SelectAll();
             };
             textBox.Leave += (s, e1) =>
             {
