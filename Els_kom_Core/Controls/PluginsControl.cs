@@ -7,6 +7,8 @@ namespace Els_kom_Core.Controls
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Windows.Forms;
     using System.Xml.Linq;
@@ -19,6 +21,7 @@ namespace Els_kom_Core.Controls
     {
         private string[] sources;
         private List<XDocument> doc;
+        private WebClient webClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginsControl"/> class.
@@ -41,10 +44,10 @@ namespace Els_kom_Core.Controls
                     this.sources[i].EndsWith("/") ? "master/plugins.xml" : "/master/plugins.xml");
             }
 
-            var webClient = new WebClient();
+            this.webClient = new WebClient();
             foreach (var source in this.sources)
             {
-                var doc = XDocument.Parse(webClient.DownloadString(source));
+                var doc = XDocument.Parse(this.webClient.DownloadString(source));
                 var elements = doc.Root.Elements("Plugin");
                 foreach (var element in elements)
                 {
@@ -72,21 +75,47 @@ namespace Els_kom_Core.Controls
 
                 this.doc.Add(doc);
             }
-
-            webClient.Dispose();
         }
 
         private void InstallButton_Click(object sender, EventArgs e)
         {
-            // first check if plugin is installed already, then uninstall the old version. before installing.
-            // install the selected plugin.
-            // TODO: Add plugin install code here.
-            MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[0].Text, "Debug!");
-            MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[1].Text, "Debug!");
-            MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[2].Text, "Debug!");
+            var downloadUrl = string.Empty;
+            var downloadFiles = new string[] { };
+            foreach (var doc in this.doc)
+            {
+                var elements = doc.Root.Elements("Plugin");
+                if (elements != null)
+                {
+                    foreach (var element in elements)
+                    {
+                        var name = element.Attribute("Name").Value;
+                        if (name == this.ListView1.SelectedItems[0].SubItems[0].Text)
+                        {
+                            var attr = element.Attribute("DownloadUrl").Value;
+                            downloadUrl = $"{attr}/{this.ListView1.SelectedItems[0].SubItems[1].Text}/";
+                            downloadFiles = element.Descendants("DownloadFile").Select(y => y.Attribute("Name").Value).ToArray();
+                        }
+                    }
+                }
+            }
+
+            foreach (var downloadFile in downloadFiles)
+            {
+                this.webClient.DownloadFile(
+                    $"{downloadUrl}{downloadFile}",
+                    $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}plugins{Path.DirectorySeparatorChar}{downloadFile}");
+            }
+
+            // MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[0].Text, "Debug!");
+            // MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[1].Text, "Debug!");
+            // MessageManager.ShowInfo(this.ListView1.SelectedItems[0].SubItems[2].Text, "Debug!");
         }
 
-        private void OkButton_Click(object sender, EventArgs e) => this.FindForm()?.Close();
+        private void OkButton_Click(object sender, EventArgs e)
+        {
+            this.FindForm()?.Close();
+            this.webClient.Dispose();
+        }
 
         private void UninstallButton_Click(object sender, EventArgs e)
         {
@@ -95,7 +124,8 @@ namespace Els_kom_Core.Controls
             // TODO: Add plugin uninstall code here.
         }
 
-        private void PluginsControl_Paint(object sender, PaintEventArgs e) => this.Label1.Text = "Select Plugins to install from the list Below. "
+        private void PluginsControl_Paint(object sender, PaintEventArgs e)
+            => this.Label1.Text = "Select Plugins to install from the list Below. "
                 + "If a Plugin you expect is not shown Configure a Plugin "
                 + "Source Repository to look in for Plugins to install from."
                 + Environment.NewLine + Environment.NewLine
