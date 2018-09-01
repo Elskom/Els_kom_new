@@ -92,6 +92,8 @@ namespace Els_kom_Core.Controls
         /// </summary>
         public NotifyIcon NotifyIcon1 { get; private set; }
 
+        private bool Enablehandlers { get; set; }
+
         /// <summary>
         /// Gets if the Els_kom window can be closed or not.
         /// </summary>
@@ -213,29 +215,37 @@ namespace Els_kom_Core.Controls
             return true;
         }
 
-        /// <summary>
-        /// Gets the Syscommand check value.
-        /// </summary>
-        /// <returns>The Syscommand check value.</returns>
-        public int GetSysCommand() => (int)SYSCOMMANDS.WM_SYSCOMMAND;
+        /// <summary>Processes Windows messages.</summary>
+        /// <param name="m">The Windows <see cref="Message"/> to process.</param>
+        protected override void WndProc(ref Message m)
+        {
+            this.Enablehandlers = !this.FindForm().ShowInTaskbar ? true : false;
+            if (this.Enablehandlers && m.Msg == (int)SYSCOMMANDS.WM_SYSCOMMAND)
+            {
+                if (m.WParam.ToInt32() == (int)SYSCOMMANDS.SC_MINIMIZE)
+                {
+                    this.FindForm().Hide();
+                    m.Result = IntPtr.Zero;
+                    return;
+                }
+                else if (m.WParam.ToInt32() == (int)SYSCOMMANDS.SC_MAXIMIZE)
+                {
+                    this.FindForm().Show();
+                    this.FindForm().Activate();
+                    m.Result = IntPtr.Zero;
+                    return;
+                }
+                else if (m.WParam.ToInt32() == (int)SYSCOMMANDS.SC_RESTORE)
+                {
+                    this.FindForm().Show();
+                    this.FindForm().Activate();
+                    m.Result = IntPtr.Zero;
+                    return;
+                }
+            }
 
-        /// <summary>
-        /// Gets the Minimize Command check value.
-        /// </summary>
-        /// <returns>The Minimize Command check value.</returns>
-        public int GetMinimizeCommand() => (int)SYSCOMMANDS.SC_MINIMIZE;
-
-        /// <summary>
-        /// Gets the Maximize Command check value.
-        /// </summary>
-        /// <returns>The Maximize Command check value.</returns>
-        public int GetMaximizeCommand() => (int)SYSCOMMANDS.SC_MAXIMIZE;
-
-        /// <summary>
-        /// Gets the Restore Command check value.
-        /// </summary>
-        /// <returns>The Restore Command check value.</returns>
-        public int GetRestoreCommand() => (int)SYSCOMMANDS.SC_RESTORE;
+            base.WndProc(ref m);
+        }
 
         private void Command1_Click(object sender, EventArgs e)
         {

@@ -17,38 +17,6 @@ namespace Els_kom.Forms
 
         internal MainForm() => this.InitializeComponent();
 
-        private bool Enablehandlers { get; set; }
-
-        protected override void WndProc(ref Message m)
-        {
-            this.Enablehandlers = !this.ShowInTaskbar ? true : false;
-            if (this.Enablehandlers && m.Msg == this.MainControl1.GetSysCommand())
-            {
-                if (m.WParam.ToInt32() == this.MainControl1.GetMinimizeCommand())
-                {
-                    this.Hide();
-                    m.Result = IntPtr.Zero;
-                    return;
-                }
-                else if (m.WParam.ToInt32() == this.MainControl1.GetMaximizeCommand())
-                {
-                    this.Show();
-                    this.Activate();
-                    m.Result = IntPtr.Zero;
-                    return;
-                }
-                else if (m.WParam.ToInt32() == this.MainControl1.GetRestoreCommand())
-                {
-                    this.Show();
-                    this.Activate();
-                    m.Result = IntPtr.Zero;
-                    return;
-                }
-            }
-
-            base.WndProc(ref m);
-        }
-
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             var cancel = e.Cancel;
