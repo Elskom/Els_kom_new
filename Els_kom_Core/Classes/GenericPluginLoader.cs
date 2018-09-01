@@ -34,16 +34,15 @@ namespace Els_kom_Core.Classes
             {
                 dllFileNames = Directory.GetFiles(path, "*.dll");
             }
-            else
-            {
-                // try to load from a zip instead then.
-                path += ".zip";
-            }
 
+            // try to load from a zip as well if plugins are installed in both places.
+            var zippath = $"{path}.zip";
             ICollection<T> plugins = new List<T>();
+            int.TryParse(SettingsFile.Settingsxml?.Read("SaveToZip"), out var _saveToZip);
+            var saveToZip = Convert.ToBoolean(_saveToZip);
 
             // handle when path points to a zip file.
-            if (Directory.Exists(path) || File.Exists(path))
+            if (Directory.Exists(path) || File.Exists(zippath))
             {
                 ICollection<Assembly> assemblies = new List<Assembly>();
                 if (dllFileNames != null)
@@ -59,9 +58,10 @@ namespace Els_kom_Core.Classes
                         assemblies.Add(assembly);
                     }
                 }
-                else
+
+                if (saveToZip && File.Exists(zippath))
                 {
-                    var zipFile = ZipFile.OpenRead(path);
+                    var zipFile = ZipFile.OpenRead(zippath);
                     foreach (var entry in zipFile.Entries)
                     {
                         // just lookup the dlls here. The LoadFromZip method will load the pdb’s if they are deemed needed.
@@ -69,7 +69,7 @@ namespace Els_kom_Core.Classes
                         {
                             SettingsFile.Settingsxml?.ReopenFile();
                             int.TryParse(SettingsFile.Settingsxml?.Read("LoadPDB"), out var tempint);
-                            var assembly = AssemblyExtensions.LoadFromZip(path, entry.FullName, Convert.ToBoolean(tempint));
+                            var assembly = AssemblyExtensions.LoadFromZip(zippath, entry.FullName, Convert.ToBoolean(tempint));
                             assemblies.Add(assembly);
                         }
                     }

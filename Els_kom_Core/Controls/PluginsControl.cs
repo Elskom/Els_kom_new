@@ -133,7 +133,7 @@ namespace Els_kom_Core.Controls
                         if (saveToZip)
                         {
                             var zippath = $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}plugins.zip";
-                            var zipFile = ZipFile.OpenRead(zippath);
+                            var zipFile = ZipFile.Open(zippath, ZipArchiveMode.Update);
                             foreach (var entry in zipFile.Entries)
                             {
                                 if (entry.FullName.Equals(downloadFile))
@@ -213,7 +213,7 @@ namespace Els_kom_Core.Controls
                         if (saveToZip)
                         {
                             var zippath = $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}plugins.zip";
-                            var zipFile = ZipFile.OpenRead(zippath);
+                            var zipFile = ZipFile.Open(zippath, ZipArchiveMode.Update);
                             foreach (var entry in zipFile.Entries)
                             {
                                 if (entry.FullName.Equals(downloadFile))
@@ -222,7 +222,12 @@ namespace Els_kom_Core.Controls
                                 }
                             }
 
+                            var entries = zipFile.Entries.Count;
                             zipFile.Dispose();
+                            if (entries == 0)
+                            {
+                                File.Delete(zippath);
+                            }
                         }
                     }
 
