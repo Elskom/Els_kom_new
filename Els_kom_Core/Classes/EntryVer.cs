@@ -11,131 +11,206 @@ namespace Els_kom_Core.Classes
     public class EntryVer
     {
         /// <summary>
-        /// Entry File name.
+        /// Initializes a new instance of the <see cref="EntryVer"/> class for unpacking files from KOM V2.
         /// </summary>
-        public string name;
+        /// <param name="name">The Entry file name.</param>
+        /// <param name="uncompressed_size">The original file size.</param>
+        /// <param name="compressed_size">The current, compressed file size.</param>
+        /// <param name="relative_offset">The relative offset of the entry file.</param>
+        public EntryVer(string name, int uncompressed_size, int compressed_size, int relative_offset)
+        {
+            this.Version = 2;
+            this.Name = name;
+            this.Uncompressed_size = uncompressed_size;
+            this.Compressed_size = compressed_size;
+            this.Relative_offset = relative_offset;
+        }
+
         /// <summary>
-        /// Entry unpacked size.
+        /// Initializes a new instance of the <see cref="EntryVer"/> class for packing files to KOM V2.
         /// </summary>
-        public int uncompressed_size;
+        /// <param name="entrydata">The input file data that is to be compressed.</param>
+        /// <param name="name">The Entry file name.</param>
+        /// <param name="uncompressed_size">The current, file size.</param>
+        /// <param name="compressed_size">The target, compressed file size.</param>
+        /// <param name="relative_offset">The relative offset of the entry file.</param>
+        public EntryVer(byte[] entrydata, string name, int uncompressed_size, int compressed_size, int relative_offset)
+        {
+            this.Version = 2;
+            this.Entrydata = entrydata;
+            this.Name = name;
+            this.Uncompressed_size = uncompressed_size;
+            this.Compressed_size = compressed_size;
+            this.Relative_offset = relative_offset;
+        }
+
         /// <summary>
-        /// Entry Compressed Size.
+        /// Initializes a new instance of the <see cref="EntryVer"/> class unpacking files from KOM V3.
         /// </summary>
-        public int compressed_size;
+        /// <param name="name">The Entry file name.</param>
+        /// <param name="uncompressed_size">The original file size.</param>
+        /// <param name="compressed_size">The current, compressed file size.</param>
+        /// <param name="checksum">The input file crc32 checksum.</param>
+        /// <param name="file_time">The input file time.</param>
+        /// <param name="algorithm">The input file's compression algorithm.</param>
+        public EntryVer(string name, int uncompressed_size, int compressed_size, int checksum, int file_time, int algorithm)
+        {
+            this.Version = 3;
+            this.Name = name;
+            this.Uncompressed_size = uncompressed_size;
+            this.Compressed_size = compressed_size;
+            this.Checksum = checksum;
+            this.File_time = file_time;
+            this.Algorithm = algorithm;
+        }
+
         /// <summary>
-        /// Use in KOM V2 only.
+        /// Initializes a new instance of the <see cref="EntryVer"/> class for packing files to KOM V3.
         /// </summary>
-        public int relative_offset;
+        /// <param name="entrydata">The input file data that is to be compressed.</param>
+        /// <param name="name">The Entry file name.</param>
+        /// <param name="uncompressed_size">The current, file size.</param>
+        /// <param name="compressed_size">The target, compressed file size.</param>
+        /// <param name="checksum">The input file crc32 checksum.</param>
+        /// <param name="file_time">The input file time.</param>
+        /// <param name="algorithm">The input file's compression algorithm.</param>
+        public EntryVer(byte[] entrydata, string name, int uncompressed_size, int compressed_size, int checksum, int file_time, int algorithm)
+        {
+            this.Version = 3;
+            this.Entrydata = entrydata;
+            this.Name = name;
+            this.Uncompressed_size = uncompressed_size;
+            this.Compressed_size = compressed_size;
+            this.Checksum = checksum;
+            this.File_time = file_time;
+            this.Algorithm = algorithm;
+        }
+
         /// <summary>
-        /// For packing.
+        /// Initializes a new instance of the <see cref="EntryVer"/> class for unpacking files from KOM V4.
         /// </summary>
-        public byte[] entrydata;
+        /// <param name="name">The Entry file name.</param>
+        /// <param name="uncompressed_size">The original file size.</param>
+        /// <param name="compressed_size">The current, compressed file size.</param>
+        /// <param name="checksum">The input file crc32 checksum.</param>
+        /// <param name="file_time">The input file time.</param>
+        /// <param name="algorithm">The input file's compression algorithm.</param>
+        /// <param name="mappedID">The input file's mapped id.</param>
+        public EntryVer(string name, int uncompressed_size, int compressed_size, int checksum, int file_time, int algorithm, string mappedID)
+        {
+            this.Version = 4;
+            this.Name = name;
+            this.Uncompressed_size = uncompressed_size;
+            this.Compressed_size = compressed_size;
+            this.Checksum = checksum;
+            this.File_time = file_time;
+            this.Algorithm = algorithm;
+            this.MappedID = mappedID;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EntryVer"/> class for packing files to KOM V4.
+        /// </summary>
+        /// <param name="entrydata">The input file data that is to be compressed.</param>
+        /// <param name="name">The Entry file name.</param>
+        /// <param name="uncompressed_size">The current, file size.</param>
+        /// <param name="compressed_size">The target, compressed file size.</param>
+        /// <param name="checksum">The input file crc32 checksum.</param>
+        /// <param name="file_time">The input file time.</param>
+        /// <param name="algorithm">The input file's compression algorithm.</param>
+        /// <param name="mappedID">The input file's mapped id.</param>
+        public EntryVer(byte[] entrydata, string name, int uncompressed_size, int compressed_size, int checksum, int file_time, int algorithm, string mappedID)
+        {
+            this.Version = 4;
+            this.Entrydata = entrydata;
+            this.Name = name;
+            this.Uncompressed_size = uncompressed_size;
+            this.Compressed_size = compressed_size;
+            this.Checksum = checksum;
+            this.File_time = file_time;
+            this.Algorithm = algorithm;
+            this.MappedID = mappedID;
+        }
+
+        /// <summary>
+        /// Gets the entry File name.
+        /// </summary>
+        /// <value>
+        /// The entry File name.
+        /// </value>
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the entry unpacked size.
+        /// </summary>
+        /// <value>
+        /// The entry unpacked size.
+        /// </value>
+        public int Uncompressed_size { get; private set; }
+
+        /// <summary>
+        /// Gets the entry Compressed Size.
+        /// </summary>
+        /// <value>
+        /// The entry Compressed Size.
+        /// </value>
+        public int Compressed_size { get; private set; }
+
+        /// <summary>
+        /// Gets the entry Relative offset.
+        /// </summary>
+        /// <value>
+        /// The entry Relative offset.
+        /// </value>
+        public int Relative_offset { get; private set; }
+
+        /// <summary>
+        /// Gets entry file data for packing.
+        /// </summary>
+        /// <value>
+        /// Entry file data for packing.
+        /// </value>
+        public byte[] Entrydata { get; private set; }
+
         // KOM V3 Members.
+
         /// <summary>
+        /// Gets entry Checksum.
+        /// </summary>
+        /// <value>
         /// Entry Checksum.
-        /// </summary>
-        public int checksum;
+        /// </value>
+        public int Checksum { get; private set; }
+
         /// <summary>
+        /// Gets entry File time.
+        /// </summary>
+        /// <value>
         /// Entry File time.
-        /// </summary>
-        public int file_time;
+        /// </value>
+        public int File_time { get; private set; }
+
         /// <summary>
+        /// Gets entry Algorithm.
+        /// </summary>
+        /// <value>
         /// Entry Algorithm.
-        /// </summary>
-        public int algorithm;
+        /// </value>
+        public int Algorithm { get; private set; }
+
         // KOM V4 Members.
+
         /// <summary>
+        /// Gets entry Mapped ID.
+        /// </summary>
+        /// <value>
         /// Entry Mapped ID.
-        /// </summary>
-        public string MappedID;
-        /// <summary>
-        /// For internal crap.
-        /// </summary>
-        internal int version;
+        /// </value>
+        public string MappedID { get; private set; }
 
         /// <summary>
-        /// Constructor for unpacking files from KOM V2.
+        /// Gets entry KOM Version number.
         /// </summary>
-        public EntryVer(string _name, int _uncompressed_size, int _compressed_size, int _relative_offset)
-        {
-            version = 2;
-            name = _name;
-            uncompressed_size = _uncompressed_size;
-            compressed_size = _compressed_size;
-            relative_offset = _relative_offset;
-        }
-
-        /// <summary>
-        /// Constructor for packing files to KOM V2.
-        /// </summary>
-        public EntryVer(byte[] _entrydata, string _name, int _uncompressed_size, int _compressed_size, int _relative_offset)
-        {
-            version = 2;
-            entrydata = _entrydata;
-            name = _name;
-            uncompressed_size = _uncompressed_size;
-            compressed_size = _compressed_size;
-            relative_offset = _relative_offset;
-        }
-
-        /// <summary>
-        /// Constructor for unpacking files from KOM V3.
-        /// </summary>
-        public EntryVer(string _name, int _uncompressed_size, int _compressed_size, int _checksum, int _file_time, int _algorithm)
-        {
-            version = 3;
-            name = _name;
-            uncompressed_size = _uncompressed_size;
-            compressed_size = _compressed_size;
-            checksum = _checksum;
-            file_time = _file_time;
-            algorithm = _algorithm;
-        }
-
-        /// <summary>
-        /// Constructor for packing files to KOM V3.
-        /// </summary>
-        public EntryVer(byte[] _entrydata, string _name, int _uncompressed_size, int _compressed_size, int _checksum, int _file_time, int _algorithm)
-        {
-            version = 3;
-            entrydata = _entrydata;
-            name = _name;
-            uncompressed_size = _uncompressed_size;
-            compressed_size = _compressed_size;
-            checksum = _checksum;
-            file_time = _file_time;
-            algorithm = _algorithm;
-        }
-
-        /// <summary>
-        /// Constructor for unpacking files from KOM V4.
-        /// </summary>
-        public EntryVer(string _name, int _uncompressed_size, int _compressed_size, int _checksum, int _file_time, int _algorithm, string _MappedID)
-        {
-            version = 4;
-            name = _name;
-            uncompressed_size = _uncompressed_size;
-            compressed_size = _compressed_size;
-            checksum = _checksum;
-            file_time = _file_time;
-            algorithm = _algorithm;
-            MappedID = _MappedID;
-        }
-
-        /// <summary>
-        /// Constructor for packing files to KOM V4.
-        /// </summary>
-        public EntryVer(byte[] _entrydata, string _name, int _uncompressed_size, int _compressed_size, int _checksum, int _file_time, int _algorithm, string _MappedID)
-        {
-            version = 4;
-            entrydata = _entrydata;
-            name = _name;
-            uncompressed_size = _uncompressed_size;
-            compressed_size = _compressed_size;
-            checksum = _checksum;
-            file_time = _file_time;
-            algorithm = _algorithm;
-            MappedID = _MappedID;
-        }
+        internal int Version { get; private set; }
     }
 }

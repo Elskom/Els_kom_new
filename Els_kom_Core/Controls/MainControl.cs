@@ -3,488 +3,535 @@
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
-// If the thread control invoke delegates was not present to change
-// the controls on the main thread The Visual Studio Debugger when
-// Running Els_kom in Debug mode to Debug plugins will yell at you
-// throwing an System.InvalidOperationException exception and
-// saying 'Cross-thread operation not valid: Control
-// '%s' accessed from a thread other than the thread it was
-// created on.'.
-
 namespace Els_kom_Core.Controls
 {
+    using System;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.IO;
+    using System.Threading;
+    using System.Windows.Forms;
+    using Els_kom_Core.Classes;
+    using Els_kom_Core.Enums;
+    using Els_kom_Core.Interfaces;
+
     /// <summary>
     /// MainControl control for Els_kom's Main form.
     /// </summary>
-    public partial class MainControl : System.Windows.Forms.UserControl
+    public partial class MainControl : UserControl
     {
-        /// <summary>
-        /// MainControl constructor.
-        /// </summary>
-        public MainControl()
-        {
-            InitializeComponent();
-        }
-
-        private string ElsDir;
-        private string showintaskbar_value;
-        private string showintaskbar_value2;
-        private string showintaskbar_tempvalue;
-        private string showintaskbar_tempvalue2;
-        private string ElsDir_temp;
-        private System.Windows.Forms.Timer SettingsTmr;
-        private System.Windows.Forms.Timer PackingTmr;
-        private System.Windows.Forms.Timer UnpackingTmr;
-        private System.Windows.Forms.Timer TestModsTmr;
-        private System.Windows.Forms.Timer LauncherTmr;
-        /// <summary>
-        /// Allows this control to properly close the loop that reads
-        /// settings that makes it work properly.
-        /// </summary>
-        public bool end_settings_loop = false;
-        /// <summary>
-        /// Tray Icon.
-        /// </summary>
-        public System.Windows.Forms.NotifyIcon NotifyIcon1;
-
-        internal System.Windows.Forms.ContextMenuStrip ContextMenuStrip1;
-        internal System.Windows.Forms.ToolStripMenuItem PackToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem UnpackToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem TestModsToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem LauncherToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripSeparator ToolStripMenuSep1;
+        private string elsDir;
+        private string showintaskbarValue;
+        private string showintaskbarValue2;
+        private string showintaskbarTempvalue;
+        private string showintaskbarTempvalue2;
+        private string elsDirTemp;
+        private System.Windows.Forms.Timer settingsTmr;
+        private System.Windows.Forms.Timer packingTmr;
+        private System.Windows.Forms.Timer unpackingTmr;
+        private System.Windows.Forms.Timer testModsTmr;
+        private System.Windows.Forms.Timer launcherTmr;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem packToolStripMenuItem;
+        private ToolStripMenuItem unpackToolStripMenuItem;
+        private ToolStripMenuItem testModsToolStripMenuItem;
+        private ToolStripMenuItem launcherToolStripMenuItem;
+        private ToolStripMenuItem exitToolStripMenuItem;
+        private ToolStripSeparator toolStripMenuSep1;
 
         /// <summary>
-        /// Event that the control fires that Minimizes the Form it is on.
+        /// Initializes a new instance of the <see cref="MainControl"/> class.
         /// </summary>
-        public event System.EventHandler MinimizeForm;
+        public MainControl() => this.InitializeComponent();
+
         /// <summary>
         /// Event that the control fires that Closes the Form it is on.
         /// </summary>
-        public event System.EventHandler CloseForm;
+        public event EventHandler CloseForm;
+
         /// <summary>
         /// Event that the control fires that tells the Form that the Tray Icon name changed.
         /// </summary>
-        public event System.EventHandler TrayNameChange;
-        /// <summary>
-        /// Event that the control fires that Shows the Form it is on in the Taskbar.
-        /// </summary>
-        public event System.EventHandler<Classes.ShowTaskbarEvent> TaskbarShow;
+        public event EventHandler TrayNameChange;
+
         /// <summary>
         /// Event that the control fires when the tray icon is clicked by the mouse.
         /// </summary>
-        public event System.EventHandler<System.Windows.Forms.MouseEventArgs> TrayClick;
+        public event EventHandler<MouseEventArgs> TrayClick;
+
         /// <summary>
         /// Event that is Fired that Allows the Form to open up it's Settings Form.
         /// </summary>
-        public event System.EventHandler ConfigForm;
+        public event EventHandler ConfigForm;
+
         /// <summary>
         /// Event that is Fired that Allows the Form it is on to open up it's About Form.
         /// </summary>
-        public event System.EventHandler AboutForm;
+        public event EventHandler AboutForm;
+
         /// <summary>
-        /// Event that is Fired that Allows the Form to show.
+        /// Event that is Fired when the Tray and form Icon needs changed.
         /// </summary>
-        public event System.EventHandler ShowForm;
+        public event EventHandler TrayIconChange;
 
-        private void Command1_Click(object sender, System.EventArgs e)
-        {
-            Label1.Text = "";
-            System.Threading.Thread tr2 = new System.Threading.Thread(Classes.KOMManager.PackKoms)
-            {
-                Name = "Classes.KOMManager.PackKoms"
-            };
-            tr2.Start();
-            PackingTmr.Enabled = true;
-        }
+        /// <summary>
+        /// Gets or sets a value indicating whether the
+        /// program should close or skip closing.
+        /// </summary>
+        /// <value>
+        /// A value indicating whether the
+        /// program should close or skip closing.
+        /// </value>
+        public static bool Closable { get; set; } = false;
 
-        private void Command1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            Label1.Text = "This option uses plugins to Pack koms.";
-        }
+        /// <summary>
+        /// Gets or sets a value indicating whether to
+        /// properly close the loop that reads settings
+        /// that makes the control work properly.
+        /// </summary>
+        /// <value>
+        /// A value indicating whether to
+        /// properly close the loop that reads settings
+        /// that makes the control work properly.
+        /// </value>
+        public bool End_settings_loop { get; set; } = false;
 
-        private void Command2_Click(object sender, System.EventArgs e)
-        {
-            Label1.Text = "";
-            System.Threading.Thread tr1 = new System.Threading.Thread(Classes.KOMManager.UnpackKoms)
-            {
-                Name = "Classes.KOMManager.UnpackKoms"
-            };
-            tr1.Start();
-            UnpackingTmr.Enabled = true;
-        }
+        /// <summary>
+        /// Gets the tray Icon.
+        /// </summary>
+        /// <value>
+        /// The tray Icon.
+        /// </value>
+        public NotifyIcon NotifyIcon1 { get; private set; }
 
-        private void Command2_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            Label1.Text = "This option uses plugins to Unpack koms.";
-        }
-
-        private void Command3_Click(object sender, System.EventArgs e)
-        {
-            Label1.Text = "";
-            AboutForm?.Invoke(this, new System.EventArgs());
-        }
-
-        private void Command3_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            Label1.Text = "Shows the About Window. Here you will see things like the version as well as a link to go to the topic to update Els_kom if needed.";
-        }
-
-        private void Command4_Click(object sender, System.EventArgs e)
-        {
-            Label1.Text = "";
-            MinimizeForm?.Invoke(this, new System.EventArgs());
-            TestMods();
-        }
-
-        private void Command4_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            Label1.Text = "Test the mods you made.";
-        }
-
-        private void Command5_Click(object sender, System.EventArgs e)
-        {
-            Label1.Text = "";
-            MinimizeForm?.Invoke(this, new System.EventArgs());
-            System.Threading.Thread tr4 = new System.Threading.Thread(Classes.ExecutionManager.RunElswordLauncher)
-            {
-                Name = "Classes.ExecutionManager.RunElswordLauncher"
-            };
-            tr4.Start();
-            LauncherTmr.Enabled = true;
-        }
-
-        private void Command5_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            Label1.Text = "Run the Launcher to Elsword to Update the client for when a server Maintenance happens (you might have to remake some mods for some files).";
-        }
-
-        private void Command6_Click(object sender, System.EventArgs e)
-        {
-            Label1.Text = "";
-            ConfigForm?.Invoke(this, new System.EventArgs());
-        }
-
-        private void Command6_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            Label1.Text = "Shows the Settings Window. Here you can easily change the Settings to Els_kom.";
-        }
-
-        private void Label1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            Label1.Text = "";
-        }
-
-        private void ExitToolStripMenuItem_Click(object sender, System.EventArgs e)
-        {
-            bool Cancel = false;
-            if (Classes.ExecutionManager.GetRunningElsword() || Classes.ExecutionManager.GetRunningElswordDirectly() || Classes.KOMManager.GetPackingState() || Classes.KOMManager.GetUnpackingState())
-            {
-                Cancel = true;
-                Classes.MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!");
-            }
-            if (!Cancel)
-            {
-                end_settings_loop = true;
-                Classes.SettingsFile.Settingsxml.Dispose();
-                CloseForm?.Invoke(this, new System.EventArgs());
-            }
-        }
-
-        private void LauncherToolStripMenuItem_Click(object sender, System.EventArgs e)
-        {
-            Label1.Text = "";
-            MinimizeForm?.Invoke(this, new System.EventArgs());
-            System.Threading.Thread tr4 = new System.Threading.Thread(Classes.ExecutionManager.RunElswordLauncher)
-            {
-                Name = "Classes.ExecutionManager.RunElswordLauncher"
-            };
-            tr4.Start();
-            LauncherTmr.Enabled = true;
-        }
-
-        private void UnpackToolStripMenuItem_Click(object sender, System.EventArgs e)
-        {
-            System.Threading.Thread tr1 = new System.Threading.Thread(Classes.KOMManager.UnpackKoms)
-            {
-                Name = "Classes.KOMManager.UnpackKoms"
-            };
-            tr1.Start();
-            UnpackingTmr.Enabled = true;
-        }
-
-        private void TestModsToolStripMenuItem_Click(object sender, System.EventArgs e)
-        {
-            Label1.Text = "";
-            MinimizeForm?.Invoke(this, new System.EventArgs());
-            TestMods();
-        }
-
-        private void PackToolStripMenuItem_Click(object sender, System.EventArgs e)
-        {
-            System.Threading.Thread tr2 = new System.Threading.Thread(Classes.KOMManager.PackKoms)
-            {
-                Name = "Classes.KOMManager.PackKoms"
-            };
-            tr2.Start();
-            PackingTmr.Enabled = true;
-        }
-
-        private void NotifyIcon1_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            TrayClick?.Invoke(this, e);
-        }
-
-        private void MainControl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            Label1.Text = "";
-        }
+        private bool Enablehandlers { get; set; }
 
         /// <summary>
         /// Gets if the Els_kom window can be closed or not.
         /// </summary>
-        public bool AbleToClose()
-        {
-            if (Classes.ExecutionManager.GetRunningElsword() ||
-                Classes.ExecutionManager.GetRunningElswordDirectly() ||
-                Classes.KOMManager.GetPackingState() ||
-                Classes.KOMManager.GetUnpackingState())
-            {
-                return false;
-            }
-            return true;
-        }
+        /// <returns>If Els_kom is ready to close or not.</returns>
+        public bool AbleToClose() => ExecutionManager.RunningElsword ||
+                ExecutionManager.RunningElswordDirectly ||
+                KOMManager.PackingState ||
+                KOMManager.UnpackingState ? false
+                : true;
 
         /// <summary>
         /// Initializes the MainControl's constants.
         /// </summary>
         public void LoadControl()
         {
-            MakeTrayIcon();
-            bool Closing = false;
-            if (Classes.ExecutionManager.IsElsKomRunning() == true)
+            this.MakeTrayIcon();
+            var closing = false;
+            if (!Directory.Exists(Application.StartupPath + "\\koms"))
             {
-                Classes.MessageManager.ShowError("Sorry, Only 1 Instance is allowed at a time.", "Error!");
-                Closing = true;
+                Directory.CreateDirectory(Application.StartupPath + "\\koms");
+            }
+
+            if (ExecutionManager.IsElsKomRunning() == true)
+            {
+                MessageManager.ShowError("Sorry, Only 1 Instance is allowed at a time.", "Error!");
+                closing = true;
             }
             else
             {
-                Classes.SettingsFile.Settingsxml = new Classes.XMLObject(Classes.SettingsFile.Path, "<Settings></Settings>");
-                ElsDir = Classes.SettingsFile.Settingsxml.Read("ElsDir");
-                if (ElsDir.Length < 1)
+                SettingsFile.Settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
+                this.elsDir = SettingsFile.Settingsxml?.Read("ElsDir");
+                if (this.elsDir.Length < 1)
                 {
-                    Classes.MessageManager.ShowInfo("Welcome to Els_kom." + System.Environment.NewLine + "Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops." + System.Environment.NewLine + "Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!");
-                    ConfigForm?.Invoke(this, new System.EventArgs());
+                    MessageManager.ShowInfo("Welcome to Els_kom." + Environment.NewLine + "Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops." + Environment.NewLine + "Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!");
+                    this.ConfigForm?.Invoke(this, new EventArgs());
                 }
-                System.Collections.Generic.ICollection<interfaces.IKomPlugin> _komplugins = Classes.GenericPluginLoader<interfaces.IKomPlugin>.LoadPlugins("plugins");
-                Classes.KOMManager.komplugins = new System.Collections.Generic.List<interfaces.IKomPlugin>();
-                foreach (var komplugin in _komplugins)
+
+                var komplugins = GenericPluginLoader<IKomPlugin>.LoadPlugins("plugins");
+                KOMManager.Komplugins.AddRange(komplugins);
+                var callbackplugins = GenericPluginLoader<ICallbackPlugin>.LoadPlugins("plugins");
+                ExecutionManager.Callbackplugins.AddRange(callbackplugins);
+                if (!Git.IsMaster)
                 {
-                    Classes.KOMManager.komplugins.Add(komplugin);
+                    MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!");
                 }
-                System.Collections.Generic.ICollection<interfaces.ICallbackPlugin> _callbackplugins = Classes.GenericPluginLoader<interfaces.ICallbackPlugin>.LoadPlugins("plugins");
-                Classes.ExecutionManager.callbackplugins = new System.Collections.Generic.List<interfaces.ICallbackPlugin>();
-                foreach (var callbackplugins in _callbackplugins)
+
+                if (Git.IsDirty)
                 {
-                    Classes.ExecutionManager.callbackplugins.Add(callbackplugins);
-                }
-                if (!Classes.Git.IsMaster)
-                {
-                    Classes.MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!");
-                }
-                if (Classes.Git.IsDirty)
-                {
-                    System.Windows.Forms.DialogResult resp = System.Windows.Forms.MessageBox.Show("This build was compiled with Uncommitted changes. As a result, this build might be unstable. Are you sure you want to run this build to test some changes to the code?", "Info!", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Information);
-                    if (resp == System.Windows.Forms.DialogResult.No)
+                    var resp = MessageBox.Show("This build was compiled with Uncommitted changes. As a result, this build might be unstable. Are you sure you want to run this build to test some changes to the code?", "Info!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (resp == DialogResult.No)
                     {
-                        Closing = true;
+                        closing = true;
                     }
                 }
             }
-            if (!Closing)
+
+            if (!closing)
             {
-                if (components == null)
+                if (this.components == null)
                 {
-                    components = new System.ComponentModel.Container();
+                    this.components = new Container();
                 }
-                SettingsTmr = new System.Windows.Forms.Timer(components)
+
+                this.settingsTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = true,
-                    Interval = 1
+                    Interval = 1,
                 };
-                PackingTmr = new System.Windows.Forms.Timer(components)
+                this.settingsTmr.Tick += new EventHandler(this.CheckSettings);
+                this.packingTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = false,
-                    Interval = 1
+                    Interval = 1,
                 };
-                PackingTmr.Tick += new System.EventHandler(Packing);
-                UnpackingTmr = new System.Windows.Forms.Timer(components)
+                this.packingTmr.Tick += new EventHandler(this.Packing);
+                this.unpackingTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = false,
-                    Interval = 1
+                    Interval = 1,
                 };
-                UnpackingTmr.Tick += new System.EventHandler(Unpacking);
-                TestModsTmr = new System.Windows.Forms.Timer(components)
+                this.unpackingTmr.Tick += new EventHandler(this.Unpacking);
+                this.testModsTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = false,
-                    Interval = 1
+                    Interval = 1,
                 };
-                TestModsTmr.Tick += new System.EventHandler(TestMods2);
-                LauncherTmr = new System.Windows.Forms.Timer(components)
+                this.testModsTmr.Tick += new EventHandler(this.TestMods2);
+                this.launcherTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = false,
-                    Interval = 1
+                    Interval = 1,
                 };
-                LauncherTmr.Tick += new System.EventHandler(Launcher);
-                ShowForm?.Invoke(this, new System.EventArgs());
+                this.launcherTmr.Tick += new EventHandler(this.Launcher);
+                this.NotifyIcon1.Icon = this.FindForm().Icon;
+                this.NotifyIcon1.Text = this.FindForm().Text;
+                this.NotifyIcon1.Visible = true;
+                this.FindForm().Show();
             }
             else
             {
-                Classes.SettingsFile.Settingsxml?.Dispose();
-                CloseForm?.Invoke(this, new System.EventArgs());
+                SettingsFile.Settingsxml?.Dispose();
+                this.CloseForm?.Invoke(this, new EventArgs());
             }
         }
 
         /// <summary>
         /// Shows the Version Error message and closes the main form if the checked version is not the same.
         /// </summary>
-        public bool VersionCheck(string version)
+        /// <returns>If Els_kom should remain open or not.</returns>
+        public bool VersionCheck()
         {
-            if (Classes.Version.version != version)
+            if (typeof(MainControl).Assembly.GetName().Version.ToString() != System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString())
             {
-                Classes.MessageManager.ShowError("Sorry, you cannot use Els_kom.exe from this version with a newer or older Core. Please update the executable as well.", "Error!");
-                CloseForm?.Invoke(this, new System.EventArgs());
+                MessageManager.ShowError("Sorry, you cannot use Els_kom.exe from this version with a newer or older Core. Please update the executable as well.", "Error!");
+                this.CloseForm?.Invoke(this, new EventArgs());
                 return false;
             }
+
             return true;
         }
 
-        /// <summary>
-        /// Handles Packing on the Main Form.
-        /// </summary>
-        private void Packing(object sender, System.EventArgs e)
+        /// <summary>Processes Windows messages.</summary>
+        /// <param name="m">The Windows <see cref="Message"/> to process.</param>
+        protected override void WndProc(ref Message m)
         {
-            if (Classes.KOMManager.GetPackingState())
+            this.Enablehandlers = !this.FindForm().ShowInTaskbar ? true : false;
+            if (this.Enablehandlers && m.Msg == (int)SYSCOMMANDS.WM_SYSCOMMAND)
             {
-                if (Command1.Enabled)
+                if (m.WParam.ToInt32() == (int)SYSCOMMANDS.SC_MINIMIZE)
                 {
-                    Command1.Enabled = false;
+                    this.FindForm().Hide();
+                    m.Result = IntPtr.Zero;
+                    return;
                 }
-                if (Command2.Enabled)
+                else if (m.WParam.ToInt32() == (int)SYSCOMMANDS.SC_MAXIMIZE)
                 {
-                    Command2.Enabled = false;
+                    this.FindForm().Show();
+                    this.FindForm().Activate();
+                    m.Result = IntPtr.Zero;
+                    return;
                 }
-                if (Command4.Enabled)
+                else if (m.WParam.ToInt32() == (int)SYSCOMMANDS.SC_RESTORE)
                 {
-                    Command4.Enabled = false;
-                }
-                if (Command5.Enabled)
-                {
-                    Command5.Enabled = false;
-                }
-                if (PackToolStripMenuItem.Enabled)
-                {
-                    PackToolStripMenuItem.Enabled = false;
-                }
-                if (UnpackToolStripMenuItem.Enabled)
-                {
-                    UnpackToolStripMenuItem.Enabled = false;
-                }
-                if (TestModsToolStripMenuItem.Enabled)
-                {
-                    TestModsToolStripMenuItem.Enabled = false;
-                }
-                if (LauncherToolStripMenuItem.Enabled)
-                {
-                    LauncherToolStripMenuItem.Enabled = false;
-                }
-                if (string.Equals(Label2.Text, string.Empty))
-                {
-                    Label2.Text = "Packing...";
-                }
-                if (!string.Equals(NotifyIcon1.Text, Label2.Text))
-                {
-                    NotifyIcon1.Text = Label2.Text;
+                    this.FindForm().Show();
+                    this.FindForm().Activate();
+                    m.Result = IntPtr.Zero;
+                    return;
                 }
             }
-            else
+
+            base.WndProc(ref m);
+        }
+
+        private void Command1_Click(object sender, EventArgs e)
+        {
+            this.Label1.Text = string.Empty;
+            var tr2 = new Thread(KOMManager.PackKoms)
             {
-                Command1.Enabled = true;
-                Command2.Enabled = true;
-                Command4.Enabled = true;
-                Command5.Enabled = true;
-                PackToolStripMenuItem.Enabled = true;
-                UnpackToolStripMenuItem.Enabled = true;
-                TestModsToolStripMenuItem.Enabled = true;
-                LauncherToolStripMenuItem.Enabled = true;
-                Label2.Text = "";
-                TrayNameChange?.Invoke(this, new System.EventArgs());
-                PackingTmr.Enabled = false;
+                Name = "Classes.KOMManager.PackKoms",
+            };
+            tr2.Start();
+            this.packingTmr.Enabled = true;
+        }
+
+        private void Command1_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = "This option uses plugins to Pack koms.";
+
+        private void Command2_Click(object sender, EventArgs e)
+        {
+            this.Label1.Text = string.Empty;
+            var tr1 = new Thread(KOMManager.UnpackKoms)
+            {
+                Name = "Classes.KOMManager.UnpackKoms",
+            };
+            tr1.Start();
+            this.unpackingTmr.Enabled = true;
+        }
+
+        private void Command2_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = "This option uses plugins to Unpack koms.";
+
+        private void Command3_Click(object sender, EventArgs e)
+        {
+            this.Label1.Text = string.Empty;
+            this.AboutForm?.Invoke(this, new EventArgs());
+        }
+
+        private void Command3_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = "Shows the About Window. Here you will see things like the version as well as a link to go to the topic to update Els_kom if needed.";
+
+        private void Command4_Click(object sender, EventArgs e)
+        {
+            this.Label1.Text = string.Empty;
+            this.FindForm().Hide();
+            this.FindForm().WindowState = FormWindowState.Minimized;
+            this.TestMods();
+        }
+
+        private void Command4_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = "Test the mods you made.";
+
+        private void Command5_Click(object sender, EventArgs e)
+        {
+            this.Label1.Text = string.Empty;
+            this.FindForm().Hide();
+            this.FindForm().WindowState = FormWindowState.Minimized;
+            var tr4 = new Thread(ExecutionManager.RunElswordLauncher)
+            {
+                Name = "Classes.ExecutionManager.RunElswordLauncher",
+            };
+            tr4.Start();
+            this.launcherTmr.Enabled = true;
+        }
+
+        private void Command5_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = "Run the Launcher to Elsword to Update the client for when a server Maintenance happens (you might have to remake some mods for some files).";
+
+        private void Command6_Click(object sender, EventArgs e)
+        {
+            this.Label1.Text = string.Empty;
+            this.ConfigForm?.Invoke(this, new EventArgs());
+        }
+
+        private void Command6_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = "Shows the Settings Window. Here you can easily change the Settings to Els_kom.";
+
+        private void Label1_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = string.Empty;
+
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var cancel = false;
+            if (ExecutionManager.RunningElsword ||
+                ExecutionManager.RunningElswordDirectly ||
+                KOMManager.PackingState ||
+                KOMManager.UnpackingState)
+            {
+                cancel = true;
+                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!");
+            }
+
+            if (!cancel)
+            {
+                this.End_settings_loop = true;
+                SettingsFile.Settingsxml?.Dispose();
+                this.CloseForm?.Invoke(this, new EventArgs());
             }
         }
 
-        /// <summary>
-        /// Handles Unpacking on the Main Form.
-        /// </summary>
-        private void Unpacking(object sender, System.EventArgs e)
+        private void LauncherToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Classes.KOMManager.GetUnpackingState())
+            this.Label1.Text = string.Empty;
+            this.FindForm().Hide();
+            this.FindForm().WindowState = FormWindowState.Minimized;
+            var tr4 = new Thread(ExecutionManager.RunElswordLauncher)
             {
-                if (Command1.Enabled)
+                Name = "Classes.ExecutionManager.RunElswordLauncher",
+            };
+            tr4.Start();
+            this.launcherTmr.Enabled = true;
+        }
+
+        private void UnpackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var tr1 = new Thread(KOMManager.UnpackKoms)
+            {
+                Name = "Classes.KOMManager.UnpackKoms",
+            };
+            tr1.Start();
+            this.unpackingTmr.Enabled = true;
+        }
+
+        private void TestModsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Label1.Text = string.Empty;
+            this.FindForm().Hide();
+            this.FindForm().WindowState = FormWindowState.Minimized;
+            this.TestMods();
+        }
+
+        private void PackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var tr2 = new Thread(KOMManager.PackKoms)
+            {
+                Name = "Classes.KOMManager.PackKoms",
+            };
+            tr2.Start();
+            this.packingTmr.Enabled = true;
+        }
+
+        private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e) => this.TrayClick?.Invoke(this, e);
+
+        private void MainControl_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = string.Empty;
+
+        // Handles Packing on the Main Form.
+        private void Packing(object sender, EventArgs e)
+        {
+            if (KOMManager.PackingState)
+            {
+                if (this.Command1.Enabled)
                 {
-                    Command1.Enabled = false;
+                    this.Command1.Enabled = false;
                 }
-                if (Command2.Enabled)
+
+                if (this.Command2.Enabled)
                 {
-                    Command2.Enabled = false;
+                    this.Command2.Enabled = false;
                 }
-                if (Command4.Enabled)
+
+                if (this.Command4.Enabled)
                 {
-                    Command4.Enabled = false;
+                    this.Command4.Enabled = false;
                 }
-                if (Command5.Enabled)
+
+                if (this.Command5.Enabled)
                 {
-                    Command5.Enabled = false;
+                    this.Command5.Enabled = false;
                 }
-                if (PackToolStripMenuItem.Enabled)
+
+                if (this.packToolStripMenuItem.Enabled)
                 {
-                    PackToolStripMenuItem.Enabled = false;
+                    this.packToolStripMenuItem.Enabled = false;
                 }
-                if (UnpackToolStripMenuItem.Enabled)
+
+                if (this.unpackToolStripMenuItem.Enabled)
                 {
-                    UnpackToolStripMenuItem.Enabled = false;
+                    this.unpackToolStripMenuItem.Enabled = false;
                 }
-                if (TestModsToolStripMenuItem.Enabled)
+
+                if (this.testModsToolStripMenuItem.Enabled)
                 {
-                    TestModsToolStripMenuItem.Enabled = false;
+                    this.testModsToolStripMenuItem.Enabled = false;
                 }
-                if (LauncherToolStripMenuItem.Enabled)
+
+                if (this.launcherToolStripMenuItem.Enabled)
                 {
-                    LauncherToolStripMenuItem.Enabled = false;
+                    this.launcherToolStripMenuItem.Enabled = false;
                 }
-                if (string.Equals(Label2.Text, string.Empty))
+
+                if (string.Equals(this.Label2.Text, string.Empty))
                 {
-                    Label2.Text = "Unpacking...";
+                    this.Label2.Text = "Packing...";
                 }
-                if (!string.Equals(NotifyIcon1.Text, Label2.Text))
+
+                if (!string.Equals(this.NotifyIcon1.Text, this.Label2.Text))
                 {
-                    NotifyIcon1.Text = Label2.Text;
+                    this.NotifyIcon1.Text = this.Label2.Text;
                 }
             }
             else
             {
-                Command1.Enabled = true;
-                Command2.Enabled = true;
-                Command4.Enabled = true;
-                Command5.Enabled = true;
-                PackToolStripMenuItem.Enabled = true;
-                UnpackToolStripMenuItem.Enabled = true;
-                TestModsToolStripMenuItem.Enabled = true;
-                LauncherToolStripMenuItem.Enabled = true;
-                Label2.Text = "";
-                TrayNameChange?.Invoke(this, new System.EventArgs());
-                UnpackingTmr.Enabled = false;
+                this.Command1.Enabled = true;
+                this.Command2.Enabled = true;
+                this.Command4.Enabled = true;
+                this.Command5.Enabled = true;
+                this.packToolStripMenuItem.Enabled = true;
+                this.unpackToolStripMenuItem.Enabled = true;
+                this.testModsToolStripMenuItem.Enabled = true;
+                this.launcherToolStripMenuItem.Enabled = true;
+                this.Label2.Text = string.Empty;
+                this.TrayNameChange?.Invoke(this, new EventArgs());
+                this.packingTmr.Enabled = false;
+            }
+        }
+
+        // Handles Unpacking on the Main Form.
+        private void Unpacking(object sender, EventArgs e)
+        {
+            if (KOMManager.UnpackingState)
+            {
+                if (this.Command1.Enabled)
+                {
+                    this.Command1.Enabled = false;
+                }
+
+                if (this.Command2.Enabled)
+                {
+                    this.Command2.Enabled = false;
+                }
+
+                if (this.Command4.Enabled)
+                {
+                    this.Command4.Enabled = false;
+                }
+
+                if (this.Command5.Enabled)
+                {
+                    this.Command5.Enabled = false;
+                }
+
+                if (this.packToolStripMenuItem.Enabled)
+                {
+                    this.packToolStripMenuItem.Enabled = false;
+                }
+
+                if (this.unpackToolStripMenuItem.Enabled)
+                {
+                    this.unpackToolStripMenuItem.Enabled = false;
+                }
+
+                if (this.testModsToolStripMenuItem.Enabled)
+                {
+                    this.testModsToolStripMenuItem.Enabled = false;
+                }
+
+                if (this.launcherToolStripMenuItem.Enabled)
+                {
+                    this.launcherToolStripMenuItem.Enabled = false;
+                }
+
+                if (string.Equals(this.Label2.Text, string.Empty))
+                {
+                    this.Label2.Text = "Unpacking...";
+                }
+
+                if (!string.Equals(this.NotifyIcon1.Text, this.Label2.Text))
+                {
+                    this.NotifyIcon1.Text = this.Label2.Text;
+                }
+            }
+            else
+            {
+                this.Command1.Enabled = true;
+                this.Command2.Enabled = true;
+                this.Command4.Enabled = true;
+                this.Command5.Enabled = true;
+                this.packToolStripMenuItem.Enabled = true;
+                this.unpackToolStripMenuItem.Enabled = true;
+                this.testModsToolStripMenuItem.Enabled = true;
+                this.launcherToolStripMenuItem.Enabled = true;
+                this.Label2.Text = string.Empty;
+                this.TrayNameChange?.Invoke(this, new EventArgs());
+                this.unpackingTmr.Enabled = false;
             }
         }
 
@@ -493,162 +540,220 @@ namespace Els_kom_Core.Controls
         /// </summary>
         private void TestMods()
         {
-            Command1.Enabled = false;
-            Command2.Enabled = false;
-            Command4.Enabled = false;
-            Command5.Enabled = false;
-            PackToolStripMenuItem.Enabled = false;
-            UnpackToolStripMenuItem.Enabled = false;
-            TestModsToolStripMenuItem.Enabled = false;
-            LauncherToolStripMenuItem.Enabled = false;
-            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(System.Windows.Forms.Application.StartupPath + "\\koms");
+            this.Command1.Enabled = false;
+            this.Command2.Enabled = false;
+            this.Command4.Enabled = false;
+            this.Command5.Enabled = false;
+            this.packToolStripMenuItem.Enabled = false;
+            this.unpackToolStripMenuItem.Enabled = false;
+            this.testModsToolStripMenuItem.Enabled = false;
+            this.launcherToolStripMenuItem.Enabled = false;
+            var di = new DirectoryInfo(Application.StartupPath + "\\koms");
             foreach (var fi in di.GetFiles("*.kom"))
             {
-                string _kom_file = fi.Name;
+                var kom_file = fi.Name;
+
                 // do not copy kom files that are in the koms directory but cannot be found to copy from taget directory to the backup directory to restore later.
-                Classes.KOMManager.CopyKomFiles(_kom_file, System.Windows.Forms.Application.StartupPath + "\\koms\\", ElsDir + "\\data");
+                KOMManager.CopyKomFiles(kom_file, Application.StartupPath + "\\koms\\", this.elsDir + "\\data");
             }
-            System.Threading.Thread tr3 = new System.Threading.Thread(Classes.ExecutionManager.RunElswordDirectly)
+
+            var tr3 = new Thread(ExecutionManager.RunElswordDirectly)
             {
-                Name = "Classes.ExecutionManager.RunElswordDirectly"
+                Name = "Classes.ExecutionManager.RunElswordDirectly",
             };
             tr3.Start();
-            TestModsTmr.Enabled = true;
+            this.testModsTmr.Enabled = true;
         }
 
-        /// <summary>
-        /// Handles Testing Mods on the Main Form (when Elsword (the game window) closes).
-        /// </summary>
-        private void TestMods2(object sender, System.EventArgs e)
+        // Handles Testing Mods on the Main Form (when Elsword (the game window) closes).
+        private void TestMods2(object sender, EventArgs e)
         {
-            if (!Classes.ExecutionManager.GetExecutingElsword())
+            var executing = ExecutionManager.ExecutingElsword;
+            if (!executing)
             {
-                if (Classes.ExecutionManager.GetRunningElswordDirectly())
+                if (ExecutionManager.RunningElswordDirectly)
                 {
-                    Classes.ExecutionManager.DeployCallBack();
-                    if (string.Equals(Label2.Text, string.Empty))
+                    ExecutionManager.DeployCallBack();
+                    if (string.Equals(this.Label2.Text, string.Empty))
                     {
-                        Label2.Text = "Testing Mods...";
+                        this.Label2.Text = "Testing Mods...";
                     }
                 }
                 else
                 {
-                    System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(System.Windows.Forms.Application.StartupPath + "\\koms");
+                    var di = new DirectoryInfo(Application.StartupPath + "\\koms");
                     foreach (var fi in di.GetFiles("*.kom"))
                     {
-                        string _kom_file = fi.Name;
-                        Classes.KOMManager.MoveOriginalKomFilesBack(_kom_file, ElsDir + "\\data\\backup", ElsDir + "\\data");
+                        var kom_file = fi.Name;
+                        KOMManager.MoveOriginalKomFilesBack(kom_file, this.elsDir + "\\data\\backup", this.elsDir + "\\data");
                     }
-                    Command1.Enabled = true;
-                    Command2.Enabled = true;
-                    Command4.Enabled = true;
-                    Command5.Enabled = true;
-                    PackToolStripMenuItem.Enabled = true;
-                    UnpackToolStripMenuItem.Enabled = true;
-                    TestModsToolStripMenuItem.Enabled = true;
-                    LauncherToolStripMenuItem.Enabled = true;
-                    Label2.Text = "";
-                    TestModsTmr.Enabled = false;
+
+                    this.Command1.Enabled = true;
+                    this.Command2.Enabled = true;
+                    this.Command4.Enabled = true;
+                    this.Command5.Enabled = true;
+                    this.packToolStripMenuItem.Enabled = true;
+                    this.unpackToolStripMenuItem.Enabled = true;
+                    this.testModsToolStripMenuItem.Enabled = true;
+                    this.launcherToolStripMenuItem.Enabled = true;
+                    this.Label2.Text = string.Empty;
+
+                    // restore window state from before testing mods.
+                    this.FindForm().WindowState = FormWindowState.Normal;
+                    this.FindForm().Show();
+                    this.testModsTmr.Enabled = false;
                 }
             }
         }
 
-        /// <summary>
-        /// Handles Updating the Game but disables the controls while it is updating to avoid unpacking,
-        /// packing, and testing mods.
-        /// </summary>
-        private void Launcher(object sender, System.EventArgs e)
+        // Handles Updating the Game but disables the controls while it is updating to avoid unpacking,
+        // packing, and testing mods.
+        private void Launcher(object sender, EventArgs e)
         {
-            if (!Classes.ExecutionManager.GetExecutingElsword())
+            if (!ExecutionManager.ExecutingElsword)
             {
-                if (Classes.ExecutionManager.GetRunningElsword())
+                if (ExecutionManager.RunningElsword)
                 {
-                    if (Command1.Enabled)
+                    if (this.Command1.Enabled)
                     {
-                        Command1.Enabled = false;
+                        this.Command1.Enabled = false;
                     }
-                    if (Command2.Enabled)
+
+                    if (this.Command2.Enabled)
                     {
-                        Command2.Enabled = false;
+                        this.Command2.Enabled = false;
                     }
-                    if (Command4.Enabled)
+
+                    if (this.Command4.Enabled)
                     {
-                        Command4.Enabled = false;
+                        this.Command4.Enabled = false;
                     }
-                    if (Command5.Enabled)
+
+                    if (this.Command5.Enabled)
                     {
-                        Command5.Enabled = false;
+                        this.Command5.Enabled = false;
                     }
-                    if (PackToolStripMenuItem.Enabled)
+
+                    if (this.packToolStripMenuItem.Enabled)
                     {
-                        PackToolStripMenuItem.Enabled = false;
+                        this.packToolStripMenuItem.Enabled = false;
                     }
-                    if (UnpackToolStripMenuItem.Enabled)
+
+                    if (this.unpackToolStripMenuItem.Enabled)
                     {
-                        UnpackToolStripMenuItem.Enabled = false;
+                        this.unpackToolStripMenuItem.Enabled = false;
                     }
-                    if (TestModsToolStripMenuItem.Enabled)
+
+                    if (this.testModsToolStripMenuItem.Enabled)
                     {
-                        TestModsToolStripMenuItem.Enabled = false;
+                        this.testModsToolStripMenuItem.Enabled = false;
                     }
-                    if (LauncherToolStripMenuItem.Enabled)
+
+                    if (this.launcherToolStripMenuItem.Enabled)
                     {
-                        LauncherToolStripMenuItem.Enabled = false;
+                        this.launcherToolStripMenuItem.Enabled = false;
                     }
-                    if (string.Equals(Label2.Text, string.Empty))
+
+                    if (string.Equals(this.Label2.Text, string.Empty))
                     {
-                        Label2.Text = "Updating...";
+                        this.Label2.Text = "Updating...";
                     }
                 }
                 else
                 {
-                    Command1.Enabled = true;
-                    Command2.Enabled = true;
-                    Command4.Enabled = true;
-                    Command5.Enabled = true;
-                    PackToolStripMenuItem.Enabled = true;
-                    UnpackToolStripMenuItem.Enabled = true;
-                    TestModsToolStripMenuItem.Enabled = true;
-                    LauncherToolStripMenuItem.Enabled = true;
-                    Label2.Text = "";
-                    LauncherTmr.Enabled = false;
+                    this.Command1.Enabled = true;
+                    this.Command2.Enabled = true;
+                    this.Command4.Enabled = true;
+                    this.Command5.Enabled = true;
+                    this.packToolStripMenuItem.Enabled = true;
+                    this.unpackToolStripMenuItem.Enabled = true;
+                    this.testModsToolStripMenuItem.Enabled = true;
+                    this.launcherToolStripMenuItem.Enabled = true;
+                    this.Label2.Text = string.Empty;
+
+                    // restore window state from before updating the game.
+                    this.FindForm().WindowState = FormWindowState.Normal;
+                    this.FindForm().Show();
+                    this.launcherTmr.Enabled = false;
                 }
             }
         }
 
-        private void CheckSettings(object sender, System.EventArgs e)
+        private void CheckSettings(object sender, EventArgs e)
         {
-            if (end_settings_loop)
+            if (this.End_settings_loop)
             {
-                SettingsTmr.Enabled = false;
+                this.settingsTmr.Enabled = false;
             }
             else
             {
-                if (AbleToClose())
+                if (this.AbleToClose())
                 {
-                    Classes.SettingsFile.Settingsxml.ReopenFile();
-                    showintaskbar_tempvalue = Classes.SettingsFile.Settingsxml.Read("IconWhileElsNotRunning");
-                    showintaskbar_tempvalue2 = Classes.SettingsFile.Settingsxml.Read("IconWhileElsRunning");
-                    ElsDir_temp = Classes.SettingsFile.Settingsxml.Read("ElsDir");
-                    if (!string.Equals(ElsDir, ElsDir_temp))
+                    SettingsFile.Settingsxml?.ReopenFile();
+                    this.showintaskbarTempvalue = SettingsFile.Settingsxml?.Read("IconWhileElsNotRunning");
+                    this.showintaskbarTempvalue2 = SettingsFile.Settingsxml?.Read("IconWhileElsRunning");
+                    this.elsDirTemp = SettingsFile.Settingsxml?.Read("ElsDir");
+                    this.TrayIconChange?.Invoke(this, new EventArgs());
+                    if (!string.Equals(this.elsDir, this.elsDirTemp))
                     {
-                        ElsDir = ElsDir_temp;
+                        this.elsDir = this.elsDirTemp;
                     }
-                    if (!Classes.ExecutionManager.GetRunningElswordDirectly())
+
+                    if (!ExecutionManager.RunningElswordDirectly)
                     {
-                        if (showintaskbar_value != showintaskbar_tempvalue)
+                        if (this.showintaskbarValue != this.showintaskbarTempvalue)
                         {
-                            showintaskbar_value = showintaskbar_tempvalue;
+                            this.showintaskbarValue = this.showintaskbarTempvalue;
                         }
-                        TaskbarShow?.Invoke(this, new Classes.ShowTaskbarEvent(showintaskbar_value));
+
+                        if (this.showintaskbarValue.Equals("0"))
+                        {
+                            // Taskbar only!!!
+                            this.NotifyIcon1.Visible = false;
+                            this.FindForm().ShowInTaskbar = true;
+                        }
+
+                        if (this.showintaskbarValue.Equals("1"))
+                        {
+                            // Tray only!!!
+                            this.NotifyIcon1.Visible = true;
+                            this.FindForm().ShowInTaskbar = false;
+                        }
+
+                        if (this.showintaskbarValue.Equals("2"))
+                        {
+                            // Both!!!
+                            this.NotifyIcon1.Visible = true;
+                            this.FindForm().ShowInTaskbar = true;
+                        }
                     }
                     else
                     {
-                        if (showintaskbar_value2 != showintaskbar_tempvalue2)
+                        if (this.showintaskbarValue2 != this.showintaskbarTempvalue2)
                         {
-                            showintaskbar_value2 = showintaskbar_tempvalue2;
+                            this.showintaskbarValue2 = this.showintaskbarTempvalue2;
                         }
-                        TaskbarShow?.Invoke(this, new Classes.ShowTaskbarEvent(showintaskbar_value));
+
+                        if (this.showintaskbarValue2.Equals("0"))
+                        {
+                            // Taskbar only!!!
+                            this.NotifyIcon1.Visible = false;
+                            this.FindForm().ShowInTaskbar = true;
+                        }
+
+                        if (this.showintaskbarValue2.Equals("1"))
+                        {
+                            // Tray only!!!
+                            this.NotifyIcon1.Visible = true;
+                            this.FindForm().ShowInTaskbar = false;
+                        }
+
+                        if (this.showintaskbarValue2.Equals("2"))
+                        {
+                            // Both!!!
+                            this.NotifyIcon1.Visible = true;
+                            this.FindForm().ShowInTaskbar = true;
+                        }
                     }
                 }
             }
@@ -659,92 +764,62 @@ namespace Els_kom_Core.Controls
         /// </summary>
         private void MakeTrayIcon()
         {
-            this.PackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem
+            this.packToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "PackToolStripMenuItem",
-                Size = new System.Drawing.Size(129, 22),
-                Text = "Pack"
+                Size = new Size(129, 22),
+                Text = "Pack",
             };
-            this.PackToolStripMenuItem.Click += new System.EventHandler(this.PackToolStripMenuItem_Click);
-            this.UnpackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem
+            this.packToolStripMenuItem.Click += new EventHandler(this.PackToolStripMenuItem_Click);
+            this.unpackToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "UnpackToolStripMenuItem",
-                Size = new System.Drawing.Size(129, 22),
-                Text = "Unpack"
+                Size = new Size(129, 22),
+                Text = "Unpack",
             };
-            this.UnpackToolStripMenuItem.Click += new System.EventHandler(this.UnpackToolStripMenuItem_Click);
-            this.ToolStripMenuSep1 = new System.Windows.Forms.ToolStripSeparator
+            this.unpackToolStripMenuItem.Click += new EventHandler(this.UnpackToolStripMenuItem_Click);
+            this.toolStripMenuSep1 = new ToolStripSeparator
             {
                 Name = "ToolStripMenuItem3",
-                Size = new System.Drawing.Size(126, 6)
+                Size = new Size(126, 6),
             };
-            this.TestModsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem
+            this.testModsToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "TestModsToolStripMenuItem",
-                Size = new System.Drawing.Size(129, 22),
-                Text = "Test Mods"
+                Size = new Size(129, 22),
+                Text = "Test Mods",
             };
-            this.TestModsToolStripMenuItem.Click += new System.EventHandler(this.TestModsToolStripMenuItem_Click);
-            this.LauncherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem
+            this.testModsToolStripMenuItem.Click += new EventHandler(this.TestModsToolStripMenuItem_Click);
+            this.launcherToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "LauncherToolStripMenuItem",
-                Size = new System.Drawing.Size(129, 22),
-                Text = "Launcher"
+                Size = new Size(129, 22),
+                Text = "Launcher",
             };
-            this.LauncherToolStripMenuItem.Click += new System.EventHandler(this.LauncherToolStripMenuItem_Click);
-            this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem
+            this.launcherToolStripMenuItem.Click += new EventHandler(this.LauncherToolStripMenuItem_Click);
+            this.exitToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "ExitToolStripMenuItem",
-                Size = new System.Drawing.Size(129, 22),
-                Text = "Exit"
+                Size = new Size(129, 22),
+                Text = "Exit",
             };
-            this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
-            this.ContextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ContextMenuStrip1.SuspendLayout();
-            this.ContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                this.PackToolStripMenuItem, this.UnpackToolStripMenuItem, this.TestModsToolStripMenuItem,
-                this.LauncherToolStripMenuItem, this.ToolStripMenuSep1, this.ExitToolStripMenuItem});
-            this.ContextMenuStrip1.Name = "ContextMenuStrip1";
-            this.ContextMenuStrip1.Size = new System.Drawing.Size(130, 154);
-            this.ContextMenuStrip1.ResumeLayout(false);
-            this.NotifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components)
+            this.exitToolStripMenuItem.Click += new EventHandler(this.ExitToolStripMenuItem_Click);
+            this.contextMenuStrip1 = new ContextMenuStrip(this.components);
+            this.contextMenuStrip1.SuspendLayout();
+            this.contextMenuStrip1.Items.AddRange(new ToolStripItem[]
             {
-                ContextMenuStrip = this.ContextMenuStrip1,
-                Visible = false
+                this.packToolStripMenuItem, this.unpackToolStripMenuItem, this.testModsToolStripMenuItem,
+                this.launcherToolStripMenuItem, this.toolStripMenuSep1, this.exitToolStripMenuItem,
+            });
+            this.contextMenuStrip1.Name = "ContextMenuStrip1";
+            this.contextMenuStrip1.Size = new Size(130, 154);
+            this.contextMenuStrip1.ResumeLayout(false);
+            this.NotifyIcon1 = new NotifyIcon(this.components)
+            {
+                ContextMenuStrip = this.contextMenuStrip1,
+                Visible = false,
             };
-            this.NotifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon1_MouseClick);
-        }
-
-        /// <summary>
-        /// Gets the Syscommand check value.
-        /// </summary>
-        public int GetSysCommand()
-        {
-            return (int)Enums.SYSCOMMANDS.WM_SYSCOMMAND;
-        }
-
-        /// <summary>
-        /// Gets the Minimize Command check value.
-        /// </summary>
-        public int GetMinimizeCommand()
-        {
-            return (int)Enums.SYSCOMMANDS.SC_MINIMIZE;
-        }
-
-        /// <summary>
-        /// Gets the Maximize Command check value.
-        /// </summary>
-        public int GetMaximizeCommand()
-        {
-            return (int)Enums.SYSCOMMANDS.SC_MAXIMIZE;
-        }
-
-        /// <summary>
-        /// Gets the Restore Command check value.
-        /// </summary>
-        public int GetRestoreCommand()
-        {
-            return (int)Enums.SYSCOMMANDS.SC_RESTORE;
+            this.NotifyIcon1.MouseClick += new MouseEventHandler(this.NotifyIcon1_MouseClick);
         }
     }
 }

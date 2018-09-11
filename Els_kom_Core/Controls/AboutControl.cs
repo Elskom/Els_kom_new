@@ -5,49 +5,43 @@
 
 namespace Els_kom_Core.Controls
 {
+    using System;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.Windows.Forms;
+
     /// <summary>
     /// AboutControl control for Els_kom's About form.
     /// </summary>
-    public partial class AboutControl : System.Windows.Forms.UserControl
+    public partial class AboutControl : UserControl
     {
         /// <summary>
-        /// AboutControl constructor.
+        /// Initializes a new instance of the <see cref="AboutControl"/> class.
         /// </summary>
-        public AboutControl()
+        public AboutControl() => this.InitializeComponent();
+
+        private void CmdOK_Click(object sender, EventArgs e) => this.FindForm()?.Close();
+
+        private void AboutControl_Paint(object sender, PaintEventArgs e)
         {
-            InitializeComponent();
+            e.Graphics.DrawLine(Pens.Gray, 0, 151, this.Width, 151);
+            e.Graphics.DrawLine(Pens.White, 0, 152, this.Width, 152);
         }
 
-        /// <summary>
-        /// Parrent Form that the control is on.
-        /// </summary>
-        public new System.Windows.Forms.Form ParentForm;
+        private void LinkLabel1_MouseEnter(object sender, EventArgs e) => this.linkLabel1.LinkColor = Color.Yellow;
 
-        void CmdOK_Click(object sender, System.EventArgs e)
-        {
-            this.ParentForm.Close();
-        }
+        private void LinkLabel1_MouseLeave(object sender, EventArgs e) => this.linkLabel1.LinkColor = Color.Blue;
 
-        private void AboutControl_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+        private void LinkLabel1_Click(object sender, EventArgs e)
         {
-            e.Graphics.DrawLine(System.Drawing.Pens.Gray, 0, 151, this.Width, 151);
-            e.Graphics.DrawLine(System.Drawing.Pens.White, 0, 152, this.Width, 152);
-        }
+            var sInfo = new ProcessStartInfo("https://www.elsword.to/forum/index.php?/topic/51000-updated-els-kom-v1494-working-as-of-8-10-16/");
+            var proc = Process.Start(sInfo);
 
-        private void LinkLabel1_MouseEnter(object sender, System.EventArgs e)
-        {
-            linkLabel1.LinkColor = System.Drawing.Color.Yellow;
-        }
+            // wait for exit.
+            proc.WaitForExit();
 
-        private void LinkLabel1_MouseLeave(object sender, System.EventArgs e)
-        {
-            linkLabel1.LinkColor = System.Drawing.Color.Blue;
-        }
-
-        private void LinkLabel1_Click(object sender, System.EventArgs e)
-        {
-            System.Diagnostics.ProcessStartInfo sInfo = new System.Diagnostics.ProcessStartInfo("https://www.elsword.to/forum/index.php?/topic/51000-updated-els-kom-v1494-working-as-of-8-10-16/");
-            System.Diagnostics.Process.Start(sInfo);
+            // cleanup proc.
+            proc.Dispose();
         }
     }
 }

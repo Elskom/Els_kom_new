@@ -5,22 +5,40 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System;
+    using System.IO;
+
     /// <summary>
     /// KOM file Unpacking failure error.
     /// </summary>
-    [System.Serializable]
-    public sealed class UnpackingError : System.IO.IOException
+    [Serializable]
+    public sealed class UnpackingError : IOException
     {
         /// <summary>
-        /// constructor of KOM file Unpacking failure error with no argrument.
+        /// Initializes a new instance of the <see cref="UnpackingError"/> class with no argrument.
         /// </summary>
-        public UnpackingError() : base()
+        public UnpackingError()
+            : base()
         {
         }
+
         /// <summary>
-        /// constructor of KOM file Unpacking failure error with an string argrument.
+        /// Initializes a new instance of the <see cref="UnpackingError"/> class with an string argrument.
         /// </summary>
-        public UnpackingError(System.String s) : base(s)
+        /// <param name="s">The error string.</param>
+        public UnpackingError(string s)
+            : base(s)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnpackingError"/> class with an string argrument
+        /// and the exception that cuased this exception.
+        /// </summary>
+        /// <param name="s">The error string.</param>
+        /// <param name="ex">The Exception that caused this Exception.</param>
+        public UnpackingError(string s, Exception ex)
+            : base(s, ex)
         {
         }
     }

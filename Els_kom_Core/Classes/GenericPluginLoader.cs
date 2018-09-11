@@ -9,71 +9,90 @@
 */
 namespace Els_kom_Core.Classes
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.IO.Compression;
+    using System.Reflection;
+
     /// <summary>
     /// Generic Els_kom plugin loader.
     /// </summary>
+    /// <typeparam name="T">The type to look for when loading plugins.</typeparam>
     internal static class GenericPluginLoader<T>
     {
         /// <summary>
         /// Loads plugins with the specified plugin interface type.
         /// </summary>
-        internal static System.Collections.Generic.ICollection<T> LoadPlugins(string path)
+        /// <param name="path">The path to look for plugins to load.</param>
+        /// <returns>A list of plugins loaded that derive from the specified type.</returns>
+        internal static ICollection<T> LoadPlugins(string path)
         {
             string[] dllFileNames = null;
-            if (System.IO.Directory.Exists(path))
+            if (Directory.Exists(path))
             {
-                dllFileNames = System.IO.Directory.GetFiles(path, "*.dll");
+                dllFileNames = Directory.GetFiles(path, "*.dll");
             }
-            else
-            {
-                // try to load from a zip instead then.
-                path += ".zip";
-            }
+
+            // try to load from a zip as well if plugins are installed in both places.
+            var zippath = $"{path}.zip";
+            ICollection<T> plugins = new List<T>();
+            int.TryParse(SettingsFile.Settingsxml?.Read("SaveToZip"), out var saveToZip1);
+            var saveToZip = Convert.ToBoolean(saveToZip1);
+
             // handle when path points to a zip file.
-            if (System.IO.Directory.Exists(path) || System.IO.File.Exists(path))
+            if (Directory.Exists(path) || File.Exists(zippath))
             {
-                System.Collections.Generic.ICollection<System.Reflection.Assembly> assemblies = new System.Collections.Generic.List<System.Reflection.Assembly>();
+                ICollection<Assembly> assemblies = new List<Assembly>();
                 if (dllFileNames != null)
                 {
-                    foreach(string dllFile in dllFileNames)
+                    foreach (var dllFile in dllFileNames)
                     {
-                        System.Reflection.AssemblyName an = System.Reflection.AssemblyName.GetAssemblyName(dllFile);
-                        System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(an);
+                        SettingsFile.Settingsxml?.ReopenFile();
+                        int.TryParse(SettingsFile.Settingsxml?.Read("LoadPDB"), out var tempint);
+                        var loadPDB = Convert.ToBoolean(tempint) ? Convert.ToBoolean(tempint) : Debugger.IsAttached;
+                        var assembly = loadPDB ?
+                            Assembly.Load(File.ReadAllBytes(dllFile), File.ReadAllBytes(dllFile.Replace("dll", "pdb"))) :
+                            Assembly.Load(File.ReadAllBytes(dllFile));
                         assemblies.Add(assembly);
                     }
                 }
-                else
+
+                if (saveToZip && File.Exists(zippath))
                 {
-                    System.IO.Compression.ZipArchive zipFile = System.IO.Compression.ZipFile.OpenRead(path);
+                    var zipFile = ZipFile.OpenRead(zippath);
                     foreach (var entry in zipFile.Entries)
                     {
                         // just lookup the dlls here. The LoadFromZip method will load the pdb’s if they are deemed needed.
                         if (entry.FullName.EndsWith(".dll"))
                         {
-                            SettingsFile.Settingsxml.ReopenFile();
-                            int.TryParse(SettingsFile.Settingsxml.Read("LoadPDB"), out int tempint);
-                            System.Reflection.Assembly assembly = AssemblyExtensions.LoadFromZip(path, entry.FullName, System.Convert.ToBoolean(tempint));
+                            SettingsFile.Settingsxml?.ReopenFile();
+                            int.TryParse(SettingsFile.Settingsxml?.Read("LoadPDB"), out var tempint);
+                            var assembly = AssemblyExtensions.LoadFromZip(zippath, entry.FullName, Convert.ToBoolean(tempint));
                             assemblies.Add(assembly);
                         }
                     }
+
                     zipFile.Dispose();
                 }
-                System.Type pluginType = typeof(T);
-                System.Collections.Generic.ICollection<System.Type> pluginTypes = new System.Collections.Generic.List<System.Type>();
-                foreach(System.Reflection.Assembly assembly in assemblies)
+
+                var pluginType = typeof(T);
+                ICollection<Type> pluginTypes = new List<Type>();
+                foreach (var assembly in assemblies)
                 {
-                    if(assembly != null)
+                    if (assembly != null)
                     {
-                        System.Type[] types = assembly.GetTypes();
-                        foreach(System.Type type in types)
+                        var types = assembly.GetTypes();
+                        foreach (var type in types)
                         {
-                            if(type.IsInterface || type.IsAbstract)
+                            if (type.IsInterface || type.IsAbstract)
                             {
                                 continue;
                             }
                             else
                             {
-                                if(type.GetInterface(pluginType.FullName) != null)
+                                if (type.GetInterface(pluginType.FullName) != null)
                                 {
                                     pluginTypes.Add(type);
                                 }
@@ -81,15 +100,17 @@ namespace Els_kom_Core.Classes
                         }
                     }
                 }
-                System.Collections.Generic.ICollection<T> plugins = new System.Collections.Generic.List<T>(pluginTypes.Count);
-                foreach(System.Type type in pluginTypes)
+
+                foreach (var type in pluginTypes)
                 {
-                    T plugin = (T)System.Activator.CreateInstance(type);
+                    var plugin = (T)Activator.CreateInstance(type);
                     plugins.Add(plugin);
                 }
+
                 return plugins;
             }
-            return null;
+
+            return plugins;
         }
     }
 }

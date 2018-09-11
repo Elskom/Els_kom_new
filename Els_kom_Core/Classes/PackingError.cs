@@ -5,22 +5,39 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System;
+    using System.IO;
+
     /// <summary>
     /// KOM file Packing failure error.
     /// </summary>
-    [System.Serializable]
-    public sealed class PackingError : System.IO.IOException
+    [Serializable]
+    public sealed class PackingError : IOException
     {
         /// <summary>
-        /// constructor of KOM file Packing failure error with no argrument.
+        /// Initializes a new instance of the <see cref="PackingError"/> class.
         /// </summary>
-        public PackingError() : base()
+        public PackingError()
+            : base()
         {
         }
+
         /// <summary>
-        /// constructor of KOM file Packing failure error with an string argrument.
+        /// Initializes a new instance of the <see cref="PackingError"/> class.
         /// </summary>
-        public PackingError(System.String s) : base(s)
+        /// <param name="s">The error string.</param>
+        public PackingError(string s)
+            : base(s)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PackingError"/> class.
+        /// </summary>
+        /// <param name="s">The error string.</param>
+        /// <param name="ex">The Exception that caused this Exception.</param>
+        public PackingError(string s, Exception ex)
+            : base(s, ex)
         {
         }
     }

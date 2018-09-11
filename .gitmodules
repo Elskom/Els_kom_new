@@ -1,0 +1,4 @@
+[submodule "externals/newsmake"]
+	path = externals/newsmake
+	url = https://github.com/Elskom/newsmake.git
+	branch = master

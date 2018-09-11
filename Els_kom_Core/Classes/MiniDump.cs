@@ -5,58 +5,106 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Runtime.InteropServices;
+    using Els_kom_Core.Enums;
+    using Els_kom_Core.Structs;
+
     /// <summary>
     /// Class in the Core that allows creating Mini-dumps when a fatal exception occurs.
     /// </summary>
-    public class MiniDump
+    internal static class MiniDump
     {
         /// <summary>
         /// Creates a Mini-dump in the file specified.
         /// </summary>
-        public static void MiniDumpToFile(string fileToDump)
+        /// <param name="fileToDump">The file path to dump to.</param>
+        internal static void MiniDumpToFile(string fileToDump)
         {
-            System.IO.FileStream fsToDump = null;
-            if (System.IO.File.Exists(fileToDump))
+            if (RuntimeInformation.IsOSPlatform(
+                OSPlatform.Windows))
             {
-                fsToDump = System.IO.File.Open(fileToDump, System.IO.FileMode.Append);
+                // file does not exist until this line, but this throws a
+                // "System.IO.IOException: The process cannot access the file
+                // '%LocalAppData%\Els_kom-[Process ID].mdmp' because it is being used by another process."
+                var fsToDump = new FileStream(
+                    fileToDump,
+                    FileMode.Create,
+                    FileAccess.ReadWrite,
+                    FileShare.Write);
+                var mINIDUMP_EXCEPTION_INFORMATION = new MINIDUMP_EXCEPTION_INFORMATION
+                {
+                    ClientPointers = false,
+                    ExceptionPointers = Marshal.GetExceptionPointers(),
+                    ThreadId = SafeNativeMethods.GetCurrentThreadId(),
+                };
+                var thisProcess = Process.GetCurrentProcess();
+                SafeNativeMethods.MiniDumpWriteDump(
+                    thisProcess.Handle,
+                    thisProcess.Id,
+                    fsToDump.SafeFileHandle,
+                    MINIDUMP_TYPE.Normal,
+                    ref mINIDUMP_EXCEPTION_INFORMATION,
+                    IntPtr.Zero,
+                    IntPtr.Zero);
+                var error = Marshal.GetLastWin32Error();
+                if (error > 0)
+                {
+                    MessageManager.ShowError(
+                        $"Mini-dumping failed with Code: {error}",
+                        "Error!");
+                }
+
+                thisProcess.Dispose();
+                fsToDump.Dispose();
             }
-            else
-            {
-                fsToDump = System.IO.File.Create(fileToDump);
-            }
-            System.Diagnostics.Process thisProcess = System.Diagnostics.Process.GetCurrentProcess();
-            SafeNativeMethods.MiniDumpWriteDump(thisProcess.Handle, thisProcess.Id,
-                fsToDump.SafeFileHandle.DangerousGetHandle(), Enums.MINIDUMP_TYPE.MiniDumpNormal,
-                System.IntPtr.Zero, System.IntPtr.Zero, System.IntPtr.Zero);
-            thisProcess.Dispose();
-            fsToDump.Dispose();
         }
 
         /// <summary>
         /// Creates a Full Mini-dump in the file specified.
         /// </summary>
-        public static void FullMiniDumpToFile(string fileToDump)
+        /// <param name="fileToDump">The file path to dump to.</param>
+        internal static void FullMiniDumpToFile(string fileToDump)
         {
-            System.IO.FileStream fsToDump = null;
-            if (System.IO.File.Exists(fileToDump))
+            if (RuntimeInformation.IsOSPlatform(
+                OSPlatform.Windows))
             {
-                fsToDump = System.IO.File.Open(fileToDump, System.IO.FileMode.Append);
+                // file does not exist until this line, but this throws a
+                // "System.IO.IOException: The process cannot access the file
+                // '%LocalAppData%\Els_kom-[Process ID].mdmp' because it is being used by another process."
+                var fsToDump = new FileStream(
+                    fileToDump,
+                    FileMode.Create,
+                    FileAccess.ReadWrite,
+                    FileShare.Write);
+                var mINIDUMP_EXCEPTION_INFORMATION = new MINIDUMP_EXCEPTION_INFORMATION
+                {
+                    ClientPointers = false,
+                    ExceptionPointers = Marshal.GetExceptionPointers(),
+                    ThreadId = SafeNativeMethods.GetCurrentThreadId(),
+                };
+                var thisProcess = Process.GetCurrentProcess();
+                SafeNativeMethods.MiniDumpWriteDump(
+                    thisProcess.Handle,
+                    thisProcess.Id,
+                    fsToDump.SafeFileHandle,
+                    MINIDUMP_TYPE.WithDataSegs | MINIDUMP_TYPE.WithFullMemory | MINIDUMP_TYPE.WithProcessThreadData | MINIDUMP_TYPE.WithFullMemoryInfo | MINIDUMP_TYPE.WithThreadInfo | MINIDUMP_TYPE.WithCodeSegs,
+                    ref mINIDUMP_EXCEPTION_INFORMATION,
+                    IntPtr.Zero,
+                    IntPtr.Zero);
+                var error = Marshal.GetLastWin32Error();
+                if (error > 0)
+                {
+                    MessageManager.ShowError(
+                        $"Mini-dumping failed with Code: {error}",
+                        "Error!");
+                }
+
+                thisProcess.Dispose();
+                fsToDump.Dispose();
             }
-            else
-            {
-                fsToDump = System.IO.File.Create(fileToDump);
-            }
-            System.Diagnostics.Process thisProcess = System.Diagnostics.Process.GetCurrentProcess();
-            SafeNativeMethods.MiniDumpWriteDump(thisProcess.Handle, thisProcess.Id,
-                fsToDump.SafeFileHandle.DangerousGetHandle(), Enums.MINIDUMP_TYPE.MiniDumpWithDataSegs |
-                Enums.MINIDUMP_TYPE.MiniDumpWithFullMemory |
-                Enums.MINIDUMP_TYPE.MiniDumpWithProcessThreadData |
-                Enums.MINIDUMP_TYPE.MiniDumpWithFullMemoryInfo |
-                Enums.MINIDUMP_TYPE.MiniDumpWithThreadInfo |
-                Enums.MINIDUMP_TYPE.MiniDumpWithCodeSegs,
-                System.IntPtr.Zero, System.IntPtr.Zero, System.IntPtr.Zero);
-            thisProcess.Dispose();
-            fsToDump.Dispose();
         }
-    };
+    }
 }

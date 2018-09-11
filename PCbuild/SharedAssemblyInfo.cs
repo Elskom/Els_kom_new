@@ -23,8 +23,7 @@
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
-// <Assembly: AssemblyVersion("1.0.*")>
-
+// [Assembly: AssemblyVersion("1.0.*")]
 [assembly: System.Reflection.AssemblyVersion("1.4.9.8")]
 [assembly: System.Reflection.AssemblyFileVersion("1.4.9.8")]
 [assembly: System.Resources.NeutralResourcesLanguage("en-US")]

@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="$(SolutionDir)\Core.props" Condition="Exists('$(SolutionDir)\Core.props')" />
   <PropertyGroup>
     <ProjectGuid>{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -10,27 +9,32 @@
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
     <NoWin32Manifest>False</NoWin32Manifest>
-    <SignAssembly>True</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
+    <DefineTrace>false</DefineTrace>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
-    <IntermediateOutputPath>..\obj\$(Platform)\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <BaseIntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <NoStdLib>False</NoStdLib>
+    <LangVersion>latest</LangVersion>
+    <OutputPath>..\bin\$(Configuration)\</OutputPath>
+    <DocumentationFile>..\bin\$(Configuration)\Els_kom.Core.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>..\PCbuild\Els_kom.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Optimize>false</Optimize>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DefineConstants>ELS_KOM_CORE_BUILD</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DefineConstants>ELS_KOM_CORE_BUILD</DefineConstants>
-    <Prefer32Bit>false</Prefer32Bit>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <DefineConstants>TRACE;ELS_KOM_CORE_BUILD</DefineConstants>
+    <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -58,63 +62,20 @@
     <Compile Include="Classes\ExecutionManager.cs" />
     <Compile Include="Classes\GenericPluginLoader.cs" />
     <Compile Include="Classes\Git.cs" />
-    <Compile Include="Classes\Icons.cs" />
     <Compile Include="Classes\KOMManager.cs" />
     <Compile Include="Classes\KOMStream.cs" />
     <Compile Include="Classes\LoadResources.cs" />
     <Compile Include="Classes\MessageManager.cs" />
     <Compile Include="Classes\MiniDump.cs" />
+    <Compile Include="Classes\MiniDumpAttribute.cs" />
     <Compile Include="Classes\PackingError.cs" />
+    <Compile Include="Classes\ReleasePackaging.cs" />
     <Compile Include="Classes\ResourcesDir.cs" />
     <Compile Include="Classes\SafeNativeMethods.cs" />
     <Compile Include="Classes\SettingsFile.cs" />
-    <Compile Include="Classes\ShowTaskbarEvent.cs" />
     <Compile Include="Classes\UnpackingError.cs" />
-    <Compile Include="Classes\Version.cs" />
     <Compile Include="Classes\XMLObject.cs" />
     <Compile Include="Classes\ZlibHelper.cs" />
-    <Compile Include="..\externals\ZLIB.NET\Adler32.cs">
-      <Link>Classes\Zlib\Adler32.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\Deflate.cs">
-      <Link>Classes\Zlib\Deflate.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\InfBlocks.cs">
-      <Link>Classes\Zlib\InfBlocks.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\InfCodes.cs">
-      <Link>Classes\Zlib\InfCodes.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\Inflate.cs">
-      <Link>Classes\Zlib\Inflate.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\InfTree.cs">
-      <Link>Classes\Zlib\InfTree.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\StaticTree.cs">
-      <Link>Classes\Zlib\StaticTree.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\SupportClass.cs">
-      <Link>Classes\Zlib\SupportClass.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\Tree.cs">
-      <Link>Classes\Zlib\Tree.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\ZInputStream.cs">
-      <Link>Classes\Zlib\ZInputStream.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\Zlib.cs">
-      <Link>Classes\Zlib\Zlib.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\ZOutputStream.cs">
-      <Link>Classes\Zlib\ZOutputStream.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\ZStream.cs">
-      <Link>Classes\Zlib\ZStream.cs</Link>
-    </Compile>
-    <Compile Include="..\externals\ZLIB.NET\ZStreamException.cs">
-      <Link>Classes\Zlib\ZStreamException.cs</Link>
-    </Compile>
     <Compile Include="Controls\AboutControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -127,6 +88,12 @@
     <Compile Include="Controls\MainControl.Designer.cs">
       <DependentUpon>MainControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PluginsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PluginsControl.Designer.cs">
+      <DependentUpon>PluginsControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -135,15 +102,38 @@
     </Compile>
     <Compile Include="Enums\LoadImagefuLoad.cs" />
     <Compile Include="Enums\LoadImageTypes.cs" />
+    <Compile Include="Structs\MINIDUMP_EXCEPTION_INFORMATION.cs" />
     <Compile Include="Enums\SYSCOMMANDS.cs" />
     <Compile Include="Enums\MINIDUMP_TYPE.cs" />
-    <Compile Include="interfaces\ICallbackPlugin.cs" />
-    <Compile Include="interfaces\IEncryptionPlugin.cs" />
-    <Compile Include="interfaces\IKomPlugin.cs" />
+    <Compile Include="Interfaces\ICallbackPlugin.cs" />
+    <Compile Include="Interfaces\IEncryptionPlugin.cs" />
+    <Compile Include="Interfaces\IKomPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\PCbuild\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NuGet.CommandLine">
+      <Version>4.7.1</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta009">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="XmlAbstraction">
+      <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="zlib.managed">
+      <Version>1.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\PCbuild\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="gitbuildinfo" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
@@ -154,8 +144,7 @@
       <OutputFile2 Required="true" />
     </ParameterGroup>
     <Task>
-      <Code Type="Fragment" Language="cs">
-        <![CDATA[
+      <Code Type="Fragment" Language="cs"><![CDATA[
         Log.LogMessage(MessageImportance.High, "Getting build info from git");
         string git_out1;
         System.Diagnostics.Process pro1 = new System.Diagnostics.Process();
@@ -228,25 +217,26 @@
         outputData += "    /// </summary>" + System.Environment.NewLine;
         outputData += "    internal static class Git" + System.Environment.NewLine;
         outputData += "    {" + System.Environment.NewLine;
-        outputData += "        private static string headdesc = \"" + git_out1 + "\";" + System.Environment.NewLine;
+        outputData += "        private static string headdesc = \"" + git_out1 + "\";" + System.Environment.NewLine + System.Environment.NewLine;
         outputData += "        /// <summary>" + System.Environment.NewLine;
-        outputData += "        /// The git commit hash as formated by git rev-parse." + System.Environment.NewLine;
+        outputData += "        /// Gets the git commit hash as formated by git rev-parse." + System.Environment.NewLine;
         outputData += "        /// </summary>" + System.Environment.NewLine;
-        outputData += "        internal static string commit = \"" + git_out2 + "\";" + System.Environment.NewLine;
+        outputData += "        internal static string Commit => \"" + git_out2 + "\";" + System.Environment.NewLine + System.Environment.NewLine;
         outputData += "        /// <summary>" + System.Environment.NewLine;
-        outputData += "        /// The git branch name as formated by git name-rev." + System.Environment.NewLine;
+        outputData += "        /// Gets the git branch name as formated by git name-rev." + System.Environment.NewLine;
         outputData += "        /// </summary>" + System.Environment.NewLine;
-        outputData += "        internal static string branchname = \"" + git_out3 + "\";" + System.Environment.NewLine;
+        outputData += "        internal static string Branchname => \"" + git_out3 + "\";" + System.Environment.NewLine + System.Environment.NewLine;
         outputData += "        /// <summary>" + System.Environment.NewLine;
-        outputData += "        /// Gets if the branch is dirty or clean based upon" + System.Environment.NewLine;
-        outputData += "        /// the string constructed by git describe." + System.Environment.NewLine;
+        outputData += "        /// Gets a value indicating whether the branch is dirty or" + System.Environment.NewLine;
+        outputData += "        /// clean based upon the string constructed by git describe." + System.Environment.NewLine;
         outputData += "        /// </summary>" + System.Environment.NewLine;
-        outputData += "        internal static bool IsDirty => headdesc.EndsWith(\"-dirty\");" + System.Environment.NewLine;
+        outputData += "        internal static bool IsDirty => headdesc.EndsWith(\"-dirty\");" + System.Environment.NewLine + System.Environment.NewLine;
         outputData += "        /// <summary>" + System.Environment.NewLine;
-        outputData += "        /// Gets if the branch is the master branch or not" + System.Environment.NewLine;
-        outputData += "        /// based upon the string constructed by git name-rev." + System.Environment.NewLine;
+        outputData += "        /// Gets a value indicating whether the branch is the master" + System.Environment.NewLine;
+        outputData += "        /// branch or not based upon the string constructed by" + System.Environment.NewLine;
+        outputData += "        /// git name-rev." + System.Environment.NewLine;
         outputData += "        /// </summary>" + System.Environment.NewLine;
-        outputData += "        internal static bool IsMaster => branchname.Equals(\"master\");" + System.Environment.NewLine;
+        outputData += "        internal static bool IsMaster => Branchname.Equals(\"master\");" + System.Environment.NewLine;
         outputData += "    }" + System.Environment.NewLine;
         outputData += "}" + System.Environment.NewLine;
         System.IO.StreamWriter fstream = new System.IO.StreamWriter(OutputFile1, false, new System.Text.UTF8Encoding(false));
@@ -268,106 +258,34 @@
         outputResourcesData += System.Environment.NewLine;
         outputResourcesData += "namespace " + TargetNamespace + System.Environment.NewLine;
         outputResourcesData += "{" + System.Environment.NewLine;
+        outputResourcesData += "    /// <summary>" + System.Environment.NewLine;
+        outputResourcesData += "    /// Resources stuff." + System.Environment.NewLine;
+        outputResourcesData += "    /// </summary>" + System.Environment.NewLine;
         outputResourcesData += "    internal static class ResourcesDir" + System.Environment.NewLine;
         outputResourcesData += "    {" + System.Environment.NewLine;
         outputResourcesData += "        /// <summary>" + System.Environment.NewLine;
-        outputResourcesData += "        /// Path to the resources file to create/read it." + System.Environment.NewLine;
+        outputResourcesData += "        /// Gets the path to the resources file to create/read it." + System.Environment.NewLine;
         outputResourcesData += "        /// </summary>" + System.Environment.NewLine;
         resourcespath = resourcespath.Replace("\\", "\\\\");
-        outputResourcesData += "        internal static string resourcespath = \"" + resourcespath + "\";" + System.Environment.NewLine;
+        outputResourcesData += "        internal static string Resourcespath => \"" + resourcespath + "\";" + System.Environment.NewLine + System.Environment.NewLine;
         outputResourcesData += "        /// <summary>" + System.Environment.NewLine;
-        outputResourcesData += "        /// Path to the Icon file to place in the resources file." + System.Environment.NewLine;
+        outputResourcesData += "        /// Gets the path to the Icon file to place in the resources file." + System.Environment.NewLine;
         outputResourcesData += "        /// </summary>" + System.Environment.NewLine;
         iconpath = iconpath.Replace("\\", "\\\\");
-        outputResourcesData += "        internal static string iconpath = \"" + iconpath + "\";" + System.Environment.NewLine;
+        outputResourcesData += "        internal static string Iconpath => \"" + iconpath + "\";" + System.Environment.NewLine;
         outputResourcesData += "    }" + System.Environment.NewLine;
         outputResourcesData += "}" + System.Environment.NewLine;
         System.IO.StreamWriter fstream2 = new System.IO.StreamWriter(OutputFile2, false, new System.Text.UTF8Encoding(false));
         fstream2.Write(outputResourcesData.ToCharArray(), 0, outputResourcesData.Length);
         fstream2.Dispose();
-]]>
-      </Code>
-    </Task>
-  </UsingTask>
-  <UsingTask TaskName="FindRCExe" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
-    <ParameterGroup>
-      <SolutionDir Required="true" />
-    </ParameterGroup>
-    <Task>
-      <Code Type="Fragment" Language="cs">
-        <![CDATA[
-        // to find only the newest rc.exe available on the system.
-        string WindowsKitsDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles);
-        WindowsKitsDir += System.IO.Path.DirectorySeparatorChar + "Windows Kits";
-        System.IO.DirectoryInfo di1 = new System.IO.DirectoryInfo(WindowsKitsDir);
-        string rcexepath = string.Empty;
-        bool found = false;
-        foreach (var di2 in di1.GetDirectories())
-        {
-          if (found)
-          {
-            found = false;
-          }
-          foreach (var di3 in di2.GetDirectories())
-          {
-            foreach (var di4 in di3.GetDirectories())
-            {
-              foreach (var fi1 in di4.GetFiles("*.exe"))
-              {
-                string _exe_file = fi1.Name;
-                if (_exe_file.Equals("rc.exe"))
-                {
-                  rcexepath = WindowsKitsDir + System.IO.Path.DirectorySeparatorChar + di2.Name;
-                  rcexepath += System.IO.Path.DirectorySeparatorChar + di3.Name + System.IO.Path.DirectorySeparatorChar;
-                  rcexepath += di4.Name + System.IO.Path.DirectorySeparatorChar + _exe_file;
-                  found = true;
-                }
-              }
-              if (!found)
-              {
-                foreach (var di5 in di4.GetDirectories())
-                {
-                  foreach (var fi1 in di5.GetFiles("*.exe"))
-                  {
-                    string _exe_file = fi1.Name;
-                    if (_exe_file.Equals("rc.exe"))
-                    {
-                      rcexepath = WindowsKitsDir + System.IO.Path.DirectorySeparatorChar + di2.Name;
-                      rcexepath += System.IO.Path.DirectorySeparatorChar + di3.Name + System.IO.Path.DirectorySeparatorChar;
-                      rcexepath += di4.Name + System.IO.Path.DirectorySeparatorChar + di5.Name;
-                      rcexepath += System.IO.Path.DirectorySeparatorChar + _exe_file;
-                      found = true;
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        Log.LogMessage(MessageImportance.High, "Compiling els_kom.rc...");
-        System.Diagnostics.Process proc = new System.Diagnostics.Process();
-        proc.StartInfo.FileName = rcexepath;
-        proc.StartInfo.Arguments = "/nologo /r \"" + SolutionDir + "..\\Els_kom\\Resources\\els_kom.rc\"";
-        proc.StartInfo.RedirectStandardOutput = false;
-        proc.StartInfo.UseShellExecute = false;
-        proc.StartInfo.CreateNoWindow = true;
-        try
-        {
-          proc.Start();
-          proc.WaitForExit();
-        }
-        catch (System.ComponentModel.Win32Exception)
-        {
-        }
-        proc.Dispose();
-]]>
-      </Code>
+]]></Code>
     </Task>
   </UsingTask>
   <Target Name="BeforeBuild">
     <gitbuildinfo OutputFile1="$(ProjectDir)\Classes\Git.cs" TargetNamespace="Els_kom_Core.Classes" SolutionDir="$(SolutionDir)" OutputFile2="$(ProjectDir)\Classes\ResourcesDir.cs" />
   </Target>
+  <!--
   <Target Name="AfterBuild">
-    <FindRCExe SolutionDir="$(SolutionDir)" />
   </Target>
+  -->
 </Project>

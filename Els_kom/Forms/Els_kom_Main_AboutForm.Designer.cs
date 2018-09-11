@@ -40,10 +40,9 @@ namespace Els_kom.Forms
             // 
             this.aboutControl1.Location = new System.Drawing.Point(0, 0);
             this.aboutControl1.Name = "aboutControl1";
-            this.aboutControl1.picIcon.Image = Els_kom_Core.Classes.Icons.FormImage;
+            this.aboutControl1.picIcon.Image = global::Els_kom.Icons.FormImage;
             this.aboutControl1.Size = new System.Drawing.Size(382, 220);
             this.aboutControl1.TabIndex = 13;
-            this.aboutControl1.ParentForm = this;
             // 
             // AboutForm
             // 
@@ -61,7 +60,7 @@ namespace Els_kom.Forms
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutForm";
-            this.Icon = Els_kom_Core.Classes.Icons.FormIcon;
+            this.Icon = global::Els_kom.Icons.FormIcon;
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

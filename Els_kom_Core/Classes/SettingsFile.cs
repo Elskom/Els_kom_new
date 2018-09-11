@@ -5,18 +5,39 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+
     /// <summary>
     /// Class that handles the settings for this Application.
     /// </summary>
     public static class SettingsFile
     {
-        private static XMLObject _settingsxml;
+        /// <summary>
+        /// Gets or sets the settings file XMLObject instance.
+        ///
+        /// This is designed so there is globally only
+        /// a single instance to save time, and memory.
+        /// </summary>
+        /// <value>
+        /// The settings file XMLObject instance.
+        ///
+        /// This is designed so there is globally only
+        /// a single instance to save time, and memory.
+        /// </value>
+        public static XMLObject Settingsxml { get; set; }
 
         /// <summary>
+        /// Gets the path to the Els_kom Settings file.
+        ///
+        /// Creates the folder if needed.
+        /// </summary>
+        /// <value>
         /// The path to the Els_kom Settings file.
         ///
-        /// Creates the folder and settings file if needed.
-        /// </summary>
+        /// Creates the folder if needed.
+        /// </value>
         public static string Path
         {
             get
@@ -25,35 +46,35 @@ namespace Els_kom_Core.Classes
                 // Create annoying folders, and throw annoying Exceptions making it harder to
                 // debug as it spams the debugger. Also then we would not need to Replace
                 // everything added to the path obtained from System.Environment.GetFolderPath.
-                string localPath = System.Environment.GetFolderPath(
-                    System.Environment.SpecialFolder.LocalApplicationData);
+                var localPath = Environment.GetFolderPath(
+                    Environment.SpecialFolder.LocalApplicationData);
                 localPath += "\\Els_kom";
-                if (!System.IO.Directory.Exists(localPath))
+                if (!Directory.Exists(localPath))
                 {
-                    System.IO.Directory.CreateDirectory(localPath);
+                    Directory.CreateDirectory(localPath);
                 }
+
+                // do not create settings file, just pass this path to XMLObject.
+                // if we create it ourselves the new optimized class will fail
+                // to work right if it is empty.
                 localPath += "\\Settings.xml";
-                if (!System.IO.File.Exists(localPath))
-                {
-                    System.IO.File.Create(localPath).Dispose();
-                }
                 return localPath;
             }
         }
 
         /// <summary>
-        /// The path to the Els_kom Error Log file.
+        /// Gets the path to the Els_kom Error Log file.
         ///
         /// Creates the Error Log file if needed.
         /// </summary>
-        public static string ErrorLogPath
+        internal static string ErrorLogPath
         {
             get
             {
-                string localPath = System.Environment.GetFolderPath(
-                    System.Environment.SpecialFolder.LocalApplicationData);
+                var localPath = Environment.GetFolderPath(
+                    Environment.SpecialFolder.LocalApplicationData);
                 localPath += "\\Els_kom";
-                System.Diagnostics.Process thisProcess = System.Diagnostics.Process.GetCurrentProcess();
+                var thisProcess = Process.GetCurrentProcess();
                 localPath += "\\" + thisProcess.ProcessName + "-" + thisProcess.Id.ToString() + ".log";
                 thisProcess.Dispose();
                 return localPath;
@@ -61,35 +82,17 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
-        /// Gets the settings file XMLObject instance.
-        ///
-        /// This is designed so there is globally only
-        /// a single instance to save time, and memory.
+        /// Gets the path to the Els_kom Mini-Dump file.
         /// </summary>
-        public static XMLObject Settingsxml
+        internal static string MiniDumpPath
         {
             get
             {
-                return _settingsxml;
-            }
-            set
-            {
-                _settingsxml = value;
-            }
-        }
- 
-        /// <summary>
-        /// The path to the Els_kom Mini-Dump file.
-        /// </summary>
-        public static string MiniDumpPath
-        {
-            get
-            {
-                string localPath = System.Environment.GetFolderPath(
-                    System.Environment.SpecialFolder.LocalApplicationData);
+                var localPath = Environment.GetFolderPath(
+                    Environment.SpecialFolder.LocalApplicationData);
                 localPath += "\\Els_kom";
-                System.Diagnostics.Process thisProcess = System.Diagnostics.Process.GetCurrentProcess();
-                localPath += "\\" + thisProcess.ProcessName + "-" + thisProcess.Id.ToString() + ".mdmp";
+                var thisProcess = Process.GetCurrentProcess();
+                localPath += System.IO.Path.DirectorySeparatorChar + thisProcess.ProcessName + "-" + thisProcess.Id.ToString() + ".mdmp";
                 thisProcess.Dispose();
                 return localPath;
             }
