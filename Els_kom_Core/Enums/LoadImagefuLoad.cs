@@ -56,6 +56,6 @@ namespace Els_kom_Core.Enums
         /// <summary>
         /// Load with VGA (256?) colors.
         /// </summary>
-        LR_VGACOLOR = 0x00000080
+        LR_VGACOLOR = 0x00000080,
     }
 }

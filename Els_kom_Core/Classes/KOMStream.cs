@@ -25,21 +25,33 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Gets a value indicating whether the Stream can Read.
         /// </summary>
+        /// <value>
+        /// A value indicating whether the Stream can Read.
+        /// </value>
         public override bool CanRead => false;
 
         /// <summary>
         /// Gets a value indicating whether the Stream can Seek.
         /// </summary>
+        /// <value>
+        /// A value indicating whether the Stream can Seek.
+        /// </value>
         public override bool CanSeek => false;
 
         /// <summary>
         /// Gets a value indicating whether the Stream can Write.
         /// </summary>
+        /// <value>
+        /// A value indicating whether the Stream can Write.
+        /// </value>
         public override bool CanWrite => false;
 
         /// <summary>
         /// Gets a value indicating whether the Stream can Timeout.
         /// </summary>
+        /// <value>
+        /// A value indicating whether the Stream can Timeout.
+        /// </value>
         public override bool CanTimeout => false;
 
         /// <summary>
@@ -48,11 +60,20 @@ namespace Els_kom_Core.Classes
         /// This is only to support extending this
         /// class for more kom plugins if needed.
         /// </summary>
+        /// <value>
+        /// The length of the stream.
+        /// Always 0 as no real stuff is supported.
+        /// This is only to support extending this
+        /// class for more kom plugins if needed.
+        /// </value>
         public override long Length => 0;
 
         /// <summary>
         /// Gets or sets the KOMStream Position.
         /// </summary>
+        /// <value>
+        /// The KOMStream Position.
+        /// </value>
         public override long Position
         {
             get => 0;

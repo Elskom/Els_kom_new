@@ -37,12 +37,6 @@
     <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\externals\ZLIB.NET\zlib.net.csproj">
-      <Project>{0c89b7a2-a218-49e4-b545-5b044a45f977}</Project>
-      <Name>zlib.net</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
@@ -80,8 +74,6 @@
     <Compile Include="Classes\SafeNativeMethods.cs" />
     <Compile Include="Classes\SettingsFile.cs" />
     <Compile Include="Classes\UnpackingError.cs" />
-    <Compile Include="Classes\XMLAttributeData.cs" />
-    <Compile Include="Classes\XMLElementData.cs" />
     <Compile Include="Classes\XMLObject.cs" />
     <Compile Include="Classes\ZlibHelper.cs" />
     <Compile Include="Controls\AboutControl.cs">
@@ -127,10 +119,21 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta009">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="XmlAbstraction">
+      <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="zlib.managed">
+      <Version>1.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\PCbuild\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="gitbuildinfo" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">

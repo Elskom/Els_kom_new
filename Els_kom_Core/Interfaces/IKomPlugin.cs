@@ -20,16 +20,25 @@ namespace Els_kom_Core.Interfaces
         /// <summary>
         /// Gets name of the KOM plugin.
         /// </summary>
+        /// <value>
+        /// Name of the KOM plugin.
+        /// </value>
         string PluginName { get; }
 
         /// <summary>
         /// Gets the KOM File header string constant for this plugin's supported KOM version.
         /// </summary>
+        /// <value>
+        /// The KOM File header string constant for this plugin's supported KOM version.
+        /// </value>
         string KOMHeaderString { get; }
 
         /// <summary>
         /// Gets the supported KOM version for packing/unpacking.
         /// </summary>
+        /// <value>
+        /// The supported KOM version for packing/unpacking.
+        /// </value>
         int SupportedKOMVersion { get; }
 
         /// <summary>

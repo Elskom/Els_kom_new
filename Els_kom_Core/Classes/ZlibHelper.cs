@@ -6,7 +6,7 @@
 namespace Els_kom_Core.Classes
 {
     using System.IO;
-    using ComponentAce.Compression.Libs.zlib;
+    using Els_kom.Compression.Libs.Zlib;
 
     /// <summary>
     /// Zlib Compression and Decompression Helper Class.
@@ -21,7 +21,7 @@ namespace Els_kom_Core.Classes
         /// <param name="adler32">The output adler32 of the data.</param>
         /// <exception cref="PackingError">Thrown when the stream Errors in any way.</exception>
         public static void CompressData(byte[] inData, out byte[] outData, out int adler32)
-            => CompressData(inData, out outData, zlibConst.Z_DEFAULT_COMPRESSION, out adler32);
+            => CompressData(inData, out outData, ZlibConst.ZDEFAULTCOMPRESSION, out adler32);
 
         /// <summary>
         /// Compresses data using the default compression level.
@@ -30,7 +30,7 @@ namespace Els_kom_Core.Classes
         /// <param name="outData">The compressed output data.</param>
         /// <exception cref="PackingError">Thrown when the stream Errors in any way.</exception>
         public static void CompressData(byte[] inData, out byte[] outData)
-            => CompressData(inData, out outData, zlibConst.Z_DEFAULT_COMPRESSION);
+            => CompressData(inData, out outData, ZlibConst.ZDEFAULTCOMPRESSION);
 
         /// <summary>
         /// Compresses data using an specific compression level.
@@ -68,7 +68,7 @@ namespace Els_kom_Core.Classes
             outZStream.Flush();
             try
             {
-                outZStream.finish();
+                outZStream.Finish();
             }
             catch (ZStreamException ex)
             {
@@ -76,7 +76,7 @@ namespace Els_kom_Core.Classes
             }
 
             outData = outMemoryStream.ToArray();
-            adler32 = (int)(outZStream.z.adler & 0xffff);
+            adler32 = (int)(outZStream.Z.Adler & 0xffff);
             outZStream.Dispose();
             inMemoryStream.Dispose();
         }
@@ -104,7 +104,7 @@ namespace Els_kom_Core.Classes
             outZStream.Flush();
             try
             {
-                outZStream.finish();
+                outZStream.Finish();
             }
             catch (ZStreamException ex)
             {

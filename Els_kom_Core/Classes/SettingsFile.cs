@@ -20,6 +20,12 @@ namespace Els_kom_Core.Classes
         /// This is designed so there is globally only
         /// a single instance to save time, and memory.
         /// </summary>
+        /// <value>
+        /// The settings file XMLObject instance.
+        ///
+        /// This is designed so there is globally only
+        /// a single instance to save time, and memory.
+        /// </value>
         public static XMLObject Settingsxml { get; set; }
 
         /// <summary>
@@ -27,6 +33,11 @@ namespace Els_kom_Core.Classes
         ///
         /// Creates the folder if needed.
         /// </summary>
+        /// <value>
+        /// The path to the Els_kom Settings file.
+        ///
+        /// Creates the folder if needed.
+        /// </value>
         public static string Path
         {
             get

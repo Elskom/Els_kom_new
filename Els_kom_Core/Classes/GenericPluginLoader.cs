@@ -38,8 +38,8 @@ namespace Els_kom_Core.Classes
             // try to load from a zip as well if plugins are installed in both places.
             var zippath = $"{path}.zip";
             ICollection<T> plugins = new List<T>();
-            int.TryParse(SettingsFile.Settingsxml?.Read("SaveToZip"), out var _saveToZip);
-            var saveToZip = Convert.ToBoolean(_saveToZip);
+            int.TryParse(SettingsFile.Settingsxml?.Read("SaveToZip"), out var saveToZip1);
+            var saveToZip = Convert.ToBoolean(saveToZip1);
 
             // handle when path points to a zip file.
             if (Directory.Exists(path) || File.Exists(zippath))

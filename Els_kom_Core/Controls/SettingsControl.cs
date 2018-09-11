@@ -147,7 +147,7 @@ namespace Els_kom_Core.Controls
                 entries.Add(new ListViewItem(
                     new string[]
                     {
-                        callbackplugin.PluginName
+                        callbackplugin.PluginName,
                     }, -1));
             }
 
@@ -156,7 +156,7 @@ namespace Els_kom_Core.Controls
                 entries.Add(new ListViewItem(
                     new string[]
                     {
-                    komplugin.PluginName
+                    komplugin.PluginName,
                     }, -1));
             }
 
@@ -176,7 +176,7 @@ namespace Els_kom_Core.Controls
             {
                 Description = "Select the Folder that Your Elsword Install is in (Must be the one that either elsword.exe or voidels.exe is in).",
                 RootFolder = Environment.SpecialFolder.MyComputer,
-                ShowNewFolderButton = false
+                ShowNewFolderButton = false,
             };
             var res = folderBrowserDialog1.ShowDialog();
             if (res == DialogResult.OK)
@@ -359,7 +359,7 @@ namespace Els_kom_Core.Controls
             {
                 Bounds = this.ListView2.SelectedItems[0].Bounds,
                 Text = this.ListView2.SelectedItems[0].Text,
-                Visible = true
+                Visible = true,
             };
             textBox.Enter += (s, s1) =>
             {

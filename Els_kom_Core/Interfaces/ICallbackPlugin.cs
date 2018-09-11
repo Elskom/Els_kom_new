@@ -16,16 +16,25 @@ namespace Els_kom_Core.Interfaces
         /// <summary>
         /// Gets name of the Test Mods Callback plugin.
         /// </summary>
+        /// <value>
+        /// Name of the Test Mods Callback plugin.
+        /// </value>
         string PluginName { get; }
 
         /// <summary>
         /// Gets a value indicating whether this plugin has it's own settings window that should display from the settings window.
         /// </summary>
+        /// <value>
+        /// A value indicating whether this plugin has it's own settings window that should display from the settings window.
+        /// </value>
         bool SupportsSettings { get; }
 
         /// <summary>
         /// Gets a value indicating whether the form should be shown as Modal Dialog Window.
         /// </summary>
+        /// <value>
+        /// A value indicating whether the form should be shown as Modal Dialog Window.
+        /// </value>
         bool ShowModal { get; }
 
         /// <summary>
@@ -33,6 +42,11 @@ namespace Els_kom_Core.Interfaces
         ///
         /// Note: Create instance before returning.
         /// </summary>
+        /// <value>
+        /// The plugin's actual settings window for showing from Els_kom's core at runtime.
+        ///
+        /// Note: Create instance before returning.
+        /// </value>
         Form SettingsWindow { get; }
 
         /// <summary>

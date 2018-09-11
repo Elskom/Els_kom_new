@@ -19,6 +19,9 @@ namespace Els_kom
         /// <summary>
         /// Gets the form icon from the project's resources.
         /// </summary>
+        /// <value>
+        /// The form icon from the project's resources.
+        /// </value>
         public static Icon FormIcon
         {
             get
@@ -56,6 +59,10 @@ namespace Els_kom
         /// Gets a 48 x 48 sized <see cref="Image"/>
         /// from a icon in the project's resources.
         /// </summary>
+        /// <value>
+        /// A 48 x 48 sized <see cref="Image"/>
+        /// from a icon in the project's resources.
+        /// </value>
         public static Image FormImage
         {
             get

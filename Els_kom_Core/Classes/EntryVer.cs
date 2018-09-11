@@ -135,26 +135,41 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Gets the entry File name.
         /// </summary>
+        /// <value>
+        /// The entry File name.
+        /// </value>
         public string Name { get; private set; }
 
         /// <summary>
         /// Gets the entry unpacked size.
         /// </summary>
+        /// <value>
+        /// The entry unpacked size.
+        /// </value>
         public int Uncompressed_size { get; private set; }
 
         /// <summary>
         /// Gets the entry Compressed Size.
         /// </summary>
+        /// <value>
+        /// The entry Compressed Size.
+        /// </value>
         public int Compressed_size { get; private set; }
 
         /// <summary>
         /// Gets the entry Relative offset.
         /// </summary>
+        /// <value>
+        /// The entry Relative offset.
+        /// </value>
         public int Relative_offset { get; private set; }
 
         /// <summary>
         /// Gets entry file data for packing.
         /// </summary>
+        /// <value>
+        /// Entry file data for packing.
+        /// </value>
         public byte[] Entrydata { get; private set; }
 
         // KOM V3 Members.
@@ -162,16 +177,25 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Gets entry Checksum.
         /// </summary>
+        /// <value>
+        /// Entry Checksum.
+        /// </value>
         public int Checksum { get; private set; }
 
         /// <summary>
         /// Gets entry File time.
         /// </summary>
+        /// <value>
+        /// Entry File time.
+        /// </value>
         public int File_time { get; private set; }
 
         /// <summary>
         /// Gets entry Algorithm.
         /// </summary>
+        /// <value>
+        /// Entry Algorithm.
+        /// </value>
         public int Algorithm { get; private set; }
 
         // KOM V4 Members.
@@ -179,6 +203,9 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Gets entry Mapped ID.
         /// </summary>
+        /// <value>
+        /// Entry Mapped ID.
+        /// </value>
         public string MappedID { get; private set; }
 
         /// <summary>

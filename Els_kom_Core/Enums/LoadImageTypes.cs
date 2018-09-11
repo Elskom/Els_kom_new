@@ -26,6 +26,6 @@ namespace Els_kom_Core.Enums
         /// <summary>
         /// Load cursor resoruce.
         /// </summary>
-        IMAGE_CURSOR = 2
+        IMAGE_CURSOR = 2,
     }
 }

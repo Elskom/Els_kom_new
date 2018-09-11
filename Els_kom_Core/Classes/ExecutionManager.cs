@@ -67,7 +67,7 @@ namespace Els_kom_Core.Classes
         /// <param name="windowStyle">Window style for the target process.</param>
         /// <param name="workingDirectory">Working directory for the target process.</param>
         /// <param name="waitForProcessExit">Waits for the target process to terminate.</param>
-        /// <returns>empty string, process stdout data, process stderr data</returns>
+        /// <returns>empty string, process stdout data, process stderr data.</returns>
         internal static string Shell(string fileName, string arguments, bool redirectStandardOutput, bool redirectStandardError, bool useShellExecute, bool createNoWindow, ProcessWindowStyle windowStyle, string workingDirectory, bool waitForProcessExit)
         {
             var ret = string.Empty;
@@ -110,7 +110,7 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Gets if Els_kom.exe is already Running. If So, Helps with Closing any new Instances.
         /// </summary>
-        /// <returns>Boolean</returns>
+        /// <returns>Boolean.</returns>
         internal static bool IsElsKomRunning()
         {
             var els_komexe = Process.GetProcessesByName("Els_kom");
@@ -120,7 +120,7 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Runs Elsword Directly.
         /// This is an blocking call that has to run in an separate thread from Els_kom's main thread.
-        /// NEVER UNDER ANY CIRCUMSTANCES RUN THIS IN THE MAIN THREAD, YOU WILL DEADLOCK ELS_KOM!!!
+        /// NEVER UNDER ANY CIRCUMSTANCES RUN THIS IN THE MAIN THREAD, YOU WILL DEADLOCK ELS_KOM!!!.
         /// </summary>
         internal static void RunElswordDirectly()
         {
@@ -159,7 +159,7 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Runs Elsword Launcher.
         /// This is an blocking call that has to run in an separate thread from Els_kom's main thread.
-        /// NEVER UNDER ANY CIRCUMSTANCES RUN THIS IN THE MAIN THREAD, YOU WILL DEADLOCK ELS_KOM!!!
+        /// NEVER UNDER ANY CIRCUMSTANCES RUN THIS IN THE MAIN THREAD, YOU WILL DEADLOCK ELS_KOM!!!.
         /// </summary>
         internal static void RunElswordLauncher()
         {
@@ -209,7 +209,7 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Deploys the Test Mods callback functions provided by plugins.
         /// This is an blocking call that has to run in an separate thread from Els_kom's main thread.
-        /// NEVER UNDER ANY CIRCUMSTANCES RUN THIS IN THE MAIN THREAD, YOU WILL DEADLOCK ELS_KOM!!!
+        /// NEVER UNDER ANY CIRCUMSTANCES RUN THIS IN THE MAIN THREAD, YOU WILL DEADLOCK ELS_KOM!!!.
         /// </summary>
         internal static void DeployCallBack()
         {

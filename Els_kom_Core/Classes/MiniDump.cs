@@ -38,7 +38,7 @@ namespace Els_kom_Core.Classes
                 {
                     ClientPointers = false,
                     ExceptionPointers = Marshal.GetExceptionPointers(),
-                    ThreadId = SafeNativeMethods.GetCurrentThreadId()
+                    ThreadId = SafeNativeMethods.GetCurrentThreadId(),
                 };
                 var thisProcess = Process.GetCurrentProcess();
                 SafeNativeMethods.MiniDumpWriteDump(
@@ -83,7 +83,7 @@ namespace Els_kom_Core.Classes
                 {
                     ClientPointers = false,
                     ExceptionPointers = Marshal.GetExceptionPointers(),
-                    ThreadId = SafeNativeMethods.GetCurrentThreadId()
+                    ThreadId = SafeNativeMethods.GetCurrentThreadId(),
                 };
                 var thisProcess = Process.GetCurrentProcess();
                 SafeNativeMethods.MiniDumpWriteDump(

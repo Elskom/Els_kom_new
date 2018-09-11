@@ -67,8 +67,8 @@ namespace Els_kom_Core.Classes
         /// <param name="DumpType">The type of mini-dump.</param>
         /// <param name="ExceptionParam">The exception information stuff.</param>
         /// <param name="UserStreamParam">User stream stuff for the dumps.</param>
-        /// <param name="CallackParam">Callback function pointer?</param>
-        /// <returns>if the mini-dump worked or not?</returns>
+        /// <param name="CallackParam">Callback function pointer?.</param>
+        /// <returns>if the mini-dump worked or not?.</returns>
         [DllImport("dbghelp.dll", EntryPoint = "MiniDumpWriteDump", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
         internal static extern bool MiniDumpWriteDump(IntPtr hProcess, int ProcessId, SafeHandle hFile, MINIDUMP_TYPE DumpType, ref MINIDUMP_EXCEPTION_INFORMATION ExceptionParam, IntPtr UserStreamParam, IntPtr CallackParam);
     }

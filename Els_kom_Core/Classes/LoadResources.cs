@@ -111,7 +111,7 @@ namespace Els_kom_Core.Classes
             {
                 ResourcesDir.Iconpath,
                 ResourcesDir.Iconpath.Replace("els_kom", "YR"),
-                ResourcesDir.Iconpath.Replace("els_kom", "VP_Trans")
+                ResourcesDir.Iconpath.Replace("els_kom", "VP_Trans"),
             };
             var iconfile = string.Empty;
             if (resource.Equals("#1"))

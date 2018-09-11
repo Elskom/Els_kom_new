@@ -11,6 +11,8 @@ cmake ..
 msbuild newsmake.sln /p:Configuration=Release /p:Platform="Win32" /nologo /verbosity:m /m
 Set-Location -Path ../../../Misc/NEWS
 $env:newsmakeprogpth = Join-Path (Get-Location) ../../externals/newsmake/build/Release/newsmake
-# works locally. Why the hell does this not work on AppVeyor.
 Start-Process -FilePath $env:newsmakeprogpth -Wait -NoNewWindow
 Set-Location -Path ../..
+Set-Location -Path PCbuild
+nuget restore
+Set-Location -Path ..

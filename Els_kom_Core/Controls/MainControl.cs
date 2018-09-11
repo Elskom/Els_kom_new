@@ -78,6 +78,10 @@ namespace Els_kom_Core.Controls
         /// Gets or sets a value indicating whether the
         /// program should close or skip closing.
         /// </summary>
+        /// <value>
+        /// A value indicating whether the
+        /// program should close or skip closing.
+        /// </value>
         public static bool Closable { get; set; } = false;
 
         /// <summary>
@@ -85,11 +89,19 @@ namespace Els_kom_Core.Controls
         /// properly close the loop that reads settings
         /// that makes the control work properly.
         /// </summary>
+        /// <value>
+        /// A value indicating whether to
+        /// properly close the loop that reads settings
+        /// that makes the control work properly.
+        /// </value>
         public bool End_settings_loop { get; set; } = false;
 
         /// <summary>
         /// Gets the tray Icon.
         /// </summary>
+        /// <value>
+        /// The tray Icon.
+        /// </value>
         public NotifyIcon NotifyIcon1 { get; private set; }
 
         private bool Enablehandlers { get; set; }
@@ -160,31 +172,31 @@ namespace Els_kom_Core.Controls
                 this.settingsTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = true,
-                    Interval = 1
+                    Interval = 1,
                 };
                 this.settingsTmr.Tick += new EventHandler(this.CheckSettings);
                 this.packingTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = false,
-                    Interval = 1
+                    Interval = 1,
                 };
                 this.packingTmr.Tick += new EventHandler(this.Packing);
                 this.unpackingTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = false,
-                    Interval = 1
+                    Interval = 1,
                 };
                 this.unpackingTmr.Tick += new EventHandler(this.Unpacking);
                 this.testModsTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = false,
-                    Interval = 1
+                    Interval = 1,
                 };
                 this.testModsTmr.Tick += new EventHandler(this.TestMods2);
                 this.launcherTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = false,
-                    Interval = 1
+                    Interval = 1,
                 };
                 this.launcherTmr.Tick += new EventHandler(this.Launcher);
                 this.NotifyIcon1.Icon = this.FindForm().Icon;
@@ -252,7 +264,7 @@ namespace Els_kom_Core.Controls
             this.Label1.Text = string.Empty;
             var tr2 = new Thread(KOMManager.PackKoms)
             {
-                Name = "Classes.KOMManager.PackKoms"
+                Name = "Classes.KOMManager.PackKoms",
             };
             tr2.Start();
             this.packingTmr.Enabled = true;
@@ -265,7 +277,7 @@ namespace Els_kom_Core.Controls
             this.Label1.Text = string.Empty;
             var tr1 = new Thread(KOMManager.UnpackKoms)
             {
-                Name = "Classes.KOMManager.UnpackKoms"
+                Name = "Classes.KOMManager.UnpackKoms",
             };
             tr1.Start();
             this.unpackingTmr.Enabled = true;
@@ -298,7 +310,7 @@ namespace Els_kom_Core.Controls
             this.FindForm().WindowState = FormWindowState.Minimized;
             var tr4 = new Thread(ExecutionManager.RunElswordLauncher)
             {
-                Name = "Classes.ExecutionManager.RunElswordLauncher"
+                Name = "Classes.ExecutionManager.RunElswordLauncher",
             };
             tr4.Start();
             this.launcherTmr.Enabled = true;
@@ -343,7 +355,7 @@ namespace Els_kom_Core.Controls
             this.FindForm().WindowState = FormWindowState.Minimized;
             var tr4 = new Thread(ExecutionManager.RunElswordLauncher)
             {
-                Name = "Classes.ExecutionManager.RunElswordLauncher"
+                Name = "Classes.ExecutionManager.RunElswordLauncher",
             };
             tr4.Start();
             this.launcherTmr.Enabled = true;
@@ -353,7 +365,7 @@ namespace Els_kom_Core.Controls
         {
             var tr1 = new Thread(KOMManager.UnpackKoms)
             {
-                Name = "Classes.KOMManager.UnpackKoms"
+                Name = "Classes.KOMManager.UnpackKoms",
             };
             tr1.Start();
             this.unpackingTmr.Enabled = true;
@@ -371,7 +383,7 @@ namespace Els_kom_Core.Controls
         {
             var tr2 = new Thread(KOMManager.PackKoms)
             {
-                Name = "Classes.KOMManager.PackKoms"
+                Name = "Classes.KOMManager.PackKoms",
             };
             tr2.Start();
             this.packingTmr.Enabled = true;
@@ -547,7 +559,7 @@ namespace Els_kom_Core.Controls
 
             var tr3 = new Thread(ExecutionManager.RunElswordDirectly)
             {
-                Name = "Classes.ExecutionManager.RunElswordDirectly"
+                Name = "Classes.ExecutionManager.RunElswordDirectly",
             };
             tr3.Start();
             this.testModsTmr.Enabled = true;
@@ -756,40 +768,40 @@ namespace Els_kom_Core.Controls
             {
                 Name = "PackToolStripMenuItem",
                 Size = new Size(129, 22),
-                Text = "Pack"
+                Text = "Pack",
             };
             this.packToolStripMenuItem.Click += new EventHandler(this.PackToolStripMenuItem_Click);
             this.unpackToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "UnpackToolStripMenuItem",
                 Size = new Size(129, 22),
-                Text = "Unpack"
+                Text = "Unpack",
             };
             this.unpackToolStripMenuItem.Click += new EventHandler(this.UnpackToolStripMenuItem_Click);
             this.toolStripMenuSep1 = new ToolStripSeparator
             {
                 Name = "ToolStripMenuItem3",
-                Size = new Size(126, 6)
+                Size = new Size(126, 6),
             };
             this.testModsToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "TestModsToolStripMenuItem",
                 Size = new Size(129, 22),
-                Text = "Test Mods"
+                Text = "Test Mods",
             };
             this.testModsToolStripMenuItem.Click += new EventHandler(this.TestModsToolStripMenuItem_Click);
             this.launcherToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "LauncherToolStripMenuItem",
                 Size = new Size(129, 22),
-                Text = "Launcher"
+                Text = "Launcher",
             };
             this.launcherToolStripMenuItem.Click += new EventHandler(this.LauncherToolStripMenuItem_Click);
             this.exitToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "ExitToolStripMenuItem",
                 Size = new Size(129, 22),
-                Text = "Exit"
+                Text = "Exit",
             };
             this.exitToolStripMenuItem.Click += new EventHandler(this.ExitToolStripMenuItem_Click);
             this.contextMenuStrip1 = new ContextMenuStrip(this.components);
@@ -797,7 +809,7 @@ namespace Els_kom_Core.Controls
             this.contextMenuStrip1.Items.AddRange(new ToolStripItem[]
             {
                 this.packToolStripMenuItem, this.unpackToolStripMenuItem, this.testModsToolStripMenuItem,
-                this.launcherToolStripMenuItem, this.toolStripMenuSep1, this.exitToolStripMenuItem
+                this.launcherToolStripMenuItem, this.toolStripMenuSep1, this.exitToolStripMenuItem,
             });
             this.contextMenuStrip1.Name = "ContextMenuStrip1";
             this.contextMenuStrip1.Size = new Size(130, 154);
@@ -805,7 +817,7 @@ namespace Els_kom_Core.Controls
             this.NotifyIcon1 = new NotifyIcon(this.components)
             {
                 ContextMenuStrip = this.contextMenuStrip1,
-                Visible = false
+                Visible = false,
             };
             this.NotifyIcon1.MouseClick += new MouseEventHandler(this.NotifyIcon1_MouseClick);
         }

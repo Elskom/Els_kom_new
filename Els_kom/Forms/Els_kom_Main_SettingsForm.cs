@@ -60,7 +60,7 @@ namespace Els_kom.Forms
             this.taskTmr = new Timer(this.components)
             {
                 Enabled = true,
-                Interval = 1
+                Interval = 1,
             };
             this.taskTmr.Tick += new EventHandler(this.TaskTmr_Tick);
         }

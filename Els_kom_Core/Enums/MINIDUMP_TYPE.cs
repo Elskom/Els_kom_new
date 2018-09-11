@@ -111,6 +111,6 @@ namespace Els_kom_Core.Enums
         /// <summary>
         /// Include Valid types?.
         /// </summary>
-        ValidTypeFlags = 0x0003ffff
+        ValidTypeFlags = 0x0003ffff,
     }
 }
