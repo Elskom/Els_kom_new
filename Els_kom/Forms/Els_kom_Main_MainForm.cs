@@ -30,7 +30,7 @@ namespace Els_kom.Forms
 
             if (!cancel)
             {
-                SettingsFile.Settingsxml?.Dispose();
+                SettingsFile.Settingsxml = null;
                 this.MainControl1.End_settings_loop = true;
             }
 

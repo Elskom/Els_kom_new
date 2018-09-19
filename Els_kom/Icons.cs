@@ -40,7 +40,7 @@ namespace Els_kom
                 }
 
                 // dispose this temporary object.
-                settingsxml?.Dispose();
+                settingsxml = null;
                 var retIcon = Properties.Resources.els_kom;
                 if (iconVal.Equals("1"))
                 {
@@ -81,7 +81,7 @@ namespace Els_kom
                 }
 
                 // dispose this temporary object.
-                settingsxml?.Dispose();
+                settingsxml = null;
                 var oldicon = Properties.Resources.els_kom;
                 if (iconVal.Equals("1"))
                 {
