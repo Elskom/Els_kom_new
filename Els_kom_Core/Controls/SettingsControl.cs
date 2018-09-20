@@ -45,74 +45,71 @@ namespace Els_kom_Core.Controls
         /// </summary>
         public void SaveSettings()
         {
-            if (!SettingsFile.Settingsxml.IsDisposed)
+            SettingsFile.Settingsxml?.ReopenFile();
+            this.curvalue3 = SettingsFile.Settingsxml?.Read("ElsDir");
+            this.curvalue = SettingsFile.Settingsxml?.Read("IconWhileElsNotRunning");
+            this.curvalue2 = SettingsFile.Settingsxml?.Read("IconWhileElsRunning");
+            if (!string.Equals(this.TextBox1.Text, this.curvalue3))
             {
-                SettingsFile.Settingsxml?.ReopenFile();
-                this.curvalue3 = SettingsFile.Settingsxml?.Read("ElsDir");
-                this.curvalue = SettingsFile.Settingsxml?.Read("IconWhileElsNotRunning");
-                this.curvalue2 = SettingsFile.Settingsxml?.Read("IconWhileElsRunning");
-                if (!string.Equals(this.TextBox1.Text, this.curvalue3))
+                if (this.TextBox1.Text.Length > 0)
                 {
-                    if (this.TextBox1.Text.Length > 0)
-                    {
-                        SettingsFile.Settingsxml?.Write("ElsDir", this.TextBox1.Text);
-                    }
-                    else
-                    {
-                        MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!");
-                    }
+                    SettingsFile.Settingsxml?.Write("ElsDir", this.TextBox1.Text);
                 }
-
-                if (!string.Equals(this.label4, this.curvalue))
+                else
                 {
-                    if (this.label5 == "...")
-                    {
-                        SettingsFile.Settingsxml?.Write("IconWhileElsNotRunning", "2");
-                    }
-                    else
-                    {
-                        SettingsFile.Settingsxml?.Write("IconWhileElsNotRunning", this.label4);
-                    }
+                    MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!");
                 }
-
-                if (!string.Equals(this.label5, this.curvalue2))
-                {
-                    if (this.label5 == "...")
-                    {
-                        SettingsFile.Settingsxml?.Write("IconWhileElsRunning", "1");
-                    }
-                    else
-                    {
-                        SettingsFile.Settingsxml?.Write("IconWhileElsRunning", this.label5);
-                    }
-                }
-
-                if (!string.Equals(this.label8, this.curvalue6))
-                {
-                    if (this.label8 == "...")
-                    {
-                        SettingsFile.Settingsxml?.Write("WindowIcon", "0");
-                    }
-                    else
-                    {
-                        SettingsFile.Settingsxml?.Write("WindowIcon", this.label8);
-                    }
-                }
-
-                SettingsFile.Settingsxml?.Write("LoadPDB", this.curvalue4.ToString());
-                SettingsFile.Settingsxml?.Write("SaveToZip", this.curvalue5.ToString());
-                var sources = new List<string>();
-                for (var i = 0; i < this.ListView2.Items.Count; i++)
-                {
-                    sources.Add(this.ListView2.Items[i].Text);
-                }
-
-                SettingsFile.Settingsxml?.Write("Sources", "Source", sources.ToArray());
-                sources.Clear();
-
-                // write to file.
-                SettingsFile.Settingsxml?.Save();
             }
+
+            if (!string.Equals(this.label4, this.curvalue))
+            {
+                if (this.label5 == "...")
+                {
+                    SettingsFile.Settingsxml?.Write("IconWhileElsNotRunning", "2");
+                }
+                else
+                {
+                    SettingsFile.Settingsxml?.Write("IconWhileElsNotRunning", this.label4);
+                }
+            }
+
+            if (!string.Equals(this.label5, this.curvalue2))
+            {
+                if (this.label5 == "...")
+                {
+                    SettingsFile.Settingsxml?.Write("IconWhileElsRunning", "1");
+                }
+                else
+                {
+                    SettingsFile.Settingsxml?.Write("IconWhileElsRunning", this.label5);
+                }
+            }
+
+            if (!string.Equals(this.label8, this.curvalue6))
+            {
+                if (this.label8 == "...")
+                {
+                    SettingsFile.Settingsxml?.Write("WindowIcon", "0");
+                }
+                else
+                {
+                    SettingsFile.Settingsxml?.Write("WindowIcon", this.label8);
+                }
+            }
+
+            SettingsFile.Settingsxml?.Write("LoadPDB", this.curvalue4.ToString());
+            SettingsFile.Settingsxml?.Write("SaveToZip", this.curvalue5.ToString());
+            var sources = new List<string>();
+            for (var i = 0; i < this.ListView2.Items.Count; i++)
+            {
+                sources.Add(this.ListView2.Items[i].Text);
+            }
+
+            SettingsFile.Settingsxml?.Write("Sources", "Source", sources.ToArray());
+            sources.Clear();
+
+            // write to file.
+            SettingsFile.Settingsxml?.Save();
         }
 
         /// <summary>

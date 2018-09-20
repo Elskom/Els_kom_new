@@ -206,7 +206,7 @@ namespace Els_kom_Core.Controls
             }
             else
             {
-                SettingsFile.Settingsxml?.Dispose();
+                SettingsFile.Settingsxml = null;
                 this.CloseForm?.Invoke(this, new EventArgs());
             }
         }
@@ -343,7 +343,7 @@ namespace Els_kom_Core.Controls
             if (!cancel)
             {
                 this.End_settings_loop = true;
-                SettingsFile.Settingsxml?.Dispose();
+                SettingsFile.Settingsxml = null;
                 this.CloseForm?.Invoke(this, new EventArgs());
             }
         }
