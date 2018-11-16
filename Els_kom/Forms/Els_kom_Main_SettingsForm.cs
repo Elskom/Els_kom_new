@@ -15,8 +15,6 @@ namespace Els_kom.Forms
     internal partial class SettingsForm : Form
     {
         private static string label1 = string.Empty;
-        private List<Task> tasks;
-        private Timer taskTmr;
 
         internal SettingsForm() => this.InitializeComponent();
 
@@ -55,14 +53,6 @@ namespace Els_kom.Forms
             // the Designer to fail to load the form the control is on.
             this.SettingsControl1.InitControl();
             Label1 = "1";
-            this.tasks = new List<Task>();
-            this.components = this.components ?? new Container();
-            this.taskTmr = new Timer(this.components)
-            {
-                Enabled = true,
-                Interval = 1,
-            };
-            this.taskTmr.Tick += new EventHandler(this.TaskTmr_Tick);
         }
 
         private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -89,26 +79,10 @@ namespace Els_kom.Forms
                     {
                         var plugsettingfrm = callbackplugin.SettingsWindow;
                         plugsettingfrm.Icon = Icons.FormIcon;
-                        var task = callbackplugin.ShowModal
-                            ? Task.Factory.StartNew(
-                                () => this.OpenPluginSettings(plugsettingfrm, this))
-                            : Task.Factory.StartNew(
-                                () => this.OpenPluginSettings(plugsettingfrm, null));
-                        this.tasks.Add(task);
-                    }
-                }
-            }
-        }
-
-        private void TaskTmr_Tick(object sender, EventArgs e)
-        {
-            foreach (var task in this.tasks)
-            {
-                if (task != null)
-                {
-                    if (task.IsCompleted || task.IsFaulted || task.IsCanceled)
-                    {
-                        task.Dispose();
+                        Task.Run(
+                            () => this.OpenPluginSettings(
+                                plugsettingfrm,
+                                callbackplugin.ShowModal ? this : null));
                     }
                 }
             }
