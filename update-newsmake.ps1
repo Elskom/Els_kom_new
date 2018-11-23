@@ -13,6 +13,4 @@ Set-Location -Path ../../../Misc/NEWS
 $env:newsmakeprogpth = Join-Path (Get-Location) ../../externals/newsmake/build/Release/newsmake
 Start-Process -FilePath $env:newsmakeprogpth -Wait -NoNewWindow
 Set-Location -Path ../..
-Set-Location -Path PCbuild
 nuget restore
-Set-Location -Path ..
