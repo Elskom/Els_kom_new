@@ -10,6 +10,7 @@ namespace Els_kom_Core.Classes
     using System.IO;
     using System.Text;
     using System.Windows.Forms;
+    using Els_kom_Core.Controls;
     using Els_kom_Core.Interfaces;
 
     /// <summary>
@@ -144,17 +145,17 @@ namespace Els_kom_Core.Classes
                         catch (UnpackingError)
                         {
                             // do not delete kom file.
-                            MessageManager.ShowError("Unpacking this KOM file failed.", "Error!");
+                            MessageManager.ShowError("Unpacking this KOM file failed.", "Error!", MainControl.NotifyIcon1);
                         }
                         catch (NotImplementedException)
                         {
-                            MessageManager.ShowError("The KOM V" + komplugin.SupportedKOMVersion + " plugin does not implement an unpacker function yet. Although it should.", "Error!");
+                            MessageManager.ShowError("The KOM V" + komplugin.SupportedKOMVersion + " plugin does not implement an unpacker function yet. Although it should.", "Error!", MainControl.NotifyIcon1);
                         }
                     }
                 }
                 else
                 {
-                    MessageManager.ShowError("Unknown KOM version Detected. Please send this KOM to the Els_kom Developers file for inspection.", "Error!");
+                    MessageManager.ShowError("Unknown KOM version Detected. Please send this KOM to the Els_kom Developers file for inspection.", "Error!", MainControl.NotifyIcon1);
                 }
             }
 
@@ -195,23 +196,23 @@ namespace Els_kom_Core.Classes
                             {
                                 // do not delete kom data folder.
                                 File.Create(Application.StartupPath + "\\koms\\" + kom_data_folder + "\\KOMVERSION." + komplugin.SupportedKOMVersion).Dispose();
-                                MessageManager.ShowError("Packing an folder to an KOM file failed.", "Error!");
+                                MessageManager.ShowError("Packing an folder to an KOM file failed.", "Error!", MainControl.NotifyIcon1);
                             }
                             catch (NotImplementedException)
                             {
                                 File.Create(Application.StartupPath + "\\koms\\" + kom_data_folder + "\\KOMVERSION." + komplugin.SupportedKOMVersion).Dispose();
-                                MessageManager.ShowError("The KOM V" + komplugin.SupportedKOMVersion + " plugin does not implement an packer function yet. Although it should.", "Error!");
+                                MessageManager.ShowError("The KOM V" + komplugin.SupportedKOMVersion + " plugin does not implement an packer function yet. Although it should.", "Error!", MainControl.NotifyIcon1);
                             }
                         }
                     }
                     else
                     {
-                        MessageManager.ShowError("An error occured while packing the file(s) to an KOM file.", "Error!");
+                        MessageManager.ShowError("An error occured while packing the file(s) to an KOM file.", "Error!", MainControl.NotifyIcon1);
                     }
                 }
                 else
                 {
-                    MessageManager.ShowError("Unknown KOM version Detected. Please send this KOM to the Els_kom Developers file for inspection.", "Error!");
+                    MessageManager.ShowError("Unknown KOM version Detected. Please send this KOM to the Els_kom Developers file for inspection.", "Error!", MainControl.NotifyIcon1);
                 }
             }
 

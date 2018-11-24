@@ -6,9 +6,11 @@
 namespace Els_kom_Core.Controls
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
     using System.IO;
+    using System.Reflection;
     using System.Threading;
     using System.Windows.Forms;
     using Els_kom_Core.Classes;
@@ -75,6 +77,14 @@ namespace Els_kom_Core.Controls
         public event EventHandler TrayIconChange;
 
         /// <summary>
+        /// Gets the tray Icon.
+        /// </summary>
+        /// <value>
+        /// The tray Icon.
+        /// </value>
+        public static NotifyIcon NotifyIcon1 { get; private set; } = null;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the
         /// program should close or skip closing.
         /// </summary>
@@ -96,13 +106,7 @@ namespace Els_kom_Core.Controls
         /// </value>
         public bool End_settings_loop { get; set; } = false;
 
-        /// <summary>
-        /// Gets the tray Icon.
-        /// </summary>
-        /// <value>
-        /// The tray Icon.
-        /// </value>
-        public NotifyIcon NotifyIcon1 { get; private set; }
+        internal static List<PluginUpdateCheck> PluginUpdateChecks { get; set; }
 
         private bool Enablehandlers { get; set; }
 
@@ -130,16 +134,16 @@ namespace Els_kom_Core.Controls
 
             if (ExecutionManager.IsElsKomRunning() == true)
             {
-                MessageManager.ShowError("Sorry, Only 1 Instance is allowed at a time.", "Error!");
+                MessageManager.ShowError("Sorry, Only 1 Instance is allowed at a time.", "Error!", NotifyIcon1);
                 closing = true;
             }
             else
             {
                 SettingsFile.Settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
-                this.elsDir = SettingsFile.Settingsxml?.Read("ElsDir");
+                this.elsDir = SettingsFile.Settingsxml?.TryRead("ElsDir");
                 if (this.elsDir.Length < 1)
                 {
-                    MessageManager.ShowInfo("Welcome to Els_kom." + Environment.NewLine + "Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops." + Environment.NewLine + "Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!");
+                    MessageManager.ShowInfo("Welcome to Els_kom." + Environment.NewLine + "Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops." + Environment.NewLine + "Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!", NotifyIcon1);
                     this.ConfigForm?.Invoke(this, new EventArgs());
                 }
 
@@ -149,7 +153,7 @@ namespace Els_kom_Core.Controls
                 ExecutionManager.Callbackplugins.AddRange(callbackplugins);
                 if (!Git.IsMaster)
                 {
-                    MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!");
+                    MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!", NotifyIcon1);
                 }
 
                 if (Git.IsDirty)
@@ -199,9 +203,18 @@ namespace Els_kom_Core.Controls
                     Interval = 1,
                 };
                 this.launcherTmr.Tick += new EventHandler(this.Launcher);
-                this.NotifyIcon1.Icon = this.FindForm().Icon;
-                this.NotifyIcon1.Text = this.FindForm().Text;
-                this.NotifyIcon1.Visible = true;
+                NotifyIcon1.Icon = this.FindForm().Icon;
+                NotifyIcon1.Text = this.FindForm().Text;
+                NotifyIcon1.Visible = true;
+                PluginUpdateCheck.NotifyIcon = NotifyIcon1;
+                PluginUpdateChecks = PluginUpdateCheck.CheckForUpdates(
+                    SettingsFile.Settingsxml?.TryRead("Sources", "Source", null));
+                foreach (var pluginUpdateCheck in PluginUpdateChecks)
+                {
+                    // discard result.
+                    var result = pluginUpdateCheck.ShowMessage;
+                }
+
                 this.FindForm().Show();
             }
             else
@@ -217,9 +230,9 @@ namespace Els_kom_Core.Controls
         /// <returns>If Els_kom should remain open or not.</returns>
         public bool VersionCheck()
         {
-            if (typeof(MainControl).Assembly.GetName().Version.ToString() != System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString())
+            if (typeof(MainControl).Assembly.GetName().Version.ToString() != Assembly.GetExecutingAssembly().GetName().Version.ToString())
             {
-                MessageManager.ShowError("Sorry, you cannot use Els_kom.exe from this version with a newer or older Core. Please update the executable as well.", "Error!");
+                MessageManager.ShowError("Sorry, you cannot use Els_kom.exe from this version with a newer or older Core. Please update the executable as well.", "Error!", NotifyIcon1);
                 this.CloseForm?.Invoke(this, new EventArgs());
                 return false;
             }
@@ -337,7 +350,7 @@ namespace Els_kom_Core.Controls
                 KOMManager.UnpackingState)
             {
                 cancel = true;
-                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!");
+                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", NotifyIcon1);
             }
 
             if (!cancel)
@@ -345,6 +358,10 @@ namespace Els_kom_Core.Controls
                 this.End_settings_loop = true;
                 SettingsFile.Settingsxml = null;
                 this.CloseForm?.Invoke(this, new EventArgs());
+                foreach (var pluginUpdateCheck in PluginUpdateChecks)
+                {
+                    pluginUpdateCheck.Dispose();
+                }
             }
         }
 
@@ -443,9 +460,9 @@ namespace Els_kom_Core.Controls
                     this.Label2.Text = "Packing...";
                 }
 
-                if (!string.Equals(this.NotifyIcon1.Text, this.Label2.Text))
+                if (!string.Equals(NotifyIcon1.Text, this.Label2.Text))
                 {
-                    this.NotifyIcon1.Text = this.Label2.Text;
+                    NotifyIcon1.Text = this.Label2.Text;
                 }
             }
             else
@@ -514,9 +531,9 @@ namespace Els_kom_Core.Controls
                     this.Label2.Text = "Unpacking...";
                 }
 
-                if (!string.Equals(this.NotifyIcon1.Text, this.Label2.Text))
+                if (!string.Equals(NotifyIcon1.Text, this.Label2.Text))
                 {
-                    this.NotifyIcon1.Text = this.Label2.Text;
+                    NotifyIcon1.Text = this.Label2.Text;
                 }
             }
             else
@@ -690,9 +707,9 @@ namespace Els_kom_Core.Controls
                 if (this.AbleToClose())
                 {
                     SettingsFile.Settingsxml?.ReopenFile();
-                    this.showintaskbarTempvalue = SettingsFile.Settingsxml?.Read("IconWhileElsNotRunning");
-                    this.showintaskbarTempvalue2 = SettingsFile.Settingsxml?.Read("IconWhileElsRunning");
-                    this.elsDirTemp = SettingsFile.Settingsxml?.Read("ElsDir");
+                    this.showintaskbarTempvalue = SettingsFile.Settingsxml?.TryRead("IconWhileElsNotRunning");
+                    this.showintaskbarTempvalue2 = SettingsFile.Settingsxml?.TryRead("IconWhileElsRunning");
+                    this.elsDirTemp = SettingsFile.Settingsxml?.TryRead("ElsDir");
                     this.TrayIconChange?.Invoke(this, new EventArgs());
                     if (!string.Equals(this.elsDir, this.elsDirTemp))
                     {
@@ -709,21 +726,21 @@ namespace Els_kom_Core.Controls
                         if (this.showintaskbarValue.Equals("0"))
                         {
                             // Taskbar only!!!
-                            this.NotifyIcon1.Visible = false;
+                            NotifyIcon1.Visible = false;
                             this.FindForm().ShowInTaskbar = true;
                         }
 
                         if (this.showintaskbarValue.Equals("1"))
                         {
                             // Tray only!!!
-                            this.NotifyIcon1.Visible = true;
+                            NotifyIcon1.Visible = true;
                             this.FindForm().ShowInTaskbar = false;
                         }
 
                         if (this.showintaskbarValue.Equals("2"))
                         {
                             // Both!!!
-                            this.NotifyIcon1.Visible = true;
+                            NotifyIcon1.Visible = true;
                             this.FindForm().ShowInTaskbar = true;
                         }
                     }
@@ -737,21 +754,21 @@ namespace Els_kom_Core.Controls
                         if (this.showintaskbarValue2.Equals("0"))
                         {
                             // Taskbar only!!!
-                            this.NotifyIcon1.Visible = false;
+                            NotifyIcon1.Visible = false;
                             this.FindForm().ShowInTaskbar = true;
                         }
 
                         if (this.showintaskbarValue2.Equals("1"))
                         {
                             // Tray only!!!
-                            this.NotifyIcon1.Visible = true;
+                            NotifyIcon1.Visible = true;
                             this.FindForm().ShowInTaskbar = false;
                         }
 
                         if (this.showintaskbarValue2.Equals("2"))
                         {
                             // Both!!!
-                            this.NotifyIcon1.Visible = true;
+                            NotifyIcon1.Visible = true;
                             this.FindForm().ShowInTaskbar = true;
                         }
                     }
@@ -814,12 +831,12 @@ namespace Els_kom_Core.Controls
             this.contextMenuStrip1.Name = "ContextMenuStrip1";
             this.contextMenuStrip1.Size = new Size(130, 154);
             this.contextMenuStrip1.ResumeLayout(false);
-            this.NotifyIcon1 = new NotifyIcon(this.components)
+            NotifyIcon1 = new NotifyIcon(this.components)
             {
                 ContextMenuStrip = this.contextMenuStrip1,
                 Visible = false,
             };
-            this.NotifyIcon1.MouseClick += new MouseEventHandler(this.NotifyIcon1_MouseClick);
+            NotifyIcon1.MouseClick += new MouseEventHandler(this.NotifyIcon1_MouseClick);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Els_kom.Forms
             if (!this.MainControl1.AbleToClose() && !MainControl.Closable)
             {
                 cancel = true;
-                MessageBox.Show("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", MainControl.NotifyIcon1);
             }
 
             if (!cancel)
@@ -55,7 +55,7 @@ namespace Els_kom.Forms
             this.Close();
         }
 
-        private void MainControl1_TrayNameChange(object sender, EventArgs e) => this.MainControl1.NotifyIcon1.Text = this.Text;
+        private void MainControl1_TrayNameChange(object sender, EventArgs e) => MainControl.NotifyIcon1.Text = this.Text;
 
         private void MainControl1_TrayClick(object sender, MouseEventArgs e)
         {
@@ -79,7 +79,7 @@ namespace Els_kom.Forms
                             this.WindowState = FormWindowState.Minimized;
                         }
                     }
-                    else if (this.MainControl1.NotifyIcon1.Visible)
+                    else if (MainControl.NotifyIcon1.Visible)
                     {
                         if (this.WindowState == FormWindowState.Minimized)
                         {
@@ -124,7 +124,7 @@ namespace Els_kom.Forms
         {
             // this seem to not update the form icon at runtime...
             this.Icon = Icons.FormIcon;
-            this.MainControl1.NotifyIcon1.Icon = this.Icon;
+            MainControl.NotifyIcon1.Icon = this.Icon;
         }
     }
 }

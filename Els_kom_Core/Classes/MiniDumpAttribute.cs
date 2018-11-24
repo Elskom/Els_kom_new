@@ -64,7 +64,7 @@ namespace Els_kom_Core.Classes
                 fileStream.Write(outputData, 0, outputData.Length);
                 fileStream.Dispose();
                 MiniDump.FullMiniDumpToFile(SettingsFile.MiniDumpPath);
-                MessageManager.ShowError(string.Format(this.text, SettingsFile.ErrorLogPath), this.ExceptionTitle);
+                MessageManager.ShowError(string.Format(this.text, SettingsFile.ErrorLogPath), this.ExceptionTitle, MainControl.NotifyIcon1);
                 Application.Exit();
             }
         }
@@ -83,7 +83,7 @@ namespace Els_kom_Core.Classes
                 fileStream.Write(outputData, 0, outputData.Length);
                 fileStream.Dispose();
                 MiniDump.FullMiniDumpToFile(SettingsFile.MiniDumpPath);
-                MessageManager.ShowError(string.Format(this.text, SettingsFile.ErrorLogPath), this.ThreadExceptionTitle);
+                MessageManager.ShowError(string.Format(this.text, SettingsFile.ErrorLogPath), this.ThreadExceptionTitle, MainControl.NotifyIcon1);
                 Application.Exit();
             }
         }

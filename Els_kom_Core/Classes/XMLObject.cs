@@ -66,7 +66,6 @@ namespace Els_kom_Core.Classes
         /// but only if it has changed. If the file was not saved it
         /// will be saved first.
         /// </summary>
-        /// <exception cref="ObjectDisposedException"><see cref="XMLObject"/> is disposed.</exception>
         /// <exception cref="InvalidOperationException">Cannot reopen on read-only instances.</exception>
         public void ReopenFile() => this.xmlObject.ReopenFile();
 
@@ -79,7 +78,6 @@ namespace Els_kom_Core.Classes
         /// empty value as well as making the attribute as if the Element was
         /// pre-added before calling this function.
         /// </summary>
-        /// <exception cref="ObjectDisposedException"><see cref="XMLObject"/> is disposed.</exception>
         /// <exception cref="Exception">Attribute already exists in the xml file.</exception>
         /// <exception cref="InvalidOperationException">When called from a read-only instance.</exception>
         /// <param name="elementname">The name of the element to add a attribute to.</param>
@@ -94,7 +92,6 @@ namespace Els_kom_Core.Classes
         ///
         /// If Element does not exist yet it will be created automatically.
         /// </summary>
-        /// <exception cref="ObjectDisposedException"><see cref="XMLObject"/> is disposed.</exception>
         /// <exception cref="InvalidOperationException">When called from a read-only instance.</exception>
         /// <param name="elementname">The name of the element to write to or create.</param>
         /// <param name="value">The value for the element.</param>
@@ -106,7 +103,6 @@ namespace Els_kom_Core.Classes
         ///
         /// If Element does not exist yet it will be created automatically.
         /// </summary>
-        /// <exception cref="ObjectDisposedException"><see cref="XMLObject"/> is disposed.</exception>
         /// <exception cref="Exception">Attribute already exists in the xml file.</exception>
         /// <exception cref="InvalidOperationException">When called from a read-only instance.</exception>
         /// <param name="elementname">
@@ -124,7 +120,6 @@ namespace Els_kom_Core.Classes
         ///
         /// If Elements do not exist yet they will be created automatically.
         /// </summary>
-        /// <exception cref="ObjectDisposedException"><see cref="XMLObject"/> is disposed.</exception>
         /// <exception cref="InvalidOperationException">When called from a read-only instance.</exception>
         /// <param name="parentelementname">parrent element name of the subelement.</param>
         /// <param name="elementname">The name to use when writing subelement(s).</param>
@@ -134,23 +129,16 @@ namespace Els_kom_Core.Classes
 
         /// <summary>
         /// Reads and returns the value set for an particular XML Element.
-        ///
-        /// If Element does not exist yet it will be created automatically with an empty value.
         /// </summary>
-        /// <exception cref="ObjectDisposedException"><see cref="XMLObject"/> is disposed.</exception>
-        /// <exception cref="InvalidOperationException">When the Element does not exist in a read-only instance.</exception>
+        /// <exception cref="ArgumentException">When the element trying to be read does not exist.</exception>
         /// <param name="elementname">The element name to read the value from.</param>
         /// <returns>The value of the input element or <see cref="string.Empty"/>.</returns>
         public string Read(string elementname) => this.xmlObject.Read(elementname);
 
         /// <summary>
         /// Reads and returns the value set for an particular XML Element attribute.
-        ///
-        /// If Element and the attribute does not exist yet it will be created automatically
-        /// with an empty value.
         /// </summary>
-        /// <exception cref="ObjectDisposedException"><see cref="XMLObject"/> is disposed.</exception>
-        /// <exception cref="InvalidOperationException">When the Element does not exist in a read-only instance.</exception>
+        /// <exception cref="ArgumentException">When the element trying to be read does not exist.</exception>
         /// <param name="elementname">The element name to get the value of a attribute.</param>
         /// <param name="attributename">The name of the attribute to get the value of.</param>
         /// <returns>The value of the input element or <see cref="string.Empty"/>.</returns>
@@ -159,12 +147,8 @@ namespace Els_kom_Core.Classes
 
         /// <summary>
         /// Reads and returns an array of values set for an particular XML Element's subelements.
-        ///
-        /// If Parent Element does not exist yet it will be created automatically
-        /// with an empty value. In that case an empty string array is returned.
         /// </summary>
-        /// <exception cref="ObjectDisposedException"><see cref="XMLObject"/> is disposed.</exception>
-        /// <exception cref="InvalidOperationException">When the Element does not exist in a read-only instance.</exception>
+        /// <exception cref="ArgumentException">When the parrent element trying to be read does not exist.</exception>
         /// <param name="parentelementname">The name of the parrent element of the subelement(s).</param>
         /// <param name="elementname">The name of the subelements to get their values.</param>
         /// <param name="unused">
@@ -178,10 +162,50 @@ namespace Els_kom_Core.Classes
             => this.xmlObject.Read(parentelementname, elementname, unused);
 
         /// <summary>
+        /// Reads and returns the value set for an particular XML Element.
+        ///
+        /// If Element does not exist yet it will be created automatically with an empty value.
+        /// Automatic creations is not possible if the object is read-only though.
+        /// </summary>
+        /// <param name="elementname">The element name to read the value from.</param>
+        /// <returns>The value of the input element or <see cref="string.Empty"/>.</returns>
+        public string TryRead(string elementname) => this.xmlObject.TryRead(elementname);
+
+        /// <summary>
+        /// Reads and returns the value set for an particular XML Element attribute.
+        ///
+        /// If Element and the attribute does not exist yet it will be created automatically
+        /// with an empty value. Automatic creations is not possible if the object is read-only though.
+        /// </summary>
+        /// <param name="elementname">The element name to get the value of a attribute.</param>
+        /// <param name="attributename">The name of the attribute to get the value of.</param>
+        /// <returns>The value of the input element or <see cref="string.Empty"/>.</returns>
+        public string TryRead(string elementname, string attributename)
+            => this.xmlObject.TryRead(elementname, attributename);
+
+        /// <summary>
+        /// Reads and returns an array of values set for an particular XML Element's subelements.
+        ///
+        /// If Parent Element does not exist yet it will be created automatically
+        /// with an empty value. In that case an empty string array is returned.
+        /// Automatic creations is not possible if the object is read-only though.
+        /// </summary>
+        /// <param name="parentelementname">The name of the parrent element of the subelement(s).</param>
+        /// <param name="elementname">The name of the subelements to get their values.</param>
+        /// <param name="unused">
+        /// A unused paramiter to avoid a compiler error from this overload.
+        /// </param>
+        /// <returns>
+        /// A array of values or a empty array of strings if
+        /// there is no subelements to this element.
+        /// </returns>
+        public string[] TryRead(string parentelementname, string elementname, object unused = null)
+            => this.xmlObject.TryRead(parentelementname, elementname, unused);
+
+        /// <summary>
         /// Deletes an xml element using the element name.
         /// Can also delete not only the parrent element but also subelements with it.
         /// </summary>
-        /// <exception cref="ObjectDisposedException"><see cref="XMLObject"/> is disposed.</exception>
         /// <exception cref="ArgumentException">elementname does not exist in the xml or in pending edits.</exception>
         /// <exception cref="InvalidOperationException">When the object is a read-only instance.</exception>
         /// <param name="elementname">The element name of the element to delete.</param>
@@ -190,7 +214,6 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Removes an xml attribute using the element name and the name of the attribute.
         /// </summary>
-        /// <exception cref="ObjectDisposedException"><see cref="XMLObject"/> is disposed.</exception>
         /// <exception cref="ArgumentException">elementname or attributename does not exist in the xml or in pending edits.</exception>
         /// <exception cref="InvalidOperationException">When the object is a read-only instance.</exception>
         /// <param name="elementname">The element name that has the attribute to delete.</param>
@@ -201,7 +224,6 @@ namespace Els_kom_Core.Classes
         /// <summary>
         /// Saves the underlying XML file if it changed.
         /// </summary>
-        /// <exception cref="ObjectDisposedException"><see cref="XMLObject"/> is disposed.</exception>
         public void Save() => this.xmlObject.Save();
     }
 }

@@ -46,9 +46,9 @@ namespace Els_kom_Core.Controls
         public void SaveSettings()
         {
             SettingsFile.Settingsxml?.ReopenFile();
-            this.curvalue3 = SettingsFile.Settingsxml?.Read("ElsDir");
-            this.curvalue = SettingsFile.Settingsxml?.Read("IconWhileElsNotRunning");
-            this.curvalue2 = SettingsFile.Settingsxml?.Read("IconWhileElsRunning");
+            this.curvalue3 = SettingsFile.Settingsxml?.TryRead("ElsDir");
+            this.curvalue = SettingsFile.Settingsxml?.TryRead("IconWhileElsNotRunning");
+            this.curvalue2 = SettingsFile.Settingsxml?.TryRead("IconWhileElsRunning");
             if (!string.Equals(this.TextBox1.Text, this.curvalue3))
             {
                 if (this.TextBox1.Text.Length > 0)
@@ -57,7 +57,7 @@ namespace Els_kom_Core.Controls
                 }
                 else
                 {
-                    MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!");
+                    MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!", MainControl.NotifyIcon1);
                 }
             }
 
@@ -118,13 +118,13 @@ namespace Els_kom_Core.Controls
         public void InitControl()
         {
             SettingsFile.Settingsxml?.ReopenFile();
-            this.curvalue3 = SettingsFile.Settingsxml?.Read("ElsDir");
-            this.curvalue = SettingsFile.Settingsxml?.Read("IconWhileElsNotRunning");
-            this.curvalue2 = SettingsFile.Settingsxml?.Read("IconWhileElsRunning");
-            this.curvalue6 = SettingsFile.Settingsxml?.Read("WindowIcon");
-            int.TryParse(SettingsFile.Settingsxml?.Read("LoadPDB"), out this.curvalue4);
-            int.TryParse(SettingsFile.Settingsxml?.Read("SaveToZip"), out this.curvalue5);
-            var sources = SettingsFile.Settingsxml?.Read("Sources", "Source", null);
+            this.curvalue3 = SettingsFile.Settingsxml?.TryRead("ElsDir");
+            this.curvalue = SettingsFile.Settingsxml?.TryRead("IconWhileElsNotRunning");
+            this.curvalue2 = SettingsFile.Settingsxml?.TryRead("IconWhileElsRunning");
+            this.curvalue6 = SettingsFile.Settingsxml?.TryRead("WindowIcon");
+            int.TryParse(SettingsFile.Settingsxml?.TryRead("LoadPDB"), out this.curvalue4);
+            int.TryParse(SettingsFile.Settingsxml?.TryRead("SaveToZip"), out this.curvalue5);
+            var sources = SettingsFile.Settingsxml?.TryRead("Sources", "Source", null);
             foreach (var source in sources)
             {
                 this.ListView2.Items.Add(source);
@@ -351,7 +351,6 @@ namespace Els_kom_Core.Controls
         // well they were too stupid to hack a elegant soluion like this.
         private void ListView2_DoubleClick(object sender, EventArgs e)
         {
-            // seems to not place the box in the correct location and it shows under the listview...
             var textBox = new TextBox
             {
                 Bounds = this.ListView2.SelectedItems[0].Bounds,

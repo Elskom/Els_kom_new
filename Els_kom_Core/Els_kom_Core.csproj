@@ -69,6 +69,7 @@
     <Compile Include="Classes\MiniDump.cs" />
     <Compile Include="Classes\MiniDumpAttribute.cs" />
     <Compile Include="Classes\PackingError.cs" />
+    <Compile Include="Classes\PluginUpdateCheck.cs" />
     <Compile Include="Classes\ReleasePackaging.cs" />
     <Compile Include="Classes\ResourcesDir.cs" />
     <Compile Include="Classes\SafeNativeMethods.cs" />
@@ -119,7 +120,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta009">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta.47">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

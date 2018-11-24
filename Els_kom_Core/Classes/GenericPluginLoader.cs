@@ -38,7 +38,7 @@ namespace Els_kom_Core.Classes
             // try to load from a zip as well if plugins are installed in both places.
             var zippath = $"{path}.zip";
             ICollection<T> plugins = new List<T>();
-            int.TryParse(SettingsFile.Settingsxml?.Read("SaveToZip"), out var saveToZip1);
+            int.TryParse(SettingsFile.Settingsxml?.TryRead("SaveToZip"), out var saveToZip1);
             var saveToZip = Convert.ToBoolean(saveToZip1);
 
             // handle when path points to a zip file.
@@ -50,12 +50,19 @@ namespace Els_kom_Core.Classes
                     foreach (var dllFile in dllFileNames)
                     {
                         SettingsFile.Settingsxml?.ReopenFile();
-                        int.TryParse(SettingsFile.Settingsxml?.Read("LoadPDB"), out var tempint);
+                        int.TryParse(SettingsFile.Settingsxml?.TryRead("LoadPDB"), out var tempint);
                         var loadPDB = Convert.ToBoolean(tempint) ? Convert.ToBoolean(tempint) : Debugger.IsAttached;
-                        var assembly = loadPDB ?
-                            Assembly.Load(File.ReadAllBytes(dllFile), File.ReadAllBytes(dllFile.Replace("dll", "pdb"))) :
-                            Assembly.Load(File.ReadAllBytes(dllFile));
-                        assemblies.Add(assembly);
+                        try
+                        {
+                            var assembly = loadPDB ?
+                                Assembly.Load(File.ReadAllBytes(dllFile), File.ReadAllBytes(dllFile.Replace("dll", "pdb"))) :
+                                Assembly.Load(File.ReadAllBytes(dllFile));
+                            assemblies.Add(assembly);
+                        }
+                        catch (BadImageFormatException)
+                        {
+                            // ignore the error and load the other files.
+                        }
                     }
                 }
 
@@ -68,7 +75,7 @@ namespace Els_kom_Core.Classes
                         if (entry.FullName.EndsWith(".dll"))
                         {
                             SettingsFile.Settingsxml?.ReopenFile();
-                            int.TryParse(SettingsFile.Settingsxml?.Read("LoadPDB"), out var tempint);
+                            int.TryParse(SettingsFile.Settingsxml?.TryRead("LoadPDB"), out var tempint);
                             var assembly = AssemblyExtensions.LoadFromZip(zippath, entry.FullName, Convert.ToBoolean(tempint));
                             assemblies.Add(assembly);
                         }
