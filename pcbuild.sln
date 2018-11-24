@@ -1,0 +1,26 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Els_kom", "Els_kom\Els_kom.csproj", "{0116DE95-C3D6-487A-9133-5D26B6CA09FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Els_kom_Core", "Els_kom_Core\Els_kom_Core.csproj", "{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0116DE95-C3D6-487A-9133-5D26B6CA09FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0116DE95-C3D6-487A-9133-5D26B6CA09FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8588AE1C-CD41-4A96-8C9A-CD48B311BB6E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D97FF96-21DB-4939-A93E-F75A2BECC958}
+	EndGlobalSection
+EndGlobal

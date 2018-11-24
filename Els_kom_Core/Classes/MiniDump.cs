@@ -9,6 +9,7 @@ namespace Els_kom_Core.Classes
     using System.Diagnostics;
     using System.IO;
     using System.Runtime.InteropServices;
+    using Els_kom_Core.Controls;
     using Els_kom_Core.Enums;
     using Els_kom_Core.Structs;
 
@@ -54,7 +55,8 @@ namespace Els_kom_Core.Classes
                 {
                     MessageManager.ShowError(
                         $"Mini-dumping failed with Code: {error}",
-                        "Error!");
+                        "Error!",
+                        MainControl.NotifyIcon1);
                 }
 
                 thisProcess.Dispose();
@@ -99,7 +101,8 @@ namespace Els_kom_Core.Classes
                 {
                     MessageManager.ShowError(
                         $"Mini-dumping failed with Code: {error}",
-                        "Error!");
+                        "Error!",
+                        MainControl.NotifyIcon1);
                 }
 
                 thisProcess.Dispose();

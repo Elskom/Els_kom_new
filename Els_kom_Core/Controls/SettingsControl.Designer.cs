@@ -440,6 +440,7 @@ namespace Els_kom_Core.Controls
             this.ListView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ColumnHeader2});
             this.ListView2.FullRowSelect = true;
+            this.ListView2.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ListView2.GridLines = true;
             this.ListView2.HideSelection = false;
             this.ListView2.LabelWrap = false;

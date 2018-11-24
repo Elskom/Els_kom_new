@@ -6,6 +6,7 @@
 namespace Els_kom
 {
     using System.Drawing;
+    using Els_kom.Properties;
     using Els_kom_Core.Classes;
 
     // Forms designer cannot see these if they are "internal" but I wanted them Internal.
@@ -31,24 +32,24 @@ namespace Els_kom
                 if (SettingsFile.Settingsxml == null)
                 {
                     settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
-                    iconVal = settingsxml.Read("WindowIcon");
+                    iconVal = settingsxml.TryRead("WindowIcon");
                 }
                 else
                 {
                     SettingsFile.Settingsxml.ReopenFile();
-                    iconVal = SettingsFile.Settingsxml.Read("WindowIcon");
+                    iconVal = SettingsFile.Settingsxml.TryRead("WindowIcon");
                 }
 
                 // dispose this temporary object.
                 settingsxml = null;
-                var retIcon = Properties.Resources.els_kom;
+                var retIcon = Resources.els_kom;
                 if (iconVal.Equals("1"))
                 {
-                    retIcon = Properties.Resources.VP_Trans;
+                    retIcon = Resources.VP_Trans;
                 }
                 else if (iconVal.Equals("2"))
                 {
-                    retIcon = Properties.Resources.YR;
+                    retIcon = Resources.YR;
                 }
 
                 return retIcon;
@@ -72,24 +73,24 @@ namespace Els_kom
                 if (SettingsFile.Settingsxml == null)
                 {
                     settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
-                    iconVal = settingsxml.Read("WindowIcon");
+                    iconVal = settingsxml.TryRead("WindowIcon");
                 }
                 else
                 {
                     SettingsFile.Settingsxml.ReopenFile();
-                    iconVal = SettingsFile.Settingsxml.Read("WindowIcon");
+                    iconVal = SettingsFile.Settingsxml.TryRead("WindowIcon");
                 }
 
                 // dispose this temporary object.
                 settingsxml = null;
-                var oldicon = Properties.Resources.els_kom;
+                var oldicon = Resources.els_kom;
                 if (iconVal.Equals("1"))
                 {
-                    oldicon = Properties.Resources.VP_Trans;
+                    oldicon = Resources.VP_Trans;
                 }
                 else if (iconVal.Equals("2"))
                 {
-                    oldicon = Properties.Resources.YR;
+                    oldicon = Resources.YR;
                 }
 
                 var newicon = new Icon(oldicon, 48, 48);

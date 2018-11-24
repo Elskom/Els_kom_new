@@ -5,6 +5,7 @@
 
 using System;
 using System.Windows.Forms;
+using Els_kom.Forms;
 using Els_kom_Core.Classes;
 
 [MiniDump(
@@ -28,7 +29,7 @@ internal static class Els_kom_Main
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Els_kom.Forms.MainForm());
+            Application.Run(new MainForm());
         }
 
         return 0;
