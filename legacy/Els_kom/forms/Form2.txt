@@ -1,0 +1,16 @@
+This Version of Els_kom uses a tool that does it's Testing of mods on it 
+instead of having it do the testing of mods within this program internally 
+which would cause bugs in this program.
+Now I hope the bugs are now fixed.
+Tool: Test_Mods.exe
+Company Name of the tool: Eloquence
+Copyright of the tool: Copyright © 2015
+
+This Version also uses a tool used to execute the Launcher. I did try 
+revising the Test mods tool to do so with a ini file but to no success.
+so I made this tool as well.
+Tool: Launcher.exe
+Company Name of the tool: Eloquence
+Copyright of the tool: Copyright © 2015
+
+For more Information on Eloquence visit the following link below.

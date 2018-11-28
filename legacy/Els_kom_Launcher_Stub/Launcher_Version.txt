@@ -1,0 +1,23 @@
+
+1 VERSIONINFO
+FILEVERSION 1,0,0,0
+PRODUCTVERSION 1,0,0,0
+FILEOS 0x4
+FILETYPE 0x1
+{
+BLOCK "StringFileInfo"
+{
+	BLOCK "040904b0"
+	{
+		VALUE "FileDescription", "Launcher Stub for Els_kom."
+		VALUE "CompanyName", "Eloquence"
+		VALUE "FileVersion", "1.0.0.0"
+		VALUE "LegalCopyright", "Copyright © 2015"
+	}
+}
+
+BLOCK "VarFileInfo"
+{
+	VALUE "Translation", 0x0409 0x04B0
+}
+}

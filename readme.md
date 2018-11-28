@@ -1,6 +1,6 @@
 # Els_kom_new
 
-![Els_kom Icon](https://github.com/Elskom/Els_kom_new/blob/icon/els_kom.png)
+![Els_kom Icon](./els_kom.png)
 
 |       | Build | VS2017 | VS2017 Preview |
 |:---------------:  |:---------------:  |:---------------:  |:---------------:  |

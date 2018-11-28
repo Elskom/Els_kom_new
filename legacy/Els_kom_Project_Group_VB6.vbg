@@ -1,0 +1,4 @@
+VBGROUP 5.0
+StartupProject=Els_kom\Els_kom.vbp
+Project=Els_kom_Test_Mods_Stub\Els_kom_Test_Mods_Stub.vbp
+Project=Els_kom_Launcher_Stub\Els_kom_Launcher_Stub.vbp
