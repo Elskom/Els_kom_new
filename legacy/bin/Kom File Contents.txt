@@ -1,0 +1,184 @@
+001 - arbor day ui
+002 - various skill sprites(protected)
+003 - ice burner model
+004 -in game's loot model
+005 - mobs ruben
+006 - mobs elder
+007 - mobs besma
+008 - mobs peita
+009 - mobs altera 1
+010 - mobs altera 2
+011 - model ally summon
+012 - mobs events
+013 - model npc(protected)
+014 - chars dialogue image (epic quest)
+015 - model aisha
+016 - model accessories
+017 - model elsword
+018 - model eve
+019 - model rena
+020 - model raven
+021 - SD
+022 - title icons
+023 - event field misc mips, town's ad boards
+024 - dungeon bg textures ruben 1, field background altera, peita (old)
+025 - dungeon bg textures ruben 2
+026 - dungeon bg textures elder
+027 - dungeon bg textures altera
+032 - dungeon bg textures altera
+033 - set of character's motions,skill motions
+034 - UI layout backbones
+035 - dungeons stages layout backbone
+036 - misc, in game's core files(protected)
+037 - mobs motion files
+038 - chars outside/lobby stance
+039 - ui npc
+040 - map layout files
+043 - DANGER! boss' name sprites
+044 - chars end mission,cut-in, boss dialogues
+045 - shop sprites, off UI elsword logo
+046 - front screen's layout
+047 - field minimap (old), minimap's symbols
+048 - dungeon and PvP rank textures.various in game front layer effects, symbols, more skill sprites including Aisha fireball and Rena Arrows.
+049 - score counter, hits counter alphabets
+050 - tutorial ui images
+051 - result bg image
+052 - change job completed - intro
+053 - ui textures1
+054 - ui textures2
+055 - ui texture3
+056 - button texture
+057 - button, ui, char upper left hp bar image
+058 - loading image for ruben
+059 - loading image for elder
+060 - loading image for besma
+061 - loading image for peita
+062 - loading image for altera
+063 - skill icons, cursors, icons, pvp rank textures
+064 - F12 guide book ui
+065 - stage select minimaps image
+066 - ui minimap (old)
+067 - item's icon 1
+068 - NEXT STAGE LOADING, HP bars, boss hp bar etc.
+069 - char's skill sfx
+070 - general in game sfx
+071 - stage sfx altera
+072 - stage sfx altera boss
+073 - stage sfx besma
+074 - stage sfx besma2
+075 - stage sfx elder
+076 - stage sfx peita
+077 - stage sfx ruben
+078 - pvp bg, GoD sfx, dance emote sfx
+079 - tutorial aisha
+080 - tutorial elsword
+081 - tutorial misc SE
+082 - tutorial eve
+083 - tutorial rena
+084 - tut0rial raven
+085 - ui sfx
+086 - altera velder bg sfx
+087 - besma bg sfx
+088 - observe npc se
+089 - dungeon gate se
+090 - elder bg sfx
+091 - ruben bg sfx
+092 - aisha voice
+093 - els voice
+094 - eve voice
+095 - rena voice
+096 - npc voice
+097 - raven voice
+098 - berd & cuttysark stage se
+099 - henir background texture
+100 - model velder mobs & stage texture
+101 - velder stage textures
+102 - mobs velder se & some mobs voice
+103 - velder loading image
+104 - enemy/boss voice
+105 - velder boss se
+106 - model pet
+107 - model chung
+108 - tutorial chung
+109 - chung voice
+110 - hamel town & dungeon texture
+111 - mobs hamel
+112 - velder town sfx
+113 - hamel town sfx
+114 - hamel dungeon, mobs & boss sfx 1
+115 - hamel loading image
+116 - aisha skills texture(protected)
+117 - chung skill textures
+118 - elsword skill texture
+119 - eve skills texture(protected)
+120 - raven skills texture
+121 - rena skills texture
+122 - type-h green skills texture
+123 - berthe skills texture
+124 - velder mobs boss skills texture
+125 - hamel mobs boss skills texture
+126 - move to towns, GoD loading image
+127 - hamel dungeon, mobs & boss sfx 2
+128 - PVP heroes model
+129 - pet sfx
+130 - item's icon 2
+131 - model ara
+132 - ara skills texture
+133 - tutorial ara
+134 - ara voice
+135 - sander map model
+136 - sander mobs model
+137 - sander town sfx 
+138 - sander dungeon sfx
+139 - sander loading image
+140 - model mounts
+141 - mounts sfx
+142 - skill elesis
+143 - model elesis
+144 - tutorial elesis
+145 - voice elesis
+146 - eltrion sfx
+147 - add skill texture
+148 - model add
+149 - tutorial add
+150 - add voice
+151 - Ereda Island Icons
+152 - Rendering
+153 - Lanox Data
+154 - Lanox Data?
+155 - Lanox Data?
+156 - Lanox data?
+157 - Lanox Data?
+158 - Lanox Data
+159 - Model Lu
+160 - Model Ciel
+161 - Tutorial Lu
+162 - Tutorial Ciel
+162 - Lu's/Ciel's voice
+163 - Ciel's voice
+i001 - Various Textures/Models
+i002 - Event monsters, drops, npc textures
+i003 - Pet textures
+i004 - Aisha special costumes
+i005 - Ara special Costumes
+i006 - Chung special costumes
+i007 - Common items of the first 5 characters
+i008 - Winter costumes
+i009 - Elsword special costumes
+i010 - Eef special costumes
+i011 - Raven special costumes
+i012 - Rena special costumes
+i013 - Titles
+i014 - ---
+i015 - ---
+i016 - ---
+i017 - Halloween dungeon 2013 and pet sfx/bgm
+i018 - Pet sfx
+i019 - A bunch of other textures
+i020 - event dungeon icons
+i021 - ui revamp
+i022 - npc event dungeon special screens
+i023 - item icons
+i024 - ---
+i025 - ---
+i026 - ---
