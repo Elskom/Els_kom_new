@@ -1,3 +1,5 @@
 .github/* linguist-vendored
 *.ps1 linguist-vendored
 *.cmd linguist-vendored
+*.bat linguist-vendored
+legacy/* linguist-vendored
