@@ -76,7 +76,7 @@ namespace Els_kom_Core.Classes
                         {
                             SettingsFile.Settingsxml?.ReopenFile();
                             int.TryParse(SettingsFile.Settingsxml?.TryRead("LoadPDB"), out var tempint);
-                            var assembly = AssemblyExtensions.LoadFromZip(zippath, entry.FullName, Convert.ToBoolean(tempint));
+                            var assembly = ZipAssembly.LoadFromZip(zippath, entry.FullName, Convert.ToBoolean(tempint));
                             assemblies.Add(assembly);
                         }
                     }

@@ -56,7 +56,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\AssemblyExtensions.cs" />
     <Compile Include="Classes\BlowFish.cs" />
     <Compile Include="Classes\EntryVer.cs" />
     <Compile Include="Classes\ExecutionManager.cs" />
@@ -129,6 +128,9 @@
     </PackageReference>
     <PackageReference Include="zlib.managed">
       <Version>1.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="ZipAssembly">
+      <Version>1.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
