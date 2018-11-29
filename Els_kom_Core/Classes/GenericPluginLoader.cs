@@ -15,6 +15,7 @@ namespace Els_kom_Core.Classes
     using System.IO;
     using System.IO.Compression;
     using System.Reflection;
+    using Elskom.Generic.Libs;
 
     /// <summary>
     /// Generic Els_kom plugin loader.
