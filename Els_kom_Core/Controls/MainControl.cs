@@ -16,6 +16,7 @@ namespace Els_kom_Core.Controls
     using Els_kom_Core.Classes;
     using Els_kom_Core.Enums;
     using Els_kom_Core.Interfaces;
+    using Elskom.Generic.Libs;
 
     /// <summary>
     /// MainControl control for Els_kom's Main form.
