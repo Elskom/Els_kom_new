@@ -9,6 +9,7 @@ namespace Els_kom_Core.Classes
     using System.IO;
     using System.Text;
     using System.Xml.Linq;
+    using Elskom.Generic.Libs;
 
     /// <summary>
     /// KOM File format related stream.
