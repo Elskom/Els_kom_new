@@ -147,9 +147,11 @@ namespace Els_kom_Core.Controls
                     this.ConfigForm?.Invoke(this, new EventArgs());
                 }
 
-                var komplugins = GenericPluginLoader<IKomPlugin>.LoadPlugins("plugins");
+                int.TryParse(SettingsFile.Settingsxml?.TryRead("SaveToZip"), out var saveToZip1);
+                int.TryParse(SettingsFile.Settingsxml?.TryRead("LoadPDB"), out var loadPDB1);
+                var komplugins = GenericPluginLoader<IKomPlugin>.LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
                 KOMManager.Komplugins.AddRange(komplugins);
-                var callbackplugins = GenericPluginLoader<ICallbackPlugin>.LoadPlugins("plugins");
+                var callbackplugins = GenericPluginLoader<ICallbackPlugin>.LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
                 ExecutionManager.Callbackplugins.AddRange(callbackplugins);
                 if (!Git.IsMaster)
                 {
