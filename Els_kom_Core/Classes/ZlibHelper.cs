@@ -108,7 +108,7 @@ namespace Els_kom_Core.Classes
             }
             catch (ZStreamException ex)
             {
-                throw new UnpackingError("Unpacking Failed.", ex);
+                throw new UnpackingError("Decompression Failed.", ex);
             }
 
             outData = outMemoryStream.ToArray();
