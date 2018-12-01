@@ -8,6 +8,8 @@ namespace Els_kom
     using System.Drawing;
     using Els_kom.Properties;
     using Els_kom_Core.Classes;
+    using Elskom.Generic.Libs;
+    using XmlAbstraction;
 
     // Forms designer cannot see these if they are "internal" but I wanted them Internal.
     // The WinForms team probably should base the Forms Designer off of Roslyn sometime?
@@ -28,10 +30,10 @@ namespace Els_kom
             get
             {
                 var iconVal = string.Empty;
-                XMLObject settingsxml = null;
+                XmlObject settingsxml = null;
                 if (SettingsFile.Settingsxml == null)
                 {
-                    settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
+                    settingsxml = new XmlObject(SettingsFile.Path, "<Settings></Settings>");
                     iconVal = settingsxml.TryRead("WindowIcon");
                 }
                 else
@@ -69,10 +71,10 @@ namespace Els_kom
             get
             {
                 var iconVal = string.Empty;
-                XMLObject settingsxml = null;
+                XmlObject settingsxml = null;
                 if (SettingsFile.Settingsxml == null)
                 {
-                    settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
+                    settingsxml = new XmlObject(SettingsFile.Path, "<Settings></Settings>");
                     iconVal = settingsxml.TryRead("WindowIcon");
                 }
                 else
