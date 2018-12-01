@@ -69,9 +69,7 @@
     <Compile Include="Classes\ReleasePackaging.cs" />
     <Compile Include="Classes\ResourcesDir.cs" />
     <Compile Include="Classes\SafeNativeMethods.cs" />
-    <Compile Include="Classes\SettingsFile.cs" />
     <Compile Include="Classes\UnpackingError.cs" />
-    <Compile Include="Classes\XMLObject.cs" />
     <Compile Include="Classes\ZlibHelper.cs" />
     <Compile Include="Controls\AboutControl.cs">
       <SubType>UserControl</SubType>
@@ -134,6 +132,9 @@
     </PackageReference>
     <PackageReference Include="MessageManager">
       <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="SettingsFile">
+      <Version>1.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

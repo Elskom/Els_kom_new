@@ -122,6 +122,9 @@
     <PackageReference Include="MessageManager">
       <Version>1.0.1</Version>
     </PackageReference>
+    <PackageReference Include="SettingsFile">
+      <Version>1.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
