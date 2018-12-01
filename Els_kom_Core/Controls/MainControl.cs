@@ -17,6 +17,7 @@ namespace Els_kom_Core.Controls
     using Els_kom_Core.Enums;
     using Els_kom_Core.Interfaces;
     using Elskom.Generic.Libs;
+    using XmlAbstraction;
 
     /// <summary>
     /// MainControl control for Els_kom's Main form.
@@ -140,7 +141,7 @@ namespace Els_kom_Core.Controls
             }
             else
             {
-                SettingsFile.Settingsxml = new XMLObject(SettingsFile.Path, "<Settings></Settings>");
+                SettingsFile.Settingsxml = new XmlObject(SettingsFile.Path, "<Settings></Settings>");
                 this.elsDir = SettingsFile.Settingsxml?.TryRead("ElsDir");
                 if (this.elsDir.Length < 1)
                 {
