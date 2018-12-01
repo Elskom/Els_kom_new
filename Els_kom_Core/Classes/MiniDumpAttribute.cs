@@ -59,7 +59,7 @@ namespace Els_kom_Core.Classes
             // do not dump or close if in a debugger.
             if (!Debugger.IsAttached)
             {
-                MainControl.Closable = true;
+                // MainControl.Closable = true;
                 var fileStream = File.OpenWrite(SettingsFile.ErrorLogPath);
                 fileStream.Write(outputData, 0, outputData.Length);
                 fileStream.Dispose();
@@ -78,6 +78,7 @@ namespace Els_kom_Core.Classes
             // do not dump or close if in a debugger.
             if (!Debugger.IsAttached)
             {
+                // MainControl.Closable = true;
                 var fileStream = File.OpenWrite(SettingsFile.ErrorLogPath);
                 fileStream.Write(outputData, 0, outputData.Length);
                 fileStream.Dispose();

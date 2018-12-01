@@ -78,16 +78,6 @@ namespace Els_kom_Core.Controls
         /// </summary>
         public event EventHandler TrayIconChange;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the
-        /// program should close or skip closing.
-        /// </summary>
-        /// <value>
-        /// A value indicating whether the
-        /// program should close or skip closing.
-        /// </value>
-        public static bool Closable { get; set; } = false;
-
         internal static List<PluginUpdateCheck> PluginUpdateChecks { get; set; }
 
         private bool Enablehandlers { get; set; }
@@ -338,7 +328,6 @@ namespace Els_kom_Core.Controls
 
             if (!cancel)
             {
-                this.End_settings_loop = true;
                 SettingsFile.Settingsxml = null;
                 this.CloseForm?.Invoke(this, new EventArgs());
                 foreach (var pluginUpdateCheck in PluginUpdateChecks)

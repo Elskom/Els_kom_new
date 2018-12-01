@@ -23,10 +23,10 @@ namespace Els_kom.Forms
             var cancel = e.Cancel;
 
             // CloseReason UnloadMode = e->CloseReason; <-- Removed because not used.
-            if (!this.MainControl1.AbleToClose() && !MainControl.Closable)
+            if (!this.MainControl1.AbleToClose()/* && !MainControl.Closable*/)
             {
                 cancel = true;
-                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", PluginUpdateCheck.NotifyIcon, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
             }
 
             if (!cancel)
@@ -55,7 +55,7 @@ namespace Els_kom.Forms
             this.Close();
         }
 
-        private void MainControl1_TrayNameChange(object sender, EventArgs e) => MainControl.NotifyIcon1.Text = this.Text;
+        private void MainControl1_TrayNameChange(object sender, EventArgs e) => PluginUpdateCheck.NotifyIcon.Text = this.Text;
 
         private void MainControl1_TrayClick(object sender, MouseEventArgs e)
         {
@@ -79,7 +79,7 @@ namespace Els_kom.Forms
                             this.WindowState = FormWindowState.Minimized;
                         }
                     }
-                    else if (MainControl.NotifyIcon1.Visible)
+                    else if (PluginUpdateCheck.NotifyIcon.Visible)
                     {
                         if (this.WindowState == FormWindowState.Minimized)
                         {
@@ -124,7 +124,7 @@ namespace Els_kom.Forms
         {
             // this seem to not update the form icon at runtime...
             this.Icon = Icons.FormIcon;
-            MainControl.NotifyIcon1.Icon = this.Icon;
+            PluginUpdateCheck.NotifyIcon.Icon = this.Icon;
         }
     }
 }
