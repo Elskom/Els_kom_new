@@ -79,14 +79,6 @@ namespace Els_kom_Core.Controls
         public event EventHandler TrayIconChange;
 
         /// <summary>
-        /// Gets the tray Icon.
-        /// </summary>
-        /// <value>
-        /// The tray Icon.
-        /// </value>
-        public static NotifyIcon NotifyIcon1 { get; private set; } = null;
-
-        /// <summary>
         /// Gets or sets a value indicating whether the
         /// program should close or skip closing.
         /// </summary>
@@ -95,18 +87,6 @@ namespace Els_kom_Core.Controls
         /// program should close or skip closing.
         /// </value>
         public static bool Closable { get; set; } = false;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to
-        /// properly close the loop that reads settings
-        /// that makes the control work properly.
-        /// </summary>
-        /// <value>
-        /// A value indicating whether to
-        /// properly close the loop that reads settings
-        /// that makes the control work properly.
-        /// </value>
-        public bool End_settings_loop { get; set; } = false;
 
         internal static List<PluginUpdateCheck> PluginUpdateChecks { get; set; }
 
@@ -136,7 +116,7 @@ namespace Els_kom_Core.Controls
 
             if (ExecutionManager.IsElsKomRunning() == true)
             {
-                MessageManager.ShowError("Sorry, Only 1 Instance is allowed at a time.", "Error!", NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                MessageManager.ShowError("Sorry, Only 1 Instance is allowed at a time.", "Error!", PluginUpdateCheck.NotifyIcon, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 closing = true;
             }
             else
@@ -145,7 +125,7 @@ namespace Els_kom_Core.Controls
                 this.elsDir = SettingsFile.Settingsxml?.TryRead("ElsDir");
                 if (this.elsDir.Length < 1)
                 {
-                    MessageManager.ShowInfo("Welcome to Els_kom." + Environment.NewLine + "Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops." + Environment.NewLine + "Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!", NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                    MessageManager.ShowInfo("Welcome to Els_kom." + Environment.NewLine + "Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops." + Environment.NewLine + "Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!", PluginUpdateCheck.NotifyIcon, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                     this.ConfigForm?.Invoke(this, new EventArgs());
                 }
 
@@ -157,7 +137,7 @@ namespace Els_kom_Core.Controls
                 ExecutionManager.Callbackplugins.AddRange(callbackplugins);
                 if (!Git.IsMaster)
                 {
-                    MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!", NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                    MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!", PluginUpdateCheck.NotifyIcon, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
 
                 if (Git.IsDirty)
@@ -207,10 +187,9 @@ namespace Els_kom_Core.Controls
                     Interval = 1,
                 };
                 this.launcherTmr.Tick += new EventHandler(this.Launcher);
-                NotifyIcon1.Icon = this.FindForm().Icon;
-                NotifyIcon1.Text = this.FindForm().Text;
-                NotifyIcon1.Visible = true;
-                PluginUpdateCheck.NotifyIcon = NotifyIcon1;
+                PluginUpdateCheck.NotifyIcon.Icon = this.FindForm().Icon;
+                PluginUpdateCheck.NotifyIcon.Text = this.FindForm().Text;
+                PluginUpdateCheck.NotifyIcon.Visible = true;
                 PluginUpdateChecks = PluginUpdateCheck.CheckForUpdates(
                     SettingsFile.Settingsxml?.TryRead("Sources", "Source", null));
                 foreach (var pluginUpdateCheck in PluginUpdateChecks)
@@ -236,7 +215,7 @@ namespace Els_kom_Core.Controls
         {
             if (typeof(MainControl).Assembly.GetName().Version.ToString() != Assembly.GetExecutingAssembly().GetName().Version.ToString())
             {
-                MessageManager.ShowError("Sorry, you cannot use Els_kom.exe from this version with a newer or older Core. Please update the executable as well.", "Error!", NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                MessageManager.ShowError("Sorry, you cannot use Els_kom.exe from this version with a newer or older Core. Please update the executable as well.", "Error!", PluginUpdateCheck.NotifyIcon, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 this.CloseForm?.Invoke(this, new EventArgs());
                 return false;
             }
@@ -354,7 +333,7 @@ namespace Els_kom_Core.Controls
                 KOMManager.UnpackingState)
             {
                 cancel = true;
-                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", PluginUpdateCheck.NotifyIcon, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
             }
 
             if (!cancel)
@@ -466,7 +445,7 @@ namespace Els_kom_Core.Controls
 
                 if (!string.Equals(NotifyIcon1.Text, this.Label2.Text))
                 {
-                    NotifyIcon1.Text = this.Label2.Text;
+                    PluginUpdateCheck.NotifyIcon.Text = this.Label2.Text;
                 }
             }
             else
@@ -535,9 +514,9 @@ namespace Els_kom_Core.Controls
                     this.Label2.Text = "Unpacking...";
                 }
 
-                if (!string.Equals(NotifyIcon1.Text, this.Label2.Text))
+                if (!string.Equals(PluginUpdateCheck.NotifyIcon.Text, this.Label2.Text))
                 {
-                    NotifyIcon1.Text = this.Label2.Text;
+                    PluginUpdateCheck.NotifyIcon.Text = this.Label2.Text;
                 }
             }
             else
@@ -730,21 +709,21 @@ namespace Els_kom_Core.Controls
                         if (this.showintaskbarValue.Equals("0"))
                         {
                             // Taskbar only!!!
-                            NotifyIcon1.Visible = false;
+                            PluginUpdateCheck.NotifyIcon.Visible = false;
                             this.FindForm().ShowInTaskbar = true;
                         }
 
                         if (this.showintaskbarValue.Equals("1"))
                         {
                             // Tray only!!!
-                            NotifyIcon1.Visible = true;
+                            PluginUpdateCheck.NotifyIcon.Visible = true;
                             this.FindForm().ShowInTaskbar = false;
                         }
 
                         if (this.showintaskbarValue.Equals("2"))
                         {
                             // Both!!!
-                            NotifyIcon1.Visible = true;
+                            PluginUpdateCheck.NotifyIcon.Visible = true;
                             this.FindForm().ShowInTaskbar = true;
                         }
                     }
@@ -758,21 +737,21 @@ namespace Els_kom_Core.Controls
                         if (this.showintaskbarValue2.Equals("0"))
                         {
                             // Taskbar only!!!
-                            NotifyIcon1.Visible = false;
+                            PluginUpdateCheck.NotifyIcon.Visible = false;
                             this.FindForm().ShowInTaskbar = true;
                         }
 
                         if (this.showintaskbarValue2.Equals("1"))
                         {
                             // Tray only!!!
-                            NotifyIcon1.Visible = true;
+                            PluginUpdateCheck.NotifyIcon.Visible = true;
                             this.FindForm().ShowInTaskbar = false;
                         }
 
                         if (this.showintaskbarValue2.Equals("2"))
                         {
                             // Both!!!
-                            NotifyIcon1.Visible = true;
+                            PluginUpdateCheck.NotifyIcon.Visible = true;
                             this.FindForm().ShowInTaskbar = true;
                         }
                     }
@@ -835,12 +814,12 @@ namespace Els_kom_Core.Controls
             this.contextMenuStrip1.Name = "ContextMenuStrip1";
             this.contextMenuStrip1.Size = new Size(130, 154);
             this.contextMenuStrip1.ResumeLayout(false);
-            NotifyIcon1 = new NotifyIcon(this.components)
+            PluginUpdateCheck.NotifyIcon = new NotifyIcon(this.components)
             {
                 ContextMenuStrip = this.contextMenuStrip1,
                 Visible = false,
             };
-            NotifyIcon1.MouseClick += new MouseEventHandler(this.NotifyIcon1_MouseClick);
+            PluginUpdateCheck.NotifyIcon.MouseClick += new MouseEventHandler(this.NotifyIcon1_MouseClick);
         }
     }
 }

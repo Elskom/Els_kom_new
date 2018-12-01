@@ -13,7 +13,6 @@ namespace Els_kom_Core.Classes
     using System.Net;
     using System.Windows.Forms;
     using System.Xml.Linq;
-    using Els_kom_Core.Controls;
     using Elskom.Generic.Libs;
 
     internal class PluginUpdateCheck : IDisposable
@@ -26,7 +25,7 @@ namespace Els_kom_Core.Classes
 
         internal static WebClient WebClient { get; private protected set; }
 
-        internal static NotifyIcon NotifyIcon { get; set; }
+        internal static NotifyIcon NotifyIcon { get; set; } = null;
 
         internal static string[] PluginUrls { get; private protected set; }
 
@@ -192,7 +191,7 @@ namespace Els_kom_Core.Classes
                     MessageManager.ShowError(
                         $"Failed to install the selected plugin.{Environment.NewLine}Reason: {ex.Message}",
                         "Error!",
-                        MainControl.NotifyIcon1,
+                        NotifyIcon,
                         Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
             }
