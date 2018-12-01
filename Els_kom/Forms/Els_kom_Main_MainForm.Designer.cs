@@ -38,7 +38,6 @@ namespace Els_kom.Forms
             // 
             // MainControl1
             // 
-            this.MainControl1.End_settings_loop = false;
             this.MainControl1.Location = new System.Drawing.Point(0, 0);
             this.MainControl1.Name = "MainControl1";
             this.MainControl1.Size = new System.Drawing.Size(304, 166);
