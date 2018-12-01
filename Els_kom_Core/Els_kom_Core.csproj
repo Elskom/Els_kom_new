@@ -65,7 +65,6 @@
     <Compile Include="Classes\MiniDump.cs" />
     <Compile Include="Classes\MiniDumpAttribute.cs" />
     <Compile Include="Classes\PackingError.cs" />
-    <Compile Include="Classes\PluginUpdateCheck.cs" />
     <Compile Include="Classes\ReleasePackaging.cs" />
     <Compile Include="Classes\ResourcesDir.cs" />
     <Compile Include="Classes\SafeNativeMethods.cs" />
@@ -135,6 +134,9 @@
     </PackageReference>
     <PackageReference Include="SettingsFile">
       <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="PluginUpdateCheck">
+      <Version>1.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
