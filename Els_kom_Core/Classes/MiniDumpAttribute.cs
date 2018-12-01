@@ -13,6 +13,7 @@ namespace Els_kom_Core.Classes
     using System.Threading;
     using System.Windows.Forms;
     using Els_kom_Core.Controls;
+    using Elskom.Generic.Libs;
 
     // do not use this attribute for anything but classes.
 
@@ -64,7 +65,7 @@ namespace Els_kom_Core.Classes
                 fileStream.Write(outputData, 0, outputData.Length);
                 fileStream.Dispose();
                 MiniDump.FullMiniDumpToFile(SettingsFile.MiniDumpPath);
-                MessageManager.ShowError(string.Format(this.text, SettingsFile.ErrorLogPath), this.ExceptionTitle, MainControl.NotifyIcon1);
+                MessageManager.ShowError(string.Format(this.text, SettingsFile.ErrorLogPath), this.ExceptionTitle, MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 Application.Exit();
             }
         }
@@ -83,7 +84,7 @@ namespace Els_kom_Core.Classes
                 fileStream.Write(outputData, 0, outputData.Length);
                 fileStream.Dispose();
                 MiniDump.FullMiniDumpToFile(SettingsFile.MiniDumpPath);
-                MessageManager.ShowError(string.Format(this.text, SettingsFile.ErrorLogPath), this.ThreadExceptionTitle, MainControl.NotifyIcon1);
+                MessageManager.ShowError(string.Format(this.text, SettingsFile.ErrorLogPath), this.ThreadExceptionTitle, MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 Application.Exit();
             }
         }

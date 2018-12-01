@@ -57,7 +57,7 @@ namespace Els_kom_Core.Controls
                 }
                 else
                 {
-                    MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!", MainControl.NotifyIcon1);
+                    MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!", MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
             }
 

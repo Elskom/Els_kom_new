@@ -8,6 +8,7 @@ namespace Els_kom_Core.Controls
     using System;
     using System.Windows.Forms;
     using Els_kom_Core.Classes;
+    using Elskom.Generic.Libs;
 
     /// <summary>
     /// PluginsControl control for Els_kom's Plugins installer/updater form.
@@ -108,7 +109,8 @@ namespace Els_kom_Core.Controls
                     MessageManager.ShowInfo(
                         "The selected plugin is not installed, or the plugin was installed and this program was not restarted yet to know that it was.",
                         "Info!",
-                        MainControl.NotifyIcon1);
+                        MainControl.NotifyIcon1,
+                        Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
             }
         }

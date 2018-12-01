@@ -11,6 +11,7 @@ namespace Els_kom_Core.Classes
     using System.Linq;
     using Els_kom_Core.Controls;
     using Els_kom_Core.Interfaces;
+    using Elskom.Generic.Libs;
 
     /// <summary>
     /// Class in the Core that allows executing Elsword directly or it's launcher.
@@ -140,17 +141,17 @@ namespace Els_kom_Core.Classes
                     }
                     else
                     {
-                        MessageManager.ShowError("Can't find '" + ElsDir + "\\data\\x2.exe'. Make sure the File Exists and try to Test your mods Again!", "Error!", MainControl.NotifyIcon1);
+                        MessageManager.ShowError("Can't find '" + ElsDir + "\\data\\x2.exe'. Make sure the File Exists and try to Test your mods Again!", "Error!", MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                     }
                 }
                 else
                 {
-                    MessageManager.ShowError("The Elsword Directory Setting is not set. Make sure to Set your Elsword Directory Setting and try to Test your mods Again!", "Error!", MainControl.NotifyIcon1);
+                    MessageManager.ShowError("The Elsword Directory Setting is not set. Make sure to Set your Elsword Directory Setting and try to Test your mods Again!", "Error!", MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
             }
             else
             {
-                MessageManager.ShowError("The Elsword Directory Setting is not set. Make sure to Set your Elsword Directory Setting and try to Test your mods Again!", "Error!", MainControl.NotifyIcon1);
+                MessageManager.ShowError("The Elsword Directory Setting is not set. Make sure to Set your Elsword Directory Setting and try to Test your mods Again!", "Error!", MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
             }
 
             // avoid bad UI bug.
@@ -189,18 +190,18 @@ namespace Els_kom_Core.Classes
                         }
                         else
                         {
-                            MessageManager.ShowError("Can't find '" + ElsDir + "\\elsword.exe'. Make sure the File Exists and try to update Elsword Again!", "Error!", MainControl.NotifyIcon1);
+                            MessageManager.ShowError("Can't find '" + ElsDir + "\\elsword.exe'. Make sure the File Exists and try to update Elsword Again!", "Error!", MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                         }
                     }
                 }
                 else
                 {
-                    MessageManager.ShowError("The Elsword Directory Setting is not set. Make sure to Set your Elsword Directory Setting and try to update Elsword Again!", "Error!", MainControl.NotifyIcon1);
+                    MessageManager.ShowError("The Elsword Directory Setting is not set. Make sure to Set your Elsword Directory Setting and try to update Elsword Again!", "Error!", MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
             }
             else
             {
-                MessageManager.ShowError("The Elsword Directory Setting is not set. Make sure to Set your Elsword Directory Setting and try to update Elsword Again!", "Error!", MainControl.NotifyIcon1);
+                MessageManager.ShowError("The Elsword Directory Setting is not set. Make sure to Set your Elsword Directory Setting and try to update Elsword Again!", "Error!", MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
             }
 
             // avoid bad UI bug.

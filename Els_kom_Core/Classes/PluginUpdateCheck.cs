@@ -14,6 +14,7 @@ namespace Els_kom_Core.Classes
     using System.Windows.Forms;
     using System.Xml.Linq;
     using Els_kom_Core.Controls;
+    using Elskom.Generic.Libs;
 
     internal class PluginUpdateCheck : IDisposable
     {
@@ -34,7 +35,8 @@ namespace Els_kom_Core.Classes
                 ? MessageManager.ShowInfo(
                     $"Update {this.CurrentVersion} for plugin {this.PluginName} is availible.",
                     "New plugin update.",
-                    NotifyIcon)
+                    NotifyIcon,
+                    Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")))
                 : DialogResult.OK;
 
         internal string PluginName { get; private protected set; }
@@ -146,7 +148,8 @@ namespace Els_kom_Core.Classes
                         MessageManager.ShowError(
                             $"Failed to download the plugins sources list.{Environment.NewLine}Reason: {ex.Message}",
                             "Error!",
-                            NotifyIcon);
+                            NotifyIcon,
+                            Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                     }
                 }
 
@@ -189,7 +192,8 @@ namespace Els_kom_Core.Classes
                     MessageManager.ShowError(
                         $"Failed to install the selected plugin.{Environment.NewLine}Reason: {ex.Message}",
                         "Error!",
-                        MainControl.NotifyIcon1);
+                        MainControl.NotifyIcon1,
+                        Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
             }
 

@@ -12,6 +12,7 @@ namespace Els_kom_Core.Classes
     using Els_kom_Core.Controls;
     using Els_kom_Core.Enums;
     using Els_kom_Core.Structs;
+    using Elskom.Generic.Libs;
 
     /// <summary>
     /// Class in the Core that allows creating Mini-dumps when a fatal exception occurs.
@@ -56,7 +57,7 @@ namespace Els_kom_Core.Classes
                     MessageManager.ShowError(
                         $"Mini-dumping failed with Code: {error}",
                         "Error!",
-                        MainControl.NotifyIcon1);
+                        MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
 
                 thisProcess.Dispose();
@@ -102,7 +103,7 @@ namespace Els_kom_Core.Classes
                     MessageManager.ShowError(
                         $"Mini-dumping failed with Code: {error}",
                         "Error!",
-                        MainControl.NotifyIcon1);
+                        MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
 
                 thisProcess.Dispose();

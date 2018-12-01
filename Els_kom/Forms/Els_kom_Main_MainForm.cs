@@ -9,6 +9,7 @@ namespace Els_kom.Forms
     using System.Windows.Forms;
     using Els_kom_Core.Classes;
     using Els_kom_Core.Controls;
+    using Elskom.Generic.Libs;
 
     internal partial class MainForm : Form
     {
@@ -25,7 +26,7 @@ namespace Els_kom.Forms
             if (!this.MainControl1.AbleToClose() && !MainControl.Closable)
             {
                 cancel = true;
-                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", MainControl.NotifyIcon1);
+                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
             }
 
             if (!cancel)
