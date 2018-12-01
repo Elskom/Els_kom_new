@@ -9,7 +9,6 @@ namespace Els_kom_Core.Classes
     using System.Diagnostics;
     using System.IO;
     using System.Runtime.InteropServices;
-    using Els_kom_Core.Controls;
     using Els_kom_Core.Enums;
     using Els_kom_Core.Structs;
     using Elskom.Generic.Libs;
@@ -57,7 +56,7 @@ namespace Els_kom_Core.Classes
                     MessageManager.ShowError(
                         $"Mini-dumping failed with Code: {error}",
                         "Error!",
-                        MainControl.NotifyIcon1,
+                        PluginUpdateCheck.NotifyIcon,
                         Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
 
@@ -104,7 +103,7 @@ namespace Els_kom_Core.Classes
                     MessageManager.ShowError(
                         $"Mini-dumping failed with Code: {error}",
                         "Error!",
-                        MainControl.NotifyIcon1,
+                        PluginUpdateCheck.NotifyIcon,
                         Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
 

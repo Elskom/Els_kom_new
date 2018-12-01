@@ -443,7 +443,7 @@ namespace Els_kom_Core.Controls
                     this.Label2.Text = "Packing...";
                 }
 
-                if (!string.Equals(NotifyIcon1.Text, this.Label2.Text))
+                if (!string.Equals(PluginUpdateCheck.NotifyIcon.Text, this.Label2.Text))
                 {
                     PluginUpdateCheck.NotifyIcon.Text = this.Label2.Text;
                 }
@@ -681,79 +681,72 @@ namespace Els_kom_Core.Controls
 
         private void CheckSettings(object sender, EventArgs e)
         {
-            if (this.End_settings_loop)
+            if (this.AbleToClose())
             {
-                this.settingsTmr.Enabled = false;
-            }
-            else
-            {
-                if (this.AbleToClose())
+                SettingsFile.Settingsxml?.ReopenFile();
+                this.showintaskbarTempvalue = SettingsFile.Settingsxml?.TryRead("IconWhileElsNotRunning");
+                this.showintaskbarTempvalue2 = SettingsFile.Settingsxml?.TryRead("IconWhileElsRunning");
+                this.elsDirTemp = SettingsFile.Settingsxml?.TryRead("ElsDir");
+                this.TrayIconChange?.Invoke(this, new EventArgs());
+                if (!string.Equals(this.elsDir, this.elsDirTemp))
                 {
-                    SettingsFile.Settingsxml?.ReopenFile();
-                    this.showintaskbarTempvalue = SettingsFile.Settingsxml?.TryRead("IconWhileElsNotRunning");
-                    this.showintaskbarTempvalue2 = SettingsFile.Settingsxml?.TryRead("IconWhileElsRunning");
-                    this.elsDirTemp = SettingsFile.Settingsxml?.TryRead("ElsDir");
-                    this.TrayIconChange?.Invoke(this, new EventArgs());
-                    if (!string.Equals(this.elsDir, this.elsDirTemp))
+                    this.elsDir = this.elsDirTemp;
+                }
+
+                if (!ExecutionManager.RunningElswordDirectly)
+                {
+                    if (this.showintaskbarValue != this.showintaskbarTempvalue)
                     {
-                        this.elsDir = this.elsDirTemp;
+                        this.showintaskbarValue = this.showintaskbarTempvalue;
                     }
 
-                    if (!ExecutionManager.RunningElswordDirectly)
+                    if (this.showintaskbarValue.Equals("0"))
                     {
-                        if (this.showintaskbarValue != this.showintaskbarTempvalue)
-                        {
-                            this.showintaskbarValue = this.showintaskbarTempvalue;
-                        }
-
-                        if (this.showintaskbarValue.Equals("0"))
-                        {
-                            // Taskbar only!!!
-                            PluginUpdateCheck.NotifyIcon.Visible = false;
-                            this.FindForm().ShowInTaskbar = true;
-                        }
-
-                        if (this.showintaskbarValue.Equals("1"))
-                        {
-                            // Tray only!!!
-                            PluginUpdateCheck.NotifyIcon.Visible = true;
-                            this.FindForm().ShowInTaskbar = false;
-                        }
-
-                        if (this.showintaskbarValue.Equals("2"))
-                        {
-                            // Both!!!
-                            PluginUpdateCheck.NotifyIcon.Visible = true;
-                            this.FindForm().ShowInTaskbar = true;
-                        }
+                        // Taskbar only!!!
+                        PluginUpdateCheck.NotifyIcon.Visible = false;
+                        this.FindForm().ShowInTaskbar = true;
                     }
-                    else
+
+                    if (this.showintaskbarValue.Equals("1"))
                     {
-                        if (this.showintaskbarValue2 != this.showintaskbarTempvalue2)
-                        {
-                            this.showintaskbarValue2 = this.showintaskbarTempvalue2;
-                        }
+                        // Tray only!!!
+                        PluginUpdateCheck.NotifyIcon.Visible = true;
+                        this.FindForm().ShowInTaskbar = false;
+                    }
 
-                        if (this.showintaskbarValue2.Equals("0"))
-                        {
-                            // Taskbar only!!!
-                            PluginUpdateCheck.NotifyIcon.Visible = false;
-                            this.FindForm().ShowInTaskbar = true;
-                        }
+                    if (this.showintaskbarValue.Equals("2"))
+                    {
+                        // Both!!!
+                        PluginUpdateCheck.NotifyIcon.Visible = true;
+                        this.FindForm().ShowInTaskbar = true;
+                    }
+                }
+                else
+                {
+                    if (this.showintaskbarValue2 != this.showintaskbarTempvalue2)
+                    {
+                        this.showintaskbarValue2 = this.showintaskbarTempvalue2;
+                    }
 
-                        if (this.showintaskbarValue2.Equals("1"))
-                        {
-                            // Tray only!!!
-                            PluginUpdateCheck.NotifyIcon.Visible = true;
-                            this.FindForm().ShowInTaskbar = false;
-                        }
+                    if (this.showintaskbarValue2.Equals("0"))
+                    {
+                        // Taskbar only!!!
+                        PluginUpdateCheck.NotifyIcon.Visible = false;
+                        this.FindForm().ShowInTaskbar = true;
+                    }
 
-                        if (this.showintaskbarValue2.Equals("2"))
-                        {
-                            // Both!!!
-                            PluginUpdateCheck.NotifyIcon.Visible = true;
-                            this.FindForm().ShowInTaskbar = true;
-                        }
+                    if (this.showintaskbarValue2.Equals("1"))
+                    {
+                        // Tray only!!!
+                        PluginUpdateCheck.NotifyIcon.Visible = true;
+                        this.FindForm().ShowInTaskbar = false;
+                    }
+
+                    if (this.showintaskbarValue2.Equals("2"))
+                    {
+                        // Both!!!
+                        PluginUpdateCheck.NotifyIcon.Visible = true;
+                        this.FindForm().ShowInTaskbar = true;
                     }
                 }
             }
