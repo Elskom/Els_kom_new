@@ -9,6 +9,7 @@ namespace Els_kom_Core.Controls
     using System.Collections.Generic;
     using System.Windows.Forms;
     using Els_kom_Core.Classes;
+    using Elskom.Generic.Libs;
 
     /// <summary>
     /// SettingsControl control for Els_kom's Settings form.

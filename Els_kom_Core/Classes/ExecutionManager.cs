@@ -5,6 +5,7 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;

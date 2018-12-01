@@ -57,7 +57,8 @@ namespace Els_kom_Core.Classes
                     MessageManager.ShowError(
                         $"Mini-dumping failed with Code: {error}",
                         "Error!",
-                        MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                        MainControl.NotifyIcon1,
+                        Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
 
                 thisProcess.Dispose();
@@ -103,7 +104,8 @@ namespace Els_kom_Core.Classes
                     MessageManager.ShowError(
                         $"Mini-dumping failed with Code: {error}",
                         "Error!",
-                        MainControl.NotifyIcon1, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                        MainControl.NotifyIcon1,
+                        Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
 
                 thisProcess.Dispose();
