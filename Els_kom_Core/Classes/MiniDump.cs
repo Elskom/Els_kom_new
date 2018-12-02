@@ -56,7 +56,6 @@ namespace Els_kom_Core.Classes
                     MessageManager.ShowError(
                         $"Mini-dumping failed with Code: {error}",
                         "Error!",
-                        PluginUpdateCheck.NotifyIcon,
                         Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
 
@@ -103,7 +102,6 @@ namespace Els_kom_Core.Classes
                     MessageManager.ShowError(
                         $"Mini-dumping failed with Code: {error}",
                         "Error!",
-                        PluginUpdateCheck.NotifyIcon,
                         Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
 
