@@ -180,8 +180,20 @@ namespace Els_kom_Core.Controls
                 PluginUpdateCheck.NotifyIcon.Icon = this.FindForm().Icon;
                 PluginUpdateCheck.NotifyIcon.Text = this.FindForm().Text;
                 PluginUpdateCheck.NotifyIcon.Visible = true;
+                var pluginTypes = new List<Type>();
+                foreach (var callbackplugin in ExecutionManager.Callbackplugins)
+                {
+                    pluginTypes.Add(callbackplugin.GetType());
+                }
+
+                foreach (var komplugin in KOMManager.Komplugins)
+                {
+                    pluginTypes.Add(komplugin.GetType());
+                }
+
                 PluginUpdateChecks = PluginUpdateCheck.CheckForUpdates(
-                    SettingsFile.Settingsxml?.TryRead("Sources", "Source", null));
+                    SettingsFile.Settingsxml?.TryRead("Sources", "Source", null),
+                    pluginTypes);
                 foreach (var pluginUpdateCheck in PluginUpdateChecks)
                 {
                     // discard result.
