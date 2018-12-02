@@ -46,7 +46,8 @@ namespace Els_kom_Core.Controls
 
             // update the list if there were new sources added during the program execution.
             MainControl.PluginUpdateChecks = PluginUpdateCheck.CheckForUpdates(
-                SettingsFile.Settingsxml?.TryRead("Sources", "Source", null));
+                SettingsFile.Settingsxml?.TryRead("Sources", "Source", null),
+                pluginTypes);
         }
 
         private void InstallButton_Click(object sender, EventArgs e)
