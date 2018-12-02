@@ -8,7 +8,6 @@ namespace Els_kom_Core.Classes
     using System;
     using System.Runtime.InteropServices;
     using Els_kom_Core.Enums;
-    using Els_kom_Core.Structs;
 
     /// <summary>
     /// Windows Native Methods.
