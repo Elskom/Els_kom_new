@@ -106,7 +106,7 @@ namespace Els_kom_Core.Controls
 
             if (ExecutionManager.IsElsKomRunning() == true)
             {
-                MessageManager.ShowError("Sorry, Only 1 Instance is allowed at a time.", "Error!", PluginUpdateCheck.NotifyIcon, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                MessageManager.ShowError("Sorry, Only 1 Instance is allowed at a time.", "Error!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 closing = true;
             }
             else
@@ -115,7 +115,7 @@ namespace Els_kom_Core.Controls
                 this.elsDir = SettingsFile.Settingsxml?.TryRead("ElsDir");
                 if (this.elsDir.Length < 1)
                 {
-                    MessageManager.ShowInfo("Welcome to Els_kom." + Environment.NewLine + "Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops." + Environment.NewLine + "Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!", PluginUpdateCheck.NotifyIcon, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                    MessageManager.ShowInfo("Welcome to Els_kom." + Environment.NewLine + "Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops." + Environment.NewLine + "Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                     this.ConfigForm?.Invoke(this, new EventArgs());
                 }
 
@@ -127,7 +127,7 @@ namespace Els_kom_Core.Controls
                 ExecutionManager.Callbackplugins.AddRange(callbackplugins);
                 if (!Git.IsMaster)
                 {
-                    MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!", PluginUpdateCheck.NotifyIcon, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                    MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
 
                 if (Git.IsDirty)
@@ -205,7 +205,7 @@ namespace Els_kom_Core.Controls
         {
             if (typeof(MainControl).Assembly.GetName().Version.ToString() != Assembly.GetExecutingAssembly().GetName().Version.ToString())
             {
-                MessageManager.ShowError("Sorry, you cannot use Els_kom.exe from this version with a newer or older Core. Please update the executable as well.", "Error!", PluginUpdateCheck.NotifyIcon, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                MessageManager.ShowError("Sorry, you cannot use Els_kom.exe from this version with a newer or older Core. Please update the executable as well.", "Error!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 this.CloseForm?.Invoke(this, new EventArgs());
                 return false;
             }
@@ -323,7 +323,7 @@ namespace Els_kom_Core.Controls
                 KOMManager.UnpackingState)
             {
                 cancel = true;
-                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", PluginUpdateCheck.NotifyIcon, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
             }
 
             if (!cancel)
