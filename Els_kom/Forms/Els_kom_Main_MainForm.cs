@@ -55,7 +55,7 @@ namespace Els_kom.Forms
             this.Close();
         }
 
-        private void MainControl1_TrayNameChange(object sender, EventArgs e) => PluginUpdateCheck.NotifyIcon.Text = this.Text;
+        private void MainControl1_TrayNameChange(object sender, EventArgs e) => MessageManager.NotifyIcon.Text = this.Text;
 
         private void MainControl1_TrayClick(object sender, MouseEventArgs e)
         {
@@ -79,7 +79,7 @@ namespace Els_kom.Forms
                             this.WindowState = FormWindowState.Minimized;
                         }
                     }
-                    else if (PluginUpdateCheck.NotifyIcon.Visible)
+                    else if (MessageManager.NotifyIcon.Visible)
                     {
                         if (this.WindowState == FormWindowState.Minimized)
                         {
@@ -124,7 +124,7 @@ namespace Els_kom.Forms
         {
             // this seem to not update the form icon at runtime...
             this.Icon = Icons.FormIcon;
-            PluginUpdateCheck.NotifyIcon.Icon = this.Icon;
+            MessageManager.NotifyIcon.Icon = this.Icon;
         }
     }
 }

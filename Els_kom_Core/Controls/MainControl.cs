@@ -177,9 +177,9 @@ namespace Els_kom_Core.Controls
                     Interval = 1,
                 };
                 this.launcherTmr.Tick += new EventHandler(this.Launcher);
-                PluginUpdateCheck.NotifyIcon.Icon = this.FindForm().Icon;
-                PluginUpdateCheck.NotifyIcon.Text = this.FindForm().Text;
-                PluginUpdateCheck.NotifyIcon.Visible = true;
+                MessageManager.NotifyIcon.Icon = this.FindForm().Icon;
+                MessageManager.NotifyIcon.Text = this.FindForm().Text;
+                MessageManager.NotifyIcon.Visible = true;
                 var pluginTypes = new List<Type>();
                 foreach (var callbackplugin in ExecutionManager.Callbackplugins)
                 {
@@ -444,9 +444,9 @@ namespace Els_kom_Core.Controls
                     this.Label2.Text = "Packing...";
                 }
 
-                if (!string.Equals(PluginUpdateCheck.NotifyIcon.Text, this.Label2.Text))
+                if (!string.Equals(MessageManager.NotifyIcon.Text, this.Label2.Text))
                 {
-                    PluginUpdateCheck.NotifyIcon.Text = this.Label2.Text;
+                    MessageManager.NotifyIcon.Text = this.Label2.Text;
                 }
             }
             else
@@ -515,9 +515,9 @@ namespace Els_kom_Core.Controls
                     this.Label2.Text = "Unpacking...";
                 }
 
-                if (!string.Equals(PluginUpdateCheck.NotifyIcon.Text, this.Label2.Text))
+                if (!string.Equals(MessageManager.NotifyIcon.Text, this.Label2.Text))
                 {
-                    PluginUpdateCheck.NotifyIcon.Text = this.Label2.Text;
+                    MessageManager.NotifyIcon.Text = this.Label2.Text;
                 }
             }
             else
@@ -704,21 +704,21 @@ namespace Els_kom_Core.Controls
                     if (this.showintaskbarValue.Equals("0"))
                     {
                         // Taskbar only!!!
-                        PluginUpdateCheck.NotifyIcon.Visible = false;
+                        MessageManager.NotifyIcon.Visible = false;
                         this.FindForm().ShowInTaskbar = true;
                     }
 
                     if (this.showintaskbarValue.Equals("1"))
                     {
                         // Tray only!!!
-                        PluginUpdateCheck.NotifyIcon.Visible = true;
+                        MessageManager.NotifyIcon.Visible = true;
                         this.FindForm().ShowInTaskbar = false;
                     }
 
                     if (this.showintaskbarValue.Equals("2"))
                     {
                         // Both!!!
-                        PluginUpdateCheck.NotifyIcon.Visible = true;
+                        MessageManager.NotifyIcon.Visible = true;
                         this.FindForm().ShowInTaskbar = true;
                     }
                 }
@@ -732,21 +732,21 @@ namespace Els_kom_Core.Controls
                     if (this.showintaskbarValue2.Equals("0"))
                     {
                         // Taskbar only!!!
-                        PluginUpdateCheck.NotifyIcon.Visible = false;
+                        MessageManager.NotifyIcon.Visible = false;
                         this.FindForm().ShowInTaskbar = true;
                     }
 
                     if (this.showintaskbarValue2.Equals("1"))
                     {
                         // Tray only!!!
-                        PluginUpdateCheck.NotifyIcon.Visible = true;
+                        MessageManager.NotifyIcon.Visible = true;
                         this.FindForm().ShowInTaskbar = false;
                     }
 
                     if (this.showintaskbarValue2.Equals("2"))
                     {
                         // Both!!!
-                        PluginUpdateCheck.NotifyIcon.Visible = true;
+                        MessageManager.NotifyIcon.Visible = true;
                         this.FindForm().ShowInTaskbar = true;
                     }
                 }
@@ -808,12 +808,12 @@ namespace Els_kom_Core.Controls
             this.contextMenuStrip1.Name = "ContextMenuStrip1";
             this.contextMenuStrip1.Size = new Size(130, 154);
             this.contextMenuStrip1.ResumeLayout(false);
-            PluginUpdateCheck.NotifyIcon = new NotifyIcon(this.components)
+            MessageManager.NotifyIcon = new NotifyIcon(this.components)
             {
                 ContextMenuStrip = this.contextMenuStrip1,
                 Visible = false,
             };
-            PluginUpdateCheck.NotifyIcon.MouseClick += new MouseEventHandler(this.NotifyIcon1_MouseClick);
+            MessageManager.NotifyIcon.MouseClick += new MouseEventHandler(this.NotifyIcon1_MouseClick);
         }
     }
 }
