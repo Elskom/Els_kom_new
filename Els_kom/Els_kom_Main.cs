@@ -7,6 +7,7 @@ using System;
 using System.Windows.Forms;
 using Els_kom.Forms;
 using Els_kom_Core.Classes;
+using Elskom.Generic.Libs;
 
 [MiniDump(
     "Please send a copy of {0} to https://github.com/Elskom/Els_kom_new/issues by making an issue and attaching the log(s) and mini-dump(s).",
