@@ -62,8 +62,6 @@
     <Compile Include="Classes\KOMManager.cs" />
     <Compile Include="Classes\KOMStream.cs" />
     <Compile Include="Classes\LoadResources.cs" />
-    <Compile Include="Classes\MiniDump.cs" />
-    <Compile Include="Classes\MiniDumpAttribute.cs" />
     <Compile Include="Classes\PackingError.cs" />
     <Compile Include="Classes\ReleasePackaging.cs" />
     <Compile Include="Classes\ResourcesDir.cs" />
@@ -96,9 +94,7 @@
     </Compile>
     <Compile Include="Enums\LoadImagefuLoad.cs" />
     <Compile Include="Enums\LoadImageTypes.cs" />
-    <Compile Include="Structs\MINIDUMP_EXCEPTION_INFORMATION.cs" />
     <Compile Include="Enums\SYSCOMMANDS.cs" />
-    <Compile Include="Enums\MINIDUMP_TYPE.cs" />
     <Compile Include="Interfaces\ICallbackPlugin.cs" />
     <Compile Include="Interfaces\IEncryptionPlugin.cs" />
     <Compile Include="Interfaces\IKomPlugin.cs" />
