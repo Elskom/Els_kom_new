@@ -32,6 +32,16 @@ namespace Els_kom_Core.Controls
             // this.doc = new List<XDocument>();
             SettingsFile.Settingsxml?.ReopenFile();
             int.TryParse(SettingsFile.Settingsxml?.TryRead("SaveToZip"), out this.saveToZip);
+            var pluginTypes = new List<Type>();
+            foreach (var callbackplugin in ExecutionManager.Callbackplugins)
+            {
+                pluginTypes.Add(callbackplugin.GetType());
+            }
+
+            foreach (var komplugin in KOMManager.Komplugins)
+            {
+                pluginTypes.Add(komplugin.GetType());
+            }
 
             // update the list if there were new sources added during the program execution.
             MainControl.PluginUpdateChecks = PluginUpdateCheck.CheckForUpdates(
