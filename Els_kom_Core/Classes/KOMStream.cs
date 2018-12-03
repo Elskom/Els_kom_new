@@ -168,11 +168,11 @@ namespace Els_kom_Core.Classes
                     }
                     catch (ArgumentException ex)
                     {
-                        throw new UnpackingError("Something failed...", ex);
+                        throw new NotUnpackableException("Something failed...", ex);
                     }
-                    catch (UnpackingError ex)
+                    catch (NotUnpackableException ex)
                     {
-                        throw new UnpackingError("decompression failed...", ex);
+                        throw new NotUnpackableException("decompression failed...", ex);
                     }
 
                     entryfile.Dispose();
@@ -206,11 +206,11 @@ namespace Els_kom_Core.Classes
                         }
                         catch (ArgumentException ex)
                         {
-                            throw new UnpackingError("Something failed...", ex);
+                            throw new NotUnpackableException("Something failed...", ex);
                         }
-                        catch (UnpackingError ex)
+                        catch (NotUnpackableException ex)
                         {
-                            throw new UnpackingError("decompression failed...", ex);
+                            throw new NotUnpackableException("decompression failed...", ex);
                         }
 
                         // Decrypt the data from a encryption plugin.
@@ -227,11 +227,10 @@ namespace Els_kom_Core.Classes
                         }
                         catch (ArgumentException ex)
                         {
-                            throw new UnpackingError("Something failed...", ex);
+                            throw new NotUnpackableException("Something failed...", ex);
                         }
-                        catch (UnpackingError ex)
-                        {
-                            throw new UnpackingError("decompression failed...", ex);
+                        catch (NotUnpackableException ex)
+                        {                     throw new NotUnpackableException("decompression failed...", ex);
                         }
                     }
 
@@ -272,7 +271,7 @@ namespace Els_kom_Core.Classes
                 {
                     ZlibHelper.DecompressData(entrydata, out dec_entrydata);
                 }
-                catch (UnpackingError)
+                catch (NotUnpackableException)
                 {
                     // copyright symbols... Really funny xor key...
                     var xorkey = Encoding.UTF8.GetBytes("\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9");
@@ -284,9 +283,9 @@ namespace Els_kom_Core.Classes
                         ZlibHelper.DecompressData(entrydata, out dec_entrydata);
                         File.Create(outpath + "\\XoRNeeded.dummy").Dispose();
                     }
-                    catch (UnpackingError ex)
+                    catch (NotUnpackableException ex)
                     {
-                        throw new UnpackingError("failed with zlib decompression of entries.", ex);
+                        throw new NotUnpackableException("failed with zlib decompression of entries.", ex);
                     }
                 }
 
