@@ -14,16 +14,16 @@ namespace Els_kom_Core.Classes
         /// Initializes a new instance of the <see cref="EntryVer"/> class for unpacking files from KOM V2.
         /// </summary>
         /// <param name="name">The Entry file name.</param>
-        /// <param name="uncompressed_size">The original file size.</param>
-        /// <param name="compressed_size">The current, compressed file size.</param>
-        /// <param name="relative_offset">The relative offset of the entry file.</param>
-        public EntryVer(string name, int uncompressed_size, int compressed_size, int relative_offset)
+        /// <param name="uncompressedsize">The original file size.</param>
+        /// <param name="compressedsize">The current, compressed file size.</param>
+        /// <param name="relativeoffset">The relative offset of the entry file.</param>
+        public EntryVer(string name, int uncompressedsize, int compressedsize, int relativeoffset)
         {
             this.Version = 2;
             this.Name = name;
-            this.Uncompressed_size = uncompressed_size;
-            this.Compressed_size = compressed_size;
-            this.Relative_offset = relative_offset;
+            this.UncompressedSize = uncompressedsize;
+            this.CompressedSize = compressedsize;
+            this.RelativeOffset = relativeoffset;
         }
 
         /// <summary>
@@ -31,36 +31,36 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <param name="entrydata">The input file data that is to be compressed.</param>
         /// <param name="name">The Entry file name.</param>
-        /// <param name="uncompressed_size">The current, file size.</param>
-        /// <param name="compressed_size">The target, compressed file size.</param>
-        /// <param name="relative_offset">The relative offset of the entry file.</param>
-        public EntryVer(byte[] entrydata, string name, int uncompressed_size, int compressed_size, int relative_offset)
+        /// <param name="uncompressedsize">The current, file size.</param>
+        /// <param name="compressedsize">The target, compressed file size.</param>
+        /// <param name="relativeoffset">The relative offset of the entry file.</param>
+        public EntryVer(byte[] entrydata, string name, int uncompressedsize, int compressedsize, int relativeoffset)
         {
             this.Version = 2;
             this.Entrydata = entrydata;
             this.Name = name;
-            this.Uncompressed_size = uncompressed_size;
-            this.Compressed_size = compressed_size;
-            this.Relative_offset = relative_offset;
+            this.UncompressedSize = uncompressedsize;
+            this.CompressedSize = compressedsize;
+            this.RelativeOffset = relativeoffset;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EntryVer"/> class unpacking files from KOM V3.
         /// </summary>
         /// <param name="name">The Entry file name.</param>
-        /// <param name="uncompressed_size">The original file size.</param>
-        /// <param name="compressed_size">The current, compressed file size.</param>
+        /// <param name="uncompressedsize">The original file size.</param>
+        /// <param name="compressedsize">The current, compressed file size.</param>
         /// <param name="checksum">The input file crc32 checksum.</param>
-        /// <param name="file_time">The input file time.</param>
+        /// <param name="filetime">The input file time.</param>
         /// <param name="algorithm">The input file's compression algorithm.</param>
-        public EntryVer(string name, int uncompressed_size, int compressed_size, int checksum, int file_time, int algorithm)
+        public EntryVer(string name, int uncompressedsize, int compressedsize, int checksum, int filetime, int algorithm)
         {
             this.Version = 3;
             this.Name = name;
-            this.Uncompressed_size = uncompressed_size;
-            this.Compressed_size = compressed_size;
+            this.UncompressedSize = uncompressedsize;
+            this.CompressedSize = compressedsize;
             this.Checksum = checksum;
-            this.File_time = file_time;
+            this.File_time = filetime;
             this.Algorithm = algorithm;
         }
 
@@ -69,20 +69,20 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <param name="entrydata">The input file data that is to be compressed.</param>
         /// <param name="name">The Entry file name.</param>
-        /// <param name="uncompressed_size">The current, file size.</param>
-        /// <param name="compressed_size">The target, compressed file size.</param>
+        /// <param name="uncompressedsize">The current, file size.</param>
+        /// <param name="compressedsize">The target, compressed file size.</param>
         /// <param name="checksum">The input file crc32 checksum.</param>
-        /// <param name="file_time">The input file time.</param>
+        /// <param name="filetime">The input file time.</param>
         /// <param name="algorithm">The input file's compression algorithm.</param>
-        public EntryVer(byte[] entrydata, string name, int uncompressed_size, int compressed_size, int checksum, int file_time, int algorithm)
+        public EntryVer(byte[] entrydata, string name, int uncompressed_size, int compressed_size, int checksum, int filetime, int algorithm)
         {
             this.Version = 3;
             this.Entrydata = entrydata;
             this.Name = name;
-            this.Uncompressed_size = uncompressed_size;
-            this.Compressed_size = compressed_size;
+            this.UncompressedSize = uncompressedsize;
+            this.CompressedSize = compressedsize;
             this.Checksum = checksum;
-            this.File_time = file_time;
+            this.FileTime = filetime;
             this.Algorithm = algorithm;
         }
 
@@ -90,20 +90,20 @@ namespace Els_kom_Core.Classes
         /// Initializes a new instance of the <see cref="EntryVer"/> class for unpacking files from KOM V4.
         /// </summary>
         /// <param name="name">The Entry file name.</param>
-        /// <param name="uncompressed_size">The original file size.</param>
-        /// <param name="compressed_size">The current, compressed file size.</param>
+        /// <param name="uncompressedsize">The original file size.</param>
+        /// <param name="compressedsize">The current, compressed file size.</param>
         /// <param name="checksum">The input file crc32 checksum.</param>
-        /// <param name="file_time">The input file time.</param>
+        /// <param name="filetime">The input file time.</param>
         /// <param name="algorithm">The input file's compression algorithm.</param>
         /// <param name="mappedID">The input file's mapped id.</param>
-        public EntryVer(string name, int uncompressed_size, int compressed_size, int checksum, int file_time, int algorithm, string mappedID)
+        public EntryVer(string name, int uncompressedsize, int compressedsize, int checksum, int filetime, int algorithm, string mappedID)
         {
             this.Version = 4;
             this.Name = name;
-            this.Uncompressed_size = uncompressed_size;
-            this.Compressed_size = compressed_size;
+            this.UncompressedSize = uncompressedsize;
+            this.CompressedSize = compressedsize;
             this.Checksum = checksum;
-            this.File_time = file_time;
+            this.FileTime = filetime;
             this.Algorithm = algorithm;
             this.MappedID = mappedID;
         }
@@ -113,21 +113,21 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <param name="entrydata">The input file data that is to be compressed.</param>
         /// <param name="name">The Entry file name.</param>
-        /// <param name="uncompressed_size">The current, file size.</param>
-        /// <param name="compressed_size">The target, compressed file size.</param>
+        /// <param name="uncompressedsize">The current, file size.</param>
+        /// <param name="compressedsize">The target, compressed file size.</param>
         /// <param name="checksum">The input file crc32 checksum.</param>
-        /// <param name="file_time">The input file time.</param>
+        /// <param name="filetime">The input file time.</param>
         /// <param name="algorithm">The input file's compression algorithm.</param>
         /// <param name="mappedID">The input file's mapped id.</param>
-        public EntryVer(byte[] entrydata, string name, int uncompressed_size, int compressed_size, int checksum, int file_time, int algorithm, string mappedID)
+        public EntryVer(byte[] entrydata, string name, int uncompressedsize, int compressedsize, int checksum, int filetime, int algorithm, string mappedID)
         {
             this.Version = 4;
             this.Entrydata = entrydata;
             this.Name = name;
-            this.Uncompressed_size = uncompressed_size;
-            this.Compressed_size = compressed_size;
+            this.UncompressedSize = uncompressedsize;
+            this.CompressedSize = compressedsize;
             this.Checksum = checksum;
-            this.File_time = file_time;
+            this.FileTime = filetime;
             this.Algorithm = algorithm;
             this.MappedID = mappedID;
         }
@@ -146,7 +146,7 @@ namespace Els_kom_Core.Classes
         /// <value>
         /// The entry unpacked size.
         /// </value>
-        public int Uncompressed_size { get; private set; }
+        public int UncompressedSize { get; private set; }
 
         /// <summary>
         /// Gets the entry Compressed Size.
@@ -154,7 +154,7 @@ namespace Els_kom_Core.Classes
         /// <value>
         /// The entry Compressed Size.
         /// </value>
-        public int Compressed_size { get; private set; }
+        public int CompressedSize { get; private set; }
 
         /// <summary>
         /// Gets the entry Relative offset.
@@ -162,7 +162,7 @@ namespace Els_kom_Core.Classes
         /// <value>
         /// The entry Relative offset.
         /// </value>
-        public int Relative_offset { get; private set; }
+        public int RelativeOffset { get; private set; }
 
         /// <summary>
         /// Gets entry file data for packing.
@@ -188,7 +188,7 @@ namespace Els_kom_Core.Classes
         /// <value>
         /// Entry File time.
         /// </value>
-        public int File_time { get; private set; }
+        public int FileTime { get; private set; }
 
         /// <summary>
         /// Gets entry Algorithm.

@@ -130,37 +130,37 @@ namespace Els_kom_Core.Classes
         /// Writes the KOM File entry to file.
         /// </summary>
         /// <param name="reader">The reader for the kom file.</param>
-        /// <param name="out_path">The output folder for every entry in the kom file.</param>
+        /// <param name="outpath">The output folder for every entry in the kom file.</param>
         /// <param name="entry">The kom file entry instance.</param>
         /// <param name="version">The kom file version.</param>
         /// <param name="xmldata">The crc.xml data to write.</param>
         /// <param name="kOMFileName">The name of the kom file the entry is from.</param>
-        public void WriteOutput(BinaryReader reader, string out_path, EntryVer entry, int version, string xmldata, string kOMFileName)
+        public void WriteOutput(BinaryReader reader, string outpath, EntryVer entry, int version, string xmldata, string kOMFileName)
         {
             if (version > 2)
             {
-                if (!Directory.Exists(out_path))
+                if (!Directory.Exists(outpath))
                 {
-                    Directory.CreateDirectory(out_path);
+                    Directory.CreateDirectory(outpath);
                 }
 
                 var xmldatabuffer = Encoding.ASCII.GetBytes(xmldata);
-                if (!File.Exists(out_path + Path.DirectorySeparatorChar + "crc.xml"))
+                if (!File.Exists(outpath + Path.DirectorySeparatorChar + "crc.xml"))
                 {
-                    var fs = File.Create(out_path + Path.DirectorySeparatorChar + "crc.xml");
+                    var fs = File.Create(outpath + Path.DirectorySeparatorChar + "crc.xml");
                     fs.Write(xmldatabuffer, 0, xmldatabuffer.Length);
                     fs.Dispose();
                 }
 
-                var entrydata = reader.ReadBytes(entry.Compressed_size);
+                var entrydata = reader.ReadBytes(entry.CompressedSize);
                 if (entry.Algorithm == 0)
                 {
                     var failure = false;
-                    var entryfile = File.Create(out_path + "\\" + entry.Name);
+                    var entryfile = File.Create(outpath + "\\" + entry.Name);
                     try
                     {
                         ZlibHelper.DecompressData(entrydata, out var dec_entrydata);
-                        entryfile.Write(dec_entrydata, 0, entry.Uncompressed_size);
+                        entryfile.Write(dec_entrydata, 0, entry.UncompressedSize);
                     }
                     catch (ArgumentException ex)
                     {
@@ -174,20 +174,20 @@ namespace Els_kom_Core.Classes
                     entryfile.Dispose();
                     if (failure)
                     {
-                        File.Move(out_path + "\\" + entry.Name, out_path + "\\" + entry.Name + "." + entry.Uncompressed_size + "." + entry.Algorithm);
+                        File.Move(outpath + "\\" + entry.Name, outpath + "\\" + entry.Name + "." + entry.UncompressedSize + "." + entry.Algorithm);
                     }
                 }
                 else
                 {
                     FileStream entryfile;
-                    if (entrydata.Length == entry.Uncompressed_size)
+                    if (entrydata.Length == entry.UncompressedSize)
                     {
-                        entryfile = File.Create(out_path + "\\" + entry.Name);
+                        entryfile = File.Create(outpath + "\\" + entry.Name);
                     }
                     else
                     {
                         // data was not decompressed properly so lets just dump it as is.
-                        entryfile = File.Create(out_path + "\\" + entry.Name + "." + entry.Uncompressed_size + "." + entry.Algorithm);
+                        entryfile = File.Create(outpath + "\\" + entry.Name + "." + entry.UncompressedSize + "." + entry.Algorithm);
                     }
 #if VERSION_0x01050000
                     byte[] dec_entrydata = null;
@@ -231,11 +231,11 @@ namespace Els_kom_Core.Classes
                         }
                     }
 
-                    entryfile.Write(dec_entrydata, 0, entry.Uncompressed_size);
+                    entryfile.Write(dec_entrydata, 0, entry.UncompressedSize);
                     entryfile.Dispose();
                     if (failure)
                     {
-                        File.Move(out_path + "\\" + entry.Name, out_path + "\\" + entry.Name + "." + entry.Uncompressed_size + "." + entry.Algorithm);
+                        File.Move(outpath + "\\" + entry.Name, outpath + "\\" + entry.Name + "." + entry.UncompressedSize + "." + entry.Algorithm);
                     }
 #else
                     if (entry.Algorithm == 3)
@@ -256,13 +256,13 @@ namespace Els_kom_Core.Classes
             else
             {
                 // Write KOM V2 output to file.
-                if (!Directory.Exists(out_path))
+                if (!Directory.Exists(outpath))
                 {
-                    Directory.CreateDirectory(out_path);
+                    Directory.CreateDirectory(outpath);
                 }
 
-                var entrydata = reader.ReadBytes(entry.Compressed_size);
-                var entryfile = File.Create(out_path + "\\" + entry.Name);
+                var entrydata = reader.ReadBytes(entry.CompressedSize);
+                var entryfile = File.Create(outpath + "\\" + entry.Name);
                 byte[] dec_entrydata;
                 try
                 {
@@ -278,7 +278,7 @@ namespace Els_kom_Core.Classes
                     try
                     {
                         ZlibHelper.DecompressData(entrydata, out dec_entrydata);
-                        File.Create(out_path + "\\XoRNeeded.dummy").Dispose();
+                        File.Create(outpath + "\\XoRNeeded.dummy").Dispose();
                     }
                     catch (UnpackingError ex)
                     {
@@ -286,7 +286,7 @@ namespace Els_kom_Core.Classes
                     }
                 }
 
-                entryfile.Write(dec_entrydata, 0, entry.Uncompressed_size);
+                entryfile.Write(dec_entrydata, 0, entry.UncompressedSize);
                 entryfile.Dispose();
             }
         }

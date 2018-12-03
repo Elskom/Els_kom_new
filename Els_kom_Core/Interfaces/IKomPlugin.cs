@@ -44,29 +44,29 @@ namespace Els_kom_Core.Interfaces
         /// <summary>
         /// Unpacker for the KOM Version this plugin supports.
         /// </summary>
-        /// <param name="in_path">input path.</param>
-        /// <param name="out_path">output (target) path.</param>
+        /// <param name="inpath">input path.</param>
+        /// <param name="outpath">output (target) path.</param>
         /// <param name="kOMFileName">KOM File name to use internally for unpacking files.</param>
         /// <exception cref="UnpackingError">Thrown when unpacking fails badly.</exception>
         /// <exception cref="NotImplementedException">Thrown when an plugin does not have this implemented yet.</exception>
-        void Unpack(string in_path, string out_path, string kOMFileName);
+        void Unpack(string inpath, string outpath, string kOMFileName);
 
         /// <summary>
         /// Packer for the KOM Version this plugin supports.
         /// </summary>
-        /// <param name="in_path">input path.</param>
-        /// <param name="out_path">output (target) path.</param>
+        /// <param name="inpath">input path.</param>
+        /// <param name="outpath">output (target) path.</param>
         /// <param name="kOMFileName">KOM File name to use internally for packing files.</param>
         /// <exception cref="PackingError">Thrown when packing fails badly.</exception>
         /// <exception cref="NotImplementedException">Thrown when an plugin does not have this implemented yet.</exception>
-        void Pack(string in_path, string out_path, string kOMFileName);
+        void Pack(string inpath, string outpath, string kOMFileName);
 
         /// <summary>
         /// Deletes the File or Folder that the plugin supports with processing.
         /// </summary>
-        /// <param name="in_path">The input path to delete.</param>
+        /// <param name="inpath">The input path to delete.</param>
         /// <param name="folder">Denotes if the input path is an file or folder.</param>
-        void Delete(string in_path, bool folder);
+        void Delete(string inpath, bool folder);
 
         /// <summary>
         /// Converts the crc.xml file to the format supported
