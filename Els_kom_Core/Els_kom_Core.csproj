@@ -62,11 +62,11 @@
     <Compile Include="Classes\KOMManager.cs" />
     <Compile Include="Classes\KOMStream.cs" />
     <Compile Include="Classes\LoadResources.cs" />
-    <Compile Include="Classes\PackingError.cs" />
+    <Compile Include="Classes\NotPackableException.cs" />
     <Compile Include="Classes\ReleasePackaging.cs" />
     <Compile Include="Classes\ResourcesDir.cs" />
     <Compile Include="Classes\SafeNativeMethods.cs" />
-    <Compile Include="Classes\UnpackingError.cs" />
+    <Compile Include="Classes\NotUnpackableException.cs" />
     <Compile Include="Classes\ZlibHelper.cs" />
     <Compile Include="Controls\AboutControl.cs">
       <SubType>UserControl</SubType>
