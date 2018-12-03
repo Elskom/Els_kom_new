@@ -134,8 +134,12 @@ namespace Els_kom_Core.Classes
         /// <param name="entry">The kom file entry instance.</param>
         /// <param name="version">The kom file version.</param>
         /// <param name="xmldata">The crc.xml data to write.</param>
+#if VERSION_0x01050000
         /// <param name="kOMFileName">The name of the kom file the entry is from.</param>
         public void WriteOutput(BinaryReader reader, string outpath, EntryVer entry, int version, string xmldata, string kOMFileName)
+#else
+        public void WriteOutput(BinaryReader reader, string outpath, EntryVer entry, int version, string xmldata)
+#endif
         {
             if (version > 2)
             {
