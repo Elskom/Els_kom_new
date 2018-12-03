@@ -60,7 +60,7 @@ namespace Els_kom_Core.Classes
             this.UncompressedSize = uncompressedsize;
             this.CompressedSize = compressedsize;
             this.Checksum = checksum;
-            this.File_time = filetime;
+            this.FileTime = filetime;
             this.Algorithm = algorithm;
         }
 
@@ -74,7 +74,7 @@ namespace Els_kom_Core.Classes
         /// <param name="checksum">The input file crc32 checksum.</param>
         /// <param name="filetime">The input file time.</param>
         /// <param name="algorithm">The input file's compression algorithm.</param>
-        public EntryVer(byte[] entrydata, string name, int uncompressed_size, int compressed_size, int checksum, int filetime, int algorithm)
+        public EntryVer(byte[] entrydata, string name, int uncompressedsize, int compressedsize, int checksum, int filetime, int algorithm)
         {
             this.Version = 3;
             this.Entrydata = entrydata;

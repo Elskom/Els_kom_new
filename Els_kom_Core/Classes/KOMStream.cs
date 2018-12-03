@@ -248,7 +248,7 @@ namespace Els_kom_Core.Classes
                     }
 
                     // for now until I can decompress this crap.
-                    entryfile.Write(entrydata, 0, entry.Compressed_size);
+                    entryfile.Write(entrydata, 0, entry.CompressedSize);
                     entryfile.Dispose();
 #endif
                 }
