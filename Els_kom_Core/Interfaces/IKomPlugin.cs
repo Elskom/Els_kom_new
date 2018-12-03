@@ -47,7 +47,7 @@ namespace Els_kom_Core.Interfaces
         /// <param name="inpath">input path.</param>
         /// <param name="outpath">output (target) path.</param>
         /// <param name="kOMFileName">KOM File name to use internally for unpacking files.</param>
-        /// <exception cref="UnpackingError">Thrown when unpacking fails badly.</exception>
+        /// <exception cref="NotUnpackableException">Thrown when unpacking fails badly.</exception>
         /// <exception cref="NotImplementedException">Thrown when an plugin does not have this implemented yet.</exception>
         void Unpack(string inpath, string outpath, string kOMFileName);
 
@@ -57,7 +57,7 @@ namespace Els_kom_Core.Interfaces
         /// <param name="inpath">input path.</param>
         /// <param name="outpath">output (target) path.</param>
         /// <param name="kOMFileName">KOM File name to use internally for packing files.</param>
-        /// <exception cref="PackingError">Thrown when packing fails badly.</exception>
+        /// <exception cref="NotPackableException">Thrown when packing fails badly.</exception>
         /// <exception cref="NotImplementedException">Thrown when an plugin does not have this implemented yet.</exception>
         void Pack(string inpath, string outpath, string kOMFileName);
 

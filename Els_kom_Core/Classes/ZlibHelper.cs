@@ -19,7 +19,7 @@ namespace Els_kom_Core.Classes
         /// <param name="inData">The original input data.</param>
         /// <param name="outData">The compressed output data.</param>
         /// <param name="adler32">The output adler32 of the data.</param>
-        /// <exception cref="PackingError">Thrown when the stream Errors in any way.</exception>
+        /// <exception cref="NotPackableException">Thrown when the stream Errors in any way.</exception>
         public static void CompressData(byte[] inData, out byte[] outData, out int adler32)
             => CompressData(inData, out outData, ZlibConst.ZDEFAULTCOMPRESSION, out adler32);
 
@@ -28,7 +28,7 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <param name="inData">The original input data.</param>
         /// <param name="outData">The compressed output data.</param>
-        /// <exception cref="PackingError">Thrown when the stream Errors in any way.</exception>
+        /// <exception cref="NotPackableException">Thrown when the stream Errors in any way.</exception>
         public static void CompressData(byte[] inData, out byte[] outData)
             => CompressData(inData, out outData, ZlibConst.ZDEFAULTCOMPRESSION);
 
@@ -38,7 +38,7 @@ namespace Els_kom_Core.Classes
         /// <param name="inData">The original input data.</param>
         /// <param name="outData">The compressed output data.</param>
         /// <param name="level">The compression level to use.</param>
-        /// <exception cref="PackingError">Thrown when the stream Errors in any way.</exception>
+        /// <exception cref="NotPackableException">Thrown when the stream Errors in any way.</exception>
         // discard returned adler32. The caller does not want it.
         public static void CompressData(byte[] inData, out byte[] outData, int level)
             => CompressData(inData, out outData, level, out var adler32);
@@ -50,7 +50,7 @@ namespace Els_kom_Core.Classes
         /// <param name="outData">The compressed output data.</param>
         /// <param name="level">The compression level to use.</param>
         /// <param name="adler32">The output adler32 of the data.</param>
-        /// <exception cref="PackingError">Thrown when the stream Errors in any way.</exception>
+        /// <exception cref="NotPackableException">Thrown when the stream Errors in any way.</exception>
         public static void CompressData(byte[] inData, out byte[] outData, int level, out int adler32)
         {
             var outMemoryStream = new MemoryStream();
@@ -72,7 +72,7 @@ namespace Els_kom_Core.Classes
             }
             catch (ZStreamException ex)
             {
-                throw new PackingError("Compression Failed.", ex);
+                throw new NotPackableException("Compression Failed.", ex);
             }
 
             outData = outMemoryStream.ToArray();
@@ -86,7 +86,7 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <param name="inData">The compressed input data.</param>
         /// <param name="outData">The decompressed output data.</param>
-        /// <exception cref="UnpackingError">Thrown when the stream Errors in any way.</exception>
+        /// <exception cref="NotUnpackableException">Thrown when the stream Errors in any way.</exception>
         public static void DecompressData(byte[] inData, out byte[] outData)
         {
             var outMemoryStream = new MemoryStream();
@@ -108,7 +108,7 @@ namespace Els_kom_Core.Classes
             }
             catch (ZStreamException ex)
             {
-                throw new UnpackingError("Decompression Failed.", ex);
+                throw new NotUnpackableException("Decompression Failed.", ex);
             }
 
             outData = outMemoryStream.ToArray();

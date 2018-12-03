@@ -25,10 +25,10 @@ namespace Els_kom_Core.Interfaces
 
         /// <summary>
         /// Decrypts an KOM file entry. If KOM file algorithm is not supported
-        /// throw <see cref="UnpackingError"/>.
+        /// throw <see cref="NotUnpackableException"/>.
         /// </summary>
-        /// <exception cref="UnpackingError">
-        /// When the KOM file algorith is not suppoted by the curently installed
+        /// <exception cref="NotUnpackableException">
+        /// When the KOM file algorithm is not suppoted by the curently installed
         /// encryption plugin.
         /// </exception>
         /// <param name="input">The input data to Decrypt.</param>
@@ -39,10 +39,10 @@ namespace Els_kom_Core.Interfaces
 
         /// <summary>
         /// Encrypts an KOM file entry. If KOM file algorithm is not supported
-        /// throw <see cref="PackingError"/>.
+        /// throw <see cref="NotPackableException"/>.
         /// </summary>
-        /// <exception cref="PackingError">
-        /// When the KOM file algorith is not suppoted by the curently installed
+        /// <exception cref="NotPackableException">
+        /// When the KOM file algorithm is not suppoted by the curently installed
         /// encryption plugin.
         /// </exception>
         /// <param name="input">The input data to Encrypt.</param>

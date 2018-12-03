@@ -9,34 +9,35 @@ namespace Els_kom_Core.Classes
     using System.IO;
 
     /// <summary>
-    /// KOM file Packing failure error.
+    /// KOM file Unpacking failure error.
     /// </summary>
     [Serializable]
-    public sealed class PackingError : IOException
+    public sealed class NotUnpackableException : IOException
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PackingError"/> class.
+        /// Initializes a new instance of the <see cref="NotUnpackableException"/> class with no argrument.
         /// </summary>
-        public PackingError()
+        public NotUnpackableException()
             : base()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PackingError"/> class.
+        /// Initializes a new instance of the <see cref="NotUnpackableException"/> class with an string argrument.
         /// </summary>
         /// <param name="s">The error string.</param>
-        public PackingError(string s)
+        public NotUnpackableException(string s)
             : base(s)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PackingError"/> class.
+        /// Initializes a new instance of the <see cref="NotUnpackableException"/> class with an string argrument
+        /// and the exception that cuased this exception.
         /// </summary>
         /// <param name="s">The error string.</param>
         /// <param name="ex">The Exception that caused this Exception.</param>
-        public PackingError(string s, Exception ex)
+        public NotUnpackableException(string s, Exception ex)
             : base(s, ex)
         {
         }
