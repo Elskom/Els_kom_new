@@ -142,7 +142,7 @@ namespace Els_kom_Core.Classes
                             // delete original kom file.
                             komplugin.Delete(Application.StartupPath + "\\koms\\" + kom_file, false);
                         }
-                        catch (UnpackingError)
+                        catch (NotUnpackableException)
                         {
                             // do not delete kom file.
                             MessageManager.ShowError("Unpacking this KOM file failed.", "Error!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
@@ -192,7 +192,7 @@ namespace Els_kom_Core.Classes
                                     komplugin.Delete(Application.StartupPath + "\\koms\\" + kom_data_folder, true);
                                 }
                             }
-                            catch (PackingError)
+                            catch (NotPackableException)
                             {
                                 // do not delete kom data folder.
                                 File.Create(Application.StartupPath + "\\koms\\" + kom_data_folder + "\\KOMVERSION." + komplugin.SupportedKOMVersion).Dispose();
