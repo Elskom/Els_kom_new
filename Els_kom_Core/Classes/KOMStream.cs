@@ -136,9 +136,9 @@ namespace Els_kom_Core.Classes
         /// <param name="xmldata">The crc.xml data to write.</param>
 #if VERSION_0x01050000
         /// <param name="kOMFileName">The name of the kom file the entry is from.</param>
-        public void WriteOutput(BinaryReader reader, string outpath, EntryVer entry, int version, string xmldata, string kOMFileName)
+        public static void WriteOutput(BinaryReader reader, string outpath, EntryVer entry, int version, string xmldata, string kOMFileName)
 #else
-        public void WriteOutput(BinaryReader reader, string outpath, EntryVer entry, int version, string xmldata)
+        public static void WriteOutput(BinaryReader reader, string outpath, EntryVer entry, int version, string xmldata)
 #endif
         {
             if (version > 2)
@@ -333,7 +333,7 @@ namespace Els_kom_Core.Classes
         /// <param name="crcversion">The version of the crc.xml file.</param>
         /// <param name="crcpath">The path to the crc.xml file.</param>
         /// <param name="checkpath">The directry that contains the crc.xml file.</param>
-        public void UpdateCRC(int crcversion, string crcpath, string checkpath)
+        public static void UpdateCRC(int crcversion, string crcpath, string checkpath)
         {
             var crcfile = new FileInfo(crcpath);
             var di1 = new DirectoryInfo(checkpath);
@@ -382,7 +382,7 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <param name="xmldata">The data in the crc.xml file.</param>
         /// <returns>The version of the crc.xml file.</returns>
-        internal int GetCRCVersion(string xmldata)
+        internal static int GetCRCVersion(string xmldata)
         {
             var xml = XElement.Parse(xmldata);
             if (xml.Element("File") != null)
@@ -407,7 +407,6 @@ namespace Els_kom_Core.Classes
         /// </summary>
         /// <param name="disposing">determines if we should dispose native resources (if any at all).</param>
         protected override void Dispose(bool disposing)
-        {
-        }
+            => base.Dispose(disposing);
     }
 }

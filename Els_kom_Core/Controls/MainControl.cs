@@ -86,7 +86,7 @@ namespace Els_kom_Core.Controls
         /// Gets if the Els_kom window can be closed or not.
         /// </summary>
         /// <returns>If Els_kom is ready to close or not.</returns>
-        public bool AbleToClose() => ExecutionManager.RunningElsword ||
+        public static bool AbleToClose() => ExecutionManager.RunningElsword ||
                 ExecutionManager.RunningElswordDirectly ||
                 KOMManager.PackingState ||
                 KOMManager.UnpackingState ? false
