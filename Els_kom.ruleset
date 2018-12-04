@@ -88,7 +88,7 @@
     <Rule Id="CA1707" Action="Warning" />
     <Rule Id="CA1819" Action="Warning" />
   </Rules>
-  <Rules AnalyzerId="" RuleNamespace="">
+  <Rules AnalyzerId="IDisposableAnalyzers" RuleNamespace="IDisposableAnalyzers">
     <Rule Id="IDISP001" Action="Warning" />
     <Rule Id="IDISP002" Action="Warning" />
     <Rule Id="IDISP003" Action="Warning" />
