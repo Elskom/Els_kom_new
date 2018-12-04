@@ -23,7 +23,7 @@ namespace Els_kom.Forms
             var cancel = e.Cancel;
 
             // CloseReason UnloadMode = e->CloseReason; <-- Removed because not used.
-            if (!this.MainControl1.AbleToClose() /*&& !MainControl.Closable*/)
+            if (!MainControl.AbleToClose() /*&& !MainControl.Closable*/)
             {
                 cancel = true;
                 MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
