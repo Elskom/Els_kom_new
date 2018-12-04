@@ -123,8 +123,16 @@ namespace Els_kom_Core.Controls
             this.curvalue = SettingsFile.Settingsxml?.TryRead("IconWhileElsNotRunning");
             this.curvalue2 = SettingsFile.Settingsxml?.TryRead("IconWhileElsRunning");
             this.curvalue6 = SettingsFile.Settingsxml?.TryRead("WindowIcon");
-            int.TryParse(SettingsFile.Settingsxml?.TryRead("LoadPDB"), out this.curvalue4);
-            int.TryParse(SettingsFile.Settingsxml?.TryRead("SaveToZip"), out this.curvalue5);
+            if (!int.TryParse(SettingsFile.Settingsxml?.TryRead("LoadPDB"), out this.curvalue4))
+            {
+                // do nothing to silence a compile error.
+            }
+
+            if (!int.TryParse(SettingsFile.Settingsxml?.TryRead("SaveToZip"), out this.curvalue5))
+            {
+                // do nothing to silence a compile error.
+            }
+
             var sources = SettingsFile.Settingsxml?.TryRead("Sources", "Source", null);
             foreach (var source in sources)
             {

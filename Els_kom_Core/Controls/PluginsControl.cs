@@ -32,7 +32,11 @@ namespace Els_kom_Core.Controls
             // var closing = false;
             // this.doc = new List<XDocument>();
             SettingsFile.Settingsxml?.ReopenFile();
-            int.TryParse(SettingsFile.Settingsxml?.TryRead("SaveToZip"), out this.saveToZip);
+            if (!int.TryParse(SettingsFile.Settingsxml?.TryRead("SaveToZip"), out this.saveToZip))
+            {
+                // do nothing to silence a compile error.
+            }
+
             var pluginTypes = new List<Type>();
             foreach (var callbackplugin in ExecutionManager.Callbackplugins)
             {

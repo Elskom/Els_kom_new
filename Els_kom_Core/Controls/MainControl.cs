@@ -119,8 +119,16 @@ namespace Els_kom_Core.Controls
                     this.ConfigForm?.Invoke(this, new EventArgs());
                 }
 
-                int.TryParse(SettingsFile.Settingsxml?.TryRead("SaveToZip"), out var saveToZip1);
-                int.TryParse(SettingsFile.Settingsxml?.TryRead("LoadPDB"), out var loadPDB1);
+                if (!int.TryParse(SettingsFile.Settingsxml?.TryRead("SaveToZip"), out var saveToZip1))
+                {
+                    // do nothing to silence a compile error.
+                }
+
+                if (!int.TryParse(SettingsFile.Settingsxml?.TryRead("LoadPDB"), out var loadPDB1))
+                {
+                    // do nothing to silence a compile error.
+                }
+
                 var komplugins = GenericPluginLoader<IKomPlugin>.LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
                 KOMManager.Komplugins.AddRange(komplugins);
                 var callbackplugins = GenericPluginLoader<ICallbackPlugin>.LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
