@@ -21,7 +21,7 @@
     <OutputPath>..\bin\$(Configuration)\</OutputPath>
     <ErrorReport>none</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <LangVersion>latest</LangVersion>
     <DebugSymbols>true</DebugSymbols>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>

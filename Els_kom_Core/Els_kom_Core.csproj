@@ -16,7 +16,7 @@
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <BaseIntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</BaseIntermediateOutputPath>
     <IntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
