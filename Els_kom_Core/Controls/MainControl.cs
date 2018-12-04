@@ -690,7 +690,7 @@ namespace Els_kom_Core.Controls
 
         private void CheckSettings(object sender, EventArgs e)
         {
-            if (this.AbleToClose())
+            if (AbleToClose())
             {
                 SettingsFile.Settingsxml?.ReopenFile();
                 this.showintaskbarTempvalue = SettingsFile.Settingsxml?.TryRead("IconWhileElsNotRunning");

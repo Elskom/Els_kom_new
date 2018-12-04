@@ -20,6 +20,7 @@ namespace Els_kom_Core.Classes
         /// Initializes a new instance of the <see cref="KOMStream"/> class.
         /// </summary>
         public KOMStream()
+            : base()
         {
         }
 
@@ -79,51 +80,6 @@ namespace Els_kom_Core.Classes
         {
             get => 0;
             set => throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Flushes the Stream. Does nothing really.
-        /// </summary>
-        public override void Flush()
-        {
-        }
-
-        /// <summary>
-        /// Reads specific amount of data from the Stream.
-        /// Does nothing really.
-        /// </summary>
-        /// <param name="buffer">The buffer to read into.</param>
-        /// <param name="offset">The offset to read into the buffer.</param>
-        /// <param name="count">The amount to read into the buffer.</param>
-        /// <returns>The amount read into the buffer.</returns>
-        public override int Read(byte[] buffer, int offset, int count) => 0;
-
-        /// <summary>
-        /// The amount to seek to. Always at 0 as Seeks are not supported.
-        /// </summary>
-        /// <param name="offset">The offset to seek to.</param>
-        /// <param name="origin">The origin option.</param>
-        /// <returns>The new position.</returns>
-        public override long Seek(long offset, SeekOrigin origin) => 0;
-
-        /// <summary>
-        /// Sets the length of the Stream.
-        /// Does nothing really.
-        /// </summary>
-        /// <param name="value">The new length of the stream.</param>
-        public override void SetLength(long value)
-        {
-        }
-
-        /// <summary>
-        /// Writes specific amount of data to the Stream.
-        /// Does nothing really.
-        /// </summary>
-        /// <param name="buffer">The buffer to write.</param>
-        /// <param name="offset">The offset to write to.</param>
-        /// <param name="count">The amount from buffer to write.</param>
-        public override void Write(byte[] buffer, int offset, int count)
-        {
         }
 
         /// <summary>
@@ -295,23 +251,16 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
-        /// Closes the Stream.
-        /// </summary>
-        public override void Close()
-        {
-        }
-
-        /// <summary>
         /// Converts the KOM crc.xml file to the provided version,
         /// if it is not already that version.
         /// </summary>
         /// <param name="toVersion">The version to convert the CRC.xml file to.</param>
         /// <param name="crcpath">The path to the crc.xml file.</param>
-        public void ConvertCRC(int toVersion, string crcpath)
+        public static void ConvertCRC(int toVersion, string crcpath)
         {
             if (File.Exists(crcpath))
             {
-                var crcversion = this.GetCRCVersion(Encoding.ASCII.GetString(File.ReadAllBytes(crcpath)));
+                var crcversion = GetCRCVersion(Encoding.ASCII.GetString(File.ReadAllBytes(crcpath)));
                 if (crcversion != toVersion)
                 {
                     foreach (var plugin in KOMManager.Komplugins)
@@ -400,6 +349,59 @@ namespace Els_kom_Core.Classes
             }
 
             return 0;
+        }
+
+        /// <summary>
+        /// Flushes the Stream. Does nothing really.
+        /// </summary>
+        public override void Flush()
+        {
+        }
+
+        /// <summary>
+        /// Reads specific amount of data from the Stream.
+        /// Does nothing really.
+        /// </summary>
+        /// <param name="buffer">The buffer to read into.</param>
+        /// <param name="offset">The offset to read into the buffer.</param>
+        /// <param name="count">The amount to read into the buffer.</param>
+        /// <returns>The amount read into the buffer.</returns>
+        public override int Read(byte[] buffer, int offset, int count) => 0;
+
+        /// <summary>
+        /// The amount to seek to. Always at 0 as Seeks are not supported.
+        /// </summary>
+        /// <param name="offset">The offset to seek to.</param>
+        /// <param name="origin">The origin option.</param>
+        /// <returns>The new position.</returns>
+        public override long Seek(long offset, SeekOrigin origin) => 0;
+
+        /// <summary>
+        /// Sets the length of the Stream.
+        /// Does nothing really.
+        /// </summary>
+        /// <param name="value">The new length of the stream.</param>
+        public override void SetLength(long value)
+        {
+        }
+
+        /// <summary>
+        /// Writes specific amount of data to the Stream.
+        /// Does nothing really.
+        /// </summary>
+        /// <param name="buffer">The buffer to write.</param>
+        /// <param name="offset">The offset to write to.</param>
+        /// <param name="count">The amount from buffer to write.</param>
+        public override void Write(byte[] buffer, int offset, int count)
+        {
+        }
+
+        /// <summary>
+        /// Closes the Stream.
+        /// </summary>
+        public override void Close()
+        {
+            base.Close();
         }
 
         /// <summary>
