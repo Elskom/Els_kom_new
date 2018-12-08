@@ -10,7 +10,6 @@ namespace Els_kom_Core.Classes
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
-    using Els_kom_Core.Interfaces;
     using Elskom.Generic.Libs;
 
     /// <summary>

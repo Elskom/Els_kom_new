@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -56,11 +56,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\EntryVer.cs" />
     <Compile Include="Classes\ExecutionManager.cs" />
     <Compile Include="Classes\Git.cs" />
     <Compile Include="Classes\KOMManager.cs" />
-    <Compile Include="Classes\KOMStream.cs" />
     <Compile Include="Classes\LoadResources.cs" />
     <Compile Include="Classes\ReleasePackaging.cs" />
     <Compile Include="Classes\ResourcesDir.cs" />
@@ -93,15 +91,15 @@
     <Compile Include="Enums\LoadImageTypes.cs" />
     <Compile Include="Enums\SYSCOMMANDS.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Interfaces\ICallbackPlugin.cs" />
-    <Compile Include="Interfaces\IEncryptionPlugin.cs" />
-    <Compile Include="Interfaces\IKomPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Elskom.PluginFramework">
+      <Version>1.0.0</Version>
+    </PackageReference>
     <PackageReference Include="NuGet.CommandLine">
       <Version>4.7.1</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -125,12 +123,6 @@
     </PackageReference>
     <PackageReference Include="XmlAbstraction">
       <Version>1.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="zlib.managed">
-      <Version>1.1.0</Version>
-    </PackageReference>
-    <PackageReference Include="BlowFish">
-      <Version>1.0.0</Version>
     </PackageReference>
     <PackageReference Include="GenericPluginLoader">
       <Version>1.0.0</Version>

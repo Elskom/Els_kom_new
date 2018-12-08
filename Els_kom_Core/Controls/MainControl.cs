@@ -15,7 +15,6 @@ namespace Els_kom_Core.Controls
     using System.Windows.Forms;
     using Els_kom_Core.Classes;
     using Els_kom_Core.Enums;
-    using Els_kom_Core.Interfaces;
     using Elskom.Generic.Libs;
     using XmlAbstraction;
 
