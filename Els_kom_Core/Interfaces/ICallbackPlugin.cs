@@ -14,10 +14,10 @@ namespace Els_kom_Core.Interfaces
     public interface ICallbackPlugin
     {
         /// <summary>
-        /// Gets name of the Test Mods Callback plugin.
+        /// Gets the name of the Test Mods Callback plugin.
         /// </summary>
         /// <value>
-        /// Name of the Test Mods Callback plugin.
+        /// The name of the Test Mods Callback plugin.
         /// </value>
         string PluginName { get; }
 

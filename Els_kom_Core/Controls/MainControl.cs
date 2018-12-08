@@ -130,7 +130,7 @@ namespace Els_kom_Core.Controls
                 }
 
                 var komplugins = GenericPluginLoader<IKomPlugin>.LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
-                KOMManager.Komplugins.AddRange(komplugins);
+                KOMStream.Komplugins.AddRange(komplugins);
                 var callbackplugins = GenericPluginLoader<ICallbackPlugin>.LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
                 ExecutionManager.Callbackplugins.AddRange(callbackplugins);
                 if (!Git.IsMaster)
@@ -199,7 +199,7 @@ namespace Els_kom_Core.Controls
                     pluginTypes.Add(callbackplugin.GetType());
                 }
 
-                foreach (var komplugin in KOMManager.Komplugins)
+                foreach (var komplugin in KOMStream.Komplugins)
                 {
                     pluginTypes.Add(komplugin.GetType());
                 }

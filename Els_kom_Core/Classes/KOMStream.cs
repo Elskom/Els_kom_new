@@ -6,9 +6,11 @@
 namespace Els_kom_Core.Classes
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Text;
     using System.Xml.Linq;
+    using Els_kom_Core.Interfaces;
     using Elskom.Generic.Libs;
 
     /// <summary>
@@ -16,12 +18,53 @@ namespace Els_kom_Core.Classes
     /// </summary>
     public class KOMStream : Stream
     {
+        private static List<IKomPlugin> komplugins;
+        private static List<IEncryptionPlugin> encryptionplugins;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="KOMStream"/> class.
         /// </summary>
         public KOMStream()
             : base()
         {
+        }
+
+        /// <summary>
+        /// Gets The list of <see cref="IKomPlugin"/> plugins.
+        /// </summary>
+        /// <value>
+        /// The list of <see cref="IKomPlugin"/> plugins.
+        /// </value>
+        public static List<IKomPlugin> Komplugins
+        {
+            get
+            {
+                if (komplugins == null)
+                {
+                    komplugins = new List<IKomPlugin>();
+                }
+
+                return komplugins;
+            }
+        }
+
+        /// <summary>
+        /// Gets The list of <see cref="IEncryptionPlugin"/> plugins.
+        /// </summary>
+        /// <value>
+        /// The list of <see cref="IEncryptionPlugin"/> plugins.
+        /// </value>
+        public static List<IEncryptionPlugin> Encryptionplugins
+        {
+            get
+            {
+                if (encryptionplugins == null)
+                {
+                    encryptionplugins = new List<IEncryptionPlugin>();
+                }
+
+                return encryptionplugins;
+            }
         }
 
         /// <summary>
@@ -170,13 +213,13 @@ namespace Els_kom_Core.Classes
                             }
 
                             // Decrypt the data from a encryption plugin.
-                            KOMManager.encryptionplugins[0].DecryptEntry(zdec_entrydata, out dec_entrydata, LoadResources.GetFileBaseName(kOMFileName), entry.Algorithm);
+                            Encryptionplugins[0].DecryptEntry(zdec_entrydata, out dec_entrydata, LoadResources.GetFileBaseName(kOMFileName), entry.Algorithm);
                         }
                         else
                         {
                             // algorithm 2 code.
                             // Decrypt the data from a encryption plugin.
-                            KOMManager.encryptionplugins[0].DecryptEntry(entrydata, out byte[] decr_entrydata, LoadResources.GetFileBaseName(kOMFileName), entry.Algorithm);
+                            Encryptionplugins[0].DecryptEntry(entrydata, out byte[] decr_entrydata, LoadResources.GetFileBaseName(kOMFileName), entry.Algorithm);
                             try
                             {
                                 MemoryZlib.DecompressData(decr_entrydata, out dec_entrydata);
@@ -268,7 +311,7 @@ namespace Els_kom_Core.Classes
                 var crcversion = GetCRCVersion(Encoding.ASCII.GetString(File.ReadAllBytes(crcpath)));
                 if (crcversion != toVersion)
                 {
-                    foreach (var plugin in KOMManager.Komplugins)
+                    foreach (var plugin in Komplugins)
                     {
                         if (toVersion == plugin.SupportedKOMVersion)
                         {
@@ -319,7 +362,7 @@ namespace Els_kom_Core.Classes
 
                     if (!found)
                     {
-                        foreach (var plugin in KOMManager.Komplugins)
+                        foreach (var plugin in Komplugins)
                         {
                             if (crcversion == plugin.SupportedKOMVersion)
                             {

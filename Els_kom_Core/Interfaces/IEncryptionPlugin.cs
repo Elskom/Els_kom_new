@@ -3,8 +3,6 @@
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
-/* 0x01050000 = v1.5.0.0 */
-#if VERSION_0x01050000
 namespace Els_kom_Core.Interfaces
 {
     using Elskom.Generic.Libs;
@@ -21,6 +19,9 @@ namespace Els_kom_Core.Interfaces
         /// <summary>
         /// Gets the name of the Encryption plugin.
         /// </summary>
+        /// <value>
+        /// The name of the Encryption plugin.
+        /// </value>
         string PluginName { get; }
 
         /// <summary>
@@ -52,4 +53,3 @@ namespace Els_kom_Core.Interfaces
         void EncryptEntry(byte[] input, out byte[] output, string kOMFileName, int algorithm);
     }
 }
-#endif

@@ -43,7 +43,7 @@ namespace Els_kom_Core.Controls
                 pluginTypes.Add(callbackplugin.GetType());
             }
 
-            foreach (var komplugin in KOMManager.Komplugins)
+            foreach (var komplugin in KOMStream.Komplugins)
             {
                 pluginTypes.Add(komplugin.GetType());
             }

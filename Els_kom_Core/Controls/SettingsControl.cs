@@ -157,7 +157,7 @@ namespace Els_kom_Core.Controls
                     }, -1));
             }
 
-            foreach (var komplugin in KOMManager.Komplugins)
+            foreach (var komplugin in KOMStream.Komplugins)
             {
                 entries.Add(new ListViewItem(
                     new string[]

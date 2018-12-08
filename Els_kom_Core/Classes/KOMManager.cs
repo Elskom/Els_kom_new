@@ -6,11 +6,9 @@
 namespace Els_kom_Core.Classes
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Text;
     using System.Windows.Forms;
-    using Els_kom_Core.Interfaces;
     using Elskom.Generic.Libs;
 
     /// <summary>
@@ -18,24 +16,6 @@ namespace Els_kom_Core.Classes
     /// </summary>
     internal static class KOMManager
     {
-        private static List<IKomPlugin> komplugins;
-
-        /// <summary>
-        /// Gets The list of <see cref="IKomPlugin"/> plugins.
-        /// </summary>
-        internal static List<IKomPlugin> Komplugins
-        {
-            get
-            {
-                if (komplugins == null)
-                {
-                    komplugins = new List<IKomPlugin>();
-                }
-
-                return komplugins;
-            }
-        }
-
         /// <summary>
         /// Gets a value indicating whether the current state on packing KOM files.
         /// </summary>
@@ -115,7 +95,7 @@ namespace Els_kom_Core.Classes
                 {
                     // remove ".kom" on end of string.
                     var kom_data_folder = Path.GetFileNameWithoutExtension(Application.StartupPath + "\\koms\\" + kom_file);
-                    foreach (var komplugin in komplugins)
+                    foreach (var komplugin in KOMStream.Komplugins)
                     {
                         try
                         {
@@ -182,7 +162,7 @@ namespace Els_kom_Core.Classes
                     // pack kom based on the version of kom supplied.
                     if (kom_ver != -1)
                     {
-                        foreach (var komplugin in komplugins)
+                        foreach (var komplugin in KOMStream.Komplugins)
                         {
                             try
                             {
@@ -279,7 +259,7 @@ namespace Els_kom_Core.Classes
             }
 
             var headerstring = Encoding.UTF8.GetString(headerbuffer);
-            foreach (var komplugin in komplugins)
+            foreach (var komplugin in KOMStream.Komplugins)
             {
                 // get version of kom file for unpacking it.
                 if (komplugin.KOMHeaderString == string.Empty)
@@ -305,7 +285,7 @@ namespace Els_kom_Core.Classes
         private static int CheckFolderVersion(string datafolder)
         {
             var ret = 0;
-            foreach (var komplugin in komplugins)
+            foreach (var komplugin in KOMStream.Komplugins)
             {
                 if (komplugin.SupportedKOMVersion != 0)
                 {

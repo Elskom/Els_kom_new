@@ -18,10 +18,10 @@ namespace Els_kom_Core.Interfaces
     public interface IKomPlugin
     {
         /// <summary>
-        /// Gets name of the KOM plugin.
+        /// Gets the name of the KOM plugin.
         /// </summary>
         /// <value>
-        /// Name of the KOM plugin.
+        /// The name of the KOM plugin.
         /// </value>
         string PluginName { get; }
 
