@@ -132,7 +132,9 @@ namespace Els_kom_Core.Classes
                             // make the version dummy file for the packer.
                             try
                             {
-                                File.Create(Application.StartupPath + "\\koms\\" + kom_data_folder + "\\KOMVERSION." + kom_ver).Dispose();
+                                using (File.Create(Application.StartupPath + "\\koms\\" + kom_data_folder + "\\KOMVERSION." + kom_ver))
+                                {
+                                }
                             }
                             catch (DirectoryNotFoundException)
                             {
@@ -195,12 +197,18 @@ namespace Els_kom_Core.Classes
                             catch (NotPackableException)
                             {
                                 // do not delete kom data folder.
-                                File.Create(Application.StartupPath + "\\koms\\" + kom_data_folder + "\\KOMVERSION." + komplugin.SupportedKOMVersion).Dispose();
+                                using (File.Create(Application.StartupPath + "\\koms\\" + kom_data_folder + "\\KOMVERSION." + komplugin.SupportedKOMVersion))
+                                {
+                                }
+
                                 MessageManager.ShowError("Packing an folder to an KOM file failed.", "Error!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                             }
                             catch (NotImplementedException)
                             {
-                                File.Create(Application.StartupPath + "\\koms\\" + kom_data_folder + "\\KOMVERSION." + komplugin.SupportedKOMVersion).Dispose();
+                                using (File.Create(Application.StartupPath + "\\koms\\" + kom_data_folder + "\\KOMVERSION." + komplugin.SupportedKOMVersion))
+                                {
+                                }
+
                                 MessageManager.ShowError("The KOM V" + komplugin.SupportedKOMVersion + " plugin does not implement an packer function yet. Although it should.", "Error!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                             }
                         }
@@ -261,14 +269,16 @@ namespace Els_kom_Core.Classes
         private static int GetHeaderVersion(string komfile)
         {
             var ret = 0;
-            var reader = new BinaryReader(File.OpenRead(Application.StartupPath + "\\koms\\" + komfile), Encoding.ASCII);
             var headerbuffer = new byte[27];
 
             // 27 is the size of the header string denoting the KOM file version number.
             var offset = 0;
-            reader.Read(headerbuffer, offset, 27);
+            using (var reader = new BinaryReader(File.OpenRead(Application.StartupPath + "\\koms\\" + komfile), Encoding.ASCII))
+            {
+                reader.Read(headerbuffer, offset, 27);
+            }
+
             var headerstring = Encoding.UTF8.GetString(headerbuffer);
-            reader.Dispose();
             foreach (var komplugin in komplugins)
             {
                 // get version of kom file for unpacking it.

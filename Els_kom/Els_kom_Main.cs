@@ -30,7 +30,10 @@ internal static class Els_kom_Main
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            using (var mainForm = new MainForm())
+            {
+                Application.Run(mainForm);
+            }
         }
 
         return 0;

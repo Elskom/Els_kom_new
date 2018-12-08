@@ -6,8 +6,6 @@
 namespace Els_kom.Forms
 {
     using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using Els_kom_Core.Classes;
@@ -18,16 +16,8 @@ namespace Els_kom.Forms
 
         internal static string Label1 { get; private set; } = "0";
 
-        private void OpenPluginSettings(Form plugsettingfrm, IWin32Window owner)
-        {
-            plugsettingfrm.ShowDialog(owner);
-            if (!plugsettingfrm.IsDisposed)
-            {
-                plugsettingfrm.Dispose();
-            }
-
-            plugsettingfrm = null;
-        }
+        private static void OpenPluginSettings(Form plugsettingfrm, IWin32Window owner)
+            => plugsettingfrm.ShowDialog(owner);
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
@@ -48,9 +38,10 @@ namespace Els_kom.Forms
 
         private void SettingsControl1_OpenPluginsForm(object sender, EventArgs e)
         {
-            var pluginsForm = new PluginsForm();
-            pluginsForm.ShowDialog();
-            pluginsForm.Dispose();
+            using (var pluginsForm = new PluginsForm())
+            {
+                pluginsForm.ShowDialog();
+            }
         }
 
         private void SettingsControl1_OpenPluginsSettings(object sender, EventArgs e)
@@ -65,7 +56,7 @@ namespace Els_kom.Forms
                         var plugsettingfrm = callbackplugin.SettingsWindow;
                         plugsettingfrm.Icon = Icons.FormIcon;
                         Task.Run(
-                            () => this.OpenPluginSettings(
+                            () => OpenPluginSettings(
                                 plugsettingfrm,
                                 callbackplugin.ShowModal ? this : null));
                     }

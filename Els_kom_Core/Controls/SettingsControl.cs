@@ -178,18 +178,20 @@ namespace Els_kom_Core.Controls
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            var folderBrowserDialog1 = new FolderBrowserDialog
+            using (var folderBrowserDialog1 = new FolderBrowserDialog
             {
                 Description = "Select the Folder that Your Elsword Install is in (Must be the one that either elsword.exe or voidels.exe is in).",
                 RootFolder = Environment.SpecialFolder.MyComputer,
                 ShowNewFolderButton = false,
-            };
-            var res = folderBrowserDialog1.ShowDialog();
-            if (res == DialogResult.OK)
+            })
             {
-                if (folderBrowserDialog1.SelectedPath.Length > 0)
+                var res = folderBrowserDialog1.ShowDialog();
+                if (res == DialogResult.OK)
                 {
-                    this.TextBox1.Text = folderBrowserDialog1.SelectedPath;
+                    if (folderBrowserDialog1.SelectedPath.Length > 0)
+                    {
+                        this.TextBox1.Text = folderBrowserDialog1.SelectedPath;
+                    }
                 }
             }
         }

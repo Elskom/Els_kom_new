@@ -6,7 +6,7 @@
 namespace Els_kom_Core.Interfaces
 {
     using System;
-    using Els_kom_Core.Classes;
+    using Elskom.Generic.Libs;
 
     /// <summary>
     /// Interface for Els_kom plugins for some optional add-ons to internal workings.

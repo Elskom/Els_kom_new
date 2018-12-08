@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="Microsoft Managed Recommended Rules" Description="These rules focus on the most critical problems in your code, including potential security holes, application crashes, and other important logic and design errors. It is recommended to include this rule set in any custom rule set you create for your projects." ToolsVersion="15.0">
   <Localization ResourceAssembly="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.dll" ResourceBaseName="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.Localized">
     <Name Resource="MinimumRecommendedRules_Name" />
@@ -86,13 +86,25 @@
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.Analyzers" RuleNamespace="Microsoft.CodeAnalysis.Analyzers">
     <Rule Id="CA1707" Action="Warning" />
-    <Rule Id="CA1819" Action="Warning" />
+    <Rule Id="CA1819" Action="Error" />
   </Rules>
   <Rules AnalyzerId="IDisposableAnalyzers" RuleNamespace="IDisposableAnalyzers">
-    <Rule Id="IDISP001" Action="Warning" />
-    <Rule Id="IDISP002" Action="Warning" />
-    <Rule Id="IDISP003" Action="Warning" />
-    <Rule Id="IDISP004" Action="Warning" />
-    <Rule Id="IDISP017" Action="Warning" />
+    <Rule Id="IDISP001" Action="Error" />
+    <Rule Id="IDISP002" Action="Error" />
+    <Rule Id="IDISP003" Action="Error" />
+    <Rule Id="IDISP004" Action="Error" />
+    <Rule Id="IDISP017" Action="Error" />
+    <Rule Id="IDISP005" Action="Error" />
+    <Rule Id="IDISP006" Action="Error" />
+    <Rule Id="IDISP008" Action="Error" />
+    <Rule Id="IDISP009" Action="Error" />
+    <Rule Id="IDISP007" Action="Error" />
+    <Rule Id="IDISP010" Action="Error" />
+    <Rule Id="IDISP011" Action="Error" />
+    <Rule Id="IDISP012" Action="Error" />
+    <Rule Id="IDISP014" Action="Error" />
+    <Rule Id="IDISP016" Action="Error" />
+    <Rule Id="IDISP015" Action="Error" />
+    <Rule Id="IDISP013" Action="Error" />
   </Rules>
 </RuleSet>

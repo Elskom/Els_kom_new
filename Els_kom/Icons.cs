@@ -7,7 +7,6 @@ namespace Els_kom
 {
     using System.Drawing;
     using Els_kom.Properties;
-    using Els_kom_Core.Classes;
     using Elskom.Generic.Libs;
     using XmlAbstraction;
 
@@ -95,8 +94,10 @@ namespace Els_kom
                     oldicon = Resources.YR;
                 }
 
-                var newicon = new Icon(oldicon, 48, 48);
-                return newicon?.ToBitmap();
+                using (var newicon = new Icon(oldicon, 48, 48))
+                {
+                    return newicon?.ToBitmap();
+                }
             }
         }
     }

@@ -55,10 +55,12 @@ namespace Els_kom_Core.Classes
                 }
 
                 Marshal.Copy(p_imagedata, memPtr, 0, (int)image_size);
-                var stream = new MemoryStream(memPtr);
-                stream.Write(memPtr, 0, (int)image_size);
-                stream.Position = 0;
-                return Image.FromStream(stream);
+                using (var stream = new MemoryStream(memPtr))
+                {
+                    stream.Write(memPtr, 0, (int)image_size);
+                    stream.Position = 0;
+                    return Image.FromStream(stream);
+                }
             }
             else
             {
@@ -129,24 +131,28 @@ namespace Els_kom_Core.Classes
 
             if (!File.Exists(ResourcesDir.Resourcespath))
             {
-                var resx = new ResXResourceWriter(ResourcesDir.Resourcespath);
-                foreach (var iconFile in iconfiles)
+                using (var resx = new ResXResourceWriter(ResourcesDir.Resourcespath))
                 {
-                    var iconstream = new MemoryStream(File.ReadAllBytes(iconFile));
-                    var icon2Dump = new Icon(iconstream);
-                    resx.AddResource(GetFileBaseName(iconFile).Trim(".ico".ToCharArray()), icon2Dump);
-                    icon2Dump.Dispose();
+                    foreach (var iconFile in iconfiles)
+                    {
+                        using (var iconstream = new MemoryStream(File.ReadAllBytes(iconFile)))
+                        {
+                            using (var icon2Dump = new Icon(iconstream))
+                            {
+                                resx.AddResource(GetFileBaseName(iconFile).Trim(".ico".ToCharArray()), icon2Dump);
+                            }
+                        }
+                    }
                 }
-
-                // write resource file.
-                resx.Dispose();
             }
 
             // now read it.
-            var resxSet = new ResXResourceSet(ResourcesDir.Resourcespath);
-            var iconold = (Icon)resxSet.GetObject(GetFileBaseName(iconfile).Trim(".ico".ToCharArray()));
-            retIcon = new Icon(iconold, width, height);
-            resxSet.Dispose();
+            using (var resxSet = new ResXResourceSet(ResourcesDir.Resourcespath))
+            {
+                var iconold = (Icon)resxSet.GetObject(GetFileBaseName(iconfile).Trim(".ico".ToCharArray()));
+                retIcon = new Icon(iconold, width, height);
+            }
+
             return retIcon;
         }
     }

@@ -107,58 +107,22 @@ namespace Els_kom_Core.Classes
                 var xmldatabuffer = Encoding.ASCII.GetBytes(xmldata);
                 if (!File.Exists(outpath + Path.DirectorySeparatorChar + "crc.xml"))
                 {
-                    var fs = File.Create(outpath + Path.DirectorySeparatorChar + "crc.xml");
-                    fs.Write(xmldatabuffer, 0, xmldatabuffer.Length);
-                    fs.Dispose();
+                    using (var fs = File.Create(outpath + Path.DirectorySeparatorChar + "crc.xml"))
+                    {
+                        fs.Write(xmldatabuffer, 0, xmldatabuffer.Length);
+                    }
                 }
 
                 var entrydata = reader.ReadBytes(entry.CompressedSize);
                 if (entry.Algorithm == 0)
                 {
                     var failure = false;
-                    var entryfile = File.Create(outpath + "\\" + entry.Name);
-                    try
+                    using (var entryfile = File.Create(outpath + "\\" + entry.Name))
                     {
-                        ZlibHelper.DecompressData(entrydata, out var dec_entrydata);
-                        entryfile.Write(dec_entrydata, 0, entry.UncompressedSize);
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        throw new NotUnpackableException("Something failed...", ex);
-                    }
-                    catch (NotUnpackableException ex)
-                    {
-                        throw new NotUnpackableException("decompression failed...", ex);
-                    }
-
-                    entryfile.Dispose();
-                    if (failure)
-                    {
-                        File.Move(outpath + "\\" + entry.Name, outpath + "\\" + entry.Name + "." + entry.UncompressedSize + "." + entry.Algorithm);
-                    }
-                }
-                else
-                {
-                    FileStream entryfile;
-                    if (entrydata.Length == entry.UncompressedSize)
-                    {
-                        entryfile = File.Create(outpath + "\\" + entry.Name);
-                    }
-                    else
-                    {
-                        // data was not decompressed properly so lets just dump it as is.
-                        entryfile = File.Create(outpath + "\\" + entry.Name + "." + entry.UncompressedSize + "." + entry.Algorithm);
-                    }
-#if VERSION_0x01050000
-                    byte[] dec_entrydata = null;
-                    var failure = false;
-                    if (entry.Algorithm == 3)
-                    {
-                        // algorithm 3 code.
-                        byte[] zdec_entrydata = null;
                         try
                         {
-                            ZlibHelper.DecompressData(entrydata, out zdec_entrydata);
+                            ZlibHelper.DecompressData(entrydata, out var dec_entrydata);
+                            entryfile.Write(dec_entrydata, 0, entry.UncompressedSize);
                         }
                         catch (ArgumentException ex)
                         {
@@ -168,47 +132,85 @@ namespace Els_kom_Core.Classes
                         {
                             throw new NotUnpackableException("decompression failed...", ex);
                         }
-
-                        // Decrypt the data from a encryption plugin.
-                        KOMManager.encryptionplugins[0].DecryptEntry(zdec_entrydata, out dec_entrydata, LoadResources.GetFileBaseName(kOMFileName), entry.Algorithm);
-                    }
-                    else
-                    {
-                        // algorithm 2 code.
-                        // Decrypt the data from a encryption plugin.
-                        KOMManager.encryptionplugins[0].DecryptEntry(entrydata, out byte[] decr_entrydata, LoadResources.GetFileBaseName(kOMFileName), entry.Algorithm);
-                        try
-                        {
-                            ZlibHelper.DecompressData(decr_entrydata, out dec_entrydata);
-                        }
-                        catch (ArgumentException ex)
-                        {
-                            throw new NotUnpackableException("Something failed...", ex);
-                        }
-                        catch (NotUnpackableException ex)
-                        {                     throw new NotUnpackableException("decompression failed...", ex);
-                        }
                     }
 
-                    entryfile.Write(dec_entrydata, 0, entry.UncompressedSize);
-                    entryfile.Dispose();
                     if (failure)
                     {
                         File.Move(outpath + "\\" + entry.Name, outpath + "\\" + entry.Name + "." + entry.UncompressedSize + "." + entry.Algorithm);
                     }
-#else
-                    if (entry.Algorithm == 3)
+                }
+                else
+                {
+                    var path = outpath + "\\" + entry.Name + "." + entry.UncompressedSize + "." + entry.Algorithm;
+                    if (entrydata.Length == entry.UncompressedSize)
                     {
-                        // algorithm 3 code.
-                    }
-                    else
-                    {
-                        // algorithm 2 code.
+                        path = outpath + "\\" + entry.Name;
                     }
 
-                    // for now until I can decompress this crap.
-                    entryfile.Write(entrydata, 0, entry.CompressedSize);
-                    entryfile.Dispose();
+                    using (var entryfile = File.Create(path))
+                    {
+#if VERSION_0x01050000
+                        byte[] dec_entrydata = null;
+                        var failure = false;
+                        if (entry.Algorithm == 3)
+                        {
+                            // algorithm 3 code.
+                            byte[] zdec_entrydata = null;
+                            try
+                            {
+                                ZlibHelper.DecompressData(entrydata, out zdec_entrydata);
+                            }
+                            catch (ArgumentException ex)
+                            {
+                                throw new NotUnpackableException("Something failed...", ex);
+                            }
+                            catch (NotUnpackableException ex)
+                            {
+                                throw new NotUnpackableException("decompression failed...", ex);
+                            }
+
+                            // Decrypt the data from a encryption plugin.
+                            KOMManager.encryptionplugins[0].DecryptEntry(zdec_entrydata, out dec_entrydata, LoadResources.GetFileBaseName(kOMFileName), entry.Algorithm);
+                        }
+                        else
+                        {
+                            // algorithm 2 code.
+                            // Decrypt the data from a encryption plugin.
+                            KOMManager.encryptionplugins[0].DecryptEntry(entrydata, out byte[] decr_entrydata, LoadResources.GetFileBaseName(kOMFileName), entry.Algorithm);
+                            try
+                            {
+                                ZlibHelper.DecompressData(decr_entrydata, out dec_entrydata);
+                            }
+                            catch (ArgumentException ex)
+                            {
+                                throw new NotUnpackableException("Something failed...", ex);
+                            }
+                            catch (NotUnpackableException ex)
+                            {
+                                throw new NotUnpackableException("decompression failed...", ex);
+                            }
+                        }
+
+                        entryfile.Write(dec_entrydata, 0, entry.UncompressedSize);
+                        entryfile.Dispose();
+                        if (failure)
+                        {
+                            File.Move(outpath + "\\" + entry.Name, outpath + "\\" + entry.Name + "." + entry.UncompressedSize + "." + entry.Algorithm);
+                        }
+                    }
+#else
+                        if (entry.Algorithm == 3)
+                        {
+                            // algorithm 3 code.
+                        }
+                        else
+                        {
+                            // algorithm 2 code.
+                        }
+
+                        // for now until I can decompress this crap.
+                        entryfile.Write(entrydata, 0, entry.CompressedSize);
+                    }
 #endif
                 }
             }
@@ -221,32 +223,35 @@ namespace Els_kom_Core.Classes
                 }
 
                 var entrydata = reader.ReadBytes(entry.CompressedSize);
-                var entryfile = File.Create(outpath + "\\" + entry.Name);
-                byte[] dec_entrydata;
-                try
+                using (var entryfile = File.Create(outpath + "\\" + entry.Name))
                 {
-                    ZlibHelper.DecompressData(entrydata, out dec_entrydata);
-                }
-                catch (NotUnpackableException)
-                {
-                    // copyright symbols... Really funny xor key...
-                    var xorkey = Encoding.UTF8.GetBytes("\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9");
-
-                    // xor this shit then try again...
-                    BlowFish.XorBlock(ref entrydata, xorkey);
+                    byte[] dec_entrydata;
                     try
                     {
                         ZlibHelper.DecompressData(entrydata, out dec_entrydata);
-                        File.Create(outpath + "\\XoRNeeded.dummy").Dispose();
                     }
-                    catch (NotUnpackableException ex)
+                    catch (NotUnpackableException)
                     {
-                        throw new NotUnpackableException("failed with zlib decompression of entries.", ex);
-                    }
-                }
+                        // copyright symbols... Really funny xor key...
+                        var xorkey = Encoding.UTF8.GetBytes("\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9\xa9");
 
-                entryfile.Write(dec_entrydata, 0, entry.UncompressedSize);
-                entryfile.Dispose();
+                        // xor this shit then try again...
+                        BlowFish.XorBlock(ref entrydata, xorkey);
+                        try
+                        {
+                            ZlibHelper.DecompressData(entrydata, out dec_entrydata);
+                            using (File.Create(outpath + "\\XoRNeeded.dummy"))
+                            {
+                            }
+                        }
+                        catch (NotUnpackableException ex)
+                        {
+                            throw new NotUnpackableException("failed with zlib decompression of entries.", ex);
+                        }
+                    }
+
+                    entryfile.Write(dec_entrydata, 0, entry.UncompressedSize);
+                }
             }
         }
 
@@ -327,31 +332,6 @@ namespace Els_kom_Core.Classes
         }
 
         /// <summary>
-        /// Gets the crc.xml file version.
-        /// </summary>
-        /// <param name="xmldata">The data in the crc.xml file.</param>
-        /// <returns>The version of the crc.xml file.</returns>
-        internal static int GetCRCVersion(string xmldata)
-        {
-            var xml = XElement.Parse(xmldata);
-            if (xml.Element("File") != null)
-            {
-                // version 3 or 4.
-                foreach (var fileElement in xml.Elements("File"))
-                {
-                    var mappedIDAttribute = fileElement.Attribute("MappedID");
-                    return mappedIDAttribute != null ? 4 : 3;
-                }
-            }
-            else
-            {
-                return 2;
-            }
-
-            return 0;
-        }
-
-        /// <summary>
         /// Flushes the Stream. Does nothing really.
         /// </summary>
         public override void Flush()
@@ -400,8 +380,31 @@ namespace Els_kom_Core.Classes
         /// Closes the Stream.
         /// </summary>
         public override void Close()
+            => base.Close();
+
+        /// <summary>
+        /// Gets the crc.xml file version.
+        /// </summary>
+        /// <param name="xmldata">The data in the crc.xml file.</param>
+        /// <returns>The version of the crc.xml file.</returns>
+        internal static int GetCRCVersion(string xmldata)
         {
-            base.Close();
+            var xml = XElement.Parse(xmldata);
+            if (xml.Element("File") != null)
+            {
+                // version 3 or 4.
+                foreach (var fileElement in xml.Elements("File"))
+                {
+                    var mappedIDAttribute = fileElement.Attribute("MappedID");
+                    return mappedIDAttribute != null ? 4 : 3;
+                }
+            }
+            else
+            {
+                return 2;
+            }
+
+            return 0;
         }
 
         /// <summary>

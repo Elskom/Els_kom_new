@@ -155,30 +155,35 @@ namespace Els_kom_Core.Controls
                     this.components = new Container();
                 }
 
+                this.settingsTmr?.Dispose();
                 this.settingsTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = true,
                     Interval = 1,
                 };
                 this.settingsTmr.Tick += new EventHandler(this.CheckSettings);
+                this.packingTmr?.Dispose();
                 this.packingTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = false,
                     Interval = 1,
                 };
                 this.packingTmr.Tick += new EventHandler(this.Packing);
+                this.unpackingTmr?.Dispose();
                 this.unpackingTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = false,
                     Interval = 1,
                 };
                 this.unpackingTmr.Tick += new EventHandler(this.Unpacking);
+                this.testModsTmr?.Dispose();
                 this.testModsTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = false,
                     Interval = 1,
                 };
                 this.testModsTmr.Tick += new EventHandler(this.TestMods2);
+                this.launcherTmr?.Dispose();
                 this.launcherTmr = new System.Windows.Forms.Timer(this.components)
                 {
                     Enabled = false,
@@ -237,7 +242,7 @@ namespace Els_kom_Core.Controls
         /// <param name="m">The Windows <see cref="Message"/> to process.</param>
         protected override void WndProc(ref Message m)
         {
-            this.Enablehandlers = !this.FindForm().ShowInTaskbar ? true : false;
+            this.Enablehandlers = !this.FindForm().ShowInTaskbar;
             if (this.Enablehandlers && m.Msg == (int)SYSCOMMANDS.WM_SYSCOMMAND)
             {
                 if (m.WParam.ToInt32() == (int)SYSCOMMANDS.SC_MINIMIZE)
@@ -766,6 +771,7 @@ namespace Els_kom_Core.Controls
         /// </summary>
         private void MakeTrayIcon()
         {
+            this.packToolStripMenuItem?.Dispose();
             this.packToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "PackToolStripMenuItem",
@@ -773,6 +779,7 @@ namespace Els_kom_Core.Controls
                 Text = "Pack",
             };
             this.packToolStripMenuItem.Click += new EventHandler(this.PackToolStripMenuItem_Click);
+            this.unpackToolStripMenuItem?.Dispose();
             this.unpackToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "UnpackToolStripMenuItem",
@@ -780,11 +787,13 @@ namespace Els_kom_Core.Controls
                 Text = "Unpack",
             };
             this.unpackToolStripMenuItem.Click += new EventHandler(this.UnpackToolStripMenuItem_Click);
+            this.toolStripMenuSep1?.Dispose();
             this.toolStripMenuSep1 = new ToolStripSeparator
             {
                 Name = "ToolStripMenuItem3",
                 Size = new Size(126, 6),
             };
+            this.testModsToolStripMenuItem?.Dispose();
             this.testModsToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "TestModsToolStripMenuItem",
@@ -792,6 +801,7 @@ namespace Els_kom_Core.Controls
                 Text = "Test Mods",
             };
             this.testModsToolStripMenuItem.Click += new EventHandler(this.TestModsToolStripMenuItem_Click);
+            this.launcherToolStripMenuItem?.Dispose();
             this.launcherToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "LauncherToolStripMenuItem",
@@ -799,6 +809,7 @@ namespace Els_kom_Core.Controls
                 Text = "Launcher",
             };
             this.launcherToolStripMenuItem.Click += new EventHandler(this.LauncherToolStripMenuItem_Click);
+            this.exitToolStripMenuItem?.Dispose();
             this.exitToolStripMenuItem = new ToolStripMenuItem
             {
                 Name = "ExitToolStripMenuItem",
@@ -806,6 +817,7 @@ namespace Els_kom_Core.Controls
                 Text = "Exit",
             };
             this.exitToolStripMenuItem.Click += new EventHandler(this.ExitToolStripMenuItem_Click);
+            this.contextMenuStrip1?.Dispose();
             this.contextMenuStrip1 = new ContextMenuStrip(this.components);
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip1.Items.AddRange(new ToolStripItem[]

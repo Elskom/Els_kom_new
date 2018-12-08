@@ -73,36 +73,38 @@ namespace Els_kom_Core.Classes
         internal static string Shell(string fileName, string arguments, bool redirectStandardOutput, bool redirectStandardError, bool useShellExecute, bool createNoWindow, ProcessWindowStyle windowStyle, string workingDirectory, bool waitForProcessExit)
         {
             var ret = string.Empty;
-            var proc = new Process();
-            proc.StartInfo.FileName = fileName;
-            proc.StartInfo.Arguments = arguments;
-            proc.StartInfo.RedirectStandardOutput = redirectStandardOutput;
-            proc.StartInfo.RedirectStandardError = redirectStandardError;
-            proc.StartInfo.UseShellExecute = useShellExecute;
-            proc.StartInfo.CreateNoWindow = createNoWindow;
-            proc.StartInfo.WindowStyle = windowStyle;
-            proc.StartInfo.WorkingDirectory = workingDirectory;
-            proc.Start();
-
-            // so that way main form Test mods functionality actually works (Lame ass hack I think tbh)...
-            if (ExecutingElsword)
+            using (var proc = new Process())
             {
-                ExecutingElsword = false;
-            }
+                proc.StartInfo.FileName = fileName;
+                proc.StartInfo.Arguments = arguments;
+                proc.StartInfo.RedirectStandardOutput = redirectStandardOutput;
+                proc.StartInfo.RedirectStandardError = redirectStandardError;
+                proc.StartInfo.UseShellExecute = useShellExecute;
+                proc.StartInfo.CreateNoWindow = createNoWindow;
+                proc.StartInfo.WindowStyle = windowStyle;
+                proc.StartInfo.WorkingDirectory = workingDirectory;
+                proc.Start();
 
-            if (redirectStandardError)
-            {
-                ret = proc.StandardError.ReadToEnd();
-            }
+                // so that way main form Test mods functionality actually works (Lame ass hack I think tbh)...
+                if (ExecutingElsword)
+                {
+                    ExecutingElsword = false;
+                }
 
-            if (redirectStandardOutput)
-            {
-                ret = proc.StandardOutput.ReadToEnd();
-            }
+                if (redirectStandardError)
+                {
+                    ret = proc.StandardError.ReadToEnd();
+                }
 
-            if (waitForProcessExit)
-            {
-                proc.WaitForExit();
+                if (redirectStandardOutput)
+                {
+                    ret = proc.StandardOutput.ReadToEnd();
+                }
+
+                if (waitForProcessExit)
+                {
+                    proc.WaitForExit();
+                }
             }
 
             // Required to have Detection on the process running to work right.

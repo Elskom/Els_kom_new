@@ -7,7 +7,7 @@
 #if VERSION_0x01050000
 namespace Els_kom_Core.Interfaces
 {
-    using Els_kom_Core.Classes;
+    using Elskom.Generic.Libs;
 
     /// <summary>
     /// Interface for Els_kom kom entry Encryption and Decryption plugins (Version 1.5.0.0 or newer).

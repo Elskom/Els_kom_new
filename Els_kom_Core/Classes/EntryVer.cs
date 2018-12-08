@@ -5,6 +5,8 @@
 
 namespace Els_kom_Core.Classes
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// This Class holds all the KOM entry Information.
     /// </summary>
@@ -170,7 +172,7 @@ namespace Els_kom_Core.Classes
         /// <value>
         /// Entry file data for packing.
         /// </value>
-        public byte[] Entrydata { get; private set; }
+        public IEnumerable<byte> Entrydata { get; private set; }
 
         // KOM V3 Members.
 
