@@ -121,7 +121,7 @@ namespace Els_kom_Core.Classes
                     {
                         try
                         {
-                            ZlibHelper.DecompressData(entrydata, out var dec_entrydata);
+                            MemoryZlib.DecompressData(entrydata, out var dec_entrydata);
                             entryfile.Write(dec_entrydata, 0, entry.UncompressedSize);
                         }
                         catch (ArgumentException ex)
@@ -158,7 +158,7 @@ namespace Els_kom_Core.Classes
                             byte[] zdec_entrydata = null;
                             try
                             {
-                                ZlibHelper.DecompressData(entrydata, out zdec_entrydata);
+                                MemoryZlib.DecompressData(entrydata, out zdec_entrydata);
                             }
                             catch (ArgumentException ex)
                             {
@@ -179,7 +179,7 @@ namespace Els_kom_Core.Classes
                             KOMManager.encryptionplugins[0].DecryptEntry(entrydata, out byte[] decr_entrydata, LoadResources.GetFileBaseName(kOMFileName), entry.Algorithm);
                             try
                             {
-                                ZlibHelper.DecompressData(decr_entrydata, out dec_entrydata);
+                                MemoryZlib.DecompressData(decr_entrydata, out dec_entrydata);
                             }
                             catch (ArgumentException ex)
                             {
@@ -228,7 +228,7 @@ namespace Els_kom_Core.Classes
                     byte[] dec_entrydata;
                     try
                     {
-                        ZlibHelper.DecompressData(entrydata, out dec_entrydata);
+                        MemoryZlib.DecompressData(entrydata, out dec_entrydata);
                     }
                     catch (NotUnpackableException)
                     {
@@ -239,7 +239,7 @@ namespace Els_kom_Core.Classes
                         BlowFish.XorBlock(ref entrydata, xorkey);
                         try
                         {
-                            ZlibHelper.DecompressData(entrydata, out dec_entrydata);
+                            MemoryZlib.DecompressData(entrydata, out dec_entrydata);
                             using (File.Create(outpath + "\\XoRNeeded.dummy"))
                             {
                             }
