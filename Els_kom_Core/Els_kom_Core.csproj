@@ -59,7 +59,6 @@
     <Compile Include="Classes\ExecutionManager.cs" />
     <Compile Include="Classes\Git.cs" />
     <Compile Include="Classes\KOMManager.cs" />
-    <Compile Include="Classes\LoadResources.cs" />
     <Compile Include="Classes\ReleasePackaging.cs" />
     <Compile Include="Classes\ResourcesDir.cs" />
     <Compile Include="Classes\SafeNativeMethods.cs" />
@@ -87,8 +86,6 @@
     <Compile Include="Controls\SettingsControl.Designer.cs">
       <DependentUpon>SettingsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Enums\LoadImagefuLoad.cs" />
-    <Compile Include="Enums\LoadImageTypes.cs" />
     <Compile Include="Enums\SYSCOMMANDS.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
