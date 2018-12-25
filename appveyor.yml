@@ -7,8 +7,6 @@ skip_commits:
     - Misc/NEWS/
     - '**/*.md'
     - .github/CODEOWNERS
-    - .gitmodules
-    - externals/
     - '**/*.yml'
 max_jobs: 15
 image:
@@ -18,7 +16,12 @@ configuration: Release
 platform:
 - Any CPU
 before_build:
-- ps: ./update-newsmake.ps1
+- ps: >-
+    nuget restore
+
+    dotnet tool install -g newsmake
+
+    newsmake
 build:
   project: pcbuild.sln
   parallel: true
