@@ -54,6 +54,7 @@ install:
     Write-Host "Installed" -ForegroundColor Green
 
     }
+cache: '%USERPROFILE%\.nuget\packages -> **\*.csproj'
 before_build:
 - ps: >-
     nuget restore
