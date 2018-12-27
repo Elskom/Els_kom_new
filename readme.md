@@ -2,8 +2,8 @@
 
 ![Els_kom Icon](./els_kom.png)
 
-|       | Build | VS2017 | VS2017 Preview |
-|:---------------:  |:---------------:  |:---------------:  |:---------------:  |
+|       | Build | VS2017 | VS2017 Preview | VS2019 Preview |
+|:---------------:  |:---------------:  |:---------------:  |:---------------:  |:---------------:  |
 | Master: | [![Build status](https://ci.appveyor.com/api/projects/status/5ikdee6h3qy6lyum/branch/master?svg=true&passingText=Master%20-%20OK&pendingText=Master%20-%20Pending&failingText=Master%20-%20Failing)](https://ci.appveyor.com/project/AraHaan/els-kom-new) |
 | Current: | [![Build status](https://ci.appveyor.com/api/projects/status/5ikdee6h3qy6lyum?svg=true&passingText=Current%20-%20OK&pendingText=Current%20-%20Pending&failingText=Current%20-%20Failing)](https://ci.appveyor.com/project/AraHaan/els-kom-new) |
 
