@@ -6,7 +6,6 @@
 using System;
 using System.Windows.Forms;
 using Els_kom.Forms;
-using Els_kom_Core.Classes;
 using Elskom.Generic.Libs;
 
 [MiniDump(
