@@ -128,10 +128,10 @@ namespace Els_kom_Core.Controls
                     // do nothing to silence a compile error.
                 }
 
-                var komplugins = GenericPluginLoader<IKomPlugin>.LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
+                var komplugins = new GenericPluginLoader<IKomPlugin>().LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
                 KOMStream.Komplugins.AddRange(komplugins);
-                var callbackplugins = GenericPluginLoader<ICallbackPlugin>.LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
-                ExecutionManager.Callbackplugins.AddRange(callbackplugins);
+                var callbackplugins = new GenericPluginLoader<ICallbackPlugin>().LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
+                KOMStream.Callbackplugins.AddRange(callbackplugins);
                 if (!Git.IsMaster)
                 {
                     MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
@@ -193,7 +193,7 @@ namespace Els_kom_Core.Controls
                 MessageManager.NotifyIcon.Text = this.FindForm().Text;
                 MessageManager.NotifyIcon.Visible = true;
                 var pluginTypes = new List<Type>();
-                foreach (var callbackplugin in ExecutionManager.Callbackplugins)
+                foreach (var callbackplugin in KOMStream.Callbackplugins)
                 {
                     pluginTypes.Add(callbackplugin.GetType());
                 }

@@ -115,6 +115,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Elskom.PluginFramework">
+      <Version>1.0.1</Version>
+    </PackageReference>
     <PackageReference Include="ReleasePackaging">
       <Version>1.0.0</Version>
     </PackageReference>

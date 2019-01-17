@@ -8,7 +8,6 @@ namespace Els_kom_Core.Controls
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
-    using Els_kom_Core.Classes;
     using Elskom.Generic.Libs;
 
     /// <summary>
@@ -148,7 +147,7 @@ namespace Els_kom_Core.Controls
             this.CheckBox1.Checked = Convert.ToBoolean(this.curvalue5);
             this.CheckBox2.Checked = Convert.ToBoolean(this.curvalue4);
             var entries = new List<ListViewItem>();
-            foreach (var callbackplugin in ExecutionManager.Callbackplugins)
+            foreach (var callbackplugin in KOMStream.Callbackplugins)
             {
                 entries.Add(new ListViewItem(
                     new string[]
@@ -325,7 +324,7 @@ namespace Els_kom_Core.Controls
             {
                 var selitem = this.ListView1.SelectedItems[i];
                 var found = false;
-                foreach (var callbackplugin in ExecutionManager.Callbackplugins)
+                foreach (var callbackplugin in KOMStream.Callbackplugins)
                 {
                     if (callbackplugin.PluginName.Equals(selitem.Text))
                     {

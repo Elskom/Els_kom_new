@@ -6,7 +6,6 @@
 namespace Els_kom_Core.Classes
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
@@ -17,23 +16,7 @@ namespace Els_kom_Core.Classes
     /// </summary>
     internal static class ExecutionManager
     {
-        private static List<ICallbackPlugin> callbackplugins;
-
-        /// <summary>
-        /// Gets the list of callback plugins.
-        /// </summary>
-        internal static List<ICallbackPlugin> Callbackplugins
-        {
-            get
-            {
-                if (callbackplugins == null)
-                {
-                    callbackplugins = new List<ICallbackPlugin>();
-                }
-
-                return callbackplugins;
-            }
-        }
+        private static bool executingElsword = false;
 
         /// <summary>
         /// Gets a value indicating whether the launcher to Elsword is running.
@@ -51,7 +34,11 @@ namespace Els_kom_Core.Classes
         /// Gets a value indicating whether Elsword is still getting ready to execute. False if executing.
         /// </summary>
         /// <returns>A value indicating if Elsword is getting ready to execute.</returns>
-        internal static bool ExecutingElsword { get; private set; } = false;
+        internal static bool ExecutingElsword
+        {
+            get => executingElsword;
+            private set => executingElsword = value;
+        }
 
         private static string ElsDir { get; set; }
 
@@ -68,8 +55,9 @@ namespace Els_kom_Core.Classes
         /// <param name="windowStyle">Window style for the target process.</param>
         /// <param name="workingDirectory">Working directory for the target process.</param>
         /// <param name="waitForProcessExit">Waits for the target process to terminate.</param>
+        /// <param name="executing">A bool indicating if the process is executing. Pass in true if you want your application to know that it has been executed.</param>
         /// <returns>empty string, process stdout data, process stderr data.</returns>
-        internal static string Shell(string fileName, string arguments, bool redirectStandardOutput, bool redirectStandardError, bool useShellExecute, bool createNoWindow, ProcessWindowStyle windowStyle, string workingDirectory, bool waitForProcessExit)
+        internal static string Shell(string fileName, string arguments, bool redirectStandardOutput, bool redirectStandardError, bool useShellExecute, bool createNoWindow, ProcessWindowStyle windowStyle, string workingDirectory, bool waitForProcessExit, ref bool executing)
         {
             var ret = string.Empty;
             using (var proc = new Process())
@@ -85,9 +73,9 @@ namespace Els_kom_Core.Classes
                 proc.Start();
 
                 // so that way main form Test mods functionality actually works (Lame ass hack I think tbh)...
-                if (ExecutingElsword)
+                if (executing)
                 {
-                    ExecutingElsword = false;
+                    executing = false;
                 }
 
                 if (redirectStandardError)
@@ -137,7 +125,7 @@ namespace Els_kom_Core.Classes
                     if (File.Exists(ElsDir + "\\data\\x2.exe"))
                     {
                         RunningElswordDirectly = true;
-                        Shell(ElsDir + "\\data\\x2.exe", "pxk19slammsu286nfha02kpqnf729ck", false, false, false, false, ProcessWindowStyle.Normal, ElsDir + "\\data\\", true);
+                        Shell(ElsDir + "\\data\\x2.exe", "pxk19slammsu286nfha02kpqnf729ck", false, false, false, false, ProcessWindowStyle.Normal, ElsDir + "\\data\\", true, ref executingElsword);
                         RunningElswordDirectly = false;
                     }
                     else
@@ -178,7 +166,7 @@ namespace Els_kom_Core.Classes
                     if (File.Exists(ElsDir + "\\voidels.exe"))
                     {
                         RunningElsword = true;
-                        Shell(ElsDir + "\\voidels.exe", string.Empty, false, false, false, false, ProcessWindowStyle.Normal, ElsDir, true);
+                        Shell(ElsDir + "\\voidels.exe", string.Empty, false, false, false, false, ProcessWindowStyle.Normal, ElsDir, true, ref executingElsword);
                         RunningElsword = false;
                     }
                     else
@@ -186,7 +174,7 @@ namespace Els_kom_Core.Classes
                         if (File.Exists(ElsDir + "\\elsword.exe"))
                         {
                             RunningElsword = true;
-                            Shell(ElsDir + "\\elsword.exe", string.Empty, false, false, false, false, ProcessWindowStyle.Normal, ElsDir, true);
+                            Shell(ElsDir + "\\elsword.exe", string.Empty, false, false, false, false, ProcessWindowStyle.Normal, ElsDir, true, ref executingElsword);
                             RunningElsword = false;
                         }
                         else
@@ -218,7 +206,7 @@ namespace Els_kom_Core.Classes
         {
             if (RunningElswordDirectly)
             {
-                foreach (var plugin in Callbackplugins)
+                foreach (var plugin in KOMStream.Callbackplugins)
                 {
                     plugin.TestModsCallback();
                 }

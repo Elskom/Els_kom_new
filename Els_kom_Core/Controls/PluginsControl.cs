@@ -8,7 +8,6 @@ namespace Els_kom_Core.Controls
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
-    using Els_kom_Core.Classes;
     using Elskom.Generic.Libs;
 
     /// <summary>
@@ -38,7 +37,7 @@ namespace Els_kom_Core.Controls
             }
 
             var pluginTypes = new List<Type>();
-            foreach (var callbackplugin in ExecutionManager.Callbackplugins)
+            foreach (var callbackplugin in KOMStream.Callbackplugins)
             {
                 pluginTypes.Add(callbackplugin.GetType());
             }

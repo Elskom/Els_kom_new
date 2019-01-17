@@ -7,7 +7,6 @@ namespace Els_kom.Forms
 {
     using System;
     using System.Windows.Forms;
-    using Els_kom_Core.Classes;
     using Els_kom_Core.Controls;
     using Elskom.Generic.Libs;
 

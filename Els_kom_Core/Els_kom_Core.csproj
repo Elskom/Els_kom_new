@@ -13,7 +13,6 @@
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <DefineTrace>false</DefineTrace>
-    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -240,7 +239,7 @@
         fstream.Write(outputData.ToCharArray(), 0, outputData.Length);
         fstream.Dispose();
         Log.LogMessage(MessageImportance.High, "Dumping Resources Path for Forms Designer.");
-        string resourcespath = SolutionDir + "..{0}Els_kom{0}Resources{0}els_kom.resx";
+        string resourcespath = SolutionDir + "Els_kom{0}Resources{0}els_kom.resx";
         resourcespath = resourcespath.Replace("\\\\", "\\");
         resourcespath = string.Format(resourcespath, System.IO.Path.DirectorySeparatorChar);
         string iconpath = SolutionDir + "..{0}Els_kom{0}Resources{0}els_kom.ico";

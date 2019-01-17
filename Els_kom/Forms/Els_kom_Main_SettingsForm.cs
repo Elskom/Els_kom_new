@@ -8,7 +8,7 @@ namespace Els_kom.Forms
     using System;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-    using Els_kom_Core.Classes;
+    using Elskom.Generic.Libs;
 
     internal partial class SettingsForm : Form
     {
@@ -49,7 +49,7 @@ namespace Els_kom.Forms
             for (var i = 0; i < this.SettingsControl1.ListView1.SelectedItems.Count; i++)
             {
                 var selitem = this.SettingsControl1.ListView1.SelectedItems[i];
-                foreach (var callbackplugin in ExecutionManager.Callbackplugins)
+                foreach (var callbackplugin in KOMStream.Callbackplugins)
                 {
                     if (callbackplugin.PluginName.Equals(selitem.Text))
                     {
