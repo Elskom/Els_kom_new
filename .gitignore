@@ -3,9 +3,7 @@ bin
 old
 .vs
 *.user
-Els_kom_Core/Classes/Git.cs
-# hack for Visual Studio Designer.
-Els_kom_Core/Classes/ResourcesDir.cs
+Els_kom/Classes/Git.cs
 *.res
 Els_kom/Resources/els_kom.resx
 # build log crap.
@@ -23,6 +21,7 @@ Plugins
 *.diagsession
 # zip files.
 *.zip
+# legacy VB6 build files.
 !/legacy/Els_kom/els_kom.res
 !/legacy/Els_kom/Resources.res
 !/legacy/Els_kom_Launcher_Stub/Launcher.res

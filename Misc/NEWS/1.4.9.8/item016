@@ -1,1 +1,1 @@
-Upgrade .NET Framework version to 4.7. Now we can take advantage of .NET 4.7 and keep up to date as much as possible with the Roslyn Language (C#).
+Expanded Main Window and added Settings button to it to be able to modify settings when the Tray icon is not shown at all.

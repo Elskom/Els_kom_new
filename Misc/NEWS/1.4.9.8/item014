@@ -1,1 +1,1 @@
-Replaced ReferenceEquals with string.Equals because it is not friendly with string and in the end always returns true because it does not compare the actual values of the 2 strings in the Settings Window.
+Els_kom is now not able to close when Packing, unpacking, testing mods, or updating the game to prevent from having all threads not exit when they should.

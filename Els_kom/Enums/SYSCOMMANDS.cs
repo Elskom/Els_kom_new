@@ -3,7 +3,7 @@
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
-namespace Els_kom_Core.Enums
+namespace Els_kom.Enums
 {
     /// <summary>
     /// System Window Commands.

@@ -49,7 +49,9 @@
     <ApplicationManifest>Resources\els_kom.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Classes\Git.cs" />
     <Compile Include="Els_kom_Main.cs" />
+    <Compile Include="Enums\SYSCOMMANDS.cs" />
     <Compile Include="Forms\Els_kom_Main_AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,21 +78,6 @@
     </Compile>
     <Compile Include="Icons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\SharedAssemblyInfo.cs">
-      <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Els_kom_Core\Els_kom_Core.csproj">
-      <Project>{8588ae1c-cd41-4a96-8c9a-cd48b311bb6e}</Project>
-      <Name>Els_kom_Core</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -109,14 +96,30 @@
     <None Include="Resources\YR.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    <EmbeddedResource Include="Forms\Els_kom_Main_AboutForm.resx">
+      <DependentUpon>Els_kom_Main_AboutForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Els_kom_Main_MainForm.resx">
+      <DependentUpon>Els_kom_Main_MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Els_kom_Main_PluginsForm.resx">
+      <DependentUpon>Els_kom_Main_PluginsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Els_kom_Main_SettingsForm.resx">
+      <DependentUpon>Els_kom_Main_SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Elskom.PluginFramework">
       <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="GenericPluginLoader">
+      <Version>1.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="PluginUpdateCheck">
+      <Version>1.0.3</Version>
     </PackageReference>
     <PackageReference Include="ReleasePackaging">
       <Version>1.0.0</Version>
@@ -151,4 +154,119 @@
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <UsingTask TaskName="gitbuildinfo" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <OutputFile1 Required="true" />
+      <TargetNamespace Required="true" />
+      <SolutionDir Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        Log.LogMessage(MessageImportance.High, "Getting build info from git");
+        string git_out1;
+        System.Diagnostics.Process pro1 = new System.Diagnostics.Process();
+        pro1.StartInfo.FileName = "git";
+        pro1.StartInfo.Arguments = "describe --all --always --dirty";
+        pro1.StartInfo.RedirectStandardOutput = true;
+        pro1.StartInfo.UseShellExecute = false;
+        pro1.StartInfo.CreateNoWindow = true;
+        try
+        {
+          pro1.Start();
+          git_out1 = pro1.StandardOutput.ReadToEnd();
+          pro1.WaitForExit();
+        }
+        catch (System.ComponentModel.Win32Exception)
+        {
+          git_out1 = "Not a git clone or git is not in Path.";
+        }
+        pro1.Dispose();
+        git_out1 = git_out1.Remove(git_out1.Length - 1, 1);
+        string git_out2;
+        System.Diagnostics.Process pro2 = new System.Diagnostics.Process();
+        pro2.StartInfo.FileName = "git";
+        pro2.StartInfo.Arguments = "rev-parse --short HEAD";
+        pro2.StartInfo.RedirectStandardOutput = true;
+        pro2.StartInfo.UseShellExecute = false;
+        pro2.StartInfo.CreateNoWindow = true;
+        try
+        {
+          pro2.Start();
+          git_out2 = pro2.StandardOutput.ReadToEnd();
+          pro2.WaitForExit();
+        }
+        catch (System.ComponentModel.Win32Exception)
+        {
+          git_out2 = "Not a git clone or git is not in Path.";
+        }
+        pro2.Dispose();
+        git_out2 = git_out2.Remove(git_out2.Length - 1, 1);
+        string git_out3;
+        System.Diagnostics.Process pro3 = new System.Diagnostics.Process();
+        pro3.StartInfo.FileName = "git";
+        pro3.StartInfo.Arguments = "name-rev --name-only HEAD";
+        pro3.StartInfo.RedirectStandardOutput = true;
+        pro3.StartInfo.UseShellExecute = false;
+        pro3.StartInfo.CreateNoWindow = true;
+        try
+        {
+          pro3.Start();
+          git_out3 = pro3.StandardOutput.ReadToEnd();
+          pro3.WaitForExit();
+        }
+        catch (System.ComponentModel.Win32Exception)
+        {
+          git_out3 = "Not a git clone or git is not in Path.";
+        }
+        pro3.Dispose();
+        git_out3 = git_out3.Remove(git_out3.Length - 1, 1);
+        string outputData = "// Copyright (c) 2014-2019, Els_kom org." + System.Environment.NewLine;
+        outputData += "// https://github.com/Elskom/" + System.Environment.NewLine;
+        outputData += "// All rights reserved." + System.Environment.NewLine;
+        outputData += "// license: MIT, see LICENSE for more details." + System.Environment.NewLine;
+        outputData += System.Environment.NewLine;
+        outputData += "/* DO NOT MODIFY THIS FILE IT IS AUTOGENERATED BY THE GITBUILDINFO BUILD TASK!!! */" + System.Environment.NewLine;
+        outputData += System.Environment.NewLine;
+        outputData += "namespace " + TargetNamespace + System.Environment.NewLine;
+        outputData += "{" + System.Environment.NewLine;
+        outputData += "    /// <summary>" + System.Environment.NewLine;
+        outputData += "    /// Gets the git branch information." + System.Environment.NewLine;
+        outputData += "    /// </summary>" + System.Environment.NewLine;
+        outputData += "    internal static class Git" + System.Environment.NewLine;
+        outputData += "    {" + System.Environment.NewLine;
+        outputData += "        private const string Headdesc = \"" + git_out1 + "\";" + System.Environment.NewLine + System.Environment.NewLine;
+        outputData += "        /// <summary>" + System.Environment.NewLine;
+        outputData += "        /// Gets the git commit hash as formated by git rev-parse." + System.Environment.NewLine;
+        outputData += "        /// </summary>" + System.Environment.NewLine;
+        outputData += "        internal static string Commit => \"" + git_out2 + "\";" + System.Environment.NewLine + System.Environment.NewLine;
+        outputData += "        /// <summary>" + System.Environment.NewLine;
+        outputData += "        /// Gets the git branch name as formated by git name-rev." + System.Environment.NewLine;
+        outputData += "        /// </summary>" + System.Environment.NewLine;
+        outputData += "        internal static string Branchname => \"" + git_out3 + "\";" + System.Environment.NewLine + System.Environment.NewLine;
+        outputData += "        /// <summary>" + System.Environment.NewLine;
+        outputData += "        /// Gets a value indicating whether the branch is dirty or" + System.Environment.NewLine;
+        outputData += "        /// clean based upon the string constructed by git describe." + System.Environment.NewLine;
+        outputData += "        /// </summary>" + System.Environment.NewLine;
+        outputData += "        internal static bool IsDirty => Headdesc.EndsWith(\"-dirty\");" + System.Environment.NewLine + System.Environment.NewLine;
+        outputData += "        /// <summary>" + System.Environment.NewLine;
+        outputData += "        /// Gets a value indicating whether the branch is the master" + System.Environment.NewLine;
+        outputData += "        /// branch or not based upon the string constructed by" + System.Environment.NewLine;
+        outputData += "        /// git name-rev." + System.Environment.NewLine;
+        outputData += "        /// </summary>" + System.Environment.NewLine;
+        outputData += "        internal static bool IsMaster => Branchname.Equals(\"master\");" + System.Environment.NewLine;
+        outputData += "    }" + System.Environment.NewLine;
+        outputData += "}" + System.Environment.NewLine;
+        System.IO.StreamWriter fstream = new System.IO.StreamWriter(OutputFile1, false, new System.Text.UTF8Encoding(false));
+        fstream.Write(outputData.ToCharArray(), 0, outputData.Length);
+        fstream.Dispose();
+]]></Code>
+    </Task>
+  </UsingTask>
+  <Target Name="BeforeBuild">
+    <gitbuildinfo OutputFile1="$(ProjectDir)\Classes\Git.cs" TargetNamespace="Els_kom.Classes" SolutionDir="$(SolutionDir)" />
+  </Target>
+  <!--
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

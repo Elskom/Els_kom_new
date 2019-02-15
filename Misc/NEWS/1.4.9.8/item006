@@ -1,1 +1,1 @@
-Renamed PCbuild.sln to pcbuild.sln.
+Changed Controls to hold the instance of the Parent Form they are on to reduce exposed events to slim to none if possible on the core.

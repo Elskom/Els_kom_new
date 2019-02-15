@@ -1,1 +1,1 @@
-Els_kom is now not able to close when Packing, unpacking, testing mods, or updating the game to prevent from having all threads not exit when they should.
+Upgrade .NET Framework version to 4.7.2. Now we can take advantage of .NET 4.7.2 and keep up to date as much as possible with the C# Language.

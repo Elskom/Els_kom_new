@@ -1,1 +1,1 @@
-Added a Thread event handler and a Unhandled Exception handler to force application exits to avoid WerFault.exe from kicking in.
+Added crc.xml updater. This can now update the crc.xml file based on the files on the input folder when packing. Supports all kom versions.

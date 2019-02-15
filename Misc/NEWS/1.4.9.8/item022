@@ -1,1 +1,1 @@
-Fixed a bug when none of the Radio buttons are checked because null is assigned to the internal string check which makes all the if's that makes them checked to evaluate to false when the Settings file does not exist.
+Use a single global Settings XMLObject Instance for all forms. Now all used memory by Els_kom drops from like 10 MB to about 8 MB.

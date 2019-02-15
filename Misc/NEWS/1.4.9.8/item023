@@ -1,1 +1,1 @@
-Changed Settings File save location from Els_kom startup folder to a Local Application Data folder.
+Added a Thread event handler and a Unhandled Exception handler to force application exits to avoid WerFault.exe from kicking in.

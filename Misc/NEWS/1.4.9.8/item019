@@ -1,1 +1,1 @@
-Removed Settings Option from Tray Icon Menu.
+Added MappedID attribute to kom v4. Also adding the key map that I currently have to unpack v4 in an loadable c++ dll.

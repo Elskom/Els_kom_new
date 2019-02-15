@@ -1,1 +1,1 @@
-Added MappedID attribute to kom v4. Also adding the key map that I currently have to unpack v4 in an loadable c++ dll.
+Fixed a bug when none of the Radio buttons are checked because null is assigned to the internal string check which makes all the if's that makes them checked to evaluate to false when the Settings file does not exist.

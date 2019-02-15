@@ -1,1 +1,1 @@
-Added a way to load plugins from a zip file.
+Changed Resources to be all loaded from Els_kom.exe from a resx file.

@@ -1,1 +1,1 @@
-Added crc.xml updater. This can now update the crc.xml file based on the files on the input folder when packing. Supports all kom versions.
+Fixed a test mods bug when the Elsword directory is not configured, or the game exe was not found. This fixes a issue where the timer endlessly loops keeping the controls disabled on the Main Window. Also fixed all crashes I know of so far.

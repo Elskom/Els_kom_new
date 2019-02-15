@@ -1,1 +1,1 @@
-Removed Python kom file format packing and unpacking code (The C# core allows plugins to do it all now).
+Renamed PCbuild.sln to pcbuild.sln.

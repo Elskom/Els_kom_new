@@ -1,1 +1,1 @@
-Fixed issue where you can open 2 settings windows in the tray icon.
+Fixed issue where Main window is minimized when Settings window is open when showing only the tray icon.

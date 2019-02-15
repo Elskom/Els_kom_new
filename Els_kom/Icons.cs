@@ -6,7 +6,8 @@
 namespace Els_kom
 {
     using System.Drawing;
-    using Els_kom.Properties;
+    using System.Globalization;
+    using System.Resources;
     using Elskom.Generic.Libs;
     using XmlAbstraction;
 
@@ -18,6 +19,10 @@ namespace Els_kom
     /// </summary>
     public static class Icons
     {
+        private static ResourceManager resourceMan;
+
+        private static CultureInfo resourceCulture;
+
         /// <summary>
         /// Gets the form icon from the project's resources.
         /// </summary>
@@ -28,12 +33,24 @@ namespace Els_kom
         {
             get
             {
+                if (resourceMan == null)
+                {
+                    resourceMan = new ResourceManager("Els_kom.Properties.Resources", typeof(Icons).Assembly);
+                }
+
+                if (resourceCulture == null)
+                {
+                    resourceCulture = CultureInfo.CurrentCulture;
+                }
+
                 var iconVal = string.Empty;
-                XmlObject settingsxml = null;
                 if (SettingsFile.Settingsxml == null)
                 {
-                    settingsxml = new XmlObject(SettingsFile.Path, "<Settings></Settings>");
+                    var settingsxml = new XmlObject(SettingsFile.Path, "<Settings></Settings>");
                     iconVal = settingsxml.TryRead("WindowIcon");
+
+                    // dispose this temporary object.
+                    settingsxml = null;
                 }
                 else
                 {
@@ -41,16 +58,14 @@ namespace Els_kom
                     iconVal = SettingsFile.Settingsxml.TryRead("WindowIcon");
                 }
 
-                // dispose this temporary object.
-                settingsxml = null;
-                var retIcon = Resources.els_kom;
+                var retIcon = (Icon)resourceMan.GetObject("els_kom", resourceCulture);
                 if (iconVal.Equals("1"))
                 {
-                    retIcon = Resources.VP_Trans;
+                    retIcon = (Icon)resourceMan.GetObject("VP_Trans", resourceCulture);
                 }
                 else if (iconVal.Equals("2"))
                 {
-                    retIcon = Resources.YR;
+                    retIcon = (Icon)resourceMan.GetObject("YR", resourceCulture);
                 }
 
                 return retIcon;
@@ -69,32 +84,7 @@ namespace Els_kom
         {
             get
             {
-                var iconVal = string.Empty;
-                XmlObject settingsxml = null;
-                if (SettingsFile.Settingsxml == null)
-                {
-                    settingsxml = new XmlObject(SettingsFile.Path, "<Settings></Settings>");
-                    iconVal = settingsxml.TryRead("WindowIcon");
-                }
-                else
-                {
-                    SettingsFile.Settingsxml.ReopenFile();
-                    iconVal = SettingsFile.Settingsxml.TryRead("WindowIcon");
-                }
-
-                // dispose this temporary object.
-                settingsxml = null;
-                var oldicon = Resources.els_kom;
-                if (iconVal.Equals("1"))
-                {
-                    oldicon = Resources.VP_Trans;
-                }
-                else if (iconVal.Equals("2"))
-                {
-                    oldicon = Resources.YR;
-                }
-
-                using (var newicon = new Icon(oldicon, 48, 48))
+                using (var newicon = new Icon(FormIcon, 48, 48))
                 {
                     return newicon?.ToBitmap();
                 }

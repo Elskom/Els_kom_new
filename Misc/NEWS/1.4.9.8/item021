@@ -1,1 +1,1 @@
-Made Tray icon and it's menu's constructed at runtime. This should now reduce lots of useless *.resx noise when controls are opened in the designer.
+Changed Settings File save location from Els_kom startup folder to a Local Application Data folder.

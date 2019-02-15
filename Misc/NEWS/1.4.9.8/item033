@@ -1,1 +1,0 @@
-Added PluginsControl to Core DLL for a plugins installer/updater form. The control is planned to lookup possible plugins to install and check if it is installed and just needs updating. This would also handle restarting Els_kom after the plugins are installed/updated to avoid issues.

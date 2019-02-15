@@ -4,23 +4,33 @@
 // license: MIT, see LICENSE for more details.
 
 using System;
+using System.Reflection;
 using System.Windows.Forms;
 using Els_kom.Forms;
 using Elskom.Generic.Libs;
 
-[MiniDump(
-    "Please send a copy of {0} to https://github.com/Elskom/Els_kom_new/issues by making an issue and attaching the log(s) and mini-dump(s).",
-    ExceptionTitle = "Unhandled Exception!",
-    ThreadExceptionTitle = "Unhandled Thread Exception!")]
 internal static class Els_kom_Main
 {
     [STAThread]
     internal static int Main(string[] args)
     {
-        var classType = typeof(Els_kom_Main);
+        MiniDumpAttribute.DumpGenerated += MiniDumpAttribute_DumpGenerated;
+        MiniDump.DumpFailed += MiniDump_DumpFailed;
+        Assembly.GetEntryAssembly().GetCustomAttributes(false);
 
         // execute our attribute.
-        classType.GetCustomAttributes(false);
+        // uncomment if the attribute is on the assembly:
+        // Assembly.GetEntryAssembly().GetCustomAttributes(false);
+        // or:
+        // typeof(TheClassWithTheAttribute).Assembly.GetCustomAttributes(false);
+        // uncomment if the attribute is on the class:
+        // Assembly.GetEntryAssembly().EntryPoint.ReflectedType.GetCustomAttributes(false);
+        // or:
+        // typeof(TheClassWithTheAttribute).GetCustomAttributes(false);
+        // uncomment if you want the attribute on the class:
+        // Assembly.GetEntryAssembly().EntryPoint.GetCustomAttributes(false);
+        // or:
+        // typeof(TheClassWithTheAttribute).GetMethod(nameof(Main), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)?.GetCustomAttributes(false);
         if ((args.Length - 1) > -1)
         {
             ReleasePackaging.PackageRelease(args);
@@ -36,5 +46,14 @@ internal static class Els_kom_Main
         }
 
         return 0;
+    }
+
+    private static void MiniDump_DumpFailed(object sender, MiniDumpEventArgs e)
+        => MessageManager.ShowError(e.Text, e.Caption, false);
+
+    private static void MiniDumpAttribute_DumpGenerated(object sender, MiniDumpEventArgs e)
+    {
+        MessageManager.ShowError(e.Text, e.Caption, false);
+        Application.Exit();
     }
 }

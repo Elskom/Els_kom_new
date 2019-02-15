@@ -1,1 +1,1 @@
-Added crc.xml converter. The crc.xml files from kom versions can now be converted to a newer or older version at will.
+Fixed crash when saving settings in the Settings Window. This was related to old code in the MainControl file that would open the Settings Window when the settings file is not found without a real instance of XMLObject resulting in a crash upon saving.
