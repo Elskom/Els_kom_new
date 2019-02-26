@@ -17,6 +17,7 @@ internal static class Els_kom_Main
         MiniDumpAttribute.DumpGenerated += MiniDumpAttribute_DumpGenerated;
         MiniDump.DumpFailed += MiniDump_DumpFailed;
         Assembly.GetEntryAssembly().GetCustomAttributes(false);
+        KOMManager.MessageEvent += KOMManager_MessageEvent;
 
         // execute our attribute.
         // uncomment if the attribute is on the assembly:
@@ -48,12 +49,15 @@ internal static class Els_kom_Main
         return 0;
     }
 
+    private static void KOMManager_MessageEvent(object sender, MessageEventArgs e)
+        => MessageManager.ShowError(e.Text, e.Caption, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+
     private static void MiniDump_DumpFailed(object sender, MiniDumpEventArgs e)
         => MessageManager.ShowError(e.Text, e.Caption, false);
 
     private static void MiniDumpAttribute_DumpGenerated(object sender, MiniDumpEventArgs e)
     {
         MessageManager.ShowError(e.Text, e.Caption, false);
-        Application.Exit();
+        Environment.Exit(1);
     }
 }

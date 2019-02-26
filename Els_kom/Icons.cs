@@ -43,29 +43,38 @@ namespace Els_kom
                     resourceCulture = CultureInfo.CurrentCulture;
                 }
 
-                var iconVal = string.Empty;
-                if (SettingsFile.Settingsxml == null)
-                {
-                    var settingsxml = new XmlObject(SettingsFile.Path, "<Settings></Settings>");
-                    iconVal = settingsxml.TryRead("WindowIcon");
-
-                    // dispose this temporary object.
-                    settingsxml = null;
-                }
-                else
-                {
-                    SettingsFile.Settingsxml.ReopenFile();
-                    iconVal = SettingsFile.Settingsxml.TryRead("WindowIcon");
-                }
-
                 var retIcon = (Icon)resourceMan.GetObject("els_kom", resourceCulture);
-                if (iconVal.Equals("1"))
+                try
                 {
-                    retIcon = (Icon)resourceMan.GetObject("VP_Trans", resourceCulture);
+                    var iconVal = string.Empty;
+                    if (SettingsFile.Settingsxml == null)
+                    {
+                        var settingsxml = new XmlObject(SettingsFile.Path, "<Settings></Settings>");
+                        iconVal = settingsxml.TryRead("WindowIcon");
+
+                        // dispose this temporary object.
+                        settingsxml = null;
+                    }
+                    else
+                    {
+                        SettingsFile.Settingsxml.ReopenFile();
+                        iconVal = SettingsFile.Settingsxml.TryRead("WindowIcon");
+                    }
+
+                    if (iconVal.Equals("1"))
+                    {
+                        retIcon = (Icon)resourceMan.GetObject("VP_Trans", resourceCulture);
+                    }
+                    else if (iconVal.Equals("2"))
+                    {
+                        retIcon = (Icon)resourceMan.GetObject("YR", resourceCulture);
+                    }
                 }
-                else if (iconVal.Equals("2"))
+                catch (System.DllNotFoundException)
                 {
-                    retIcon = (Icon)resourceMan.GetObject("YR", resourceCulture);
+                    // if a dependency of this method cannot be loaded it could be because this is executed
+                    // in the forms designer and the retardid thing does not factor in nuget packages when
+                    // looking for assemblies to load.
                 }
 
                 return retIcon;

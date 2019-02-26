@@ -58,7 +58,7 @@ namespace Els_kom.Forms
             this.CheckBox1.Checked = Convert.ToBoolean(this.curvalue5);
             this.CheckBox2.Checked = Convert.ToBoolean(this.curvalue4);
             var entries = new List<ListViewItem>();
-            foreach (var callbackplugin in KOMStream.Callbackplugins)
+            foreach (var callbackplugin in KOMManager.Callbackplugins)
             {
                 entries.Add(new ListViewItem(
                     new string[]
@@ -67,7 +67,7 @@ namespace Els_kom.Forms
                     }, -1));
             }
 
-            foreach (var komplugin in KOMStream.Komplugins)
+            foreach (var komplugin in KOMManager.Komplugins)
             {
                 entries.Add(new ListViewItem(
                     new string[]
@@ -296,7 +296,7 @@ namespace Els_kom.Forms
             {
                 var selitem = this.ListView1.SelectedItems[i];
                 var found = false;
-                foreach (var callbackplugin in KOMStream.Callbackplugins)
+                foreach (var callbackplugin in KOMManager.Callbackplugins)
                 {
                     if (callbackplugin.PluginName.Equals(selitem.Text))
                     {
@@ -316,7 +316,7 @@ namespace Els_kom.Forms
             for (var i = 0; i < this.ListView1.SelectedItems.Count; i++)
             {
                 var selitem = this.ListView1.SelectedItems[i];
-                foreach (var callbackplugin in KOMStream.Callbackplugins)
+                foreach (var callbackplugin in KOMManager.Callbackplugins)
                 {
                     if (callbackplugin.PluginName.Equals(selitem.Text))
                     {

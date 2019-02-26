@@ -130,9 +130,9 @@ namespace Els_kom.Forms
                 }
 
                 var komplugins = new GenericPluginLoader<IKomPlugin>().LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
-                KOMStream.Komplugins.AddRange(komplugins);
+                KOMManager.Komplugins.AddRange(komplugins);
                 var callbackplugins = new GenericPluginLoader<ICallbackPlugin>().LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
-                KOMStream.Callbackplugins.AddRange(callbackplugins);
+                KOMManager.Callbackplugins.AddRange(callbackplugins);
                 if (!Git.IsMaster)
                 {
                     MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
@@ -154,12 +154,12 @@ namespace Els_kom.Forms
                 this.MessageManager1.Text = this.Text;
                 this.MessageManager1.Visible = true;
                 var pluginTypes = new List<Type>();
-                foreach (var callbackplugin in KOMStream.Callbackplugins)
+                foreach (var callbackplugin in KOMManager.Callbackplugins)
                 {
                     pluginTypes.Add(callbackplugin.GetType());
                 }
 
-                foreach (var komplugin in KOMStream.Komplugins)
+                foreach (var komplugin in KOMManager.Komplugins)
                 {
                     pluginTypes.Add(komplugin.GetType());
                 }
@@ -555,7 +555,7 @@ namespace Els_kom.Forms
             {
                 if (ExecutionManager.RunningElswordDirectly)
                 {
-                    KOMStream.DeployCallBack(ExecutionManager.RunningElswordDirectly);
+                    KOMManager.DeployCallBack(ExecutionManager.RunningElswordDirectly);
                     if (string.Equals(this.Label2.Text, string.Empty))
                     {
                         this.Label2.Text = "Testing Mods...";

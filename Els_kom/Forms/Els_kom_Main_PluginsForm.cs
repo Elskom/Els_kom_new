@@ -26,12 +26,12 @@ namespace Els_kom.Forms
             }
 
             var pluginTypes = new List<Type>();
-            foreach (var callbackplugin in KOMStream.Callbackplugins)
+            foreach (var callbackplugin in KOMManager.Callbackplugins)
             {
                 pluginTypes.Add(callbackplugin.GetType());
             }
 
-            foreach (var komplugin in KOMStream.Komplugins)
+            foreach (var komplugin in KOMManager.Komplugins)
             {
                 pluginTypes.Add(komplugin.GetType());
             }

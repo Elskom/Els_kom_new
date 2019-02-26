@@ -46,6 +46,6 @@ using Elskom.Generic.Libs;
 // use DumpType = MinidumpTypes.Normal for normal mini-dumps.
 [assembly: MiniDump(
     "Please send a copy of {0} to https://github.com/Elskom/Els_kom_new/issues by making an issue and attaching the log(s) and mini-dump(s).",
-    DumpType = MinidumpTypes.WithDataSegs | MinidumpTypes.WithFullMemory | MinidumpTypes.WithProcessThreadData | MinidumpTypes.WithFullMemoryInfo | MinidumpTypes.WithThreadInfo | MinidumpTypes.WithCodeSegs,
+    DumpType = MinidumpTypes.WithDataSegs | MinidumpTypes.WithFullMemory | MinidumpTypes.WithProcessThreadData | MinidumpTypes.WithFullMemoryInfo | MinidumpTypes.WithThreadInfo | MinidumpTypes.WithCodeSegs | MinidumpTypes.WithUnloadedModules | MinidumpTypes.WithTokenInformation | MinidumpTypes.WithModuleHeaders | MinidumpTypes.FilterTriage | MinidumpTypes.WithIptTrace,
     ExceptionTitle = "Unhandled Exception!",
     ThreadExceptionTitle = "Unhandled Thread Exception!")]
