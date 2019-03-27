@@ -122,7 +122,7 @@
       <Version>1.0.3</Version>
     </PackageReference>
     <PackageReference Include="ReleasePackaging">
-      <Version>1.0.0</Version>
+      <Version>1.0.1</Version>
     </PackageReference>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.1-beta.61">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
