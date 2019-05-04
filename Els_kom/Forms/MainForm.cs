@@ -8,9 +8,9 @@ namespace Els_kom.Forms
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Runtime.InteropServices;
     using System.Threading;
     using System.Windows.Forms;
-    using Els_kom.Classes;
     using Els_kom.Enums;
     using Elskom.Generic.Libs;
     using XmlAbstraction;
@@ -76,7 +76,7 @@ namespace Els_kom.Forms
             if (!AbleToClose() && !ForceClosure.ForceClose)
             {
                 cancel = true;
-                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                _ = MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
             }
 
             if (!cancel)
@@ -93,12 +93,12 @@ namespace Els_kom.Forms
             var closing = false;
             if (!Directory.Exists(Application.StartupPath + "\\koms"))
             {
-                Directory.CreateDirectory(Application.StartupPath + "\\koms");
+                _ = Directory.CreateDirectory(Application.StartupPath + "\\koms");
             }
 
             if (ExecutionManager.IsElsKomRunning() == true)
             {
-                MessageManager.ShowError("Sorry, Only 1 Instance is allowed at a time.", "Error!", false);
+                _ = MessageManager.ShowError("Sorry, Only 1 Instance is allowed at a time.", "Error!", false);
                 closing = true;
             }
             else
@@ -107,13 +107,13 @@ namespace Els_kom.Forms
                 this.elsDir = SettingsFile.Settingsxml?.TryRead("ElsDir");
                 if (this.elsDir.Length < 1)
                 {
-                    MessageManager.ShowInfo("Welcome to Els_kom." + Environment.NewLine + "Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops." + Environment.NewLine + "Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!", false);
+                    _ = MessageManager.ShowInfo("Welcome to Els_kom." + Environment.NewLine + "Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops." + Environment.NewLine + "Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!", false);
 
                     // avoids an issue where more than 1 settings form can be opened at the same time.
                     if (this.settingsfrm == null && this.aboutfrm == null)
                     {
                         this.settingsfrm = new SettingsForm();
-                        this.settingsfrm.ShowDialog();
+                        _ = this.settingsfrm.ShowDialog();
                         this.settingsfrm.Dispose();
                         this.settingsfrm = null;
                     }
@@ -133,12 +133,12 @@ namespace Els_kom.Forms
                 KOMManager.Komplugins.AddRange(komplugins);
                 var callbackplugins = new GenericPluginLoader<ICallbackPlugin>().LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
                 KOMManager.Callbackplugins.AddRange(callbackplugins);
-                if (!Git.IsMaster)
+                if (!GitInformation.GetAssemblyInstance(typeof(Els_kom_Main))?.IsMaster ?? false)
                 {
-                    MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                    _ = MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
 
-                if (Git.IsDirty)
+                if (GitInformation.GetAssemblyInstance(typeof(Els_kom_Main))?.IsDirty ?? false)
                 {
                     var resp = MessageBox.Show("This build was compiled with Uncommitted changes. As a result, this build might be unstable. Are you sure you want to run this build to test some changes to the code?", "Info!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     if (resp == DialogResult.No)
@@ -221,7 +221,7 @@ namespace Els_kom.Forms
             if (this.aboutfrm == null && this.settingsfrm == null)
             {
                 this.aboutfrm = new AboutForm();
-                this.aboutfrm.ShowDialog();
+                _ = this.aboutfrm.ShowDialog();
                 this.aboutfrm.Dispose();
                 this.aboutfrm = null;
             }
@@ -262,7 +262,7 @@ namespace Els_kom.Forms
             if (this.settingsfrm == null && this.aboutfrm == null)
             {
                 this.settingsfrm = new SettingsForm();
-                this.settingsfrm.ShowDialog();
+                _ = this.settingsfrm.ShowDialog();
                 this.settingsfrm.Dispose();
                 this.settingsfrm = null;
             }
@@ -281,7 +281,7 @@ namespace Els_kom.Forms
                 KOMManager.UnpackingState)
             {
                 cancel = true;
-                MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                _ = MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
             }
 
             if (!cancel)

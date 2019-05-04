@@ -1,21 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0116DE95-C3D6-487A-9133-5D26B6CA09FB}</ProjectGuid>
+    <TargetFramework>net472</TargetFramework>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Els_kom</RootNamespace>
     <AssemblyName>Els_kom</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
     <DelaySign>False</DelaySign>
     <NoStdLib>False</NoStdLib>
+    <UseWindowsForms>true</UseWindowsForms>
     <BaseIntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</BaseIntermediateOutputPath>
     <IntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
+    <IsPackable>false</IsPackable>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\bin\$(Configuration)\</OutputPath>
@@ -29,10 +29,18 @@
     <BaseAddress>4194304</BaseAddress>
     <RegisterForComInterop>False</RegisterForComInterop>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <StartupObject>Els_kom.Els_kom_Main</StartupObject>
+    <ApplicationIcon>Resources\els_kom.ico</ApplicationIcon>
+    <ApplicationManifest>Resources\els_kom.manifest</ApplicationManifest>
+    <AssemblyTitle>Els_kom</AssemblyTitle>
+    <AssemblyVersion>1.4.9.8</AssemblyVersion>
+    <AssemblyInformationalVersion>1.4.9.8</AssemblyInformationalVersion>
+    <FileVersion>1.4.9.8</FileVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Copyright>Copyright © 2014-2019</Copyright>
+    <Company>Els_kom org.</Company>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>Els_kom_Main</StartupObject>
-  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CodeAnalysisRuleSet>..\Els_kom.ruleset</CodeAnalysisRuleSet>
@@ -40,89 +48,45 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
     <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>Resources\els_kom.ico</ApplicationIcon>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>..\Els_kom.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>Resources\els_kom.manifest</ApplicationManifest>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="Classes\Git.cs" />
-    <Compile Include="Els_kom_Main.cs" />
-    <Compile Include="Enums\SYSCOMMANDS.cs" />
-    <Compile Include="Forms\Els_kom_Main_AboutForm.cs">
+    <Compile Update="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Els_kom_Main_AboutForm.Designer.cs">
-      <DependentUpon>Els_kom_Main_AboutForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Els_kom_Main_MainForm.cs">
+    <Compile Update="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Els_kom_Main_MainForm.Designer.cs">
-      <DependentUpon>Els_kom_Main_MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Els_kom_Main_PluginsForm.cs">
+    <Compile Update="Forms\PluginsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Els_kom_Main_PluginsForm.Designer.cs">
-      <DependentUpon>Els_kom_Main_PluginsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Els_kom_Main_SettingsForm.cs">
+    <Compile Update="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Els_kom_Main_SettingsForm.Designer.cs">
-      <DependentUpon>Els_kom_Main_SettingsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Icons.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
+
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json">
       <Link>stylecop.json</Link>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </AdditionalFiles>
-    <None Include="Resources\els_kom.manifest" />
-    <None Include="Resources\els_kom.ico" />
-    <None Include="Resources\VP_Trans.ico" />
-    <None Include="Resources\YR.ico" />
   </ItemGroup>
+
   <ItemGroup>
-    <EmbeddedResource Include="Forms\Els_kom_Main_AboutForm.resx">
-      <DependentUpon>Els_kom_Main_AboutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Els_kom_Main_MainForm.resx">
-      <DependentUpon>Els_kom_Main_MainForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Els_kom_Main_PluginsForm.resx">
-      <DependentUpon>Els_kom_Main_PluginsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Els_kom_Main_SettingsForm.resx">
-      <DependentUpon>Els_kom_Main_SettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Elskom.PluginFramework">
-      <Version>1.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="GenericPluginLoader">
-      <Version>1.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="PluginUpdateCheck">
-      <Version>1.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="ReleasePackaging">
-      <Version>1.0.1</Version>
+    <PackageReference Include="GitBuildInfo" Version="0.18.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -140,130 +104,116 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="XmlAbstraction">
-      <Version>1.2.2</Version>
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('../../MyPackages/GitInformation/src/GitInformation/AraHaan.GitInformation.csproj')">
+    <ProjectReference Include="../../MyPackages/GitInformation/src/GitInformation/AraHaan.GitInformation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="!Exists('../../MyPackages/GitInformation/src/GitInformation/AraHaan.GitInformation.csproj')">
+    <PackageReference Include="AraHaan.GitInformation">
+      <Version>1.0.0</Version>
     </PackageReference>
-    <PackageReference Include="MessageManager">
-      <Version>1.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="SettingsFile">
-      <Version>1.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="MiniDump">
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('../../MyPackages/PluginFramework/PluginFramework.csproj')">
+    <ProjectReference Include="../../MyPackages/PluginFramework/PluginFramework.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="!Exists('../../MyPackages/PluginFramework/PluginFramework.csproj')">
+    <PackageReference Include="Elskom.PluginFramework">
       <Version>1.0.2</Version>
     </PackageReference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <UsingTask TaskName="gitbuildinfo" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
-    <ParameterGroup>
-      <OutputFile1 Required="true" />
-      <TargetNamespace Required="true" />
-      <SolutionDir Required="true" />
-    </ParameterGroup>
-    <Task>
-      <Code Type="Fragment" Language="cs"><![CDATA[
-        Log.LogMessage(MessageImportance.High, "Getting build info from git");
-        string git_out1;
-        System.Diagnostics.Process pro1 = new System.Diagnostics.Process();
-        pro1.StartInfo.FileName = "git";
-        pro1.StartInfo.Arguments = "describe --all --always --dirty";
-        pro1.StartInfo.RedirectStandardOutput = true;
-        pro1.StartInfo.UseShellExecute = false;
-        pro1.StartInfo.CreateNoWindow = true;
-        try
-        {
-          pro1.Start();
-          git_out1 = pro1.StandardOutput.ReadToEnd();
-          pro1.WaitForExit();
-        }
-        catch (System.ComponentModel.Win32Exception)
-        {
-          git_out1 = "Not a git clone or git is not in Path.";
-        }
-        pro1.Dispose();
-        git_out1 = git_out1.Remove(git_out1.Length - 1, 1);
-        string git_out2;
-        System.Diagnostics.Process pro2 = new System.Diagnostics.Process();
-        pro2.StartInfo.FileName = "git";
-        pro2.StartInfo.Arguments = "rev-parse --short HEAD";
-        pro2.StartInfo.RedirectStandardOutput = true;
-        pro2.StartInfo.UseShellExecute = false;
-        pro2.StartInfo.CreateNoWindow = true;
-        try
-        {
-          pro2.Start();
-          git_out2 = pro2.StandardOutput.ReadToEnd();
-          pro2.WaitForExit();
-        }
-        catch (System.ComponentModel.Win32Exception)
-        {
-          git_out2 = "Not a git clone or git is not in Path.";
-        }
-        pro2.Dispose();
-        git_out2 = git_out2.Remove(git_out2.Length - 1, 1);
-        string git_out3;
-        System.Diagnostics.Process pro3 = new System.Diagnostics.Process();
-        pro3.StartInfo.FileName = "git";
-        pro3.StartInfo.Arguments = "name-rev --name-only HEAD";
-        pro3.StartInfo.RedirectStandardOutput = true;
-        pro3.StartInfo.UseShellExecute = false;
-        pro3.StartInfo.CreateNoWindow = true;
-        try
-        {
-          pro3.Start();
-          git_out3 = pro3.StandardOutput.ReadToEnd();
-          pro3.WaitForExit();
-        }
-        catch (System.ComponentModel.Win32Exception)
-        {
-          git_out3 = "Not a git clone or git is not in Path.";
-        }
-        pro3.Dispose();
-        git_out3 = git_out3.Remove(git_out3.Length - 1, 1);
-        string outputData = "// Copyright (c) 2014-2019, Els_kom org." + System.Environment.NewLine;
-        outputData += "// https://github.com/Elskom/" + System.Environment.NewLine;
-        outputData += "// All rights reserved." + System.Environment.NewLine;
-        outputData += "// license: MIT, see LICENSE for more details." + System.Environment.NewLine;
-        outputData += System.Environment.NewLine;
-        outputData += "/* DO NOT MODIFY THIS FILE IT IS AUTOGENERATED BY THE GITBUILDINFO BUILD TASK!!! */" + System.Environment.NewLine;
-        outputData += System.Environment.NewLine;
-        outputData += "namespace " + TargetNamespace + System.Environment.NewLine;
-        outputData += "{" + System.Environment.NewLine;
-        outputData += "    /// <summary>" + System.Environment.NewLine;
-        outputData += "    /// Gets the git branch information." + System.Environment.NewLine;
-        outputData += "    /// </summary>" + System.Environment.NewLine;
-        outputData += "    internal static class Git" + System.Environment.NewLine;
-        outputData += "    {" + System.Environment.NewLine;
-        outputData += "        private const string Headdesc = \"" + git_out1 + "\";" + System.Environment.NewLine + System.Environment.NewLine;
-        outputData += "        /// <summary>" + System.Environment.NewLine;
-        outputData += "        /// Gets the git commit hash as formated by git rev-parse." + System.Environment.NewLine;
-        outputData += "        /// </summary>" + System.Environment.NewLine;
-        outputData += "        internal static string Commit => \"" + git_out2 + "\";" + System.Environment.NewLine + System.Environment.NewLine;
-        outputData += "        /// <summary>" + System.Environment.NewLine;
-        outputData += "        /// Gets the git branch name as formated by git name-rev." + System.Environment.NewLine;
-        outputData += "        /// </summary>" + System.Environment.NewLine;
-        outputData += "        internal static string Branchname => \"" + git_out3 + "\";" + System.Environment.NewLine + System.Environment.NewLine;
-        outputData += "        /// <summary>" + System.Environment.NewLine;
-        outputData += "        /// Gets a value indicating whether the branch is dirty or" + System.Environment.NewLine;
-        outputData += "        /// clean based upon the string constructed by git describe." + System.Environment.NewLine;
-        outputData += "        /// </summary>" + System.Environment.NewLine;
-        outputData += "        internal static bool IsDirty => Headdesc.EndsWith(\"-dirty\");" + System.Environment.NewLine + System.Environment.NewLine;
-        outputData += "        /// <summary>" + System.Environment.NewLine;
-        outputData += "        /// Gets a value indicating whether the branch is the master" + System.Environment.NewLine;
-        outputData += "        /// branch or not based upon the string constructed by" + System.Environment.NewLine;
-        outputData += "        /// git name-rev." + System.Environment.NewLine;
-        outputData += "        /// </summary>" + System.Environment.NewLine;
-        outputData += "        internal static bool IsMaster => Branchname.Equals(\"master\");" + System.Environment.NewLine;
-        outputData += "    }" + System.Environment.NewLine;
-        outputData += "}" + System.Environment.NewLine;
-        System.IO.StreamWriter fstream = new System.IO.StreamWriter(OutputFile1, false, new System.Text.UTF8Encoding(false));
-        fstream.Write(outputData.ToCharArray(), 0, outputData.Length);
-        fstream.Dispose();
-]]></Code>
-    </Task>
-  </UsingTask>
-  <Target Name="BeforeBuild">
-    <gitbuildinfo OutputFile1="$(ProjectDir)\Classes\Git.cs" TargetNamespace="Els_kom.Classes" SolutionDir="$(SolutionDir)" />
+
+  <ItemGroup Condition="Exists('../../MyPackages/GenericPluginLoader/GenericPluginLoader.csproj')">
+    <ProjectReference Include="../../MyPackages/GenericPluginLoader/GenericPluginLoader.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="!Exists('../../MyPackages/GenericPluginLoader/GenericPluginLoader.csproj')">
+    <PackageReference Include="GenericPluginLoader">
+      <Version>1.0.2</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('../../MyPackages/PluginUpdateCheck/PluginUpdateCheck.csproj')">
+    <ProjectReference Include="../../MyPackages/PluginUpdateCheck/PluginUpdateCheck.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="!Exists('../../MyPackages/PluginUpdateCheck/PluginUpdateCheck.csproj')">
+    <PackageReference Include="PluginUpdateCheck">
+      <Version>1.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('../../MyPackages/ReleasePackaging/ReleasePackaging.csproj')">
+    <ProjectReference Include="../../MyPackages/ReleasePackaging/ReleasePackaging.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="!Exists('../../MyPackages/ReleasePackaging/ReleasePackaging.csproj')">
+    <PackageReference Include="ReleasePackaging">
+      <Version>1.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('../../MyPackages/XmlAbstraction/src/XmlAbstraction/src/XmlAbstraction.csproj')">
+    <ProjectReference Include="../../MyPackages/XmlAbstraction/src/XmlAbstraction/src/XmlAbstraction.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="!Exists('../../MyPackages/XmlAbstraction/src/XmlAbstraction/src/XmlAbstraction.csproj')">
+    <PackageReference Include="XmlAbstraction">
+      <Version>1.2.2</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('../../MyPackages/MessageManager/MessageManager.csproj')">
+    <ProjectReference Include="../../MyPackages/MessageManager/MessageManager.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="!Exists('../../MyPackages/MessageManager/MessageManager.csproj')">
+    <PackageReference Include="MessageManager">
+      <Version>1.1.2</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('../../MyPackages/SettingsFile/SettingsFile.csproj')">
+    <ProjectReference Include="../../MyPackages/SettingsFile/SettingsFile.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="!Exists('../../MyPackages/SettingsFile/SettingsFile.csproj')">
+    <PackageReference Include="SettingsFile">
+      <Version>1.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('../../MyPackages/MiniDump/MiniDump.csproj')">
+    <ProjectReference Include="../../MyPackages/MiniDump/MiniDump.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="!Exists('../../MyPackages/MiniDump/MiniDump.csproj')">
+    <PackageReference Include="MiniDump">
+      <Version>1.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <Target Name="GitBuildInfo" BeforeTargets="PrepareForBuild">
+    <GitBuildInfoTask OutputPath="$(ProjectDir)\Properties\GitAssemblyInfo.cs" AssemblyType="Els_kom.Els_kom_Main" />
   </Target>
   <!--
   <Target Name="AfterBuild">

@@ -5,6 +5,7 @@
 
 namespace Els_kom
 {
+    using System;
     using System.Drawing;
     using System.Globalization;
     using System.Resources;
@@ -43,7 +44,8 @@ namespace Els_kom
                     resourceCulture = CultureInfo.CurrentCulture;
                 }
 
-                var retIcon = (Icon)resourceMan.GetObject("els_kom", resourceCulture);
+                var ico = resourceMan.GetObject("els_kom", resourceCulture);
+                var retIcon = (Icon)ico;
                 try
                 {
                     var iconVal = string.Empty;
@@ -70,7 +72,7 @@ namespace Els_kom
                         retIcon = (Icon)resourceMan.GetObject("YR", resourceCulture);
                     }
                 }
-                catch (System.DllNotFoundException)
+                catch (DllNotFoundException)
                 {
                     // if a dependency of this method cannot be loaded it could be because this is executed
                     // in the forms designer and the retardid thing does not factor in nuget packages when
@@ -95,7 +97,7 @@ namespace Els_kom
             {
                 using (var newicon = new Icon(FormIcon, 48, 48))
                 {
-                    return newicon?.ToBitmap();
+                    return newicon.ToBitmap();
                 }
             }
         }

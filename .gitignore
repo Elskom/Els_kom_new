@@ -3,7 +3,7 @@ bin
 old
 .vs
 *.user
-Els_kom/Classes/Git.cs
+Els_kom/Properties/GitAssemblyInfo.cs
 *.res
 Els_kom/Resources/els_kom.resx
 # build log crap.

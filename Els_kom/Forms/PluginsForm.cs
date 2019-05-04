@@ -110,7 +110,7 @@ namespace Els_kom.Forms
                 }
                 else
                 {
-                    MessageManager.ShowInfo(
+                    _ = MessageManager.ShowInfo(
                         "The selected plugin is not installed, or the plugin was installed and this program was not restarted yet to know that it was.",
                         "Info!",
                         Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
