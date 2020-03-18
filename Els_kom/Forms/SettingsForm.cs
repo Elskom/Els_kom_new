@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, Els_kom org.
+// Copyright (c) 2014-2020, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -8,9 +8,10 @@ namespace Els_kom.Forms
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
+    using Els_kom.Controls;
     using Elskom.Generic.Libs;
 
-    internal partial class SettingsForm : Form
+    internal partial class SettingsForm : /*Form*/ThemedForm
     {
         private string curvalue;
         private string curvalue2;
@@ -235,7 +236,7 @@ namespace Els_kom.Forms
                 }
                 else
                 {
-                    _ = MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                    _ = MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!", Convert.ToBoolean(Convert.ToInt32(!string.IsNullOrEmpty(SettingsFile.Settingsxml?.TryRead("UseNotifications")) ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
             }
 

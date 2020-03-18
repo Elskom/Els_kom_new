@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, Els_kom org.
+// Copyright (c) 2014-2020, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -7,6 +7,7 @@ namespace Els_kom
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Drawing.Imaging;
     using System.Messaging;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
@@ -62,14 +63,14 @@ namespace Els_kom
         }
 
         private static void PluginUpdateCheck_MessageEvent(object sender, MessageEventArgs e)
-            => MessageManager.ShowInfo(e.Text, e.Caption, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+            => _ = MessageManager.ShowInfo(e.Text, e.Caption, Convert.ToBoolean(Convert.ToInt32(!string.IsNullOrEmpty(SettingsFile.Settingsxml?.TryRead("UseNotifications")) ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
 
         private static void KOMManager_MessageEvent(object sender, MessageEventArgs e)
-            => MessageManager.ShowError(e.Text, e.Caption, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+            => _ = MessageManager.ShowError(e.Text, e.Caption, Convert.ToBoolean(Convert.ToInt32(!string.IsNullOrEmpty(SettingsFile.Settingsxml?.TryRead("UseNotifications")) ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
 
         /*
         private static void MiniDump_DumpFailed(object sender, MessageEventArgs e)
-            => MessageManager.ShowError(e.Text, e.Caption, false);
+            => _ = MessageManager.ShowError(e.Text, e.Caption, false);
         */
 
         private static void MiniDump_DumpMessage(object sender, MessageEventArgs e)
@@ -77,11 +78,17 @@ namespace Els_kom
             _ = MessageManager.ShowError(e.Text, e.Caption, false);
             if (!e.Text.StartsWith("Mini-dumping failed with Code: "))
             {
+                // save screenshot of crash.
+                using (var screenshot = NativeMethods.ScreenShots.MakeScreenShot())
+                {
+                    screenshot.Save(SettingsFile.MiniDumpPath.Replace(".mdmp", ".png"), ImageFormat.Png);
+                }
+
                 Environment.Exit(1);
             }
         }
 
         private static void GenericPluginLoader_PluginLoaderMessage(object sender, MessageEventArgs e)
-            => _ = MessageManager.ShowError(e.Text, e.Caption, Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+            => _ = MessageManager.ShowError(e.Text, e.Caption, Convert.ToBoolean(Convert.ToInt32(!string.IsNullOrEmpty(SettingsFile.Settingsxml?.TryRead("UseNotifications")) ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
     }
 }

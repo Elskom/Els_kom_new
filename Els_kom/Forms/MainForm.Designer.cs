@@ -63,51 +63,38 @@ namespace Els_kom.Forms
             // 
             // Command6
             // 
-            this.Command6.BackColor = System.Drawing.Color.Transparent;
             this.Command6.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.Command6, "Command6");
-            this.Command6.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Command6.Name = "Command6";
-            this.Command6.UseVisualStyleBackColor = false;
             this.Command6.Click += new System.EventHandler(this.Command6_Click);
             this.Command6.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Command6_MouseMove);
             // 
             // Command5
             // 
-            this.Command5.BackColor = System.Drawing.Color.Transparent;
             this.Command5.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.Command5, "Command5");
-            this.Command5.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Command5.Name = "Command5";
-            this.Command5.UseVisualStyleBackColor = false;
             this.Command5.Click += new System.EventHandler(this.Command5_Click);
             this.Command5.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Command5_MouseMove);
             // 
             // Command4
             // 
-            this.Command4.BackColor = System.Drawing.Color.Transparent;
             this.Command4.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.Command4, "Command4");
-            this.Command4.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Command4.Name = "Command4";
-            this.Command4.UseVisualStyleBackColor = false;
             this.Command4.Click += new System.EventHandler(this.Command4_Click);
             this.Command4.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Command4_MouseMove);
             // 
             // Command3
             // 
-            this.Command3.BackColor = System.Drawing.Color.Transparent;
             this.Command3.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.Command3, "Command3");
-            this.Command3.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Command3.Name = "Command3";
-            this.Command3.UseVisualStyleBackColor = false;
             this.Command3.Click += new System.EventHandler(this.Command3_Click);
             this.Command3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Command3_MouseMove);
             // 
             // Frame1
             // 
-            this.Frame1.BackColor = System.Drawing.SystemColors.Control;
             this.Frame1.Controls.Add(this.Label1);
             resources.ApplyResources(this.Frame1, "Frame1");
             this.Frame1.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -116,41 +103,31 @@ namespace Els_kom.Forms
             // 
             // Label1
             // 
-            this.Label1.BackColor = System.Drawing.SystemColors.Control;
             this.Label1.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.Label1, "Label1");
-            this.Label1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Label1.Name = "Label1";
             this.Label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Label1_MouseMove);
             // 
             // Command2
             // 
-            this.Command2.BackColor = System.Drawing.Color.Transparent;
             this.Command2.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.Command2, "Command2");
-            this.Command2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Command2.Name = "Command2";
-            this.Command2.UseVisualStyleBackColor = false;
             this.Command2.Click += new System.EventHandler(this.Command2_Click);
             this.Command2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Command2_MouseMove);
             // 
             // Command1
             // 
-            this.Command1.BackColor = System.Drawing.Color.Transparent;
             this.Command1.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.Command1, "Command1");
-            this.Command1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Command1.Name = "Command1";
-            this.Command1.UseVisualStyleBackColor = false;
             this.Command1.Click += new System.EventHandler(this.Command1_Click);
             this.Command1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Command1_MouseMove);
             // 
             // Label2
             // 
-            this.Label2.BackColor = System.Drawing.Color.Transparent;
             this.Label2.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.Label2, "Label2");
-            this.Label2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Label2.Name = "Label2";
             // 
             // packToolStripMenuItem
@@ -225,11 +202,10 @@ namespace Els_kom.Forms
             // 
             this.launcherTmr.Interval = 1;
             this.launcherTmr.Tick += new System.EventHandler(this.Launcher);
-            //
+            // 
             // MessageManager1
-            //
+            // 
             this.MessageManager1.ContextMenuStrip = this.contextMenuStrip1;
-            this.MessageManager1.Visible = false;
             this.MessageManager1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MessageManager1_MouseClick);
             // 
             // MainForm
@@ -245,11 +221,12 @@ namespace Els_kom.Forms
             this.Controls.Add(this.Command2);
             this.Controls.Add(this.Command1);
             this.Controls.Add(this.Label2);
+            this.Controls.Add(this.MessageManager1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
+            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Icon = global::Els_kom.Icons.FormIcon;
             this.ShowInTaskbar = false;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -260,15 +237,15 @@ namespace Els_kom.Forms
 
         }
 
-        private System.Windows.Forms.Label Label1;
-        private System.Windows.Forms.Label Label2;
-        private System.Windows.Forms.GroupBox Frame1;
-        private System.Windows.Forms.Button Command1;
-        private System.Windows.Forms.Button Command2;
-        private System.Windows.Forms.Button Command3;
-        private System.Windows.Forms.Button Command4;
-        private System.Windows.Forms.Button Command5;
-        private System.Windows.Forms.Button Command6;
+        private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label1;
+        private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label2;
+        private System.Windows.Forms.GroupBox/*Els_kom.Controls.ThemedGroupBox*/ Frame1;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Command1;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Command2;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Command3;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Command4;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Command5;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Command6;
         private Elskom.Generic.Libs.MessageManager MessageManager1;
         private System.Windows.Forms.Timer settingsTmr;
         private System.Windows.Forms.Timer packingTmr;

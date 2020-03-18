@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, Els_kom org.
+// Copyright (c) 2014-2020, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -11,11 +11,12 @@ namespace Els_kom.Forms
     using System.Runtime.InteropServices;
     using System.Threading;
     using System.Windows.Forms;
+    using Els_kom.Controls;
     using Els_kom.Enums;
     using Elskom.Generic.Libs;
     using XmlAbstraction;
 
-    internal partial class MainForm : Form
+    internal partial class MainForm : /*Form*/ThemedForm
     {
         private Form aboutfrm;
         private Form settingsfrm;
@@ -76,7 +77,7 @@ namespace Els_kom.Forms
             if (!AbleToClose() && !ForceClosure.ForceClose)
             {
                 cancel = true;
-                _ = MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                _ = MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(Convert.ToInt32(!string.IsNullOrEmpty(SettingsFile.Settingsxml?.TryRead("UseNotifications")) ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
             }
 
             if (!cancel)
@@ -135,7 +136,7 @@ namespace Els_kom.Forms
                 KOMManager.Callbackplugins.AddRange(callbackplugins);
                 if (!GitInformation.GetAssemblyInstance(typeof(Els_kom_Main))?.IsMaster ?? false)
                 {
-                    _ = MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                    _ = MessageManager.ShowInfo("This branch is not the master branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into master.", "Info!", Convert.ToBoolean(Convert.ToInt32(!string.IsNullOrEmpty(SettingsFile.Settingsxml?.TryRead("UseNotifications")) ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
 
                 if (GitInformation.GetAssemblyInstance(typeof(Els_kom_Main))?.IsDirty ?? false)
@@ -152,7 +153,6 @@ namespace Els_kom.Forms
             {
                 this.MessageManager1.Icon = this.Icon;
                 this.MessageManager1.Text = this.Text;
-                this.MessageManager1.Visible = true;
                 var pluginTypes = new List<Type>();
                 foreach (var callbackplugin in KOMManager.Callbackplugins)
                 {
@@ -173,6 +173,7 @@ namespace Els_kom.Forms
                     var result = pluginUpdateCheck.ShowMessage;
                 }
 
+                this.MessageManager1.Visible = true;
                 this.Show();
                 this.Activate();
             }
@@ -185,7 +186,8 @@ namespace Els_kom.Forms
             }
         }
 
-        private void MainForm_MouseLeave(object sender, EventArgs e) => this.Label1.Text = string.Empty;
+        private void MainForm_MouseLeave(object sender, EventArgs e)
+            => this.Label1.Text = string.Empty;
 
         private void Command1_Click(object sender, EventArgs e)
         {
@@ -198,7 +200,8 @@ namespace Els_kom.Forms
             this.packingTmr.Enabled = true;
         }
 
-        private void Command1_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = "This option uses plugins to Pack koms.";
+        private void Command1_MouseMove(object sender, MouseEventArgs e)
+            => this.Label1.Text = "This option uses plugins to Pack koms.";
 
         private void Command2_Click(object sender, EventArgs e)
         {
@@ -211,7 +214,8 @@ namespace Els_kom.Forms
             this.unpackingTmr.Enabled = true;
         }
 
-        private void Command2_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = "This option uses plugins to Unpack koms.";
+        private void Command2_MouseMove(object sender, MouseEventArgs e)
+            => this.Label1.Text = "This option uses plugins to Unpack koms.";
 
         private void Command3_Click(object sender, EventArgs e)
         {
@@ -227,7 +231,8 @@ namespace Els_kom.Forms
             }
         }
 
-        private void Command3_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = "Shows the About Window. Here you will see things like the version as well as a link to go to the topic to update Els_kom if needed.";
+        private void Command3_MouseMove(object sender, MouseEventArgs e)
+            => this.Label1.Text = "Shows the About Window. Here you will see things like the version as well as a link to go to the topic to update Els_kom if needed.";
 
         private void Command4_Click(object sender, EventArgs e)
         {
@@ -237,7 +242,8 @@ namespace Els_kom.Forms
             this.TestMods();
         }
 
-        private void Command4_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = "Test the mods you made.";
+        private void Command4_MouseMove(object sender, MouseEventArgs e)
+            => this.Label1.Text = "Test the mods you made.";
 
         private void Command5_Click(object sender, EventArgs e)
         {
@@ -252,7 +258,8 @@ namespace Els_kom.Forms
             this.launcherTmr.Enabled = true;
         }
 
-        private void Command5_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = "Run the Launcher to Elsword to Update the client for when a server Maintenance happens (you might have to remake some mods for some files).";
+        private void Command5_MouseMove(object sender, MouseEventArgs e)
+            => this.Label1.Text = "Run the Launcher to Elsword to Update the client for when a server Maintenance happens (you might have to remake some mods for some files).";
 
         private void Command6_Click(object sender, EventArgs e)
         {
@@ -268,9 +275,11 @@ namespace Els_kom.Forms
             }
         }
 
-        private void Command6_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = "Shows the Settings Window. Here you can easily change the Settings to Els_kom.";
+        private void Command6_MouseMove(object sender, MouseEventArgs e)
+            => this.Label1.Text = "Shows the Settings Window. Here you can easily change the Settings to Els_kom.";
 
-        private void Label1_MouseMove(object sender, MouseEventArgs e) => this.Label1.Text = string.Empty;
+        private void Label1_MouseMove(object sender, MouseEventArgs e)
+            => this.Label1.Text = string.Empty;
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -281,7 +290,7 @@ namespace Els_kom.Forms
                 KOMManager.UnpackingState)
             {
                 cancel = true;
-                _ = MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                _ = MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(Convert.ToInt32(!string.IsNullOrEmpty(SettingsFile.Settingsxml?.TryRead("UseNotifications")) ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
             }
 
             if (!cancel)
@@ -678,7 +687,7 @@ namespace Els_kom.Forms
 
             if (AbleToClose())
             {
-                if (this.showintaskbarValue != this.showintaskbarTempvalue)
+                if (this.showintaskbarValue != this.showintaskbarTempvalue && this.showintaskbarTempvalue != null)
                 {
                     this.showintaskbarValue = this.showintaskbarTempvalue;
                 }
@@ -706,7 +715,7 @@ namespace Els_kom.Forms
             }
             else
             {
-                if (this.showintaskbarValue2 != this.showintaskbarTempvalue2)
+                if (this.showintaskbarValue2 != this.showintaskbarTempvalue2 && this.showintaskbarTempvalue2 != null)
                 {
                     this.showintaskbarValue2 = this.showintaskbarTempvalue2;
                 }

@@ -9,7 +9,7 @@
   "settings": {
     "documentationRules": {
       "companyName": "Els_kom org.",
-      "copyrightText": "Copyright (c) 2014-2019, {companyName}\nhttps://github.com/Elskom/\nAll rights reserved.\nlicense: MIT, see LICENSE for more details.",
+      "copyrightText": "Copyright (c) 2014-2020, {companyName}\nhttps://github.com/Elskom/\nAll rights reserved.\nlicense: MIT, see LICENSE for more details.",
       "documentInternalElements": false,
       "xmlHeader": false
     }

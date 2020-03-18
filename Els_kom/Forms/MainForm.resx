@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Command6.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Arial, 8pt</value>
+    <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
   <data name="Command6.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 81</value>
@@ -133,10 +133,13 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Command6.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>3</value>
   </data>
   <data name="Command6.Text" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="Command6.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
   </data>
   <data name="&gt;&gt;Command6.Name" xml:space="preserve">
     <value>Command6</value>
@@ -151,7 +154,7 @@
     <value>1</value>
   </data>
   <data name="Command5.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Arial, 8pt</value>
+    <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
   <data name="Command5.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 129</value>
@@ -163,10 +166,13 @@
     <value>65, 21</value>
   </data>
   <data name="Command5.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>5</value>
   </data>
   <data name="Command5.Text" xml:space="preserve">
     <value>Launcher</value>
+  </data>
+  <data name="Command5.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
   </data>
   <data name="&gt;&gt;Command5.Name" xml:space="preserve">
     <value>Command5</value>
@@ -181,7 +187,7 @@
     <value>2</value>
   </data>
   <data name="Command4.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Arial, 8pt</value>
+    <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
   <data name="Command4.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 105</value>
@@ -193,10 +199,13 @@
     <value>65, 21</value>
   </data>
   <data name="Command4.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>4</value>
   </data>
   <data name="Command4.Text" xml:space="preserve">
     <value>Test Mods</value>
+  </data>
+  <data name="Command4.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
   </data>
   <data name="&gt;&gt;Command4.Name" xml:space="preserve">
     <value>Command4</value>
@@ -211,7 +220,7 @@
     <value>3</value>
   </data>
   <data name="Command3.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Arial, 8pt</value>
+    <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
   <data name="Command3.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 57</value>
@@ -223,10 +232,13 @@
     <value>65, 21</value>
   </data>
   <data name="Command3.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>2</value>
   </data>
   <data name="Command3.Text" xml:space="preserve">
     <value>About</value>
+  </data>
+  <data name="Command3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
   </data>
   <data name="&gt;&gt;Command3.Name" xml:space="preserve">
     <value>Command3</value>
@@ -241,7 +253,7 @@
     <value>4</value>
   </data>
   <data name="Label1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Arial, 8pt</value>
+    <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
   <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 7</value>
@@ -253,7 +265,7 @@
     <value>203, 144</value>
   </data>
   <data name="Label1.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;Label1.Name" xml:space="preserve">
     <value>Label1</value>
@@ -283,7 +295,7 @@
     <value>217, 158</value>
   </data>
   <data name="Frame1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;Frame1.Name" xml:space="preserve">
     <value>Frame1</value>
@@ -298,7 +310,7 @@
     <value>5</value>
   </data>
   <data name="Command2.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Arial, 8pt</value>
+    <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
   <data name="Command2.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 33</value>
@@ -315,6 +327,9 @@
   <data name="Command2.Text" xml:space="preserve">
     <value>Unpack</value>
   </data>
+  <data name="Command2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
+  </data>
   <data name="&gt;&gt;Command2.Name" xml:space="preserve">
     <value>Command2</value>
   </data>
@@ -328,7 +343,7 @@
     <value>6</value>
   </data>
   <data name="Command1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Arial, 8pt</value>
+    <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
   <data name="Command1.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 9</value>
@@ -345,6 +360,9 @@
   <data name="Command1.Text" xml:space="preserve">
     <value>Pack</value>
   </data>
+  <data name="Command1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
+  </data>
   <data name="&gt;&gt;Command1.Name" xml:space="preserve">
     <value>Command1</value>
   </data>
@@ -358,7 +376,7 @@
     <value>7</value>
   </data>
   <data name="Label2.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Arial, 8pt</value>
+    <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
   <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 151</value>
@@ -370,7 +388,7 @@
     <value>81, 17</value>
   </data>
   <data name="Label2.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;Label2.Name" xml:space="preserve">
     <value>Label2</value>
@@ -385,43 +403,43 @@
     <value>8</value>
   </data>
   <data name="packToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 22</value>
+    <value>127, 22</value>
   </data>
   <data name="packToolStripMenuItem.Text" xml:space="preserve">
     <value>Pack</value>
   </data>
   <data name="unpackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 22</value>
+    <value>127, 22</value>
   </data>
   <data name="unpackToolStripMenuItem.Text" xml:space="preserve">
     <value>Unpack</value>
   </data>
   <data name="toolStripMenuSep1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 6</value>
+    <value>124, 6</value>
   </data>
   <data name="testModsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 22</value>
+    <value>127, 22</value>
   </data>
   <data name="testModsToolStripMenuItem.Text" xml:space="preserve">
     <value>Test Mods</value>
   </data>
   <data name="launcherToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 22</value>
+    <value>127, 22</value>
   </data>
   <data name="launcherToolStripMenuItem.Text" xml:space="preserve">
     <value>Launcher</value>
   </data>
   <data name="exitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 22</value>
+    <value>127, 22</value>
   </data>
   <data name="exitToolStripMenuItem.Text" xml:space="preserve">
     <value>Exit</value>
   </data>
-  <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <data name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>172, 17</value>
+  </data>
   <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>129, 120</value>
+    <value>128, 120</value>
   </data>
   <data name="&gt;&gt;contextMenuStrip1.Name" xml:space="preserve">
     <value>contextMenuStrip1</value>
@@ -429,24 +447,27 @@
   <data name="&gt;&gt;contextMenuStrip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <metadata name="settingsTmr.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>172, 17</value>
-  </metadata>
-  <metadata name="packingTmr.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>288, 17</value>
-  </metadata>
-  <metadata name="unpackingTmr.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>404, 17</value>
-  </metadata>
-  <metadata name="testModsTmr.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>534, 17</value>
-  </metadata>
-  <metadata name="launcherTmr.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>658, 17</value>
-  </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <data name="settingsTmr.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>327, 17</value>
+  </data>
+  <data name="packingTmr.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>443, 17</value>
+  </data>
+  <data name="unpackingTmr.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>559, 17</value>
+  </data>
+  <data name="testModsTmr.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>689, 17</value>
+  </data>
+  <data name="launcherTmr.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>813, 17</value>
+  </data>
+  <data name="MessageManager1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>17, 17</value>
+  </data>
+  <data name="$this.Localizable" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
+  </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 14</value>
   </data>
@@ -534,10 +555,16 @@
   <data name="&gt;&gt;launcherTmr.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;MessageManager1.Name" xml:space="preserve">
+    <value>MessageManager1</value>
+  </data>
+  <data name="&gt;&gt;MessageManager1.Type" xml:space="preserve">
+    <value>Elskom.Generic.Libs.MessageManager, MessageManager, Version=1.1.2.0, Culture=neutral, PublicKeyToken=0371adb4a80cedf9</value>
+  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Els_kom.Controls.ThemedForm, Els_kom, Version=1.4.9.8, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

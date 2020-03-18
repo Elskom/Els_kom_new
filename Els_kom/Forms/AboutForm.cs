@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, Els_kom org.
+// Copyright (c) 2014-2020, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -9,8 +9,9 @@ namespace Els_kom.Forms
     using System.Diagnostics;
     using System.Drawing;
     using System.Windows.Forms;
+    using Els_kom.Controls;
 
-    internal partial class AboutForm : Form
+    internal partial class AboutForm : /*Form*/ThemedForm
     {
         internal AboutForm() => this.InitializeComponent();
 
@@ -34,12 +35,6 @@ namespace Els_kom.Forms
                 // wait for exit.
                 proc?.WaitForExit();
             }
-        }
-
-        private void AboutForm_Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.DrawLine(Pens.Gray, 0, 151, this.Width, 151);
-            e.Graphics.DrawLine(Pens.White, 0, 152, this.Width, 152);
         }
     }
 }

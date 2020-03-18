@@ -93,7 +93,6 @@ namespace Els_kom.Forms
             // 
             resources.ApplyResources(this.Button1, "Button1");
             this.Button1.Name = "Button1";
-            this.Button1.UseVisualStyleBackColor = true;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // TextBox1
@@ -105,7 +104,6 @@ namespace Els_kom.Forms
             // 
             resources.ApplyResources(this.Button2, "Button2");
             this.Button2.Name = "Button2";
-            this.Button2.UseVisualStyleBackColor = true;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // TreeView1
@@ -216,7 +214,6 @@ namespace Els_kom.Forms
             // 
             resources.ApplyResources(this.Button3, "Button3");
             this.Button3.Name = "Button3";
-            this.Button3.UseVisualStyleBackColor = true;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // ListView1
@@ -290,35 +287,30 @@ namespace Els_kom.Forms
             // 
             resources.ApplyResources(this.Button6, "Button6");
             this.Button6.Name = "Button6";
-            this.Button6.UseVisualStyleBackColor = true;
             this.Button6.Click += new System.EventHandler(this.Button6_Click);
             // 
             // Button5
             // 
             resources.ApplyResources(this.Button5, "Button5");
             this.Button5.Name = "Button5";
-            this.Button5.UseVisualStyleBackColor = true;
             this.Button5.Click += new System.EventHandler(this.Button5_Click);
             // 
             // CheckBox2
             // 
             resources.ApplyResources(this.CheckBox2, "CheckBox2");
             this.CheckBox2.Name = "CheckBox2";
-            this.CheckBox2.UseVisualStyleBackColor = true;
             this.CheckBox2.CheckedChanged += new System.EventHandler(this.CheckBox2_CheckedChanged);
             // 
             // CheckBox1
             // 
             resources.ApplyResources(this.CheckBox1, "CheckBox1");
             this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.UseVisualStyleBackColor = true;
             this.CheckBox1.CheckedChanged += new System.EventHandler(this.CheckBox1_CheckedChanged);
             // 
             // Button4
             // 
             resources.ApplyResources(this.Button4, "Button4");
             this.Button4.Name = "Button4";
-            this.Button4.UseVisualStyleBackColor = true;
             this.Button4.Click += new System.EventHandler(this.Button4_Click);
             // 
             // ListView2
@@ -345,17 +337,18 @@ namespace Els_kom.Forms
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.TreeView1);
             this.Controls.Add(this.Button2);
             this.Controls.Add(this.Panel6);
             this.Controls.Add(this.Panel5);
             this.Controls.Add(this.Panel3);
+            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
-            this.Icon = global::Els_kom.Icons.FormIcon;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.Panel1.ResumeLayout(false);
@@ -372,34 +365,34 @@ namespace Els_kom.Forms
 
         }
 
-        private System.Windows.Forms.Panel Panel5;
+        private System.Windows.Forms.Panel/*Els_kom.Controls.ThemedPanel*/ Panel5;
         private System.Windows.Forms.ColumnHeader ColumnHeader1;
         private System.Windows.Forms.ListView ListView2;
         private System.Windows.Forms.ColumnHeader ColumnHeader2;
-        private System.Windows.Forms.Label Label6;
-        private System.Windows.Forms.Button Button6;
-        private System.Windows.Forms.Button Button5;
-        private System.Windows.Forms.CheckBox CheckBox2;
-        private System.Windows.Forms.CheckBox CheckBox1;
-        private System.Windows.Forms.Button Button4;
-        private System.Windows.Forms.Label Label7;
+        private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label6;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Button6;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Button5;
+        private System.Windows.Forms.CheckBox/*Els_kom.Controls.ThemedCheckBox*/ CheckBox2;
+        private System.Windows.Forms.CheckBox/*Els_kom.Controls.ThemedCheckBox*/ CheckBox1;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Button4;
+        private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label7;
         private System.Windows.Forms.RadioButton RadioButton9;
         private System.Windows.Forms.RadioButton RadioButton8;
         private System.Windows.Forms.RadioButton RadioButton7;
-        private System.Windows.Forms.Button Button2;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Button2;
         private System.Windows.Forms.TreeView TreeView1;
-        private System.Windows.Forms.Panel Panel6;
-        private System.Windows.Forms.Button Button3;
+        private System.Windows.Forms.Panel/*Els_kom.Controls.ThemedPanel*/ Panel6;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Button3;
         private System.Windows.Forms.ListView ListView1;
-        private System.Windows.Forms.Label Label1;
-        private System.Windows.Forms.Label Label2;
-        private System.Windows.Forms.Label Label3;
-        private System.Windows.Forms.Button Button1;
+        private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label1;
+        private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label2;
+        private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label3;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Button1;
         private System.Windows.Forms.TextBox TextBox1;
-        private System.Windows.Forms.Panel Panel1;
-        private System.Windows.Forms.Panel Panel2;
-        private System.Windows.Forms.Panel Panel3;
-        private System.Windows.Forms.Panel Panel4;
+        private System.Windows.Forms.Panel/*Els_kom.Controls.ThemedPanel*/ Panel1;
+        private System.Windows.Forms.Panel/*Els_kom.Controls.ThemedPanel*/ Panel2;
+        private System.Windows.Forms.Panel/*Els_kom.Controls.ThemedPanel*/ Panel3;
+        private System.Windows.Forms.Panel/*Els_kom.Controls.ThemedPanel*/ Panel4;
         private System.Windows.Forms.RadioButton RadioButton1;
         private System.Windows.Forms.RadioButton RadioButton2;
         private System.Windows.Forms.RadioButton RadioButton3;

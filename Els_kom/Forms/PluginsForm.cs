@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, Els_kom org.
+// Copyright (c) 2014-2020, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -8,9 +8,10 @@ namespace Els_kom.Forms
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
+    using Els_kom.Controls;
     using Elskom.Generic.Libs;
 
-    internal partial class PluginsForm : Form
+    internal partial class PluginsForm : /*Form*/ThemedForm
     {
         private bool pluginChanges = false;
         private int saveToZip = 0;
@@ -113,7 +114,7 @@ namespace Els_kom.Forms
                     _ = MessageManager.ShowInfo(
                         "The selected plugin is not installed, or the plugin was installed and this program was not restarted yet to know that it was.",
                         "Info!",
-                        Convert.ToBoolean(Convert.ToInt32(SettingsFile.Settingsxml?.TryRead("UseNotifications") != string.Empty ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                        Convert.ToBoolean(Convert.ToInt32(!string.IsNullOrEmpty(SettingsFile.Settingsxml?.TryRead("UseNotifications")) ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
                 }
             }
         }

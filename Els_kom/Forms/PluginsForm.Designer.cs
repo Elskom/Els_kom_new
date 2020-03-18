@@ -73,6 +73,7 @@ namespace Els_kom.Forms
             // 
             // Label1
             // 
+            this.Label1.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.Label1, "Label1");
             this.Label1.Name = "Label1";
             // 
@@ -80,37 +81,35 @@ namespace Els_kom.Forms
             // 
             resources.ApplyResources(this.InstallButton, "InstallButton");
             this.InstallButton.Name = "InstallButton";
-            this.InstallButton.UseVisualStyleBackColor = true;
             this.InstallButton.Click += new System.EventHandler(this.InstallButton_Click);
             // 
             // OkButton
             // 
             resources.ApplyResources(this.OkButton, "OkButton");
             this.OkButton.Name = "OkButton";
-            this.OkButton.UseVisualStyleBackColor = true;
             this.OkButton.Click += new System.EventHandler(this.OkButton_Click);
             // 
             // UninstallButton
             // 
             resources.ApplyResources(this.UninstallButton, "UninstallButton");
             this.UninstallButton.Name = "UninstallButton";
-            this.UninstallButton.UseVisualStyleBackColor = true;
             this.UninstallButton.Click += new System.EventHandler(this.UninstallButton_Click);
             // 
             // PluginsForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.ListView1);
             this.Controls.Add(this.Label1);
             this.Controls.Add(this.InstallButton);
             this.Controls.Add(this.OkButton);
             this.Controls.Add(this.UninstallButton);
+            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PluginsForm";
-            this.Icon = global::Els_kom.Icons.FormIcon;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Load += new System.EventHandler(this.PluginsForm_Load);
             this.ResumeLayout(false);
@@ -123,9 +122,9 @@ namespace Els_kom.Forms
         private System.Windows.Forms.ColumnHeader ColumnHeader1;
         private System.Windows.Forms.ColumnHeader ColumnHeader2;
         private System.Windows.Forms.ColumnHeader ColumnHeader3;
-        private System.Windows.Forms.Label Label1;
-        private System.Windows.Forms.Button InstallButton;
-        private System.Windows.Forms.Button OkButton;
-        private System.Windows.Forms.Button UninstallButton;
+        private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label1;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ InstallButton;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ OkButton;
+        private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ UninstallButton;
     }
 }

@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, Els_kom org.
+// Copyright (c) 2014-2020, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -51,7 +51,8 @@ namespace Els_kom
                     var iconVal = string.Empty;
                     if (SettingsFile.Settingsxml == null)
                     {
-                        var settingsxml = new XmlObject(SettingsFile.Path, "<Settings></Settings>");
+                        // trap devenv if it is detected.
+                        var settingsxml = new XmlObject(SettingsFile.Path.Replace("devenv", "Els_kom"), "<Settings></Settings>");
                         iconVal = settingsxml.TryRead("WindowIcon");
 
                         // dispose this temporary object.
@@ -99,6 +100,60 @@ namespace Els_kom
                 {
                     return newicon.ToBitmap();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets the Void Elsword official logo based on the logo
+        /// from their website.
+        /// </summary>
+        /// <value>
+        /// The Void Elsword official logo based on the logo
+        /// from their website.
+        /// </value>
+        public static Image VoidElsLogo
+        {
+            get
+            {
+                if (resourceMan == null)
+                {
+                    resourceMan = new ResourceManager("Els_kom.Properties.Resources", typeof(Icons).Assembly);
+                }
+
+                if (resourceCulture == null)
+                {
+                    resourceCulture = CultureInfo.CurrentCulture;
+                }
+
+                var void_logo = (Image)resourceMan.GetObject("voidels_logo", resourceCulture);
+                return void_logo;
+            }
+        }
+
+        /// <summary>
+        /// Gets the Elsword official logo based on the logo
+        /// from x2.exe.
+        /// </summary>
+        /// <value>
+        /// The Elsword official logo based on the logo
+        /// from x2.exe.
+        /// </value>
+        public static Image ElsLogo
+        {
+            get
+            {
+                if (resourceMan == null)
+                {
+                    resourceMan = new ResourceManager("Els_kom.Properties.Resources", typeof(Icons).Assembly);
+                }
+
+                if (resourceCulture == null)
+                {
+                    resourceCulture = CultureInfo.CurrentCulture;
+                }
+
+                var void_logo = (Image)resourceMan.GetObject("els_logo", resourceCulture);
+                return void_logo;
             }
         }
     }
