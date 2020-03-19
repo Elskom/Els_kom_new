@@ -40,6 +40,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <Copyright>Copyright © 2014-2020</Copyright>
     <Company>Els_kom org.</Company>
+    <Version>1.4.9.8</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
@@ -63,6 +64,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!--
     <Compile Update="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +77,7 @@
     <Compile Update="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    -->
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -90,128 +93,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitBuildInfo" Version="0.20.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.164">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="IDisposableAnalyzers" Version="3.3.2">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0-beta2.20167.5">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="Exists('../../MyPackages/GitInformation/src/GitInformation/AraHaan.GitInformation.csproj')">
-    <ProjectReference Include="../../MyPackages/GitInformation/src/GitInformation/AraHaan.GitInformation.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="!Exists('../../MyPackages/GitInformation/src/GitInformation/AraHaan.GitInformation.csproj')">
-    <PackageReference Include="AraHaan.GitInformation">
-      <Version>1.0.0</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="Exists('../../MyPackages/PluginFramework/PluginFramework.csproj')">
-    <ProjectReference Include="../../MyPackages/PluginFramework/PluginFramework.csproj">
-      <Private>true</Private>
-    </ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="!Exists('../../MyPackages/PluginFramework/PluginFramework.csproj')">
-    <PackageReference Include="Elskom.PluginFramework">
-      <Version>1.0.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="Exists('../../MyPackages/GenericPluginLoader/GenericPluginLoader.csproj')">
-    <ProjectReference Include="../../MyPackages/GenericPluginLoader/GenericPluginLoader.csproj">
-      <Private>true</Private>
-    </ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="!Exists('../../MyPackages/GenericPluginLoader/GenericPluginLoader.csproj')">
-    <PackageReference Include="GenericPluginLoader">
-      <Version>1.0.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="Exists('../../MyPackages/PluginUpdateCheck/PluginUpdateCheck.csproj')">
-    <ProjectReference Include="../../MyPackages/PluginUpdateCheck/PluginUpdateCheck.csproj">
-      <Private>true</Private>
-    </ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="!Exists('../../MyPackages/PluginUpdateCheck/PluginUpdateCheck.csproj')">
-    <PackageReference Include="PluginUpdateCheck">
-      <Version>1.0.3</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="Exists('../../MyPackages/ReleasePackaging/ReleasePackaging.csproj')">
-    <ProjectReference Include="../../MyPackages/ReleasePackaging/ReleasePackaging.csproj">
-      <Private>true</Private>
-    </ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="!Exists('../../MyPackages/ReleasePackaging/ReleasePackaging.csproj')">
-    <PackageReference Include="ReleasePackaging">
-      <Version>1.0.1</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="Exists('../../MyPackages/XmlAbstraction/src/XmlAbstraction/src/XmlAbstraction.csproj')">
-    <ProjectReference Include="../../MyPackages/XmlAbstraction/src/XmlAbstraction/src/XmlAbstraction.csproj">
-      <Private>true</Private>
-    </ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="!Exists('../../MyPackages/XmlAbstraction/src/XmlAbstraction/src/XmlAbstraction.csproj')">
-    <PackageReference Include="XmlAbstraction">
-      <Version>1.2.3</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="Exists('../../MyPackages/MessageManager/MessageManager.csproj')">
-    <ProjectReference Include="../../MyPackages/MessageManager/MessageManager.csproj">
-      <Private>true</Private>
-    </ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="!Exists('../../MyPackages/MessageManager/MessageManager.csproj')">
-    <PackageReference Include="MessageManager">
-      <Version>1.1.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="Exists('../../MyPackages/SettingsFile/SettingsFile.csproj')">
-    <ProjectReference Include="../../MyPackages/SettingsFile/SettingsFile.csproj">
-      <Private>true</Private>
-    </ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="!Exists('../../MyPackages/SettingsFile/SettingsFile.csproj')">
-    <PackageReference Include="SettingsFile">
-      <Version>1.0.3</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="Exists('../../MyPackages/MiniDump/MiniDump.csproj')">
-    <ProjectReference Include="../../MyPackages/MiniDump/MiniDump.csproj">
-      <Private>true</Private>
-    </ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="!Exists('../../MyPackages/MiniDump/MiniDump.csproj')">
-    <PackageReference Include="MiniDump">
-      <Version>1.0.3</Version>
-    </PackageReference>
+    <PackageReference Include="GitBuildInfo" Version="0.20.0" IncludeAssets="runtime; build; native; contentfiles; analyzers" PrivateAssets="All" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.164" IncludeAssets="runtime; build; native; contentfiles; analyzers" PrivateAssets="All" />
+    <PackageReference Include="IDisposableAnalyzers" Version="3.3.2" IncludeAssets="runtime; build; native; contentfiles; analyzers" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0-beta2.20169.3" IncludeAssets="runtime; build; native; contentfiles; analyzers" PrivateAssets="all" />
+    <PackageReference Include="AraHaan.GitInformation" Version="1.0.1" />
+    <PackageReference Include="Elskom.PluginFramework" Version="1.0.2" />
+    <PackageReference Include="GenericPluginLoader" Version="1.0.2" />
+    <PackageReference Include="PluginUpdateCheck" Version="1.0.3" />
+    <PackageReference Include="ReleasePackaging" Version="1.0.1" />
+    <PackageReference Include="XmlAbstraction" Version="1.2.3" />
+    <PackageReference Include="MessageManager" Version="1.1.2" />
+    <PackageReference Include="SettingsFile" Version="1.0.3" />
+    <PackageReference Include="MiniDump" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>

@@ -398,6 +398,7 @@ namespace Els_kom.Forms
                     textBox.Select(0, 0);
                 }
             };
+            ShareXResources.ApplyDarkThemeToControl(textBox);
             this.ListView2.Controls.Add(textBox);
             this.ActiveControl = textBox;
         }

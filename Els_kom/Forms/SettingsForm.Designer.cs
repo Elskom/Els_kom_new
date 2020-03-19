@@ -53,7 +53,7 @@ namespace Els_kom.Forms
             this.Panel3 = new System.Windows.Forms.Panel();
             this.Panel5 = new System.Windows.Forms.Panel();
             this.Button3 = new System.Windows.Forms.Button();
-            this.ListView1 = new System.Windows.Forms.ListView();
+            this.ListView1 = new Els_kom.Controls.ThemedListView();
             this.ColumnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Panel6 = new System.Windows.Forms.Panel();
             this.Label7 = new System.Windows.Forms.Label();
@@ -66,7 +66,7 @@ namespace Els_kom.Forms
             this.CheckBox2 = new System.Windows.Forms.CheckBox();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             this.Button4 = new System.Windows.Forms.Button();
-            this.ListView2 = new System.Windows.Forms.ListView();
+            this.ListView2 = new Els_kom.Controls.ThemedListView();
             this.ColumnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Panel1.SuspendLayout();
             this.Panel2.SuspendLayout();
@@ -367,7 +367,7 @@ namespace Els_kom.Forms
 
         private System.Windows.Forms.Panel/*Els_kom.Controls.ThemedPanel*/ Panel5;
         private System.Windows.Forms.ColumnHeader ColumnHeader1;
-        private System.Windows.Forms.ListView ListView2;
+        private Els_kom.Controls.ThemedListView ListView2;
         private System.Windows.Forms.ColumnHeader ColumnHeader2;
         private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label6;
         private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Button6;
@@ -383,7 +383,7 @@ namespace Els_kom.Forms
         private System.Windows.Forms.TreeView TreeView1;
         private System.Windows.Forms.Panel/*Els_kom.Controls.ThemedPanel*/ Panel6;
         private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Button3;
-        private System.Windows.Forms.ListView ListView1;
+        private Els_kom.Controls.ThemedListView ListView1;
         private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label1;
         private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label2;
         private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label3;

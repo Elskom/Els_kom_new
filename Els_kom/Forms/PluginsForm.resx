@@ -120,43 +120,44 @@
   <data name="ColumnHeader1.Text" xml:space="preserve">
     <value>Plugin Name</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ColumnHeader1.Width" type="System.Int32, mscorlib">
+  <assembly alias="System.Runtime" name="System.Runtime, Version=4.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ColumnHeader1.Width" type="System.Int32, System.Runtime">
     <value>120</value>
   </data>
   <data name="ColumnHeader2.Text" xml:space="preserve">
     <value>Current Version</value>
   </data>
-  <data name="ColumnHeader2.Width" type="System.Int32, mscorlib">
+  <data name="ColumnHeader2.Width" type="System.Int32, System.Runtime">
     <value>96</value>
   </data>
   <data name="ColumnHeader3.Text" xml:space="preserve">
     <value>Installed Version</value>
   </data>
-  <data name="ColumnHeader3.Width" type="System.Int32, mscorlib">
+  <data name="ColumnHeader3.Width" type="System.Int32, System.Runtime">
     <value>102</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="ListView1.Font" type="System.Drawing.Font, System.Drawing">
+  <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+  <data name="ListView1.Font" type="System.Drawing.Font, System.Drawing.Common">
     <value>Microsoft Sans Serif, 9.25pt</value>
   </data>
-  <data name="ListView1.LabelWrap" type="System.Boolean, mscorlib">
+  <data name="ListView1.LabelWrap" type="System.Boolean, System.Runtime">
     <value>False</value>
   </data>
-  <data name="ListView1.Location" type="System.Drawing.Point, System.Drawing">
+  <assembly alias="System.Drawing.Primitives" name="System.Drawing.Primitives, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ListView1.Location" type="System.Drawing.Point, System.Drawing.Primitives">
     <value>6, 108</value>
   </data>
-  <data name="ListView1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ListView1.Size" type="System.Drawing.Size, System.Drawing.Primitives">
     <value>347, 106</value>
   </data>
-  <data name="ListView1.TabIndex" type="System.Int32, mscorlib">
+  <data name="ListView1.TabIndex" type="System.Int32, System.Runtime">
     <value>0</value>
   </data>
   <data name="&gt;&gt;ListView1.Name" xml:space="preserve">
     <value>ListView1</value>
   </data>
   <data name="&gt;&gt;ListView1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Els_kom.Controls.ThemedListView, Els_kom, Version=1.4.9.8, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ListView1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -164,16 +165,16 @@
   <data name="&gt;&gt;ListView1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="Label1.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="Label1.Font" type="System.Drawing.Font, System.Drawing.Common">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing.Primitives">
     <value>3, 7</value>
   </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing.Primitives">
     <value>351, 98</value>
   </data>
-  <data name="Label1.TabIndex" type="System.Int32, mscorlib">
+  <data name="Label1.TabIndex" type="System.Int32, System.Runtime">
     <value>1</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
@@ -193,16 +194,16 @@ Note: Plugin Source Repsitories should only contain an Plugins.xml file which li
   <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="InstallButton.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="InstallButton.Font" type="System.Drawing.Font, System.Drawing.Common">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="InstallButton.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="InstallButton.Location" type="System.Drawing.Point, System.Drawing.Primitives">
     <value>127, 221</value>
   </data>
-  <data name="InstallButton.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="InstallButton.Size" type="System.Drawing.Size, System.Drawing.Primitives">
     <value>69, 23</value>
   </data>
-  <data name="InstallButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="InstallButton.TabIndex" type="System.Int32, System.Runtime">
     <value>2</value>
   </data>
   <data name="InstallButton.Text" xml:space="preserve">
@@ -220,16 +221,16 @@ Note: Plugin Source Repsitories should only contain an Plugins.xml file which li
   <data name="&gt;&gt;InstallButton.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="OkButton.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="OkButton.Font" type="System.Drawing.Font, System.Drawing.Common">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="OkButton.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="OkButton.Location" type="System.Drawing.Point, System.Drawing.Primitives">
     <value>279, 221</value>
   </data>
-  <data name="OkButton.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="OkButton.Size" type="System.Drawing.Size, System.Drawing.Primitives">
     <value>75, 23</value>
   </data>
-  <data name="OkButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="OkButton.TabIndex" type="System.Int32, System.Runtime">
     <value>3</value>
   </data>
   <data name="OkButton.Text" xml:space="preserve">
@@ -247,16 +248,16 @@ Note: Plugin Source Repsitories should only contain an Plugins.xml file which li
   <data name="&gt;&gt;OkButton.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="UninstallButton.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="UninstallButton.Font" type="System.Drawing.Font, System.Drawing.Common">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="UninstallButton.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="UninstallButton.Location" type="System.Drawing.Point, System.Drawing.Primitives">
     <value>203, 221</value>
   </data>
-  <data name="UninstallButton.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="UninstallButton.Size" type="System.Drawing.Size, System.Drawing.Primitives">
     <value>69, 23</value>
   </data>
-  <data name="UninstallButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="UninstallButton.TabIndex" type="System.Int32, System.Runtime">
     <value>4</value>
   </data>
   <data name="UninstallButton.Text" xml:space="preserve">
@@ -274,13 +275,13 @@ Note: Plugin Source Repsitories should only contain an Plugins.xml file which li
   <data name="&gt;&gt;UninstallButton.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="$this.Localizable" type="System.Boolean, mscorlib">
+  <data name="$this.Localizable" type="System.Boolean, System.Runtime">
     <value>True</value>
   </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing.Primitives">
     <value>6, 13</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing.Primitives">
     <value>359, 249</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

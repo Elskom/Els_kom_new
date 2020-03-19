@@ -9,6 +9,7 @@ namespace Els_kom
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Windows.Forms;
+    using Els_kom.Controls;
     using Elskom.Generic.Libs;
 
     public static class ShareXResources
@@ -47,7 +48,12 @@ namespace Els_kom
             // }
         }
 
-        private static void ApplyDarkThemeToControl(Control control)
+        internal static void ApplyDarkThemeToControl(Control control)
+        {
+            InternalApplyDarkThemeToControl(control);
+        }
+
+        private static void InternalApplyDarkThemeToControl(Control control)
         {
             if (control.ContextMenuStrip != null)
             {
@@ -120,10 +126,10 @@ namespace Els_kom
                     lb.ForeColor = Theme.TextColor;
                     lb.BackColor = Theme.LightBackgroundColor;
                     return;
-                case ListView lv:
+                case ThemedListView lv:
                     lv.ForeColor = Theme.TextColor;
                     lv.BackColor = Theme.LightBackgroundColor;
-                    lv.SupportDarkTheme();
+                    lv.FillLastColumn();
                     return;
                 case SplitContainer sc:
                     sc.Panel1.BackColor = Theme.BackgroundColor;
