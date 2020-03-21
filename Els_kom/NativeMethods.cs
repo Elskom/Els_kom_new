@@ -254,6 +254,9 @@ namespace Els_kom
         [DllImport("dwmapi.dll")]
         public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
 
+        [DllImport("User32.DLL")]
+        public static extern int SendMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
+
         public static bool UseImmersiveDarkMode(IntPtr handle, bool enabled)
         {
             if (IsWindows10OrGreater(17763))
