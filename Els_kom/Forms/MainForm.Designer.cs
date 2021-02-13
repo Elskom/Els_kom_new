@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, Els_kom org.
+// Copyright (c) 2014-2021, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -7,23 +7,6 @@ namespace Els_kom.Forms
 {
     partial class MainForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
         #region Windows Form Designer generated code
 
@@ -33,7 +16,6 @@ namespace Els_kom.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.Command6 = new System.Windows.Forms.Button();
             this.Command5 = new System.Windows.Forms.Button();
@@ -50,13 +32,13 @@ namespace Els_kom.Forms
             this.testModsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.launcherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.settingsTmr = new System.Windows.Forms.Timer(this.components);
-            this.packingTmr = new System.Windows.Forms.Timer(this.components);
-            this.unpackingTmr = new System.Windows.Forms.Timer(this.components);
-            this.testModsTmr = new System.Windows.Forms.Timer(this.components);
-            this.launcherTmr = new System.Windows.Forms.Timer(this.components);
-            this.MessageManager1 = new Elskom.Generic.Libs.MessageManager(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.Components);
+            this.settingsTmr = new System.Windows.Forms.Timer(this.Components);
+            this.packingTmr = new System.Windows.Forms.Timer(this.Components);
+            this.unpackingTmr = new System.Windows.Forms.Timer(this.Components);
+            this.testModsTmr = new System.Windows.Forms.Timer(this.Components);
+            this.launcherTmr = new System.Windows.Forms.Timer(this.Components);
+            this.MessageManager1 = new Elskom.Generic.Libs.MessageManager(this.Components);
             this.Frame1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2014-2019, Els_kom org.
+﻿// Copyright (c) 2014-2021, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -7,10 +7,6 @@ namespace Els_kom.Forms
 {
     partial class GameSelectionForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -24,10 +20,6 @@ namespace Els_kom.Forms
                 button.Dispose();
             }
 
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
             base.Dispose(disposing);
         }
 

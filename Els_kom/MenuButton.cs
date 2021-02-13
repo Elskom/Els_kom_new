@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2014-2020, Els_kom org.
+﻿// Copyright (c) 2014-2021, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -31,12 +31,10 @@ namespace Els_kom
         protected override void OnPaint(PaintEventArgs pevent)
         {
             base.OnPaint(pevent);
-
             if (this.Menu != null)
             {
                 var arrowX = this.ClientRectangle.Width - 14;
                 var arrowY = (this.ClientRectangle.Height / 2) - 1;
-
                 var color = this.Enabled ? this.ForeColor : SystemColors.ControlDark;
                 using (Brush brush = new SolidBrush(color))
                 {

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2014-2020, Els_kom org.
+﻿// Copyright (c) 2014-2021, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -10,72 +10,40 @@ namespace Els_kom
 
     public class ShareXTheme
     {
-        public ShareXTheme()
-        {
-        }
-
         public string Name { get; set; }
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color BackgroundColor { get; set; }
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color LightBackgroundColor { get; set; }
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color DarkBackgroundColor { get; set; }
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color TextColor { get; set; }
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color BorderColor { get; set; }
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color CheckerColor { get; set; }
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color CheckerColor2 { get; set; }
 
         public int CheckerSize { get; set; } = 15;
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color LinkColor { get; set; }
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color MenuHighlightColor { get; set; }
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color MenuHighlightBorderColor { get; set; }
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color MenuBorderColor { get; set; }
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color MenuCheckBackgroundColor { get; set; }
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color SeparatorLightColor { get; set; }
 
-        // [Editor(typeof(MyColorEditor), typeof(UITypeEditor))]
-        // [TypeConverter(typeof(MyColorConverter))]
         public Color SeparatorDarkColor { get; set; }
 
         public static ShareXTheme GetDarkTheme()
-            => new ShareXTheme()
+            => new()
             {
                 Name = "Dark",
                 BackgroundColor = Color.FromArgb(42, 47, 56),
@@ -96,7 +64,7 @@ namespace Els_kom
             };
 
         public static ShareXTheme GetLightTheme()
-            => new ShareXTheme()
+            => new()
             {
                 Name = "Light",
                 BackgroundColor = Color.FromArgb(242, 242, 242),
@@ -117,7 +85,7 @@ namespace Els_kom
             };
 
         public static ShareXTheme GetPinkTheme()
-            => new ShareXTheme()
+            => new()
             {
                 Name = "Pink",
                 BackgroundColor = Color.HotPink,
@@ -142,13 +110,13 @@ namespace Els_kom
             };
 
         public static ShareXTheme GetPurpleTheme()
-            => new ShareXTheme()
+            => new()
             {
                 Name = "Purple",
             };
 
         public static List<ShareXTheme> GetPresets()
-            => new List<ShareXTheme>() { GetDarkTheme(), GetLightTheme(), GetPinkTheme(), GetPurpleTheme() };
+            => new() { GetDarkTheme(), GetLightTheme(), GetPinkTheme(), GetPurpleTheme() };
 
         public override string ToString()
             => this.Name;

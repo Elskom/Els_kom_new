@@ -61,6 +61,26 @@ namespace Els_kom.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] archive {
+            get {
+                object obj = ResourceManager.GetObject("archive", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap closeglyph {
+            get {
+                object obj = ResourceManager.GetObject("closeglyph", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon els_kom {
@@ -77,6 +97,46 @@ namespace Els_kom.Properties {
             get {
                 object obj = ResourceManager.GetObject("els_logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap helpglyph {
+            get {
+                object obj = ResourceManager.GetObject("helpglyph", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] launch {
+            get {
+                object obj = ResourceManager.GetObject("launch", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] unarchive {
+            get {
+                object obj = ResourceManager.GetObject("unarchive", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] vial_solid {
+            get {
+                object obj = ResourceManager.GetObject("vial_solid", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

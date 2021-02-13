@@ -1,40 +1,105 @@
-﻿// Copyright (c) 2014-2020, Els_kom org.
+﻿// Copyright (c) 2014-2021, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
 namespace Els_kom.Controls
 {
-    using Els_kom.Enums;
     using System;
     using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Drawing.Drawing2D;
+    using System.Runtime.InteropServices;
     using System.Windows.Forms;
+    using Els_kom.Enums;
 
-    // using NativeInterface;
-    internal class ThemedForm : /*Custom*/Form
+    internal class ThemedForm : Form
     {
-        private bool minimizeHover = false;
-        private bool maximizeHover = false;
-        private bool closeHover = false;
-        private bool helpHover = false;
-        private bool active = false;
+        private bool minimizeHover;
+        private bool maximizeHover;
+        private bool closeHover;
+        private bool helpHover;
+        private bool minimizeClicked;
+        private bool maximizeClicked;
+        private bool closeClicked;
+        private bool helpClicked;
+        private bool active;
+        private bool mouseDown;
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Gets disposed of automatically.")]
+        private ContextMenuStrip systemMenuStrip;
+        private Point lastLocation;
+        private bool menuShown;
+
+        // state bitmaps.
+        private Bitmap minimizeBitmap;
+        private Bitmap minimizeHoverBitmap;
+        private Bitmap minimizeDisabledBitmap;
+        private Bitmap maximizeBitmap;
+        private Bitmap maximizeHoverBitmap;
+        private Bitmap maximizeDisabledBitmap;
+        private Bitmap closeBitmap;
+        private Bitmap closeHoverBitmap;
+        private Bitmap closeClickedBitmap;
+        private Bitmap helpBitmap;
+        private Bitmap helpHoverBitmap;
+        private Bitmap iconBitmap;
+        private Icon lastIcon;
 
         internal ThemedForm()
         {
-            this.InitializeComponent();
-            this.MinimizeHitbox = new Rectangle(this.Size.Width - 126, 1, 45, 29);
-            this.MaximizeHitbox = new Rectangle(this.Size.Width - 86, 1, 45, 29);
-            this.CloseHitbox = new Rectangle(this.Size.Width - 42, 1, 45, 29);
-            this.HelpHitbox = new Rectangle(this.Size.Width - 84, 1, 45, 29);
+            this.SuspendLayout();
+
+            // ThemedForm
+            this.ClientSize = new Size(300, 300);
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.Name = "ThemedForm";
+            this.ResumeLayout(false);
+
+            // These seems to be the correct locations for the caption buttons in Windows 10.
+            this.MinimizeHitbox = new Rectangle(this.Size.Width - 136, 1, 45, 29);
+            this.MaximizeHitbox = new Rectangle(this.Size.Width - 90, 1, 45, 29);
+            this.CloseHitbox = new Rectangle(this.Size.Width - 44, 1, 45, 29);
+            this.HelpHitbox = new Rectangle(this.Size.Width - 90, 1, 45, 29);
+
+            // these are fixed points never changeing.
+            this.IconHitbox = new Rectangle(9, 7, 16, 16);
+
+            // the caption in the title bar. We need this to set the bit to make form moveable again.
+            this.CaptionHitbox = new Rectangle(0, 0, this.Size.Width, 31);
             this.Paint += this.ThemedForm_Paint;
             this.Load += this.ThemedForm_Load;
+            this.MouseUp += this.ThemedForm_MouseUp;
             this.MouseDown += this.ThemedForm_MouseDown;
             this.MouseMove += this.ThemedForm_MouseMove;
+            this.MouseLeave += this.ThemedForm_MouseLeave;
             this.Activated += this.ThemedForm_Activated;
             this.Deactivate += this.ThemedForm_Deactivate;
+            if (ShareXResources.Theme != ShareXTheme.GetPresets()[0])
+            {
+                ShareXResources.Theme = ShareXTheme.GetPresets()[0];
+            }
+
+            // create state bitmaps.
+            this.CreateBitmap(ref this.minimizeBitmap, this.MinimizeHitbox, true, false);
+            this.CreateBitmap(ref this.minimizeHoverBitmap, this.MinimizeHitbox, true, true);
+            this.CreateBitmap(ref this.minimizeDisabledBitmap, this.MinimizeHitbox, false, false);
+            this.CreateBitmap(ref this.maximizeBitmap, this.MaximizeHitbox, true, false);
+            this.CreateBitmap(ref this.maximizeHoverBitmap, this.MaximizeHitbox, true, true);
+            this.CreateBitmap(ref this.maximizeDisabledBitmap, this.MaximizeHitbox, false, false);
+            this.CreateBitmap(ref this.closeBitmap, this.CloseHitbox, true, false);
+            this.CreateBitmap(ref this.closeHoverBitmap, this.CloseHitbox, true, true);
+            this.CreateBitmap(ref this.closeClickedBitmap, this.CloseHitbox, true, false, false, true);
+            this.CreateBitmap(ref this.helpBitmap, this.HelpHitbox, true, false, false);
+            this.CreateBitmap(ref this.helpHoverBitmap, this.HelpHitbox, true, true, false);
+            this.CreateBitmap(ref this.iconBitmap, this.IconHitbox, true, false);
         }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [Localizable(false)]
+        public Container Components { get; } = new Container();
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Localizable(false)]
@@ -43,12 +108,28 @@ namespace Els_kom.Controls
             get => base.Size;
             set
             {
-                // this._size = value;
+                // this._size = value
 
                 // the size of the Windows 10 Window frame.
                 Size tmp = default;
                 tmp.Width += value.Width + 2;
                 tmp.Height += value.Height + 32;
+                var numchanged = value.Width - this.DefaultSize.Width;
+                var captionrect = this.CaptionHitbox;
+                var minrect = this.MinimizeHitbox;
+                var maxrect = this.MaximizeHitbox;
+                var closerect = this.CloseHitbox;
+                var helprect = this.HelpHitbox;
+                captionrect.Width = tmp.Width;
+                this.CaptionHitbox = captionrect;
+                minrect.X = this.DefaultSize.Width + numchanged - 136;
+                this.MinimizeHitbox = minrect;
+                maxrect.X = this.DefaultSize.Width + numchanged - 90;
+                this.MaximizeHitbox = maxrect;
+                closerect.X = this.DefaultSize.Width + numchanged - 44;
+                this.CloseHitbox = closerect;
+                helprect.X = this.DefaultSize.Width + numchanged - 90;
+                this.HelpHitbox = helprect;
                 base.Size = tmp;
             }
         }
@@ -60,68 +141,135 @@ namespace Els_kom.Controls
             get => base.ClientSize;
             set
             {
-                // this._size = value;
+                // this._size = value
 
                 // the size of the Windows 10 Window frame.
                 Size tmp = default;
                 tmp.Width += value.Width + 2;
                 tmp.Height += value.Height + 32;
+                var numchanged = value.Width - this.DefaultSize.Width;
+                var captionrect = this.CaptionHitbox;
+                var minrect = this.MinimizeHitbox;
+                var maxrect = this.MaximizeHitbox;
+                var closerect = this.CloseHitbox;
+                var helprect = this.HelpHitbox;
+                captionrect.Width = tmp.Width;
+                this.CaptionHitbox = captionrect;
+                minrect.X = this.DefaultSize.Width + numchanged - 136;
+                this.MinimizeHitbox = minrect;
+                maxrect.X = this.DefaultSize.Width + numchanged - 90;
+                this.MaximizeHitbox = maxrect;
+                closerect.X = this.DefaultSize.Width + numchanged - 44;
+                this.CloseHitbox = closerect;
+                helprect.X = this.DefaultSize.Width + numchanged - 90;
+                this.HelpHitbox = helprect;
                 base.ClientSize = tmp;
             }
         }
 
-        protected override Size DefaultSize => new Size(300, 300);
-
-        private Rectangle MinimizeHitbox { get; }
-
-        private Rectangle MaximizeHitbox { get; }
-
-        private Rectangle CloseHitbox { get; }
-
-        private Rectangle HelpHitbox { get; }
-
-        /*
-        protected override void OnNonClientPaint(Graphics g, Size paintArea)
+        [Localizable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public new Icon Icon
         {
-            base.OnNonClientPaint(g, paintArea);
+            get => base.Icon;
 
-            // points to be used in linear gradient brush
-            var p1 = new Point(0, 0);
-            var p2 = new Point(paintArea.Width, 0);
-
-            // var c1 = this.IsWindowActive ? Color.Blue : Color.SkyBlue;
-            // var c2 = this.IsWindowActive ? Color.LightBlue : Color.LightSkyBlue;
-
-            using (var brush = new LinearGradientBrush(p1, p2, ShareXResources.Theme.BackgroundColor, ShareXResources.Theme.BackgroundColor))
+            set
             {
-                g.FillRectangle(brush, 0, 0, paintArea.Width, paintArea.Height);
+                base.Icon = value;
+                this.iconBitmap?.Dispose();
+                this.iconBitmap = null;
+                this.CreateBitmap(ref this.iconBitmap, this.IconHitbox, true, false);
+                this.Invalidate(this.IconHitbox);
             }
-
-            TextRenderer.DrawText(g, this.Text, SystemFonts.CaptionFont, new Rectangle(10, 0, 256, 40),
-                Color.White, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
         }
 
-        protected override void OnPaint(PaintEventArgs e)
-            => base.OnPaint(e);
+        protected override Size DefaultSize => new(300, 300);
 
-        protected override void OnLoad(EventArgs e)
-            => base.OnLoad(e);
-        */
+        private Rectangle MinimizeHitbox { get; set; }
 
+        private Rectangle MaximizeHitbox { get; set; }
+
+        private Rectangle CloseHitbox { get; set; }
+
+        private Rectangle HelpHitbox { get; set; }
+
+        private Rectangle CaptionHitbox { get; set; }
+
+        private Rectangle IconHitbox { get; set; }
+
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP002:Dispose member.", Justification = "Automatically disposed when components are disposed in a loop.")]
+        private ContextMenuStrip SystemMenuStrip
+        {
+            get
+            {
+                // prevent returning a new instance every time.
+                if (this.systemMenuStrip != null)
+                {
+                    return this.systemMenuStrip;
+                }
+
+                // is null so we need to create one.
+                // get the system's menu and copy the data to a ContextMenuStrip.
+                var hmenu = NativeMethods.GetSystemMenu(new HandleRef(this, this.Handle), bRevert: false);
+                this.AdjustSystemMenu(hmenu);
+                var mENUITEMINFOs = NativeMethods.GetMenuInfo(new HandleRef(this, hmenu));
+                this.systemMenuStrip = NativeMethods.GetContextMenu(mENUITEMINFOs, this.Components, this);
+                this.systemMenuStrip.Opened += this.SystemMenuStrip_Opened;
+                this.systemMenuStrip.Closed += this.SystemMenuStrip_Closed;
+
+                // theme this dark or whatever colors the theme is.
+                ShareXResources.ApplyDarkThemeToControl(this.systemMenuStrip);
+                return this.systemMenuStrip;
+            }
+        }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected.", Justification = "Needed to not leak the memory from the Icons.")]
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.Components?.Dispose();
+                this.minimizeBitmap?.Dispose();
+                this.minimizeHoverBitmap?.Dispose();
+                this.minimizeDisabledBitmap?.Dispose();
+                this.maximizeBitmap?.Dispose();
+                this.maximizeHoverBitmap?.Dispose();
+                this.maximizeDisabledBitmap?.Dispose();
+                this.closeBitmap?.Dispose();
+                this.closeHoverBitmap?.Dispose();
+                this.closeClickedBitmap?.Dispose();
+                this.helpBitmap?.Dispose();
+                this.helpHoverBitmap?.Dispose();
+                this.iconBitmap?.Dispose();
+
+                // this.lastIcon?.Dispose()
+            }
+
+            base.Dispose(disposing);
+        }
+
+        private static void CheckBitmapIfNull(ref Bitmap bitmap, string message)
+        {
+            if (bitmap == null)
+            {
+                MessageBox.Show(message, "Info!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP003:Dispose previous before re-assigning.", Justification = "Does not need to be disposed of first.")]
         private void ThemedForm_Paint(object sender, PaintEventArgs e)
         {
             var fillRect = new Rectangle(1, 1, this.Size.Width - 2, 30);
             using (var pen = new Pen(ShareXResources.Theme.BorderColor))
-            using (var pen2 = new Pen(ShareXResources.Theme.TextColor))
             using (var brush = new LinearGradientBrush(fillRect, ShareXResources.Theme.LightBackgroundColor, ShareXResources.Theme.LightBackgroundColor, LinearGradientMode.Vertical))
             using (var brush2 = new LinearGradientBrush(fillRect, ShareXResources.Theme.DarkBackgroundColor, ShareXResources.Theme.DarkBackgroundColor, LinearGradientMode.Vertical))
-            using (var brush3 = new LinearGradientBrush(this.MinimizeHitbox, ShareXResources.Theme.MenuHighlightColor, ShareXResources.Theme.MenuHighlightColor, LinearGradientMode.Vertical))
-            using (var brush4 = new LinearGradientBrush(this.MaximizeHitbox, ShareXResources.Theme.MenuHighlightColor, ShareXResources.Theme.MenuHighlightColor, LinearGradientMode.Vertical))
-            using (var brush5 = new LinearGradientBrush(this.CloseHitbox, ShareXResources.Theme.MenuHighlightColor, ShareXResources.Theme.MenuHighlightColor, LinearGradientMode.Vertical))
-            using (var brush6 = new LinearGradientBrush(this.HelpHitbox, ShareXResources.Theme.MenuHighlightColor, ShareXResources.Theme.MenuHighlightColor, LinearGradientMode.Vertical))
             {
                 e.Graphics.DrawRectangle(pen, 0, 0, this.Size.Width - 1, this.Size.Height - 1);
-                if (Equals(ActiveForm, this) && this.active)
+                if (/*Equals(ActiveForm, this) && */this.active)
                 {
                     e.Graphics.FillRectangle(brush2, fillRect);
                 }
@@ -139,28 +287,48 @@ namespace Els_kom.Controls
                         {
                             if (this.minimizeHover)
                             {
-                                e.Graphics.FillRectangle(brush3, this.MinimizeHitbox);
+                                CheckBitmapIfNull(ref this.minimizeHoverBitmap, "Minimize Hover Bitmap is null.");
+                                e.Graphics.DrawImage(this.minimizeHoverBitmap, this.MinimizeHitbox);
                             }
-
-                            e.Graphics.DrawLine(pen2, 187, 16, 196, 16);
+                            else
+                            {
+                                CheckBitmapIfNull(ref this.minimizeDisabledBitmap, "Minimize Bitmap is null.");
+                                e.Graphics.DrawImage(this.minimizeBitmap, this.MinimizeHitbox);
+                            }
                         }
                         else
                         {
-                            e.Graphics.DrawLine(Pens.LightGray, 187, 16, 196, 16);
+                            CheckBitmapIfNull(ref this.minimizeDisabledBitmap, "Minimize Disabled Bitmap is null.");
+                            e.Graphics.DrawImage(this.minimizeDisabledBitmap, this.MinimizeHitbox);
                         }
 
                         if (this.maximizeHover)
                         {
-                            e.Graphics.FillRectangle(brush4, this.MaximizeHitbox);
+                            CheckBitmapIfNull(ref this.maximizeHoverBitmap, "Maximize Hover bitmap is null.");
+                            e.Graphics.DrawImage(this.maximizeHoverBitmap, this.MaximizeHitbox);
+                        }
+                        else
+                        {
+                            CheckBitmapIfNull(ref this.maximizeBitmap, "Maximize bitmap is null.");
+                            e.Graphics.DrawImage(this.maximizeBitmap, this.MaximizeHitbox);
                         }
 
                         // close box is here. Sadly no check for this though.
                         if (this.closeHover)
                         {
-                            e.Graphics.FillRectangle(brush5, this.CloseHitbox);
+                            CheckBitmapIfNull(ref this.closeHoverBitmap, "Close Hover bitmap is null.");
+                            e.Graphics.DrawImage(this.closeHoverBitmap, this.CloseHitbox);
                         }
-
-                        // TODO: Draw Close Button image.
+                        else if (this.closeClicked)
+                        {
+                            CheckBitmapIfNull(ref this.closeClickedBitmap, "Close Clicked bitmap is null.");
+                            e.Graphics.DrawImage(this.closeClickedBitmap, this.CloseHitbox);
+                        }
+                        else
+                        {
+                            CheckBitmapIfNull(ref this.closeBitmap, "Close bitmap is null.");
+                            e.Graphics.DrawImage(this.closeBitmap, this.CloseHitbox);
+                        }
                     }
                     else
                     {
@@ -168,37 +336,60 @@ namespace Els_kom.Controls
                         {
                             if (this.minimizeHover)
                             {
-                                e.Graphics.FillRectangle(brush3, this.MinimizeHitbox);
+                                CheckBitmapIfNull(ref this.minimizeHoverBitmap, "Minimize Hover bitmap is null.");
+                                e.Graphics.DrawImage(this.minimizeHoverBitmap, this.MinimizeHitbox);
+                            }
+                            else
+                            {
+                                CheckBitmapIfNull(ref this.minimizeBitmap, "Minimize bitmap is null.");
+                                e.Graphics.DrawImage(this.minimizeBitmap, this.MinimizeHitbox);
                             }
 
-                            e.Graphics.DrawLine(pen2, 187, 16, 196, 16);
+                            CheckBitmapIfNull(ref this.maximizeDisabledBitmap, "Maximize Disabled bitmap is null.");
+                            e.Graphics.DrawImage(this.maximizeDisabledBitmap, this.MaximizeHitbox);
                         }
                         else if (this.HelpButton)
                         {
                             if (this.helpHover)
                             {
-                                e.Graphics.FillRectangle(brush6, this.HelpHitbox);
+                                CheckBitmapIfNull(ref this.helpHoverBitmap, "Help Hover bitmap is null.");
+                                e.Graphics.DrawImage(this.helpHoverBitmap, this.HelpHitbox);
                             }
-
-                            // TODO: Draw Help Button image.
+                            else
+                            {
+                                CheckBitmapIfNull(ref this.helpBitmap, "Help bitmap is null.");
+                                e.Graphics.DrawImage(this.helpBitmap, this.HelpHitbox);
+                            }
                         }
 
                         // close box is here. Sadly no check for this though.
                         if (this.closeHover)
                         {
-                            e.Graphics.FillRectangle(brush5, this.CloseHitbox);
+                            CheckBitmapIfNull(ref this.closeHoverBitmap, "Close Hover bitmap is null.");
+                            e.Graphics.DrawImage(this.closeHoverBitmap, this.CloseHitbox);
                         }
-
-                        // TODO: Draw Close Button image.
+                        else if (this.closeClicked)
+                        {
+                            CheckBitmapIfNull(ref this.closeClickedBitmap, "Close Clicked bitmap is null.");
+                            e.Graphics.DrawImage(this.closeClickedBitmap, this.CloseHitbox);
+                        }
+                        else
+                        {
+                            CheckBitmapIfNull(ref this.closeBitmap, "Close bitmap is null.");
+                            e.Graphics.DrawImage(this.closeBitmap, this.CloseHitbox);
+                        }
                     }
                 }
             }
 
             if (this.ControlBox)
             {
+                // updates iconBitmap if it changed, otherwise resets it back to the old one anyway.
+                this.CreateBitmap(ref this.iconBitmap, this.IconHitbox, true, false);
+
                 // icons on Windows 10 seems to always be drawn at the Location(9 (x), 7 (y))
                 // and is always 16x16 in pixels at least on FixedSingle frames.
-                e.Graphics.DrawIcon(this.Icon, new Rectangle(9, 7, 16, 16));
+                e.Graphics.DrawImage(this.iconBitmap, this.IconHitbox);
 
                 // window text seems to always be at Location(30 (x), 17, (y))
                 // at least on FixedSingle frames.
@@ -212,37 +403,8 @@ namespace Els_kom.Controls
             }
             else
             {
-                // todo: get where the text is located at when ControlBox is disabled.
+                // TODO: get where the text is located at when ControlBox is disabled.
             }
-
-            /*
-            var val = 2;
-            var result = NativeMethods.DwmSetWindowAttribute(this.Handle, (int)NativeMethods.DwmWindowAttribute.DWMWA_NCRENDERING_POLICY, ref val, sizeof(int));
-            if (result == 0)
-            {
-                var m = new NativeMethods.MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 31 };
-                var result2 = NativeMethods.DwmExtendFrameIntoClientArea(this.Handle, ref m);
-                if (result2 == 0)
-                {
-                    // call to extend frame into client are failed.
-                }
-            }
-            else
-            {
-                // call to extend frame into client are failed.
-            }
-            */
-
-            // var g = e.Graphics;
-            // var fillRect = new Rectangle(0, 0, this.ClientSize.Width, this.ClientSize.Height);
-            // if (fillRect.Width > 0 && fillRect.Height > 0)
-            // {
-            //     using (var brush = new LinearGradientBrush(fillRect, Color.FromArgb(80, 80, 80), Color.FromArgb(40, 40, 40), LinearGradientMode.Vertical))
-            //     {
-            //         g.FillRectangle(brush, fillRect);
-            //     }
-            // }
-            // throw new NotImplementedException();
         }
 
         private void ThemedForm_Load(object sender, EventArgs e)
@@ -258,65 +420,414 @@ namespace Els_kom.Controls
 
             if (!this.DesignMode)
             {
-                ShareXResources.Theme = ShareXTheme.GetPresets()[0];
                 ShareXResources.ApplyTheme(this);
             }
+        }
 
-            // throw new NotImplementedException();
+        private void ThemedForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.mouseDown = false;
+            this.minimizeHover = false;
+            this.maximizeHover = false;
+            this.closeHover = false;
+            this.helpHover = false;
+            if (this.CaptionHitbox.Contains(e.Location))
+            {
+                if (this.ControlBox)
+                {
+                    if (this.MinimizeHitbox.Contains(e.Location) && this.MinimizeBox && this.minimizeClicked)
+                    {
+                        this.Capture = false;
+                        var result = NativeMethods.SendMessageW(new HandleRef(this, this.Handle), WindowsMessages.SYSCOMMAND, (IntPtr)(int)SYSCOMMANDS.SC_MINIMIZE, IntPtr.Zero);
+                        Debug.WriteLineIf(result != IntPtr.Zero, $"NativeMethods.SendMessageW() failed with error code {result.ToInt32()}");
+                        this.Capture = true;
+                    }
+                    else if (this.MaximizeHitbox.Contains(e.Location) && this.MaximizeBox && this.maximizeClicked)
+                    {
+                        // maximize disabled state is handled by the helphitbox one to avoid breaking the helpbox when it is enabled.
+                        this.Capture = false;
+                        var result = NativeMethods.SendMessageW(new HandleRef(this, this.Handle), WindowsMessages.SYSCOMMAND, (IntPtr)(int)SYSCOMMANDS.SC_MAXIMIZE, IntPtr.Zero);
+                        Debug.WriteLineIf(result != IntPtr.Zero, $"NativeMethods.SendMessageW() failed with error code {result.ToInt32()}");
+                        this.Capture = true;
+                    }
+                    else if (this.HelpHitbox.Contains(e.Location) && this.HelpButton && this.helpClicked)
+                    {
+                        this.Capture = false;
+                        var result = NativeMethods.SendMessageW(new HandleRef(this, this.Handle), WindowsMessages.SYSCOMMAND, (IntPtr)(int)SYSCOMMANDS.SC_CONTEXTHELP, IntPtr.Zero);
+                        Debug.WriteLineIf(result != IntPtr.Zero, $"NativeMethods.SendMessageW() failed with error code {result.ToInt32()}");
+                        this.Capture = true;
+                    }
+                    else if (this.CloseHitbox.Contains(e.Location) && this.closeClicked)
+                    {
+                        this.Capture = false;
+                        var result = NativeMethods.SendMessageW(new HandleRef(this, this.Handle), WindowsMessages.SYSCOMMAND, (IntPtr)(int)SYSCOMMANDS.SC_CLOSE, IntPtr.Zero);
+                        Debug.WriteLineIf(result != IntPtr.Zero, $"NativeMethods.SendMessageW() failed with error code {result.ToInt32()}");
+                        if (!this.IsDisposed)
+                        {
+                            this.Capture = true;
+                        }
+                    }
+                    else
+                    {
+                        this.minimizeClicked = false;
+                        this.maximizeClicked = false;
+                        this.closeClicked = false;
+                        this.helpClicked = false;
+                    }
+                }
+                else
+                {
+                    this.minimizeClicked = false;
+                    this.maximizeClicked = false;
+                    this.closeClicked = false;
+                    this.helpClicked = false;
+                }
+            }
         }
 
         private void ThemedForm_MouseDown(object sender, MouseEventArgs e)
         {
-            if (this.ControlBox)
+            if (this.CaptionHitbox.Contains(e.Location))
             {
-                // todo: do what the buttons originally did.
-                if (this.MinimizeHitbox.Contains(e.Location) && this.MinimizeBox)
+                if (this.ControlBox)
                 {
-                    _ = NativeMethods.SendMessage(this.Handle, (uint)WindowsMessages.SYSCOMMAND, (int)SYSCOMMANDS.SC_MINIMIZE, 0);
+                    if (this.MinimizeHitbox.Contains(e.Location) && this.MinimizeBox)
+                    {
+                        this.minimizeClicked = true;
+                    }
+                    else if (this.MinimizeHitbox.Contains(e.Location))
+                    {
+                        // must handle this disabled state to avoid bugs.
+                    }
+                    else if (this.MaximizeHitbox.Contains(e.Location) && this.MaximizeBox)
+                    {
+                        // maximize disabled state is handled by the helphitbox one to avoid breaking the helpbox when it is enabled.
+                        this.maximizeClicked = true;
+                    }
+                    else if (this.HelpHitbox.Contains(e.Location) && this.HelpButton)
+                    {
+                        this.helpClicked = true;
+                    }
+                    else if (this.HelpHitbox.Contains(e.Location))
+                    {
+                        // must handle this disabled state to avoid bugs.
+                    }
+                    else if (this.CloseHitbox.Contains(e.Location))
+                    {
+                        this.closeClicked = true;
+                        this.Invalidate(this.CloseHitbox);
+                    }
+                    else if (this.IconHitbox.Contains(e.Location))
+                    {
+                        // todo: pop up the system menu like before.
+                        if (this.IsHandleCreated && e.Button == MouseButtons.Left)
+                        {
+                            if (!this.menuShown)
+                            {
+                                this.SystemMenuStrip.Show(this, e.Location.X, e.Location.Y);
+                            }
+                            else
+                            {
+                                this.Capture = false;
+                                var result = NativeMethods.SendMessageW(new HandleRef(this, this.Handle), WindowsMessages.SYSCOMMAND, (IntPtr)(int)SYSCOMMANDS.SC_CLOSE, IntPtr.Zero);
+                                Debug.WriteLineIf(result != IntPtr.Zero, $"NativeMethods.SendMessageW() failed with error code {result.ToInt32()}");
+                                if (!this.IsDisposed)
+                                {
+                                    this.Capture = true;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // now we make the form move now that we verified that none of the standard buttons was clicked on.
+                        this.mouseDown = true;
+                        this.lastLocation = e.Location;
+                    }
                 }
-                else if (this.MaximizeHitbox.Contains(e.Location) && this.MaximizeBox)
+                else
                 {
-                    _ = NativeMethods.SendMessage(this.Handle, (uint)WindowsMessages.SYSCOMMAND, (int)SYSCOMMANDS.SC_MAXIMIZE, 0);
-                }
-                else if (this.HelpHitbox.Contains(e.Location) && this.HelpButton)
-                {
-                    _ = NativeMethods.SendMessage(this.Handle, (uint)WindowsMessages.SYSCOMMAND, (int)SYSCOMMANDS.SC_CONTEXTHELP, 0);
-                }
-                else if (this.CloseHitbox.Contains(e.Location))
-                {
-                    _ = NativeMethods.SendMessage(this.Handle, (uint)WindowsMessages.SYSCOMMAND, (int)SYSCOMMANDS.SC_CLOSE, 0);
+                    // now we make the form move now that we verified that none of the standard buttons was clicked on.
+                    this.mouseDown = true;
+                    this.lastLocation = e.Location;
                 }
             }
         }
 
         private void ThemedForm_MouseMove(object sender, MouseEventArgs e)
         {
-            if (this.ControlBox)
+            if (this.CaptionHitbox.Contains(e.Location) && this.ControlBox)
             {
-                this.minimizeHover = this.MinimizeHitbox.Contains(e.Location) && this.MinimizeBox;
-                this.maximizeHover = this.MaximizeHitbox.Contains(e.Location) && this.MaximizeBox;
-                this.helpHover = this.HelpHitbox.Contains(e.Location) && this.HelpButton;
-                this.closeHover = this.CloseHitbox.Contains(e.Location);
+                if (this.MinimizeHitbox.Contains(e.Location) && this.MinimizeBox)
+                {
+                    if (!this.minimizeHover)
+                    {
+                        this.minimizeHover = true;
+                        this.Invalidate(this.MinimizeHitbox);
+                    }
+                }
+                else
+                {
+                    if (this.minimizeHover)
+                    {
+                        this.minimizeHover = false;
+                        this.Invalidate(this.MinimizeHitbox);
+                    }
+                }
+
+                if (this.MaximizeHitbox.Contains(e.Location) && this.MaximizeBox)
+                {
+                    if (!this.maximizeHover)
+                    {
+                        this.maximizeHover = true;
+                        this.Invalidate(this.MaximizeHitbox);
+                    }
+                }
+                else
+                {
+                    if (this.maximizeHover)
+                    {
+                        this.maximizeHover = false;
+                        this.Invalidate(this.MaximizeHitbox);
+                    }
+                }
+
+                if (this.HelpHitbox.Contains(e.Location) && this.HelpButton)
+                {
+                    if (!this.helpHover)
+                    {
+                        this.helpHover = true;
+                        this.Invalidate(this.HelpHitbox);
+                    }
+                }
+                else
+                {
+                    if (this.helpHover)
+                    {
+                        this.helpHover = false;
+                        this.Invalidate(this.HelpHitbox);
+                    }
+                }
+
+                if (this.CloseHitbox.Contains(e.Location))
+                {
+                    if (!this.closeHover)
+                    {
+                        this.closeHover = true;
+                        this.Invalidate(this.CloseHitbox);
+                    }
+                }
+                else
+                {
+                    if (this.closeHover)
+                    {
+                        this.closeHover = false;
+                        this.Invalidate(this.CloseHitbox);
+                    }
+                }
+
+                if (this.mouseDown)
+                {
+                    this.Location = new Point(
+                        this.Location.X - this.lastLocation.X + e.X, this.Location.Y - this.lastLocation.Y + e.Y);
+                }
+            }
+        }
+
+        private void ThemedForm_MouseLeave(object sender, EventArgs e)
+        {
+            if (this.mouseDown)
+            {
+                this.mouseDown = false;
+            }
+
+            if (this.minimizeHover)
+            {
+                this.minimizeHover = false;
+                this.Invalidate(this.MinimizeHitbox);
+            }
+
+            if (this.maximizeHover)
+            {
+                this.maximizeHover = false;
+                this.Invalidate(this.MaximizeHitbox);
+            }
+
+            if (this.closeHover)
+            {
+                this.closeHover = false;
+                this.Invalidate(this.CloseHitbox);
+            }
+
+            if (this.helpHover)
+            {
+                this.helpHover = false;
+                this.Invalidate(this.HelpHitbox);
             }
         }
 
         private void ThemedForm_Activated(object sender, EventArgs e)
-            => this.active = true;
+        {
+            Debug.WriteLine("Activated");
+            this.active = true;
+            this.Invalidate();
+        }
 
         private void ThemedForm_Deactivate(object sender, EventArgs e)
-            => this.active = false;
-
-        private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // ThemedForm
-            // 
-            this.ClientSize = new System.Drawing.Size(300, 300);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "ThemedForm";
-            this.ResumeLayout(false);
+            Debug.WriteLine("Deactivated");
+            this.active = false;
+            this.Invalidate();
+        }
 
+        private void SystemMenuStrip_Opened(object sender, EventArgs e)
+            => this.menuShown = true;
+
+        private void SystemMenuStrip_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+            => this.menuShown = false;
+
+        private void AdjustSystemMenu(IntPtr hmenu)
+        {
+            // UpdateWindowState()
+            var winState = this.WindowState;
+            var borderStyle = this.FormBorderStyle;
+            var sizableBorder = borderStyle is FormBorderStyle.SizableToolWindow or FormBorderStyle.Sizable;
+            var showMin = this.MinimizeBox && winState != FormWindowState.Minimized;
+            var showMax = this.MaximizeBox && winState != FormWindowState.Maximized;
+            var showClose = this.ControlBox;
+            var showRestore = winState != FormWindowState.Normal;
+            var showSize = sizableBorder && winState != FormWindowState.Minimized
+                            && winState != FormWindowState.Maximized;
+            if (!showMin)
+            {
+                _ = NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_MINIMIZE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.GRAYED));
+            }
+            else
+            {
+                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_MINIMIZE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.ENABLED));
+            }
+
+            if (!showMax)
+            {
+                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_MAXIMIZE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.GRAYED));
+            }
+            else
+            {
+                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_MAXIMIZE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.ENABLED));
+            }
+
+            if (!showClose)
+            {
+                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_CLOSE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.GRAYED));
+            }
+            else
+            {
+                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_CLOSE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.ENABLED));
+            }
+
+            if (!showRestore)
+            {
+                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_RESTORE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.GRAYED));
+            }
+            else
+            {
+                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_RESTORE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.ENABLED));
+            }
+
+            if (!showSize)
+            {
+                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_SIZE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.GRAYED));
+            }
+            else
+            {
+                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_SIZE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.ENABLED));
+            }
+        }
+
+        // lazily create the bitmap.
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected.", Justification = "Needed to cleanup old bitmap.")]
+        private void CreateBitmap(ref Bitmap bitmap, Rectangle bounds, bool enabled, bool hovered, bool isMaximize = true, bool isClicked = false)
+        {
+            if (bitmap == this.iconBitmap && Icons.IconEquals(this.lastIcon, this.Icon))
+            {
+                return;
+            }
+
+            bitmap?.Dispose();
+            bitmap = new Bitmap(bounds.Width, bounds.Height);
+            var bmpRect = new Rectangle(0, 0, bounds.Width, bounds.Height);
+
+            // in case we got to draw the buttons to the bitmap!!!
+            // the 2 colors for the close button was taken from the default windows 10 theme file.
+            using var pen = new Pen(ShareXResources.Theme.TextColor);
+            using var brush = new LinearGradientBrush(bmpRect, ShareXResources.Theme.MenuHighlightColor, ShareXResources.Theme.MenuHighlightColor, LinearGradientMode.Vertical);
+            using var closeHoverBrush = new LinearGradientBrush(bmpRect, Color.FromArgb(255, 232, 17, 35), Color.FromArgb(255, 232, 17, 35), LinearGradientMode.Vertical);
+            using var closeClickedBrush = new LinearGradientBrush(bmpRect, Color.FromArgb(153, 231, 16, 34), Color.FromArgb(153, 231, 16, 34), LinearGradientMode.Vertical);
+            using var gr = Graphics.FromImage(bitmap);
+            if (bounds == this.IconHitbox)
+            {
+                this.lastIcon = this.Icon;
+                using var iconbmp = this.Icon.ToBitmap();
+                using var bmp = new Bitmap(iconbmp, 16, 16);
+                gr.DrawImage(bmp, new Point(0, 0));
+            }
+            else if (bounds == this.MinimizeHitbox)
+            {
+                if (enabled)
+                {
+                    if (hovered)
+                    {
+                        gr.FillRectangle(brush, bmpRect);
+                    }
+
+                    gr.DrawLine(pen, new Point(18, 15), new Point(28, 15));
+                }
+                else
+                {
+                    gr.DrawLine(Pens.DarkGray, new Point(18, 15), new Point(28, 15));
+                }
+            }
+            else if ((bounds == this.MaximizeHitbox) && isMaximize)
+            {
+                if (enabled)
+                {
+                    if (hovered)
+                    {
+                        gr.FillRectangle(brush, bmpRect);
+                    }
+
+                    gr.DrawRectangle(pen, 18, 10, 10, 10);
+                }
+                else
+                {
+                    // color it with Pens.LightGray.
+                    gr.DrawRectangle(Pens.DarkGray, 18, 10, 10, 10);
+                }
+            }
+            else if (bounds == this.CloseHitbox)
+            {
+                if (hovered)
+                {
+                    gr.FillRectangle(closeHoverBrush, bmpRect);
+                }
+                else if (isClicked)
+                {
+                    gr.FillRectangle(closeClickedBrush, bmpRect);
+                }
+
+                // TODO: Draw icon image of the button itself like windows does.
+                gr.DrawImage(Properties.Resources.closeglyph, new Point(18, 10));
+            }
+            else if (bounds == this.HelpHitbox)
+            {
+                if (hovered)
+                {
+                    gr.FillRectangle(brush, bmpRect);
+                }
+
+                // TODO: Draw icon image of the button itself like windows does.
+                gr.DrawImage(Properties.Resources.helpglyph, new Point(18, 10));
+            }
         }
     }
 }
