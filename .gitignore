@@ -27,3 +27,7 @@ Plugins
 !/legacy/Els_kom_Launcher_Stub/Launcher.res
 !/legacy/Els_kom_Test_Mods_Stub/Test_Mods.res
 !/legacy/bin/*
+# jetbrains rider files.
+.idea/*
+# Private copy of the pcbuild solution file containing the plugin projects.
+pcbuild.private.sln

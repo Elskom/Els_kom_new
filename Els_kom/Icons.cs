@@ -1,16 +1,15 @@
-// Copyright (c) 2014-2020, Els_kom org.
+// Copyright (c) 2014-2021, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
 namespace Els_kom
 {
-    using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Globalization;
     using System.Resources;
     using Elskom.Generic.Libs;
-    using XmlAbstraction;
 
     // Forms designer cannot see these if they are "internal" but I wanted them Internal.
     // The WinForms team probably should base the Forms Designer off of Roslyn sometime?
@@ -21,7 +20,6 @@ namespace Els_kom
     public static class Icons
     {
         private static ResourceManager resourceMan;
-
         private static CultureInfo resourceCulture;
 
         /// <summary>
@@ -44,41 +42,13 @@ namespace Els_kom
                     resourceCulture = CultureInfo.CurrentCulture;
                 }
 
-                var ico = resourceMan.GetObject("els_kom", resourceCulture);
-                var retIcon = (Icon)ico;
-                try
+                var iconVal = SettingsFile.SettingsJson.WindowIcon;
+                var retIcon = iconVal switch
                 {
-                    var iconVal = string.Empty;
-                    if (SettingsFile.Settingsxml == null)
-                    {
-                        // trap devenv if it is detected.
-                        var settingsxml = new XmlObject(SettingsFile.Path.Replace("devenv", "Els_kom"), "<Settings></Settings>");
-                        iconVal = settingsxml.TryRead("WindowIcon");
-
-                        // dispose this temporary object.
-                        settingsxml = null;
-                    }
-                    else
-                    {
-                        SettingsFile.Settingsxml.ReopenFile();
-                        iconVal = SettingsFile.Settingsxml.TryRead("WindowIcon");
-                    }
-
-                    if (iconVal.Equals("1"))
-                    {
-                        retIcon = (Icon)resourceMan.GetObject("VP_Trans", resourceCulture);
-                    }
-                    else if (iconVal.Equals("2"))
-                    {
-                        retIcon = (Icon)resourceMan.GetObject("YR", resourceCulture);
-                    }
-                }
-                catch (DllNotFoundException)
-                {
-                    // if a dependency of this method cannot be loaded it could be because this is executed
-                    // in the forms designer and the retardid thing does not factor in nuget packages when
-                    // looking for assemblies to load.
-                }
+                    1 => (Icon)resourceMan.GetObject("VP_Trans", resourceCulture),
+                    2 => (Icon)resourceMan.GetObject("YR", resourceCulture),
+                    _ => (Icon)resourceMan.GetObject("els_kom", resourceCulture),
+                };
 
                 return retIcon;
             }
@@ -92,14 +62,13 @@ namespace Els_kom
         /// A 48 x 48 sized <see cref="Image"/>
         /// from a icon in the project's resources.
         /// </value>
+        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP012:Property should not return created disposable.", Justification = "Needed.")]
         public static Image FormImage
         {
             get
             {
-                using (var newicon = new Icon(FormIcon, 48, 48))
-                {
-                    return newicon.ToBitmap();
-                }
+                using var newicon = new Icon(FormIcon, 48, 48);
+                return newicon.ToBitmap();
             }
         }
 
@@ -155,6 +124,48 @@ namespace Els_kom
                 var void_logo = (Image)resourceMan.GetObject("els_logo", resourceCulture);
                 return void_logo;
             }
+        }
+
+        /// <summary>
+        /// Checks if 2 icons are Equal.
+        /// </summary>
+        /// <param name="icon1">The 1st icon to check.</param>
+        /// <param name="icon2">The 2nd icon to check.</param>
+        /// <returns><see langword="true"/>, if they are both Equal or <see langword="null"/>, <see langword="false"/> otherwise.</returns>
+        public static bool IconEquals(Icon icon1, Icon icon2)
+        {
+            var result = true;
+            using (var bitmap1 = icon1?.ToBitmap())
+            using (var bitmap2 = icon2?.ToBitmap())
+            {
+                if ((bitmap1 == null || bitmap2 == null) && !(bitmap1 == null && bitmap2 == null))
+                {
+                    result = false;
+                }
+                else if (bitmap1?.Size == bitmap2?.Size)
+                {
+                    for (var y = 0; y < bitmap1?.Height; y++)
+                    {
+                        for (var x = 0; x < bitmap1.Width; x++)
+                        {
+                            var col1 = bitmap1.GetPixel(x, y);
+                            var col2 = bitmap2.GetPixel(x, y);
+                            if (!col1.Equals(col2))
+                            {
+                                result = false;
+                                break;
+                            }
+                        }
+
+                        if (!result)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

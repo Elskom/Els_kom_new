@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2020, Els_kom org.
+// Copyright (c) 2014-2021, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -13,7 +13,7 @@ namespace Els_kom.Enums
     internal enum SYSCOMMANDS
     {
         /// <summary>
-        /// Did a Window size command happen?
+        /// Did a Window size command happen?.
         /// </summary>
         WM_SYSCOMMAND = 0x0112,
 
@@ -68,10 +68,10 @@ namespace Els_kom.Enums
 
         SCF_ISSECURE = 0x00000001,
 
-        [Obsolete("A Old version of SC_MINIMIZE. Provided to be consistent with WinUser.h", false)]
+        [Obsolete("A Old version of SC_MINIMIZE. Provided to be consistent with WinUser.h", true)]
         SC_ICON = SC_MINIMIZE,
 
-        [Obsolete("A Old version of SC_MAXIMIZE. Provided to be consistent with WinUser.h", false)]
+        [Obsolete("A Old version of SC_MAXIMIZE. Provided to be consistent with WinUser.h", true)]
         SC_ZOOM = SC_MAXIMIZE,
     }
 }

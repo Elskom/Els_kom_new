@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2014-2020, Els_kom org.
+﻿// Copyright (c) 2014-2021, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -27,7 +27,7 @@ namespace Els_kom.Enums
         /// <summary>
         /// The WM_DESTROY message is sent when a window is being destroyed. It is sent to the window procedure of the window being destroyed after the window is removed from the screen.
         /// This message is sent first to the window being destroyed and then to the child windows (if any) as they are destroyed. During the processing of the message, it can be assumed that all child windows still exist.
-        /// /// </summary>
+        /// </summary>
         DESTROY = 0x0002,
 
         /// <summary>
@@ -275,9 +275,9 @@ namespace Els_kom.Enums
         COMPACTING = 0x0041,
 
         /// <summary>
-        /// WM_COMMNOTIFY is Obsolete for Win32-Based Applications
+        /// WM_COMMNOTIFY is Obsolete for Win32-Based Applications.
         /// </summary>
-        [Obsolete]
+        [Obsolete("COMMNOTIFY is obsolete for Win32-Based Applications.", true)]
         COMMNOTIFY = 0x0044,
 
         /// <summary>
@@ -292,9 +292,9 @@ namespace Els_kom.Enums
 
         /// <summary>
         /// Notifies applications that the system, typically a battery-powered personal computer, is about to enter a suspended mode.
-        /// Use: POWERBROADCAST
+        /// Use: POWERBROADCAST.
         /// </summary>
-        [Obsolete]
+        [Obsolete("Use POWERBROADCAST instead.", true)]
         POWER = 0x0048,
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Els_kom.Enums
         STYLECHANGING = 0x007C,
 
         /// <summary>
-        /// The WM_STYLECHANGED message is sent to a window after the SetWindowLong function has changed one or more of the window's styles
+        /// The WM_STYLECHANGED message is sent to a window after the SetWindowLong function has changed one or more of the window's styles.
         /// </summary>
         STYLECHANGED = 0x007D,
 
@@ -496,7 +496,7 @@ namespace Els_kom.Enums
         /// <summary>
         /// The WM_KEYDOWN message is posted to the window with the keyboard focus when a nonsystem key is pressed. A nonsystem key is a key that is pressed when the ALT key is not pressed.
         /// </summary>
-        KEYDOWN = 0x0100,
+        KEYDOWN = KEYFIRST,
 
         /// <summary>
         /// The WM_KEYUP message is posted to the window with the keyboard focus when a nonsystem key is released. A nonsystem key is a key that is pressed when the ALT key is not pressed, or a keyboard key that is pressed when a window has the keyboard focus.
@@ -542,7 +542,7 @@ namespace Els_kom.Enums
         /// <summary>
         /// This message filters for keyboard messages.
         /// </summary>
-        KEYLAST = 0x0109,
+        KEYLAST = UNICHAR,
 
         /// <summary>
         /// Sent immediately before the IME generates the composition string as a result of a keystroke. A window receives this message through its WindowProc function.
@@ -558,7 +558,7 @@ namespace Els_kom.Enums
         /// Sent to an application when the IME changes composition status as a result of a keystroke. A window receives this message through its WindowProc function.
         /// </summary>
         IME_COMPOSITION = 0x010F,
-        IME_KEYLAST = 0x010F,
+        IME_KEYLAST = IME_COMPOSITION,
 
         /// <summary>
         /// The WM_INITDIALOG message is sent to the dialog box procedure immediately before a dialog box is displayed. Dialog box procedures typically use this message to initialize controls and carry out any other initialization tasks that affect the appearance of the dialog box.
@@ -698,7 +698,7 @@ namespace Els_kom.Enums
         /// <summary>
         /// The WM_MOUSEMOVE message is posted to a window when the cursor moves. If the mouse is not captured, the message is posted to the window that contains the cursor. Otherwise, the message is posted to the window that has captured the mouse.
         /// </summary>
-        MOUSEMOVE = 0x0200,
+        MOUSEMOVE = MOUSEFIRST,
 
         /// <summary>
         /// The WM_LBUTTONDOWN message is posted when the user presses the left mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
@@ -773,7 +773,7 @@ namespace Els_kom.Enums
         /// <summary>
         /// Use WM_MOUSELAST to specify the last mouse message. Used with PeekMessage() Function.
         /// </summary>
-        MOUSELAST = 0x020E,
+        MOUSELAST = MOUSEHWHEEL,
 
         /// <summary>
         /// The WM_PARENTNOTIFY message is sent to the parent of a child window when the child window is created or destroyed, or when the user clicks a mouse button while the cursor is over the child window. When the child window is being created, the system sends WM_PARENTNOTIFY just before the CreateWindow or CreateWindowEx function that creates the window returns. When the child window is being destroyed, the system sends the message before any processing to destroy the window takes place.

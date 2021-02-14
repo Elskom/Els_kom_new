@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2014-2020, Els_kom org.
+﻿// Copyright (c) 2014-2021, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -15,35 +15,16 @@ namespace Els_kom
     public class ListViewColumnSorter : IComparer
     {
         /// <summary>
-        /// Specifies the column to be sorted.
-        /// </summary>
-        private int ColumnToSort;
-
-        /// <summary>
-        /// Specifies the order in which to sort (i.e. 'Ascending').
-        /// </summary>
-        private SortOrder OrderOfSort;
-
-        /// <summary>
-        /// Case insensitive comparer object.
-        /// </summary>
-        private CaseInsensitiveComparer ObjectCompare;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ListViewColumnSorter"/> class.
         /// </summary>
         public ListViewColumnSorter()
         {
             // Initialize the column to '0'
-            this.ColumnToSort = 0;
+            this.SortColumn = 0;
 
             // Initialize the sort order to 'none'
-            this.OrderOfSort = SortOrder.None;
-
+            this.Order = SortOrder.None;
             this.SortByDate = false;
-
-            // Initialize the CaseInsensitiveComparer object
-            this.ObjectCompare = new CaseInsensitiveComparer();
         }
 
         /// <summary>
@@ -60,11 +41,7 @@ namespace Els_kom
         /// <value>
         /// The number of the column to which to apply the sorting operation (Defaults to '0').
         /// </value>
-        public int SortColumn
-        {
-            get => this.ColumnToSort;
-            set => this.ColumnToSort = value;
-        }
+        public int SortColumn { get; set; }
 
         /// <summary>
         /// Gets or sets the order of sorting to apply (for example, 'Ascending' or 'Descending').
@@ -72,11 +49,7 @@ namespace Els_kom
         /// <value>
         /// The order of sorting to apply (for example, 'Ascending' or 'Descending').
         /// </value>
-        public SortOrder Order
-        {
-            get => this.OrderOfSort;
-            set => this.OrderOfSort = value;
-        }
+        public SortOrder Order { get; set; }
 
         /// <summary>
         /// This method is inherited from the IComparer interface.  It compares the two objects passed using a case insensitive comparison.
@@ -95,16 +68,16 @@ namespace Els_kom
 
             // Compare the two items
             compareResult = this.SortByDate
-                ? DateTime.Compare((DateTime)listviewX.SubItems[this.ColumnToSort].Tag, (DateTime)listviewY.SubItems[this.ColumnToSort].Tag)
-                : this.ObjectCompare.Compare(listviewX.SubItems[this.ColumnToSort].Text, listviewY.SubItems[this.ColumnToSort].Text);
+                ? DateTime.Compare((DateTime)listviewX.SubItems[this.SortColumn].Tag, (DateTime)listviewY.SubItems[this.SortColumn].Tag)
+                : string.Compare(listviewX.SubItems[this.SortColumn].Text, listviewY.SubItems[this.SortColumn].Text, StringComparison.OrdinalIgnoreCase);
 
             // Calculate correct return value based on object comparison
-            if (this.OrderOfSort == SortOrder.Ascending)
+            if (this.Order == SortOrder.Ascending)
             {
                 // Ascending sort is selected, return normal result of compare operation
                 return compareResult;
             }
-            else if (this.OrderOfSort == SortOrder.Descending)
+            else if (this.Order == SortOrder.Descending)
             {
                 // Descending sort is selected, return negative result of compare operation
                 return -compareResult;

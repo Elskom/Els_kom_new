@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2014-2020, Els_kom org.
+﻿// Copyright (c) 2014-2021, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -7,19 +7,17 @@ namespace Els_kom.Forms
 {
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
-    using System.Linq;
     using System.Windows.Forms;
     using Els_kom.Controls;
-    using Elskom.Generic.Libs;
 
     internal partial class GameSelectionForm : ThemedForm
     {
-        private readonly List<Button> buttons = new List<Button>();
+        private readonly List<Button> buttons = new();
 
         public GameSelectionForm()
             => this.InitializeComponent();
 
+#if NEVER_DEFINED
         public bool ExecuteGame { get; set; } = false;
 
         private void OnGrandChaseInstanceButtonClick()
@@ -47,10 +45,12 @@ namespace Els_kom.Forms
                 // TODO: Do some sort of work then.
             }
         }
+#endif
 
         private void GameSelectionForm_Load(object sender, System.EventArgs e)
         {
-            SettingsFile.Settingsxml?.ReopenFile();
+#if NEVER_DEFINED
+            SettingsFile.SettingsJson = SettingsFile.SettingsJson?.ReopenFile();
 
             // we need to pad this by 6 * 3. (per control that is.
             var padding = 6;
@@ -94,6 +94,12 @@ namespace Els_kom.Forms
 
                 this.buttons.Add(btn);
             }
+#else
+            _ = string.Equals(null, null, StringComparison.Ordinal);
+
+            // throw for now.
+            throw new NotSupportedException("Not finished yet.");
+#endif
         }
     }
 }

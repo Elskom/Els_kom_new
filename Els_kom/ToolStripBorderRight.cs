@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2014-2020, Els_kom org.
+﻿// Copyright (c) 2014-2021, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -15,7 +15,6 @@ namespace Els_kom
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-
             if (this.DrawCustomBorder)
             {
                 using (var pen = new Pen(ProfessionalColors.SeparatorDark))

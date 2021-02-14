@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2020, Els_kom org.
+// Copyright (c) 2014-2021, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -7,39 +7,29 @@ namespace Els_kom.Forms
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Windows.Forms;
     using Els_kom.Controls;
     using Elskom.Generic.Libs;
 
     internal partial class PluginsForm : /*Form*/ThemedForm
     {
-        private bool pluginChanges = false;
-        private int saveToZip = 0;
+        private bool pluginChanges;
+        private int saveToZip;
 
-        internal PluginsForm() => this.InitializeComponent();
+        internal PluginsForm()
+            => this.InitializeComponent();
 
         private void PluginsForm_Load(object sender, EventArgs e)
         {
-            SettingsFile.Settingsxml?.ReopenFile();
-            if (!int.TryParse(SettingsFile.Settingsxml?.TryRead("SaveToZip"), out this.saveToZip))
-            {
-                // do nothing to silence a compile error.
-            }
-
+            this.saveToZip = SettingsFile.SettingsJson.SaveToZip;
             var pluginTypes = new List<Type>();
-            foreach (var callbackplugin in KOMManager.Callbackplugins)
-            {
-                pluginTypes.Add(callbackplugin.GetType());
-            }
-
-            foreach (var komplugin in KOMManager.Komplugins)
-            {
-                pluginTypes.Add(komplugin.GetType());
-            }
+            pluginTypes.AddRange(KOMManager.Callbackplugins.Select((x) => x.GetType()));
+            pluginTypes.AddRange(KOMManager.Komplugins.Select((x) => x.GetType()));
 
             // update the list if there were new sources added during the program execution.
             MainForm.PluginUpdateChecks = PluginUpdateCheck.CheckForUpdates(
-                SettingsFile.Settingsxml?.TryRead("Sources", "Source", null),
+                SettingsFile.SettingsJson.Sources.Source.ToArray(),
                 pluginTypes);
         }
 
@@ -50,17 +40,14 @@ namespace Els_kom.Forms
                 foreach (var pluginUpdateCheck in MainForm.PluginUpdateChecks)
                 {
                     // install only the selected plugin.
-                    if (pluginUpdateCheck.PluginName.Equals(this.ListView1.SelectedItems[0].SubItems[0].Text))
+                    if (pluginUpdateCheck.PluginName.Equals(this.ListView1.SelectedItems[0].SubItems[0].Text, StringComparison.Ordinal))
                     {
                         var result = pluginUpdateCheck.Install(Convert.ToBoolean(this.saveToZip));
 
-                        // avoid resetting the value back to false if "Uninstall" returns "false".
-                        if (!this.pluginChanges)
+                        // avoid resetting the value back to false if "Install" returns "false".
+                        if (!this.pluginChanges && result)
                         {
-                            if (result)
-                            {
-                                this.pluginChanges = result;
-                            }
+                            this.pluginChanges = result;
                         }
                     }
                 }
@@ -89,22 +76,19 @@ namespace Els_kom.Forms
         {
             if (this.ListView1.SelectedItems.Count > 0)
             {
-                if (!this.ListView1.SelectedItems[0].SubItems[2].Text.Equals(string.Empty))
+                if (!this.ListView1.SelectedItems[0].SubItems[2].Text.Equals(string.Empty, StringComparison.Ordinal))
                 {
                     foreach (var pluginUpdateCheck in MainForm.PluginUpdateChecks)
                     {
                         // install only the selected plugin.
-                        if (pluginUpdateCheck.PluginName.Equals(this.ListView1.SelectedItems[0].SubItems[0].Text))
+                        if (pluginUpdateCheck.PluginName.Equals(this.ListView1.SelectedItems[0].SubItems[0].Text, StringComparison.Ordinal))
                         {
                             var result = pluginUpdateCheck.Uninstall(Convert.ToBoolean(this.saveToZip));
 
                             // avoid resetting the value back to false if "Uninstall" returns "false".
-                            if (!this.pluginChanges)
+                            if (!this.pluginChanges && result)
                             {
-                                if (result)
-                                {
-                                    this.pluginChanges = result;
-                                }
+                                this.pluginChanges = result;
                             }
                         }
                     }
@@ -114,7 +98,7 @@ namespace Els_kom.Forms
                     _ = MessageManager.ShowInfo(
                         "The selected plugin is not installed, or the plugin was installed and this program was not restarted yet to know that it was.",
                         "Info!",
-                        Convert.ToBoolean(Convert.ToInt32(!string.IsNullOrEmpty(SettingsFile.Settingsxml?.TryRead("UseNotifications")) ? SettingsFile.Settingsxml?.TryRead("UseNotifications") : "0")));
+                        Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
                 }
             }
         }
