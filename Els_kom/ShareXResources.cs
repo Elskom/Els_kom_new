@@ -24,7 +24,10 @@ namespace Els_kom
 
         public static ShareXTheme Theme { get; set; } = new ShareXTheme();
 
-        public static void ApplyTheme(Form form, bool setIcon = true)
+        public static void ApplyTheme(Form form)
+            => ApplyTheme(form, true);
+
+        public static void ApplyTheme(Form form, bool setIcon)
         {
             if (setIcon)
             {
