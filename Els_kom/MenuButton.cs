@@ -20,7 +20,6 @@ namespace Els_kom
         protected override void OnMouseDown(MouseEventArgs mevent)
         {
             base.OnMouseDown(mevent);
-
             if (this.Menu != null && mevent.Button == MouseButtons.Left)
             {
                 var menuLocation = this.ShowMenuUnderCursor ? mevent.Location : new Point(0, this.Height);
@@ -36,11 +35,9 @@ namespace Els_kom
                 var arrowX = this.ClientRectangle.Width - 14;
                 var arrowY = (this.ClientRectangle.Height / 2) - 1;
                 var color = this.Enabled ? this.ForeColor : SystemColors.ControlDark;
-                using (Brush brush = new SolidBrush(color))
-                {
-                    var arrows = new Point[] { new Point(arrowX, arrowY), new Point(arrowX + 7, arrowY), new Point(arrowX + 3, arrowY + 4) };
-                    pevent.Graphics.FillPolygon(brush, arrows);
-                }
+                using Brush brush = new SolidBrush(color);
+                var arrows = new[] { new Point(arrowX, arrowY), new Point(arrowX + 7, arrowY), new Point(arrowX + 3, arrowY + 4) };
+                pevent.Graphics.FillPolygon(brush, arrows);
             }
         }
     }
