@@ -16,12 +16,18 @@ jobs:
     steps:
     # clone the Sdk repository.
     - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
       with:
         repository: 'Elskom/Sdk'
         ref: 'main'
         path: 'Sdk'
         # we need the submodule inside of the Sdk so it can build it properly.
         submodules: recursive
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.100-preview.1.21103.13
 
     - name: Build and package Sdk.
       run: |
@@ -30,11 +36,6 @@ jobs:
         dotnet build --configuration Release --no-restore
         dotnet pack --configuration Release --no-build
 
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.100-preview.1.21103.13
     - name: Build with dotnet
       run: |
         dotnet nuget add source ./Sdk/artifacts --name "My local package builds"
