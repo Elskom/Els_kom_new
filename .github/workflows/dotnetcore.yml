@@ -38,5 +38,5 @@ jobs:
 
     - name: Build with dotnet
       run: |
-        dotnet nuget add source ./Sdk/artifacts --name "My local package builds"
+        dotnet nuget add source D:\a\Els_kom_new\Els_kom_new\Sdk\artifacts --name "My local package builds"
         dotnet build --configuration Release
