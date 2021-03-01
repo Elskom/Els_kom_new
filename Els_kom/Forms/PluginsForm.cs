@@ -8,7 +8,6 @@ namespace Els_kom.Forms
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Windows.Forms;
     using Els_kom.Controls;
     using Elskom.Generic.Libs;
 
@@ -30,7 +29,8 @@ namespace Els_kom.Forms
             // update the list if there were new sources added during the program execution.
             MainForm.PluginUpdateChecks = PluginUpdateCheck.CheckForUpdates(
                 SettingsFile.SettingsJson.Sources.Source.ToArray(),
-                pluginTypes);
+                pluginTypes,
+                Els_kom_Main.ServiceProvider);
         }
 
         private void InstallButton_Click(object sender, EventArgs e)
@@ -58,13 +58,32 @@ namespace Els_kom.Forms
         {
             if (this.pluginChanges)
             {
-                var result = MessageManager.ShowQuestion(
-                    "A plugin was installed, uninstalled or updated. Do you want to restart this program now for the changes to take effect?",
-                    "Info!");
-                if (result == DialogResult.Yes)
-                {
-                    Application.Restart();
-                }
+                _ = MainForm.MessageManager.ShowInfo("A plugin was installed, uninstalled or updated. All plugins are about to be reloaded.", "Info!", Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
+                var komloader = new GenericPluginLoader<IKomPlugin>();
+                var callbackloader = new GenericPluginLoader<ICallbackPlugin>();
+                var encryptionloader = new GenericPluginLoader<IEncryptionPlugin>();
+#if NET5_0_OR_GREATER
+                komloader.UnloadPlugins(MainForm.Contexts);
+                MainForm.Contexts.Clear();
+#else
+                komloader.UnloadPlugins(MainForm.Domains);
+                MainForm.Domains.Clear();
+#endif
+                var komplugins = komloader.LoadPlugins("plugins", out var domains1, Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                KOMManager.Komplugins.AddRange(komplugins);
+                var callbackplugins = callbackloader.LoadPlugins("plugins", out var domains2, Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                KOMManager.Callbackplugins.AddRange(callbackplugins);
+                var encryptionplugins = encryptionloader.LoadPlugins("plugins", out var domains3, Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                KOMManager.Encryptionplugins.AddRange(encryptionplugins);
+#if NET5_0_OR_GREATER
+                MainForm.Contexts.AddRange(domains1);
+                MainForm.Contexts.AddRange(domains2);
+                MainForm.Contexts.AddRange(domains3);
+#else
+                MainForm.Domains.AddRange(domains1);
+                MainForm.Domains.AddRange(domains2);
+                MainForm.Domains.AddRange(domains3);
+#endif
             }
             else
             {
@@ -95,7 +114,7 @@ namespace Els_kom.Forms
                 }
                 else
                 {
-                    _ = MessageManager.ShowInfo(
+                    _ = MainForm.MessageManager.ShowInfo(
                         "The selected plugin is not installed, or the plugin was installed and this program was not restarted yet to know that it was.",
                         "Info!",
                         Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));

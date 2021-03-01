@@ -31,3 +31,4 @@ Plugins
 .idea/*
 # Private copy of the pcbuild solution file containing the plugin projects.
 pcbuild.private.sln
+Sdk/

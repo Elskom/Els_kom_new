@@ -462,9 +462,6 @@
   <data name="launcherTmr.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>813, 17</value>
   </data>
-  <data name="MessageManager1.TrayLocation" type="System.Drawing.Point, System.Drawing">
-    <value>17, 17</value>
-  </data>
   <data name="$this.Localizable" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -554,12 +551,6 @@
   </data>
   <data name="&gt;&gt;launcherTmr.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MessageManager1.Name" xml:space="preserve">
-    <value>MessageManager1</value>
-  </data>
-  <data name="&gt;&gt;MessageManager1.Type" xml:space="preserve">
-    <value>Elskom.Generic.Libs.MessageManager, MessageManager, Version=1.1.2.0, Culture=neutral, PublicKeyToken=0371adb4a80cedf9</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>

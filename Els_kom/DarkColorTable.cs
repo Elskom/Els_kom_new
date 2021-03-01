@@ -8,7 +8,7 @@ namespace Els_kom
     using System.Drawing;
     using System.Windows.Forms;
 
-    public class DarkColorTable : ProfessionalColorTable
+    internal class DarkColorTable : ProfessionalColorTable
     {
         public override Color ButtonSelectedHighlight
             => ShareXResources.Theme.MenuHighlightColor;

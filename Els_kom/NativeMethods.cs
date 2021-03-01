@@ -229,47 +229,6 @@ namespace Els_kom
             NoFrame = 0x800,
         }
 
-        public enum CombineRgnStyles
-        {
-            RGN_AND = 1,
-            RGN_OR = 2,
-            RGN_XOR = 3,
-            RGN_DIFF = 4,
-            RGN_COPY = 5,
-            RGN_MIN = RGN_AND,
-            RGN_MAX = RGN_COPY,
-        }
-
-        public enum HitTestResult
-        {
-            HTBORDER = 18, // In the border of a window that does not have a sizing border.
-            HTBOTTOM = 15, // In the lower-horizontal border of a resizable window (the user can click the mouse to resize the window vertically).
-            HTBOTTOMLEFT = 16, // In the lower-left corner of a border of a resizable window(the user can click the mouse to resize the window diagonally).
-            HTBOTTOMRIGHT = 17, // In the lower-right corner of a border of a resizable window(the user can click the mouse to resize the window diagonally).
-            HTCAPTION = 2, // In a title bar.
-            HTCLIENT = 1, // In a client area.
-            HTCLOSE = 20, // In a Close button.
-            HTERROR = -2, // On the screen background or on a dividing line between windows (same as HTNOWHERE, except that the DefWindowProc function produces a system beep to indicate an error).
-            HTGROWBOX = 4, // In a size box(same as HTSIZE).
-            HTHELP = 21, // In a Help button.
-            HTHSCROLL = 6, // In a horizontal scroll bar.
-            HTLEFT = 10, // In the left border of a resizable window (the user can click the mouse to resize the window horizontally).
-            HTMENU = 5, // In a menu.
-            HTMAXBUTTON = 9, // In a Maximize button.
-            HTMINBUTTON = 8, // In a Minimize button.
-            HTNOWHERE = 0, // On the screen background or on a dividing line between windows.
-            HTREDUCE = HTMINBUTTON, // In a Minimize button.
-            HTRIGHT = 11, // In the right border of a resizable window (the user can click the mouse to resize the window horizontally).
-            HTSIZE = HTGROWBOX, // In a size box(same as HTGROWBOX).
-            HTSYSMENU = 3, // In a window menu or in a Close button in a child window.
-            HTTOP = 12, // In the upper-horizontal border of a window.
-            HTTOPLEFT = 13, // In the upper-left corner of a window border.
-            HTTOPRIGHT = 14, // In the upper-right corner of a window border.
-            HTTRANSPARENT = -1, // In a window currently covered by another window in the same thread (the message will be sent to underlying windows in the same thread until one of them returns a code that is not HTTRANSPARENT).
-            HTVSCROLL = 7, // In the vertical scroll bar.
-            HTZOOM = HTMAXBUTTON, // In a Maximize button.
-        }
-
         [Flags]
         public enum MIIM
         {
@@ -678,7 +637,7 @@ namespace Els_kom
 
         // for making screenshots.
         [DllImport("gdi32.dll")]
-        internal static extern bool BitBlt(IntPtr hdcDest, int xDest, int yDest, int wDest, int hDest, IntPtr hdcSource, int xSrc, int ySrc, CopyPixelOperation rop);
+        internal static extern bool BitBlt(IntPtr hdcDest, int xDest, int yDest, int wDest, int hDest, IntPtr hdcSource, int xSrc, int ySrc, int rop);
 
         [DllImport("user32.dll")]
         internal static extern bool ReleaseDC(IntPtr hWnd, IntPtr hDC);
@@ -952,7 +911,7 @@ namespace Els_kom
                 var hDest = CreateCompatibleDC(hSrce);
                 var hBmp = CreateCompatibleBitmap(hSrce, sz.Width, sz.Height);
                 var hOldBmp = SelectObject(hDest, hBmp);
-                _ = BitBlt(hDest, 0, 0, sz.Width, sz.Height, hSrce, 0, 0, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
+                _ = BitBlt(hDest, 0, 0, sz.Width, sz.Height, hSrce, 0, 0, 0xCC0020 | 0x40000000);
                 var bmp = Image.FromHbitmap(hBmp);
                 _ = SelectObject(hDest, hOldBmp);
                 _ = DeleteObject(hBmp);

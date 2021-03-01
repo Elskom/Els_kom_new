@@ -12,7 +12,7 @@ namespace Els_kom
     using Els_kom.Controls;
     using Elskom.Generic.Libs;
 
-    public static class ShareXResources
+    internal static class ShareXResources
     {
         private static readonly List<Button> HoveredButtonList = new();
         private static readonly List<Button> FocusedButtonList = new();

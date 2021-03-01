@@ -8,14 +8,34 @@ on:
 
 jobs:
   build:
-
     runs-on: windows-latest
-
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_NOLOGO: true
     steps:
+    # clone the Sdk repository.
+    - uses: actions/checkout@v2
+      with:
+        repository: 'Elskom/Sdk'
+        ref: 'main'
+        path: 'Sdk'
+        # we need the submodule inside of the Sdk so it can build it properly.
+        submodules: recursive
+
+    - name: Build and package Sdk.
+      run: |
+        cd Sdk/
+        dotnet restore
+        dotnet build --configuration Release --no-restore
+        dotnet pack --configuration Release --no-build
+
     - uses: actions/checkout@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.100-preview.1.21103.13
     - name: Build with dotnet
-      run: dotnet build --configuration Release
+      run: |
+        dotnet nuget add source ./Sdk/artifacts --name "My local package builds"
+        dotnet build --configuration Release

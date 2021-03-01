@@ -46,7 +46,6 @@ namespace Els_kom.Forms
             this.Label6 = new System.Windows.Forms.Label();
             this.Button6 = new System.Windows.Forms.Button();
             this.Button5 = new System.Windows.Forms.Button();
-            this.CheckBox2 = new System.Windows.Forms.CheckBox();
             this.CheckBox1 = new System.Windows.Forms.CheckBox();
             this.Button4 = new System.Windows.Forms.Button();
             this.ListView2 = new Els_kom.Controls.ThemedListView();
@@ -229,7 +228,6 @@ namespace Els_kom.Forms
             this.Panel6.Controls.Add(this.Label6);
             this.Panel6.Controls.Add(this.Button6);
             this.Panel6.Controls.Add(this.Button5);
-            this.Panel6.Controls.Add(this.CheckBox2);
             this.Panel6.Controls.Add(this.CheckBox1);
             this.Panel6.Controls.Add(this.Button4);
             this.Panel6.Controls.Add(this.ListView2);
@@ -277,12 +275,6 @@ namespace Els_kom.Forms
             resources.ApplyResources(this.Button5, "Button5");
             this.Button5.Name = "Button5";
             this.Button5.Click += new System.EventHandler(this.Button5_Click);
-            // 
-            // CheckBox2
-            // 
-            resources.ApplyResources(this.CheckBox2, "CheckBox2");
-            this.CheckBox2.Name = "CheckBox2";
-            this.CheckBox2.CheckedChanged += new System.EventHandler(this.CheckBox2_CheckedChanged);
             // 
             // CheckBox1
             // 
@@ -355,7 +347,6 @@ namespace Els_kom.Forms
         private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label6;
         private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Button6;
         private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Button5;
-        private System.Windows.Forms.CheckBox/*Els_kom.Controls.ThemedCheckBox*/ CheckBox2;
         private System.Windows.Forms.CheckBox/*Els_kom.Controls.ThemedCheckBox*/ CheckBox1;
         private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Button4;
         private System.Windows.Forms.Label/*Els_kom.Controls.ThemedLabel*/ Label7;

@@ -11,13 +11,10 @@ namespace Els_kom
     using System.Resources;
     using Elskom.Generic.Libs;
 
-    // Forms designer cannot see these if they are "internal" but I wanted them Internal.
-    // The WinForms team probably should base the Forms Designer off of Roslyn sometime?
-
     /// <summary>
     /// Els_kom Icon Resource Class.
     /// </summary>
-    public static class Icons
+    internal static class Icons
     {
         private static ResourceManager resourceMan;
         private static CultureInfo resourceCulture;

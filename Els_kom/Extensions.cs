@@ -24,11 +24,9 @@ namespace Els_kom
                 return Array.Empty<byte>();
             }
 
-            using (var ms = new MemoryStream())
-            {
-                icon.Save(ms);
-                return ms.ToArray();
-            }
+            using var ms = new MemoryStream();
+            icon.Save(ms);
+            return ms.ToArray();
         }
 
         public static string ToHexString(this Color color)

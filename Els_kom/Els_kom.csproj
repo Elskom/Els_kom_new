@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Elskom.Sdk/1.0.0">
 
   <PropertyGroup>
     <TargetFrameworks>net472;net5.0-windows</TargetFrameworks>
@@ -39,9 +39,6 @@
     <Copyright>Copyright © 2014-2021</Copyright>
     <Company>Els_kom org.</Company>
     <Version>1.4.9.8</Version>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>preview</AnalysisLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
@@ -83,7 +80,6 @@
 
   <ItemGroup>
     <PackageReference Include="Svg" Version="3.2.3" />
-    <PackageReference Include="Elskom.Sdk" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,7 +7,7 @@ namespace Els_kom
 {
     using System.Windows.Forms;
 
-    public class ToolStripDarkRenderer : ToolStripCustomRenderer
+    internal class ToolStripDarkRenderer : ToolStripCustomRenderer
     {
         public ToolStripDarkRenderer()
             : base(new DarkColorTable())

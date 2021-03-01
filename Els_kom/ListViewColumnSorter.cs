@@ -12,7 +12,7 @@ namespace Els_kom
     /// <summary>
     /// This class is an implementation of the 'IComparer' interface.
     /// </summary>
-    public class ListViewColumnSorter : IComparer
+    internal class ListViewColumnSorter : IComparer
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListViewColumnSorter"/> class.

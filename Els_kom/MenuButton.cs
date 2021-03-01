@@ -9,7 +9,7 @@ namespace Els_kom
     using System.Drawing;
     using System.Windows.Forms;
 
-    public class MenuButton : Button
+    internal class MenuButton : Button
     {
         [DefaultValue(null)]
         public ContextMenuStrip Menu { get; set; }

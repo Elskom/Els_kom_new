@@ -117,19 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
-  <data name="Label1.Font" type="System.Drawing.Font, System.Drawing.Common">
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <assembly alias="System.Drawing.Primitives" name="System.Drawing.Primitives, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 14</value>
   </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>92, 13</value>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 14</value>
   </data>
-  <assembly alias="System.Runtime" name="System.Runtime, Version=4.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Label1.TabIndex" type="System.Int32, System.Runtime">
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Label1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
@@ -147,16 +146,16 @@
   <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="Button1.Font" type="System.Drawing.Font, System.Drawing.Common">
+  <data name="Button1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
     <value>348, 11</value>
   </data>
-  <data name="Button1.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 19</value>
   </data>
-  <data name="Button1.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Button1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
@@ -174,13 +173,13 @@
   <data name="&gt;&gt;Button1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>100, 11</value>
   </data>
-  <data name="TextBox1.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="TextBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>242, 20</value>
   </data>
-  <data name="TextBox1.TabIndex" type="System.Int32, System.Runtime">
+  <data name="TextBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="&gt;&gt;TextBox1.Name" xml:space="preserve">
@@ -195,13 +194,13 @@
   <data name="&gt;&gt;TextBox1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="Panel1.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Panel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>413, 46</value>
   </data>
-  <data name="Panel1.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Panel1.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="&gt;&gt;Panel1.Name" xml:space="preserve">
@@ -216,16 +215,16 @@
   <data name="&gt;&gt;Panel1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="Button2.Font" type="System.Drawing.Font, System.Drawing.Common">
+  <data name="Button2.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="Button2.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
     <value>444, 144</value>
   </data>
-  <data name="Button2.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>79, 21</value>
   </data>
-  <data name="Button2.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Button2.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
   <data name="Button2.Text" xml:space="preserve">
@@ -243,7 +242,7 @@
   <data name="&gt;&gt;Button2.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="TreeView1.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="TreeView1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 10</value>
   </data>
   <data name="TreeView1.Nodes" mimetype="application/x-microsoft.net.object.binary.base64">
@@ -276,10 +275,10 @@
         AAAA/////wkEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="TreeView1.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="TreeView1.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 127</value>
   </data>
-  <data name="TreeView1.TabIndex" type="System.Int32, System.Runtime">
+  <data name="TreeView1.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
   <data name="&gt;&gt;TreeView1.Name" xml:space="preserve">
@@ -294,16 +293,16 @@
   <data name="&gt;&gt;TreeView1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="RadioButton6.AutoSize" type="System.Boolean, System.Runtime">
+  <data name="RadioButton6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="RadioButton6.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="RadioButton6.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 6</value>
   </data>
-  <data name="RadioButton6.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="RadioButton6.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 17</value>
   </data>
-  <data name="RadioButton6.TabIndex" type="System.Int32, System.Runtime">
+  <data name="RadioButton6.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="RadioButton6.Text" xml:space="preserve">
@@ -321,16 +320,16 @@
   <data name="&gt;&gt;RadioButton6.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="RadioButton5.AutoSize" type="System.Boolean, System.Runtime">
+  <data name="RadioButton5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="RadioButton5.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="RadioButton5.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 6</value>
   </data>
-  <data name="RadioButton5.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="RadioButton5.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 17</value>
   </data>
-  <data name="RadioButton5.TabIndex" type="System.Int32, System.Runtime">
+  <data name="RadioButton5.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="RadioButton5.Text" xml:space="preserve">
@@ -348,16 +347,16 @@
   <data name="&gt;&gt;RadioButton5.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="RadioButton4.AutoSize" type="System.Boolean, System.Runtime">
+  <data name="RadioButton4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="RadioButton4.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="RadioButton4.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 6</value>
   </data>
-  <data name="RadioButton4.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="RadioButton4.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 17</value>
   </data>
-  <data name="RadioButton4.TabIndex" type="System.Int32, System.Runtime">
+  <data name="RadioButton4.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="RadioButton4.Text" xml:space="preserve">
@@ -375,13 +374,13 @@
   <data name="&gt;&gt;RadioButton4.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="Panel4.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Panel4.Location" type="System.Drawing.Point, System.Drawing">
     <value>144, 34</value>
   </data>
-  <data name="Panel4.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="Panel4.Size" type="System.Drawing.Size, System.Drawing">
     <value>198, 29</value>
   </data>
-  <data name="Panel4.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Panel4.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
   <data name="&gt;&gt;Panel4.Name" xml:space="preserve">
@@ -396,16 +395,16 @@
   <data name="&gt;&gt;Panel4.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="RadioButton3.AutoSize" type="System.Boolean, System.Runtime">
+  <data name="RadioButton3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="RadioButton3.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="RadioButton3.Location" type="System.Drawing.Point, System.Drawing">
     <value>303, 12</value>
   </data>
-  <data name="RadioButton3.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="RadioButton3.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 17</value>
   </data>
-  <data name="RadioButton3.TabIndex" type="System.Int32, System.Runtime">
+  <data name="RadioButton3.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
   <data name="RadioButton3.Text" xml:space="preserve">
@@ -423,16 +422,16 @@
   <data name="&gt;&gt;RadioButton3.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="RadioButton2.AutoSize" type="System.Boolean, System.Runtime">
+  <data name="RadioButton2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="RadioButton2.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="RadioButton2.Location" type="System.Drawing.Point, System.Drawing">
     <value>240, 12</value>
   </data>
-  <data name="RadioButton2.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="RadioButton2.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 17</value>
   </data>
-  <data name="RadioButton2.TabIndex" type="System.Int32, System.Runtime">
+  <data name="RadioButton2.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="RadioButton2.Text" xml:space="preserve">
@@ -450,16 +449,16 @@
   <data name="&gt;&gt;RadioButton2.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="RadioButton1.AutoSize" type="System.Boolean, System.Runtime">
+  <data name="RadioButton1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="RadioButton1.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="RadioButton1.Location" type="System.Drawing.Point, System.Drawing">
     <value>163, 12</value>
   </data>
-  <data name="RadioButton1.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="RadioButton1.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 17</value>
   </data>
-  <data name="RadioButton1.TabIndex" type="System.Int32, System.Runtime">
+  <data name="RadioButton1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="RadioButton1.Text" xml:space="preserve">
@@ -477,16 +476,16 @@
   <data name="&gt;&gt;RadioButton1.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="Label3.Font" type="System.Drawing.Font, System.Drawing.Common">
+  <data name="Label3.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="Label3.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 42</value>
   </data>
-  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>130, 13</value>
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 14</value>
   </data>
-  <data name="Label3.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Label3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
@@ -504,16 +503,16 @@
   <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="Label2.Font" type="System.Drawing.Font, System.Drawing.Common">
+  <data name="Label2.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 14</value>
   </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>148, 13</value>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 14</value>
   </data>
-  <data name="Label2.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Label2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
@@ -531,13 +530,13 @@
   <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="Panel2.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Panel2.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 51</value>
   </data>
-  <data name="Panel2.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="Panel2.Size" type="System.Drawing.Size, System.Drawing">
     <value>413, 74</value>
   </data>
-  <data name="Panel2.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Panel2.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
   <data name="&gt;&gt;Panel2.Name" xml:space="preserve">
@@ -552,13 +551,13 @@
   <data name="&gt;&gt;Panel2.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="Panel3.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Panel3.Location" type="System.Drawing.Point, System.Drawing">
     <value>107, 10</value>
   </data>
-  <data name="Panel3.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="Panel3.Size" type="System.Drawing.Size, System.Drawing">
     <value>415, 127</value>
   </data>
-  <data name="Panel3.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Panel3.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
   <data name="&gt;&gt;Panel3.Name" xml:space="preserve">
@@ -573,19 +572,19 @@
   <data name="&gt;&gt;Panel3.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="Button3.Enabled" type="System.Boolean, System.Runtime">
+  <data name="Button3.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="Button3.Font" type="System.Drawing.Font, System.Drawing.Common">
+  <data name="Button3.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="Button3.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Button3.Location" type="System.Drawing.Point, System.Drawing">
     <value>325, 95</value>
   </data>
-  <data name="Button3.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="Button3.Size" type="System.Drawing.Size, System.Drawing">
     <value>79, 23</value>
   </data>
-  <data name="Button3.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Button3.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="Button3.Text" xml:space="preserve">
@@ -606,19 +605,19 @@
   <data name="ColumnHeader1.Text" xml:space="preserve">
     <value>Plugin</value>
   </data>
-  <data name="ColumnHeader1.Width" type="System.Int32, System.Runtime">
+  <data name="ColumnHeader1.Width" type="System.Int32, mscorlib">
     <value>395</value>
   </data>
-  <data name="ListView1.LabelWrap" type="System.Boolean, System.Runtime">
+  <data name="ListView1.LabelWrap" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="ListView1.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="ListView1.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 7</value>
   </data>
-  <data name="ListView1.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="ListView1.Size" type="System.Drawing.Size, System.Drawing">
     <value>396, 83</value>
   </data>
-  <data name="ListView1.TabIndex" type="System.Int32, System.Runtime">
+  <data name="ListView1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="&gt;&gt;ListView1.Name" xml:space="preserve">
@@ -633,16 +632,16 @@
   <data name="&gt;&gt;ListView1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="Panel5.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Panel5.Location" type="System.Drawing.Point, System.Drawing">
     <value>107, 10</value>
   </data>
-  <data name="Panel5.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="Panel5.Size" type="System.Drawing.Size, System.Drawing">
     <value>415, 127</value>
   </data>
-  <data name="Panel5.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Panel5.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="Panel5.Visible" type="System.Boolean, System.Runtime">
+  <data name="Panel5.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="&gt;&gt;Panel5.Name" xml:space="preserve">
@@ -657,19 +656,19 @@
   <data name="&gt;&gt;Panel5.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="Panel6.AutoScroll" type="System.Boolean, System.Runtime">
+  <data name="Panel6.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="Label7.Font" type="System.Drawing.Font, System.Drawing.Common">
+  <data name="Label7.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="Label7.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>12, 169</value>
+  <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 129</value>
   </data>
-  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 13</value>
   </data>
-  <data name="Label7.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Label7.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
   </data>
   <data name="Label7.Text" xml:space="preserve">
@@ -687,16 +686,16 @@
   <data name="&gt;&gt;Label7.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="RadioButton9.AutoSize" type="System.Boolean, System.Runtime">
+  <data name="RadioButton9.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="RadioButton9.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>184, 186</value>
+  <data name="RadioButton9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>184, 146</value>
   </data>
-  <data name="RadioButton9.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="RadioButton9.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 17</value>
   </data>
-  <data name="RadioButton9.TabIndex" type="System.Int32, System.Runtime">
+  <data name="RadioButton9.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
   <data name="RadioButton9.Text" xml:space="preserve">
@@ -714,16 +713,16 @@
   <data name="&gt;&gt;RadioButton9.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="RadioButton8.AutoSize" type="System.Boolean, System.Runtime">
+  <data name="RadioButton8.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="RadioButton8.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>90, 186</value>
+  <data name="RadioButton8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>90, 146</value>
   </data>
-  <data name="RadioButton8.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="RadioButton8.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 17</value>
   </data>
-  <data name="RadioButton8.TabIndex" type="System.Int32, System.Runtime">
+  <data name="RadioButton8.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
   <data name="RadioButton8.Text" xml:space="preserve">
@@ -741,16 +740,16 @@
   <data name="&gt;&gt;RadioButton8.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="RadioButton7.AutoSize" type="System.Boolean, System.Runtime">
+  <data name="RadioButton7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="RadioButton7.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>15, 186</value>
+  <data name="RadioButton7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 146</value>
   </data>
-  <data name="RadioButton7.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="RadioButton7.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 17</value>
   </data>
-  <data name="RadioButton7.TabIndex" type="System.Int32, System.Runtime">
+  <data name="RadioButton7.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
   <data name="RadioButton7.Text" xml:space="preserve">
@@ -768,16 +767,16 @@
   <data name="&gt;&gt;RadioButton7.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="Label6.Font" type="System.Drawing.Font, System.Drawing.Common">
+  <data name="Label6.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
     <value>11, 7</value>
   </data>
-  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>176, 13</value>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 14</value>
   </data>
-  <data name="Label6.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Label6.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
@@ -795,16 +794,16 @@
   <data name="&gt;&gt;Label6.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="Button6.Font" type="System.Drawing.Font, System.Drawing.Common">
+  <data name="Button6.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="Button6.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Button6.Location" type="System.Drawing.Point, System.Drawing">
     <value>318, 103</value>
   </data>
-  <data name="Button6.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="Button6.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 19</value>
   </data>
-  <data name="Button6.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Button6.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
   <data name="Button6.Text" xml:space="preserve">
@@ -822,16 +821,16 @@
   <data name="&gt;&gt;Button6.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="Button5.Font" type="System.Drawing.Font, System.Drawing.Common">
+  <data name="Button5.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="Button5.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Button5.Location" type="System.Drawing.Point, System.Drawing">
     <value>233, 103</value>
   </data>
-  <data name="Button5.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="Button5.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 19</value>
   </data>
-  <data name="Button5.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Button5.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="Button5.Text" xml:space="preserve">
@@ -849,43 +848,16 @@
   <data name="&gt;&gt;Button5.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="CheckBox2.Font" type="System.Drawing.Font, System.Drawing.Common">
+  <data name="CheckBox1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="CheckBox2.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>15, 142</value>
+  <data name="CheckBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 105</value>
   </data>
-  <data name="CheckBox2.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>240, 17</value>
+  <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 18</value>
   </data>
-  <data name="CheckBox2.TabIndex" type="System.Int32, System.Runtime">
-    <value>2</value>
-  </data>
-  <data name="CheckBox2.Text" xml:space="preserve">
-    <value>Load debugging symbols for Installed Plugins.</value>
-  </data>
-  <data name="&gt;&gt;CheckBox2.Name" xml:space="preserve">
-    <value>CheckBox2</value>
-  </data>
-  <data name="&gt;&gt;CheckBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;CheckBox2.Parent" xml:space="preserve">
-    <value>Panel6</value>
-  </data>
-  <data name="&gt;&gt;CheckBox2.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="CheckBox1.Font" type="System.Drawing.Font, System.Drawing.Common">
-    <value>Microsoft Sans Serif, 8.25pt</value>
-  </data>
-  <data name="CheckBox1.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>15, 125</value>
-  </data>
-  <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>177, 17</value>
-  </data>
-  <data name="CheckBox1.TabIndex" type="System.Int32, System.Runtime">
+  <data name="CheckBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="CheckBox1.Text" xml:space="preserve">
@@ -901,18 +873,18 @@
     <value>Panel6</value>
   </data>
   <data name="&gt;&gt;CheckBox1.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>7</value>
   </data>
-  <data name="Button4.Font" type="System.Drawing.Font, System.Drawing.Common">
+  <data name="Button4.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
-  <data name="Button4.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Button4.Location" type="System.Drawing.Point, System.Drawing">
     <value>276, 133</value>
   </data>
-  <data name="Button4.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="Button4.Size" type="System.Drawing.Size, System.Drawing">
     <value>117, 22</value>
   </data>
-  <data name="Button4.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Button4.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="Button4.Text" xml:space="preserve">
@@ -933,19 +905,19 @@
   <data name="ColumnHeader2.Text" xml:space="preserve">
     <value>Sources</value>
   </data>
-  <data name="ColumnHeader2.Width" type="System.Int32, System.Runtime">
+  <data name="ColumnHeader2.Width" type="System.Int32, mscorlib">
     <value>372</value>
   </data>
-  <data name="ListView2.LabelWrap" type="System.Boolean, System.Runtime">
+  <data name="ListView2.LabelWrap" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="ListView2.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="ListView2.Location" type="System.Drawing.Point, System.Drawing">
     <value>14, 23</value>
   </data>
-  <data name="ListView2.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="ListView2.Size" type="System.Drawing.Size, System.Drawing">
     <value>378, 76</value>
   </data>
-  <data name="ListView2.TabIndex" type="System.Int32, System.Runtime">
+  <data name="ListView2.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
   <data name="&gt;&gt;ListView2.Name" xml:space="preserve">
@@ -960,16 +932,16 @@
   <data name="&gt;&gt;ListView2.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
-  <data name="Panel6.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+  <data name="Panel6.Location" type="System.Drawing.Point, System.Drawing">
     <value>107, 10</value>
   </data>
-  <data name="Panel6.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="Panel6.Size" type="System.Drawing.Size, System.Drawing">
     <value>415, 127</value>
   </data>
-  <data name="Panel6.TabIndex" type="System.Int32, System.Runtime">
+  <data name="Panel6.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="Panel6.Visible" type="System.Boolean, System.Runtime">
+  <data name="Panel6.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="&gt;&gt;Panel6.Name" xml:space="preserve">
@@ -984,13 +956,13 @@
   <data name="&gt;&gt;Panel6.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="$this.Localizable" type="System.Boolean, System.Runtime">
+  <data name="$this.Localizable" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing.Primitives">
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 14</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing.Primitives">
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>531, 177</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

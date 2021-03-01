@@ -8,7 +8,7 @@ namespace Els_kom
     using System.Collections.Generic;
     using System.Drawing;
 
-    public class ShareXTheme
+    internal class ShareXTheme
     {
         public string Name { get; set; }
 

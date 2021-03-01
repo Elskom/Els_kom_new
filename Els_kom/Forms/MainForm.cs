@@ -17,6 +17,7 @@ namespace Els_kom.Forms
 
     internal partial class MainForm : /*Form*/ThemedForm
     {
+        private static MessageManager messageManager = null;
         private Form aboutfrm;
         private Form settingsfrm;
         private string elsDir = string.Empty;
@@ -27,9 +28,27 @@ namespace Els_kom.Forms
         private string elsDirTemp = string.Empty;
 
         internal MainForm()
-            => this.InitializeComponent();
+        {
+            this.InitializeComponent();
+            this.SuspendLayout();
+            messageManager = new MessageManager(this.Components)
+            {
+                ContextMenuStrip = this.contextMenuStrip1,
+            };
+            messageManager.MouseClick += new MouseEventHandler(this.MessageManager1_MouseClick);
+            this.Controls.Add(messageManager);
+            this.ResumeLayout(false);
+        }
 
         internal static List<PluginUpdateCheck> PluginUpdateChecks { get; set; }
+
+#if NET5_0_OR_GREATER
+        internal static List<PluginLoadContext> Contexts { get; } = new List<PluginLoadContext>();
+#else
+        internal static List<AppDomain> Domains { get; } = new List<AppDomain>();
+#endif
+
+        internal static MessageManager MessageManager => messageManager ?? null;
 
         private bool Enablehandlers { get; set; }
 
@@ -119,14 +138,21 @@ namespace Els_kom.Forms
                     }
                 }
 
-                var saveToZip1 = SettingsFile.SettingsJson.SaveToZip;
-                var loadPDB1 = SettingsFile.SettingsJson.LoadPDB;
-                var komplugins = new GenericPluginLoader<IKomPlugin>().LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
+                var komplugins = new GenericPluginLoader<IKomPlugin>().LoadPlugins("plugins", out var domains1, Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
                 KOMManager.Komplugins.AddRange(komplugins);
-                var callbackplugins = new GenericPluginLoader<ICallbackPlugin>().LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
+                var callbackplugins = new GenericPluginLoader<ICallbackPlugin>().LoadPlugins("plugins", out var domains2, Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
                 KOMManager.Callbackplugins.AddRange(callbackplugins);
-                var encryptionplugins = new GenericPluginLoader<IEncryptionPlugin>().LoadPlugins("plugins", Convert.ToBoolean(saveToZip1), Convert.ToBoolean(loadPDB1));
+                var encryptionplugins = new GenericPluginLoader<IEncryptionPlugin>().LoadPlugins("plugins", out var domains3, Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
                 KOMManager.Encryptionplugins.AddRange(encryptionplugins);
+#if NET5_0_OR_GREATER
+                Contexts.AddRange(domains1);
+                Contexts.AddRange(domains2);
+                Contexts.AddRange(domains3);
+#else
+                Domains.AddRange(domains1);
+                Domains.AddRange(domains2);
+                Domains.AddRange(domains3);
+#endif
                 if (!GitInformation.GetAssemblyInstance(typeof(Els_kom_Main))?.IsMain ?? false)
                 {
                     _ = MessageManager.ShowInfo("This branch is not the main branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into main.", "Info!", Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
@@ -144,22 +170,23 @@ namespace Els_kom.Forms
 
             if (!closing)
             {
-                this.MessageManager1.Icon = this.Icon;
-                this.MessageManager1.Text = this.Text;
+                MessageManager.Icon = this.Icon;
+                MessageManager.Text = this.Text;
                 var pluginTypes = new List<Type>();
                 pluginTypes.AddRange(KOMManager.Callbackplugins.Select((x) => x.GetType()));
                 pluginTypes.AddRange(KOMManager.Komplugins.Select((x) => x.GetType()));
                 pluginTypes.AddRange(KOMManager.Encryptionplugins.Select((x) => x.GetType()));
                 PluginUpdateChecks = PluginUpdateCheck.CheckForUpdates(
                     SettingsFile.SettingsJson.Sources.Source.ToArray(),
-                    pluginTypes);
+                    pluginTypes,
+                    Els_kom_Main.ServiceProvider);
                 foreach (var pluginUpdateCheck in PluginUpdateChecks)
                 {
                     // discard result.
                     _ = pluginUpdateCheck.ShowMessage;
                 }
 
-                this.MessageManager1.Visible = true;
+                MessageManager.Visible = true;
                 this.Show();
                 this.Activate();
             }
@@ -360,7 +387,7 @@ namespace Els_kom.Forms
                             this.WindowState = FormWindowState.Minimized;
                         }
                     }
-                    else if (this.MessageManager1.Visible)
+                    else if (MessageManager.Visible)
                     {
                         if (this.WindowState == FormWindowState.Minimized)
                         {
@@ -473,9 +500,9 @@ namespace Els_kom.Forms
                 this.Icon = Icons.FormIcon;
             }
 
-            if (this.MessageManager1.Icon == null || !Icons.IconEquals(this.MessageManager1.Icon, this.Icon))
+            if (MessageManager.Icon == null || !Icons.IconEquals(MessageManager.Icon, this.Icon))
             {
-                this.MessageManager1.Icon = this.Icon;
+                MessageManager.Icon = this.Icon;
             }
 
             if (!string.Equals(this.elsDir, this.elsDirTemp, StringComparison.Ordinal))
@@ -510,7 +537,7 @@ namespace Els_kom.Forms
                 case 0:
                 {
                     // Taskbar only!!!
-                    this.MessageManager1.Visible = false;
+                    MessageManager.Visible = false;
                     this.ShowInTaskbar = true;
                     break;
                 }
@@ -518,7 +545,7 @@ namespace Els_kom.Forms
                 case 1:
                 {
                     // Tray only!!!
-                    this.MessageManager1.Visible = true;
+                    MessageManager.Visible = true;
                     this.ShowInTaskbar = false;
                     break;
                 }
@@ -526,7 +553,7 @@ namespace Els_kom.Forms
                 case 2:
                 {
                     // Both!!!
-                    this.MessageManager1.Visible = true;
+                    MessageManager.Visible = true;
                     this.ShowInTaskbar = true;
                     break;
                 }
@@ -548,7 +575,7 @@ namespace Els_kom.Forms
             this.testModsToolStripMenuItem.Enabled = enabled;
             this.launcherToolStripMenuItem.Enabled = enabled;
             this.Label2.Text = status;
-            this.MessageManager1.Text = notifyiconstate;
+            MessageManager.Text = notifyiconstate;
         }
     }
 }

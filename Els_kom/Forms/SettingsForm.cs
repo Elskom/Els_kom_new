@@ -14,7 +14,6 @@ namespace Els_kom.Forms
     internal partial class SettingsForm : /*Form*/ThemedForm
     {
         private int curvalue4;
-        private int curvalue5;
         private int label4 = -1;
         private int label5 = -1;
         private int label8 = -1;
@@ -26,8 +25,7 @@ namespace Els_kom.Forms
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
-            this.curvalue4 = SettingsFile.SettingsJson.LoadPDB;
-            this.curvalue5 = SettingsFile.SettingsJson.SaveToZip;
+            this.curvalue4 = SettingsFile.SettingsJson.SaveToZip;
             var sources = SettingsFile.SettingsJson.Sources.Source;
             var sourceEntries = new List<ListViewItem>();
             sources.ForEach(
@@ -45,8 +43,7 @@ namespace Els_kom.Forms
             this.label4 = SettingsFile.SettingsJson.IconWhileElsNotRunning;
             this.label5 = SettingsFile.SettingsJson.IconWhileElsRunning;
             this.label8 = SettingsFile.SettingsJson.WindowIcon;
-            this.CheckBox1.Checked = Convert.ToBoolean(this.curvalue5);
-            this.CheckBox2.Checked = Convert.ToBoolean(this.curvalue4);
+            this.CheckBox1.Checked = Convert.ToBoolean(this.curvalue4);
             var entries = new List<ListViewItem>();
             KOMManager.Callbackplugins.ForEach(
                 (x) => entries.Add(
@@ -224,7 +221,7 @@ namespace Els_kom.Forms
                 }
                 else
                 {
-                    _ = MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!", Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
+                    _ = MainForm.MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!", Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
                 }
             }
 
@@ -243,8 +240,7 @@ namespace Els_kom.Forms
                 SettingsFile.SettingsJson.WindowIcon = this.label8 == -1 ? 0 : this.label8;
             }
 
-            SettingsFile.SettingsJson.LoadPDB = this.curvalue4;
-            SettingsFile.SettingsJson.SaveToZip = this.curvalue5;
+            SettingsFile.SettingsJson.SaveToZip = this.curvalue4;
             var sources = new List<string>();
             for (var i = 0; i < this.ListView2.Items.Count; i++)
             {
@@ -313,10 +309,7 @@ namespace Els_kom.Forms
         }
 
         private void CheckBox1_CheckedChanged(object sender, EventArgs e)
-            => this.curvalue5 = Convert.ToInt32(this.CheckBox1.Checked);
-
-        private void CheckBox2_CheckedChanged(object sender, EventArgs e)
-            => this.curvalue4 = Convert.ToInt32(this.CheckBox2.Checked);
+            => this.curvalue4 = Convert.ToInt32(this.CheckBox1.Checked);
 
         // people say use a DataGridView because they cant hack together a solution.
         // well they were too stupid to hack a elegant soluion like this.

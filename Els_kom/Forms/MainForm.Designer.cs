@@ -38,7 +38,6 @@ namespace Els_kom.Forms
             this.unpackingTmr = new System.Windows.Forms.Timer(this.Components);
             this.testModsTmr = new System.Windows.Forms.Timer(this.Components);
             this.launcherTmr = new System.Windows.Forms.Timer(this.Components);
-            this.MessageManager1 = new Elskom.Generic.Libs.MessageManager(this.Components);
             this.Frame1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -185,11 +184,6 @@ namespace Els_kom.Forms
             this.launcherTmr.Interval = 1;
             this.launcherTmr.Tick += new System.EventHandler(this.Launcher);
             // 
-            // MessageManager1
-            // 
-            this.MessageManager1.ContextMenuStrip = this.contextMenuStrip1;
-            this.MessageManager1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MessageManager1_MouseClick);
-            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -203,7 +197,6 @@ namespace Els_kom.Forms
             this.Controls.Add(this.Command2);
             this.Controls.Add(this.Command1);
             this.Controls.Add(this.Label2);
-            this.Controls.Add(this.MessageManager1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -228,7 +221,6 @@ namespace Els_kom.Forms
         private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Command4;
         private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Command5;
         private System.Windows.Forms.Button/*Els_kom.Controls.ThemedButton*/ Command6;
-        private Elskom.Generic.Libs.MessageManager MessageManager1;
         private System.Windows.Forms.Timer settingsTmr;
         private System.Windows.Forms.Timer packingTmr;
         private System.Windows.Forms.Timer unpackingTmr;

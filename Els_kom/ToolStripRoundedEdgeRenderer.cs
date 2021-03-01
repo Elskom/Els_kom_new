@@ -7,7 +7,7 @@ namespace Els_kom
 {
     using System.Windows.Forms;
 
-    public class ToolStripRoundedEdgeRenderer : ToolStripProfessionalRenderer
+    internal class ToolStripRoundedEdgeRenderer : ToolStripProfessionalRenderer
     {
         public ToolStripRoundedEdgeRenderer()
             => this.RoundedEdges = false;

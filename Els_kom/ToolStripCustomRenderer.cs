@@ -8,7 +8,7 @@ namespace Els_kom
     using System.Drawing;
     using System.Windows.Forms;
 
-    public class ToolStripCustomRenderer : ToolStripRoundedEdgeRenderer
+    internal class ToolStripCustomRenderer : ToolStripRoundedEdgeRenderer
     {
         public ToolStripCustomRenderer(ProfessionalColorTable professionalColorTable)
             : base(professionalColorTable)

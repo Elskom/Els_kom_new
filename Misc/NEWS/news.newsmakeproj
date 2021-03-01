@@ -2,11 +2,13 @@
 
 	<PropertyGroup>
 		<ProjectName>Els_kom</ProjectName>
-		<OutputFile>../../bin/Release/news.txt</OutputFile>
+		<!-- target framework. Use TargetFrameworks for multiple framework targets. -->
+		<TargetFramework>net472</TargetFramework>
+		<OutputFile>../../bin/Release/$(TargetFramework)/news.txt</OutputFile>
 		<!-- tab or spaces for entries in generated section chunks. -->
 		<UseTabs>false</UseTabs>
 		<!--
-			controls weather or not to delete the first imported folder with
+			controls wether or not to delete the first imported folder with
 			it's entry files or not. If set to false it will delete them.
 			if true it will not denoting that this project is on it's development
 			status and not an release version yet (e.g. Python 3.7.0a4 being not
