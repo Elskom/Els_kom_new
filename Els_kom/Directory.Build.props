@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
 
   <PropertyGroup>
     <!--
@@ -8,13 +8,7 @@
     -->
     <ImportDirectoryBuildProps>false</ImportDirectoryBuildProps>
     <BaseIntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</BaseIntermediateOutputPath>
-    <GenerateResourceUsePreserializedResources Condition="$(TargetFramework.StartsWith('net4')) AND '$(UseWindowsForms)' == 'true'">true</GenerateResourceUsePreserializedResources>
+    <IntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Resources.Extensions" Version="*-*" Condition="$(TargetFramework.StartsWith('net4')) AND '$(UseWindowsForms)' == 'true'">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-  </ItemGroup>
 </Project>
