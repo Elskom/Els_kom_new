@@ -2,7 +2,7 @@
 
 ![Els_kom Icon](./els_kom.png)
 
-![.NET Core](https://github.com/Elskom/Els_kom_new/workflows/.NET%20Core/badge.svg?branch=master&event=push)
+![.NET Core](https://github.com/Elskom/Els_kom_new/workflows/.NET%20Core/badge.svg?branch=main&event=push)
 ![.NET Core](https://github.com/Elskom/Els_kom_new/workflows/.NET%20Core/badge.svg?event=pull_request)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1ec89deb386140fa983b577708d952e2)](https://app.codacy.com/gh/Elskom/Els_kom_new?utm_source=github.com&utm_medium=referral&utm_content=Elskom/Els_kom_new&utm_campaign=Badge_Grade)
 
