@@ -2,7 +2,10 @@
 
 ![Els_kom Icon](./els_kom.png)
 
+[![HitCount](http://hits.dwyl.com/Elskom/Els_kom_new.svg)](http://hits.dwyl.com/Elskom/Els_kom_new)
 ![.NET Core](https://github.com/Elskom/Els_kom_new/workflows/.NET%20Core/badge.svg?branch=main&event=push)
+[![Github pulls-passing](https://img.shields.io/github/issues-search/Elskom/Els_kom_new?label=passing%20pull%20requests&query=is%3Aopen+status%3Asuccess+is%3Apr&color=limegreen)](https://github.com/Elskom/Els_kom_new/pulls?q=is%3Aopen+status%3Asuccess+is%3Apr)
+[![Github pulls-failing](https://img.shields.io/github/issues-search/Elskom/Els_kom_new?label=failing%20pull%20requests&query=is%3Aopen+status%3Afailure+is%3Apr&color=red)](https://github.com/Elskom/Els_kom_new/pulls?q=is%3Aopen+status%3Afailure+is%3Apr)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1ec89deb386140fa983b577708d952e2)](https://app.codacy.com/gh/Elskom/Els_kom_new)
 
 This is a version of Els_kom for Elsword and Grand Chase KOM Files.
