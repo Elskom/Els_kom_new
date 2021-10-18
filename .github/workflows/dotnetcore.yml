@@ -15,8 +15,8 @@ jobs:
       DOTNET_NOLOGO: true
     steps:
     # clone the Sdk repository.
-    - uses: actions/checkout@v2.3.4
-    - uses: actions/checkout@v2.3.4
+    - uses: actions/checkout@v2.3.5
+    - uses: actions/checkout@v2.3.5
       with:
         repository: 'Elskom/Sdk'
         ref: 'main'
