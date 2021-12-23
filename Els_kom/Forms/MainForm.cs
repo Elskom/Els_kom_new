@@ -7,17 +7,22 @@ namespace Els_kom.Forms
 {
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using System.Threading;
     using System.Windows.Forms;
+    using System.Xml.Linq;
+    using System.Xml.XPath;
     using Els_kom.Controls;
-    using Els_kom.Enums;
-    using Elskom.Generic.Libs;
+    using Microsoft.Extensions.DependencyInjection;
+    using Svg;
+    using TerraFX.Interop.Windows;
 
     internal partial class MainForm : /*Form*/ThemedForm
     {
-        private static MessageManager messageManager = null;
+        private static NotifyIcon notifyIcon;
         private Form aboutfrm;
         private Form settingsfrm;
         private string elsDir = string.Empty;
@@ -31,39 +36,30 @@ namespace Els_kom.Forms
         {
             this.InitializeComponent();
             this.SuspendLayout();
-            messageManager = new MessageManager(this.Components)
+            MessageManager.Notification += this.MessageManager_Notification;
+            notifyIcon = new NotifyIcon(this.Components)
             {
                 ContextMenuStrip = this.contextMenuStrip1,
             };
-            messageManager.MouseClick += new MouseEventHandler(this.MessageManager1_MouseClick);
-            this.Controls.Add(messageManager);
+            notifyIcon.MouseClick += new MouseEventHandler(this.NotifyIcon_MouseClick);
+            ShareXResources.ApplyDarkThemeToControl(this.contextMenuStrip1);
             this.ResumeLayout(false);
         }
-
-        internal static List<PluginUpdateCheck> PluginUpdateChecks { get; set; }
-
-#if NET5_0_OR_GREATER
-        internal static List<PluginLoadContext> Contexts { get; } = new List<PluginLoadContext>();
-#else
-        internal static List<AppDomain> Domains { get; } = new List<AppDomain>();
-#endif
-
-        internal static MessageManager MessageManager => messageManager ?? null;
 
         private bool Enablehandlers { get; set; }
 
         protected override void WndProc(ref Message m)
         {
             this.Enablehandlers = !this.ShowInTaskbar;
-            if (this.Enablehandlers && m.Msg == (int)SYSCOMMANDS.WM_SYSCOMMAND)
+            if (this.Enablehandlers && m.Msg == WM.WM_SYSCOMMAND)
             {
-                if (m.WParam.ToInt32() == (int)SYSCOMMANDS.SC_MINIMIZE)
+                if (m.WParam.ToInt32() == SC.SC_MINIMIZE)
                 {
                     this.Hide();
                     m.Result = IntPtr.Zero;
                     return;
                 }
-                else if (m.WParam.ToInt32() is (int)SYSCOMMANDS.SC_MAXIMIZE or (int)SYSCOMMANDS.SC_RESTORE)
+                else if (m.WParam.ToInt32() is SC.SC_MAXIMIZE or SC.SC_RESTORE)
                 {
                     this.Show();
                     this.Activate();
@@ -86,7 +82,7 @@ namespace Els_kom.Forms
             var cancel = e.Cancel;
 
             // CloseReason UnloadMode = e->CloseReason; <-- Removed because not used.
-            if (!AbleToClose() && !ForceClosure.ForceClose)
+            if (!AbleToClose() && !MiniDumpAttribute.ForceClose)
             {
                 cancel = true;
                 _ = MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
@@ -103,11 +99,13 @@ namespace Els_kom.Forms
         private void MainForm_Load(object sender, EventArgs e)
         {
             this.Hide();
-            this.packToolStripMenuItem.Image = NativeMethods.ConvertSVGTo16x16Image(Properties.Resources.archive, ShareXResources.Theme.TextColor);
-            this.unpackToolStripMenuItem.Image = NativeMethods.ConvertSVGTo16x16Image(Properties.Resources.unarchive, ShareXResources.Theme.TextColor);
-            this.testModsToolStripMenuItem.Image = NativeMethods.ConvertSVGTo16x16Image(Properties.Resources.vial_solid, ShareXResources.Theme.TextColor);
-            this.launcherToolStripMenuItem.Image = NativeMethods.ConvertSVGTo16x16Image(Properties.Resources.launch, ShareXResources.Theme.TextColor);
-            this.exitToolStripMenuItem.Image = NativeMethods.GetNativeMenuItemImage(new IntPtr(NativeMethods.HBMMENU_POPUP_CLOSE), true);
+
+            // var textColor = Color.FromArgb((int)Windows.GetThemeSysColor(Windows.GetWindowTheme((HWND)this.Handle), Windows.TMT_WINDOWTEXT));
+            this.packToolStripMenuItem.Image = ConvertSVGTo16x16Image(Properties.Resources.archive, ShareXResources.Theme.TextColor);
+            this.unpackToolStripMenuItem.Image = ConvertSVGTo16x16Image(Properties.Resources.unarchive, ShareXResources.Theme.TextColor);
+            this.testModsToolStripMenuItem.Image = ConvertSVGTo16x16Image(Properties.Resources.vial_solid, ShareXResources.Theme.TextColor);
+            this.launcherToolStripMenuItem.Image = ConvertSVGTo16x16Image(Properties.Resources.launch, ShareXResources.Theme.TextColor);
+            this.exitToolStripMenuItem.Image = GetNativeMenuItemImage(HBMMENU.HBMMENU_POPUP_CLOSE, true);
             var closing = false;
             if (!Directory.Exists(Application.StartupPath + "\\koms"))
             {
@@ -121,9 +119,11 @@ namespace Els_kom.Forms
             }
             else
             {
+                SettingsFile.SettingsJson = SettingsFile.SettingsJson.ReopenFile();
                 this.elsDir = SettingsFile.SettingsJson.ElsDir;
                 if (this.elsDir.Length < 1)
                 {
+                    _ = MessageManager.ShowInfo(SettingsFile.SettingsPath, "Debug!", false);
                     _ = MessageManager.ShowInfo($"Welcome to Els_kom.{Environment.NewLine}Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops.{Environment.NewLine}Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!", false);
 
                     // avoids an issue where more than 1 settings form can be opened at the same time.
@@ -138,21 +138,12 @@ namespace Els_kom.Forms
                     }
                 }
 
-                var komplugins = new GenericPluginLoader<IKomPlugin>().LoadPlugins("plugins", out var domains1, Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                var komplugins = Els_kom_Main.ServiceProvider.GetRequiredService<GenericPluginLoader>().LoadPlugins<IKomPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
                 KOMManager.Komplugins.AddRange(komplugins);
-                var callbackplugins = new GenericPluginLoader<ICallbackPlugin>().LoadPlugins("plugins", out var domains2, Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                var callbackplugins = Els_kom_Main.ServiceProvider.GetRequiredService<GenericPluginLoader>().LoadPlugins<ICallbackPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
                 KOMManager.Callbackplugins.AddRange(callbackplugins);
-                var encryptionplugins = new GenericPluginLoader<IEncryptionPlugin>().LoadPlugins("plugins", out var domains3, Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                var encryptionplugins = Els_kom_Main.ServiceProvider.GetRequiredService<GenericPluginLoader>().LoadPlugins<IEncryptionPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
                 KOMManager.Encryptionplugins.AddRange(encryptionplugins);
-#if NET5_0_OR_GREATER
-                Contexts.AddRange(domains1);
-                Contexts.AddRange(domains2);
-                Contexts.AddRange(domains3);
-#else
-                Domains.AddRange(domains1);
-                Domains.AddRange(domains2);
-                Domains.AddRange(domains3);
-#endif
                 if (!GitInformation.GetAssemblyInstance(typeof(Els_kom_Main))?.IsMain ?? false)
                 {
                     _ = MessageManager.ShowInfo("This branch is not the main branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into main.", "Info!", Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
@@ -170,23 +161,18 @@ namespace Els_kom.Forms
 
             if (!closing)
             {
-                MessageManager.Icon = this.Icon;
-                MessageManager.Text = this.Text;
+                notifyIcon.Icon = this.Icon;
+                notifyIcon.Text = this.Text;
                 var pluginTypes = new List<Type>();
                 pluginTypes.AddRange(KOMManager.Callbackplugins.Select((x) => x.GetType()));
                 pluginTypes.AddRange(KOMManager.Komplugins.Select((x) => x.GetType()));
                 pluginTypes.AddRange(KOMManager.Encryptionplugins.Select((x) => x.GetType()));
-                PluginUpdateChecks = PluginUpdateCheck.CheckForUpdates(
-                    SettingsFile.SettingsJson.Sources.Source.ToArray(),
-                    pluginTypes,
-                    Els_kom_Main.ServiceProvider);
-                foreach (var pluginUpdateCheck in PluginUpdateChecks)
-                {
-                    // discard result.
-                    _ = pluginUpdateCheck.ShowMessage;
-                }
+                var pluginUpdateCheck = Els_kom_Main.ServiceProvider.GetRequiredService<PluginUpdateCheck>();
 
-                MessageManager.Visible = true;
+                // discard results.
+                _ = pluginUpdateCheck.CheckForUpdates(SettingsFile.SettingsJson.Sources, pluginTypes);
+                _ = pluginUpdateCheck.ShowMessage;
+                notifyIcon.Visible = true;
                 this.Show();
                 this.Activate();
             }
@@ -316,10 +302,6 @@ namespace Els_kom.Forms
                 this.aboutfrm?.Close();
                 this.settingsfrm?.Close();
                 this.Close();
-                foreach (var pluginUpdateCheck in PluginUpdateChecks)
-                {
-                    pluginUpdateCheck.Dispose();
-                }
             }
         }
 
@@ -365,7 +347,24 @@ namespace Els_kom.Forms
             this.packingTmr.Enabled = true;
         }
 
-        private void MessageManager1_MouseClick(object sender, MouseEventArgs e)
+        private void MessageManager_Notification(object sender, NotificationEventArgs e)
+        {
+            if (e.UseNotifications)
+            {
+                notifyIcon.ShowBalloonTip(e.TimeOut, e.Title, e.Text, (ToolTipIcon)e.Icon);
+            }
+            else
+            {
+                MessageBox.Show(
+                    FromHandle(this.Handle),
+                    e.Text,
+                    e.Title,
+                    (MessageBoxButtons)e.MessageBoxButtons,
+                    (MessageBoxIcon)e.MessageBoxIcon);
+            }
+        }
+
+        private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
             if (AboutForm.Label1 == 1 || SettingsForm.Label9 == 1)
             {
@@ -387,7 +386,7 @@ namespace Els_kom.Forms
                             this.WindowState = FormWindowState.Minimized;
                         }
                     }
-                    else if (MessageManager.Visible)
+                    else if (notifyIcon.Visible)
                     {
                         if (this.WindowState == FormWindowState.Minimized)
                         {
@@ -429,10 +428,8 @@ namespace Els_kom.Forms
         {
             this.SetControlState(false, "Testing Mods...", "Testing Mods...");
             var di = new DirectoryInfo(Application.StartupPath + "\\koms");
-            foreach (var fi in di.GetFiles("*.kom"))
+            foreach (var kom_file in di.GetFiles("*.kom").Select(fi => fi.Name))
             {
-                var kom_file = fi.Name;
-
                 // do not copy kom files that are in the koms directory but cannot be found to copy from taget directory to the backup directory to restore later.
                 KOMManager.CopyKomFiles(kom_file, Application.StartupPath + "\\koms\\", this.elsDir + "\\data");
             }
@@ -448,7 +445,7 @@ namespace Els_kom.Forms
         // Handles Testing Mods on the Main Form (when Elsword (the game window) closes).
         private void TestMods2(object sender, EventArgs e)
         {
-            if (!ProcessExtensions.Executing)
+            if (!ExecutionManager.IsExecuting(false))
             {
                 if (ExecutionManager.RunningElswordDirectly)
                 {
@@ -457,9 +454,8 @@ namespace Els_kom.Forms
                 else
                 {
                     var di = new DirectoryInfo(Application.StartupPath + "\\koms");
-                    foreach (var fi in di.GetFiles("*.kom"))
+                    foreach (var kom_file in di.GetFiles("*.kom").Select(fi => fi.Name))
                     {
-                        var kom_file = fi.Name;
                         KOMManager.MoveOriginalKomFilesBack(kom_file, this.elsDir + "\\data\\backup", this.elsDir + "\\data");
                     }
 
@@ -478,7 +474,7 @@ namespace Els_kom.Forms
         // packing, and testing mods.
         private void Launcher(object sender, EventArgs e)
         {
-            if (!ProcessExtensions.Executing && !ExecutionManager.RunningElsword)
+            if (!ExecutionManager.IsExecuting(true) && !ExecutionManager.RunningElsword)
             {
                 this.SetControlState(true, string.Empty, this.Text);
 
@@ -500,9 +496,9 @@ namespace Els_kom.Forms
                 this.Icon = Icons.FormIcon;
             }
 
-            if (MessageManager.Icon == null || !Icons.IconEquals(MessageManager.Icon, this.Icon))
+            if (notifyIcon.Icon == null || !Icons.IconEquals(notifyIcon.Icon, this.Icon))
             {
-                MessageManager.Icon = this.Icon;
+                notifyIcon.Icon = this.Icon;
             }
 
             if (!string.Equals(this.elsDir, this.elsDirTemp, StringComparison.Ordinal))
@@ -537,7 +533,7 @@ namespace Els_kom.Forms
                 case 0:
                 {
                     // Taskbar only!!!
-                    MessageManager.Visible = false;
+                    notifyIcon.Visible = false;
                     this.ShowInTaskbar = true;
                     break;
                 }
@@ -545,7 +541,7 @@ namespace Els_kom.Forms
                 case 1:
                 {
                     // Tray only!!!
-                    MessageManager.Visible = true;
+                    notifyIcon.Visible = true;
                     this.ShowInTaskbar = false;
                     break;
                 }
@@ -553,7 +549,7 @@ namespace Els_kom.Forms
                 case 2:
                 {
                     // Both!!!
-                    MessageManager.Visible = true;
+                    notifyIcon.Visible = true;
                     this.ShowInTaskbar = true;
                     break;
                 }
@@ -575,7 +571,24 @@ namespace Els_kom.Forms
             this.testModsToolStripMenuItem.Enabled = enabled;
             this.launcherToolStripMenuItem.Enabled = enabled;
             this.Label2.Text = status;
-            MessageManager.Text = notifyiconstate;
+            notifyIcon.Text = notifyiconstate;
+        }
+
+        private static Image ConvertSVGTo16x16Image(byte[] svgData, Color color)
+        {
+            var svgString = Encoding.UTF8.GetString(svgData);
+            var root = XElement.Parse(svgString);
+            var colors = root.XPathSelectElements("//*[@fill]");
+            foreach (var node in colors)
+            {
+                node.Attribute("fill").Value = color.ToHexString();
+            }
+
+            svgString = root.ToString();
+            var svgDoc = SvgDocument.FromSvg<SvgDocument>(svgString);
+            svgDoc.FillRule = SvgFillRule.EvenOdd;
+            var image = svgDoc.Draw(16, 16);
+            return image;
         }
     }
 }

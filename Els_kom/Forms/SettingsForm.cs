@@ -9,7 +9,6 @@ namespace Els_kom.Forms
     using System.Collections.Generic;
     using System.Windows.Forms;
     using Els_kom.Controls;
-    using Elskom.Generic.Libs;
 
     internal partial class SettingsForm : /*Form*/ThemedForm
     {
@@ -26,9 +25,9 @@ namespace Els_kom.Forms
         private void SettingsForm_Load(object sender, EventArgs e)
         {
             this.curvalue4 = SettingsFile.SettingsJson.SaveToZip;
-            var sources = SettingsFile.SettingsJson.Sources.Source;
             var sourceEntries = new List<ListViewItem>();
-            sources.ForEach(
+            Array.ForEach(
+                SettingsFile.SettingsJson.Sources,
                 (x) => sourceEntries.Add(
                     new ListViewItem(
                         new string[]
@@ -221,7 +220,7 @@ namespace Els_kom.Forms
                 }
                 else
                 {
-                    _ = MainForm.MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!", Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
+                    _ = MessageManager.ShowWarning("You Should Set a Working Elsword Directory.", "Warning!", Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
                 }
             }
 
@@ -248,8 +247,7 @@ namespace Els_kom.Forms
             }
 
             // refill the sources from the ones in this form
-            SettingsFile.SettingsJson.Sources.Source.Clear();
-            SettingsFile.SettingsJson.Sources.Source.AddRange(sources);
+            SettingsFile.SettingsJson.Sources = sources.ToArray();
 
             // write to file.
             SettingsFile.SettingsJson.Save();
@@ -279,14 +277,11 @@ namespace Els_kom.Forms
             for (var i = 0; i < this.ListView1.SelectedItems.Count; i++)
             {
                 var selitem = this.ListView1.SelectedItems[i];
-                foreach (var callbackplugin in KOMManager.Callbackplugins)
+                foreach (var callbackplugin in KOMManager.Callbackplugins.Where(callbackplugin => callbackplugin.PluginName.Equals(selitem.Text)))
                 {
-                    if (callbackplugin.PluginName.Equals(selitem.Text))
-                    {
-                        using var plugsettingfrm = (Form)callbackplugin.SettingsWindow;
-                        plugsettingfrm.Icon = Icons.FormIcon;
-                        _ = plugsettingfrm.ShowDialog(callbackplugin.ShowModal ? this : null);
-                    }
+                    using var plugsettingfrm = (Form)callbackplugin.SettingsWindow;
+                    plugsettingfrm.Icon = Icons.FormIcon;
+                    _ = plugsettingfrm.ShowDialog(callbackplugin.ShowModal ? this : null);
                 }
             }
         }

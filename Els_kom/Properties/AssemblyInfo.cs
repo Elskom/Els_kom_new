@@ -5,7 +5,6 @@
 
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Elskom.Generic.Libs;
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
@@ -19,7 +18,7 @@ using Elskom.Generic.Libs;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// use DumpType = MinidumpTypes.Normal for normal mini-dumps.
+// use DumpType = MiniDumpType.Normal for normal mini-dumps.
 [assembly: MiniDump(
     Text = "Please send a copy of {0} to https://github.com/Elskom/Els_kom_new/issues by making an issue and attaching the log(s) and mini-dump(s).",
-    DumpType = MinidumpTypes.WithDataSegs | MinidumpTypes.WithFullMemory | MinidumpTypes.WithProcessThreadData | MinidumpTypes.WithFullMemoryInfo | MinidumpTypes.WithThreadInfo | MinidumpTypes.WithCodeSegs | MinidumpTypes.WithUnloadedModules | MinidumpTypes.WithTokenInformation | MinidumpTypes.WithModuleHeaders | MinidumpTypes.FilterTriage | MinidumpTypes.WithIptTrace)]
+    DumpType = MiniDumpType.Full)]

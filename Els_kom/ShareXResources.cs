@@ -5,15 +5,16 @@
 
 namespace Els_kom
 {
-    using System.Collections.Generic;
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Windows.Forms;
+    using TerraFX.Interop.Windows;
     using Els_kom.Controls;
-    using Elskom.Generic.Libs;
 
     internal static class ShareXResources
     {
+        // use to keep track of the painting.
         private static readonly List<Button> HoveredButtonList = new();
         private static readonly List<Button> FocusedButtonList = new();
 
@@ -24,9 +25,6 @@ namespace Els_kom
 
         public static ShareXTheme Theme { get; set; } = new ShareXTheme();
 
-        public static void ApplyTheme(Form form)
-            => ApplyTheme(form, true);
-
         public static void ApplyTheme(Form form, bool setIcon)
         {
             if (setIcon)
@@ -35,21 +33,27 @@ namespace Els_kom
             }
 
             ApplyDarkThemeToControl(form);
-            if (form.IsHandleCreated)
-            {
-                _ = NativeMethods.UseImmersiveDarkMode(form.Handle, true);
-            }
-            else
-            {
-                form.HandleCreated += (s, e) => NativeMethods.UseImmersiveDarkMode(form.Handle, true);
-            }
         }
 
         internal static void ApplyDarkThemeToControl(Control control)
             => InternalApplyDarkThemeToControl(control);
 
-        private static void InternalApplyDarkThemeToControl(Control control)
+        private static unsafe void InternalApplyDarkThemeToControl(Control control)
         {
+            if (control.IsHandleCreated)
+            {
+                EnableUxThemeDarkMode(control.Handle, true);
+                _ = UseImmersiveDarkMode(control.Handle, true);
+            }
+            else
+            {
+                control.HandleCreated += (s, e) =>
+                {
+                    EnableUxThemeDarkMode(control.Handle, true);
+                    UseImmersiveDarkMode(control.Handle, true);
+                };
+            }
+
             if (control.ContextMenuStrip != null)
             {
                 control.ContextMenuStrip.Renderer = new ToolStripDarkRenderer();
@@ -60,14 +64,10 @@ namespace Els_kom
                 mb.Menu.Renderer = new ToolStripDarkRenderer();
             }
 
+            control.ForeColor = Theme.TextColor;
+            control.BackColor = Theme.BackgroundColor;
             switch (control)
             {
-                case MessageManager mm:
-                {
-                    mm.ContextMenuStrip.Renderer = new ToolStripDarkRenderer();
-                    return;
-                }
-
                 case Button btn:
                 {
                     btn.FlatStyle = FlatStyle.Flat;
@@ -94,21 +94,27 @@ namespace Els_kom
                 {
                     tb.ForeColor = Theme.TextColor;
                     tb.BackColor = Theme.LightBackgroundColor;
-                    tb.BorderStyle = BorderStyle.FixedSingle;
+
+                    // tb.BorderStyle = BorderStyle.FixedSingle;
 
                     // change text box boarder.
-                    NativeMethods.MARGINS margins = default;
-                    _ = NativeMethods.DwmExtendFrameIntoClientArea(tb.Handle, ref margins);
+                    var dc = Windows.GetWindowDC((HWND)tb.Handle);
+                    using var g = Graphics.FromHdc(dc);
+                    using var pen1 = new Pen(Theme.BorderColor);
+                    g.DrawRectangle(pen1, 0, 0, tb.Width - 1, tb.Height - 1);
+                    _ = Windows.ReleaseDC((HWND)tb.Handle, dc);
 
+                    // MARGINS margins = default;
+                    // Windows.DwmExtendFrameIntoClientArea((HWND)tb.Handle, &margins);
+                    //
                     // hopefully this is correct.
-                    var boarderRect = new Rectangle(0, 0, margins.rightWidth, margins.bottomHeight);
-                    if (boarderRect.Width > 0 && boarderRect.Height > 0)
-                    {
-                        using var pen1 = new Pen(Theme.BorderColor);
-                        using var g = tb.CreateGraphics();
-                        g.DrawRectangle(pen1, boarderRect);
-                    }
-
+                    // var boarderRect = new Rectangle(0, 0, margins.cxRightWidth, margins.cyBottomHeight);
+                    // if (boarderRect.Width > 0 && boarderRect.Height > 0)
+                    // {
+                    //     using var pen1 = new Pen(Theme.BorderColor);
+                    //     using var g = tb.CreateGraphics();
+                    //     g.DrawRectangle(pen1, boarderRect);
+                    // }
                     return;
                 }
 
@@ -212,31 +218,80 @@ namespace Els_kom
                     break;
             }
 
-            control.ForeColor = Theme.TextColor;
-            control.BackColor = Theme.BackgroundColor;
             foreach (Control child in control.Controls)
             {
                 ApplyDarkThemeToControl(child);
             }
         }
 
-        private static void Btn_MouseEnter(object sender, System.EventArgs e)
+        private static unsafe void EnableUxThemeDarkMode(nint hwnd, bool enable)
         {
-            HoveredButtonList.Clear();
+            if (!OperatingSystem.IsWindowsVersionAtLeast(10, 0, 1809))
+            {
+                return;
+            }
+
+            if (enable)
+            {
+                const string themeName = "DarkMode_Explorer";
+                fixed (char* szExplorer = themeName)
+                {
+                    _ = Windows.SetWindowTheme((HWND)hwnd, (ushort*)szExplorer, null);
+                }
+            }
+            else
+            {
+                _ = Windows.SetWindowTheme((HWND)hwnd, null, null);
+            }
+        }
+
+        private static unsafe bool UseImmersiveDarkMode(nint handle, bool enabled)
+        {
+            if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 17763))
+            {
+                var attribute = OperatingSystem.IsWindowsVersionAtLeast(10, 0, 18985)
+                    ? (int)DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE
+                    : (int)DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE - 1;
+                var useImmersiveDarkMode = enabled ? 1 : 0;
+                return Windows.DwmSetWindowAttribute((HWND)handle, (uint)attribute, &useImmersiveDarkMode, sizeof(int)) == 0;
+            }
+
+            return false;
+        }
+
+        private static void Btn_MouseEnter(object sender, EventArgs e)
+        {
+            for (var i = 0; i < HoveredButtonList.Count; i++)
+            {
+                var btn = HoveredButtonList[i];
+                HoveredButtonList.Remove(btn);
+                btn.Invalidate();
+            }
+
             HoveredButtonList.Add((Button)sender);
         }
 
-        private static void Btn_MouseLeave(object sender, System.EventArgs e)
-            => HoveredButtonList.Clear();
+        private static void Btn_MouseLeave(object sender, EventArgs e)
+        {
+            for (var i = 0; i < HoveredButtonList.Count; i++)
+            {
+                var btn = HoveredButtonList[i];
+                HoveredButtonList.Remove(btn);
+                btn.Invalidate();
+            }
+        }
 
-        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP004:Don't ignore return value of type IDisposable.", Justification = "Disposing would close the form the button is on.")]
         private static void Btn_Paint(object sender, PaintEventArgs e)
         {
             var btn = (Button)sender;
             var g = e.Graphics;
             if (btn.Focused)
             {
-                FocusedButtonList.Clear();
+                for (var i = 0; i < FocusedButtonList.Count; i++)
+                {
+                    FocusedButtonList[i].Invalidate();
+                }
+
                 FocusedButtonList.Add(btn);
             }
 

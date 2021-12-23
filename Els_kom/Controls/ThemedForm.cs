@@ -6,17 +6,19 @@
 namespace Els_kom.Controls
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
-    using System.Drawing.Drawing2D;
+    using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
-    using Els_kom.Enums;
+    using TerraFX.Interop.Windows;
 
     internal class ThemedForm : Form
     {
+        /*
         private bool minimizeHover;
         private bool maximizeHover;
         private bool closeHover;
@@ -27,8 +29,12 @@ namespace Els_kom.Controls
         private bool helpClicked;
         private bool active;
         private bool mouseDown;
-        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Gets disposed of automatically.")]
+        */
         private ContextMenuStrip systemMenuStrip;
+        private bool active;
+
+        // private bool menuShown;
+        /*
         private Point lastLocation;
         private bool menuShown;
 
@@ -46,6 +52,7 @@ namespace Els_kom.Controls
         private Bitmap helpHoverBitmap;
         private Bitmap iconBitmap;
         private Icon lastIcon;
+        */
 
         internal ThemedForm()
         {
@@ -58,30 +65,33 @@ namespace Els_kom.Controls
             this.ResumeLayout(false);
 
             // These seems to be the correct locations for the caption buttons in Windows 10.
-            this.MinimizeHitbox = new Rectangle(this.Size.Width - 136, 1, 45, 29);
-            this.MaximizeHitbox = new Rectangle(this.Size.Width - 90, 1, 45, 29);
-            this.CloseHitbox = new Rectangle(this.Size.Width - 44, 1, 45, 29);
-            this.HelpHitbox = new Rectangle(this.Size.Width - 90, 1, 45, 29);
-
+            // this.MinimizeHitbox = new Rectangle(this.Size.Width - 136, 1, 45, 29);
+            // this.MaximizeHitbox = new Rectangle(this.Size.Width - 90, 1, 45, 29);
+            // this.CloseHitbox = new Rectangle(this.Size.Width - 44, 1, 45, 29);
+            // this.HelpHitbox = new Rectangle(this.Size.Width - 90, 1, 45, 29);
+            //
             // these are fixed points never changeing.
-            this.IconHitbox = new Rectangle(9, 7, 16, 16);
-
+            // this.IconHitbox = new Rectangle(9, 7, 16, 16);
+            //
             // the caption in the title bar. We need this to set the bit to make form moveable again.
-            this.CaptionHitbox = new Rectangle(0, 0, this.Size.Width, 31);
-            this.Paint += this.ThemedForm_Paint;
+            // this.CaptionHitbox = new Rectangle(0, 0, this.Size.Width, 31);
+            // this.Paint += this.ThemedForm_Paint;
             this.Load += this.ThemedForm_Load;
+            /*
             this.MouseUp += this.ThemedForm_MouseUp;
             this.MouseDown += this.ThemedForm_MouseDown;
             this.MouseMove += this.ThemedForm_MouseMove;
             this.MouseLeave += this.ThemedForm_MouseLeave;
             this.Activated += this.ThemedForm_Activated;
             this.Deactivate += this.ThemedForm_Deactivate;
+            */
             if (ShareXResources.Theme != ShareXTheme.GetPresets()[0])
             {
                 ShareXResources.Theme = ShareXTheme.GetPresets()[0];
             }
 
             // create state bitmaps.
+            /*
             this.CreateBitmap(ref this.minimizeBitmap, this.MinimizeHitbox, true, false);
             this.CreateBitmap(ref this.minimizeHoverBitmap, this.MinimizeHitbox, true, true);
             this.CreateBitmap(ref this.minimizeDisabledBitmap, this.MinimizeHitbox, false, false);
@@ -94,6 +104,7 @@ namespace Els_kom.Controls
             this.CreateBitmap(ref this.helpBitmap, this.HelpHitbox, true, false, false);
             this.CreateBitmap(ref this.helpHoverBitmap, this.HelpHitbox, true, true, false);
             this.CreateBitmap(ref this.iconBitmap, this.IconHitbox, true, false);
+            */
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -101,6 +112,7 @@ namespace Els_kom.Controls
         [Localizable(false)]
         public Container Components { get; } = new Container();
 
+        /*
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Localizable(false)]
         public new Size Size
@@ -176,15 +188,17 @@ namespace Els_kom.Controls
             set
             {
                 base.Icon = value;
-                this.iconBitmap?.Dispose();
-                this.iconBitmap = null;
-                this.CreateBitmap(ref this.iconBitmap, this.IconHitbox, true, false);
-                this.Invalidate(this.IconHitbox);
-            }
+                // this.iconBitmap?.Dispose();
+                // this.iconBitmap = null;
+                // this.CreateBitmap(ref this.iconBitmap, this.IconHitbox, true, false);
+                // this.Invalidate(this.IconHitbox);
+           }
         }
+        */
 
         protected override Size DefaultSize => new(300, 300);
 
+        /*
         private Rectangle MinimizeHitbox { get; set; }
 
         private Rectangle MaximizeHitbox { get; set; }
@@ -196,31 +210,129 @@ namespace Els_kom.Controls
         private Rectangle CaptionHitbox { get; set; }
 
         private Rectangle IconHitbox { get; set; }
+        */
 
-        [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP002:Dispose member.", Justification = "Automatically disposed when components are disposed in a loop.")]
-        private ContextMenuStrip SystemMenuStrip
+        internal static Image GetNativeMenuItemImage(HBITMAP hBitmap, bool enabled)
         {
-            get
+            if (hBitmap != IntPtr.Zero && hBitmap > HBMMENU.HBMMENU_POPUP_MINIMIZE)
             {
-                // prevent returning a new instance every time.
-                if (this.systemMenuStrip != null)
+                var image = Image.FromHbitmap(hBitmap);
+                for (var x = 0; x < image.Width; x++)
                 {
-                    return this.systemMenuStrip;
+                    for (var y = 0; y < image.Height; y++)
+                    {
+                        var color = image.GetPixel(x, y);
+                        if (color.A != (byte)0)
+                        {
+                            image.SetPixel(x, y, Color.FromArgb(color.A, Color.White));
+                        }
+                    }
                 }
 
-                // is null so we need to create one.
-                // get the system's menu and copy the data to a ContextMenuStrip.
-                var hmenu = NativeMethods.GetSystemMenu(new HandleRef(this, this.Handle), bRevert: false);
-                this.AdjustSystemMenu(hmenu);
-                var mENUITEMINFOs = NativeMethods.GetMenuInfo(new HandleRef(this, hmenu));
-                this.systemMenuStrip = NativeMethods.GetContextMenu(mENUITEMINFOs, this.Components, this);
-                this.systemMenuStrip.Opened += this.SystemMenuStrip_Opened;
-                this.systemMenuStrip.Closed += this.SystemMenuStrip_Closed;
-
-                // theme this dark or whatever colors the theme is.
-                ShareXResources.ApplyDarkThemeToControl(this.systemMenuStrip);
-                return this.systemMenuStrip;
+                return image;
             }
+            else
+            {
+                // its a system defined bitmap
+                var buttonToUse = (CaptionButton)(-1);
+                if (hBitmap == HBMMENU.HBMMENU_MBAR_CLOSE
+                    || hBitmap == HBMMENU.HBMMENU_MBAR_CLOSE_D
+                    || hBitmap == HBMMENU.HBMMENU_POPUP_CLOSE)
+                {
+                    buttonToUse = CaptionButton.Close;
+                }
+                else if (hBitmap == HBMMENU.HBMMENU_MBAR_MINIMIZE
+                    || hBitmap == HBMMENU.HBMMENU_MBAR_MINIMIZE_D
+                    || hBitmap == HBMMENU.HBMMENU_POPUP_MINIMIZE)
+                {
+                    buttonToUse = CaptionButton.Minimize;
+                }
+                else if (hBitmap == HBMMENU.HBMMENU_MBAR_RESTORE
+                    || hBitmap == HBMMENU.HBMMENU_POPUP_RESTORE)
+                {
+                    buttonToUse = CaptionButton.Restore;
+                }
+                else if (hBitmap == HBMMENU.HBMMENU_POPUP_MAXIMIZE)
+                {
+                    buttonToUse = CaptionButton.Maximize;
+                }
+
+                if ((int)buttonToUse > -1)
+                {
+                    // we've mapped to a system defined bitmap we know how to draw
+                    var image = new Bitmap(16, 16);
+                    using (var g = Graphics.FromImage(image))
+                    {
+                        ControlPaint.DrawCaptionButton(g, new Rectangle(Point.Empty, image.Size), buttonToUse, ButtonState.Flat);
+                        g.DrawRectangle(SystemPens.Control, 0, 0, image.Width - 1, image.Height - 1);
+                    }
+
+                    for (var x = 0; x < image.Width; x++)
+                    {
+                        for (var y = 0; y < image.Height; y++)
+                        {
+                            var color = image.GetPixel(x, y);
+                            if (color != SystemColors.Control && color != Color.FromArgb(255, 240, 240, 240) && enabled)
+                            {
+                                image.SetPixel(x, y, Color.White);
+                            }
+                        }
+                    }
+
+                    image.MakeTransparent(SystemColors.Control);
+                    return image;
+                }
+            }
+
+            return null;
+        }
+
+        protected override unsafe void WndProc(ref Message m)
+        {
+            if ((m.Msg is WM.WM_SYSCOMMAND
+                && m.WParam.ToInt32() is SC.SC_MOUSEMENU or SC.SC_KEYMENU
+                /* Currently is not what I expect to happen on Windows 11 instead of SC_MOUSEMENU.*/
+                or 61587)
+                /* Undocumented but works for "Taskbar right clicks". */
+                || m.Msg is 0x313
+                /* To handle right click in NC area. */
+                || m.Msg is WM.WM_CONTEXTMENU)
+            {
+                this.systemMenuStrip.Show(Windows.GET_X_LPARAM(m.LParam), Windows.GET_Y_LPARAM(m.LParam));
+                return;
+            }
+            else if (m.Msg is WM.WM_NCPAINT)
+            {
+                if (this.active)
+                {
+                    var tbInfo = GetTitleBarInfo((HWND)m.HWnd);
+                    using var graphics = Graphics.FromHwnd(m.HWnd);
+                    using var pen = new Pen(ShareXResources.Theme.BorderColor);
+
+                    // draw on the "Title Bar".
+                    // for some reason I cant see it though on Windows 11.
+                    graphics.DrawRectangle(pen, Rectangle.Inflate(tbInfo.Items[0].Bounds, -1, -1));
+
+                    // TODO: Get bounds of the NC area TEXT and paint over it in white.
+                    // return;
+                }
+            }
+            else if (m.Msg is WM.WM_NCACTIVATE)
+            {
+                this.active = m.WParam.ToInt32().Equals(Convert.ToInt32(true));
+                var tbInfo = GetTitleBarInfo((HWND)m.HWnd);
+                fixed (RECT* pRect = &tbInfo.Items[0].Rect)
+                {
+                    _ = Windows.InvalidateRect((HWND)m.HWnd, pRect, true);
+                }
+
+                if (this.active)
+                {
+                    return;
+                }
+            }
+
+            base.WndProc(ref m);
         }
 
         /// <summary>
@@ -232,26 +344,28 @@ namespace Els_kom.Controls
         {
             if (disposing)
             {
+                this.systemMenuStrip.Dispose();
                 this.Components?.Dispose();
-                this.minimizeBitmap?.Dispose();
-                this.minimizeHoverBitmap?.Dispose();
-                this.minimizeDisabledBitmap?.Dispose();
-                this.maximizeBitmap?.Dispose();
-                this.maximizeHoverBitmap?.Dispose();
-                this.maximizeDisabledBitmap?.Dispose();
-                this.closeBitmap?.Dispose();
-                this.closeHoverBitmap?.Dispose();
-                this.closeClickedBitmap?.Dispose();
-                this.helpBitmap?.Dispose();
-                this.helpHoverBitmap?.Dispose();
-                this.iconBitmap?.Dispose();
 
+                // this.minimizeBitmap?.Dispose();
+                // this.minimizeHoverBitmap?.Dispose();
+                // this.minimizeDisabledBitmap?.Dispose();
+                // this.maximizeBitmap?.Dispose();
+                // this.maximizeHoverBitmap?.Dispose();
+                // this.maximizeDisabledBitmap?.Dispose();
+                // this.closeBitmap?.Dispose();
+                // this.closeHoverBitmap?.Dispose();
+                // this.closeClickedBitmap?.Dispose();
+                // this.helpBitmap?.Dispose();
+                // this.helpHoverBitmap?.Dispose();
+                // this.iconBitmap?.Dispose();
                 // this.lastIcon?.Dispose()
             }
 
             base.Dispose(disposing);
         }
 
+        /*
         private static void CheckBitmapIfNull(ref Bitmap bitmap, string message)
         {
             if (bitmap == null)
@@ -269,7 +383,7 @@ namespace Els_kom.Controls
             using (var brush2 = new LinearGradientBrush(fillRect, ShareXResources.Theme.DarkBackgroundColor, ShareXResources.Theme.DarkBackgroundColor, LinearGradientMode.Vertical))
             {
                 e.Graphics.DrawRectangle(pen, 0, 0, this.Size.Width - 1, this.Size.Height - 1);
-                if (/*Equals(ActiveForm, this) && */this.active)
+                if (this.active)
                 {
                     e.Graphics.FillRectangle(brush2, fillRect);
                 }
@@ -406,24 +520,38 @@ namespace Els_kom.Controls
                 // TODO: get where the text is located at when ControlBox is disabled.
             }
         }
+        */
 
         private void ThemedForm_Load(object sender, EventArgs e)
         {
-            this.FormBorderStyle = FormBorderStyle.None;
-            foreach (Control control in this.Controls)
-            {
-                var tmp = new Point(control.Location.X, control.Location.Y);
-                tmp.X += 1;
-                tmp.Y += 31;
-                control.Location = tmp;
-            }
-
+            // this.FormBorderStyle = FormBorderStyle.None;
+            // foreach (Control control in this.Controls)
+            // {
+            //     var tmp = new Point(control.Location.X, control.Location.Y);
+            //     tmp.X += 1;
+            //     tmp.Y += 31;
+            //     control.Location = tmp;
+            // }
             if (!this.DesignMode)
             {
-                ShareXResources.ApplyTheme(this);
+                ShareXResources.ApplyTheme(this, !this.DesignMode);
+
+                // is null so we need to create one.
+                // get the system's menu and copy the data to a ContextMenuStrip.
+                var hmenu = Windows.GetSystemMenu((HWND)this.Handle, false);
+                this.AdjustSystemMenu(hmenu);
+                var mENUITEMINFOs = GetMenuInfo(hmenu);
+                this.systemMenuStrip = GetContextMenu(mENUITEMINFOs, this.Components, this);
+
+                // this.systemMenuStrip.Opened += this.SystemMenuStrip_Opened;
+                // this.systemMenuStrip.Closed += this.SystemMenuStrip_Closed;
+
+                // theme this dark or whatever colors the theme is.
+                ShareXResources.ApplyDarkThemeToControl(this.systemMenuStrip);
             }
         }
 
+        /*
         private void ThemedForm_MouseUp(object sender, MouseEventArgs e)
         {
             this.mouseDown = false;
@@ -679,14 +807,17 @@ namespace Els_kom.Controls
             this.active = false;
             this.Invalidate();
         }
+        */
 
+        /*
         private void SystemMenuStrip_Opened(object sender, EventArgs e)
             => this.menuShown = true;
 
         private void SystemMenuStrip_Closed(object sender, ToolStripDropDownClosedEventArgs e)
             => this.menuShown = false;
+        */
 
-        private void AdjustSystemMenu(IntPtr hmenu)
+        private void AdjustSystemMenu(HMENU hmenu)
         {
             // UpdateWindowState()
             var winState = this.WindowState;
@@ -696,55 +827,196 @@ namespace Els_kom.Controls
             var showMax = this.MaximizeBox && winState != FormWindowState.Maximized;
             var showClose = this.ControlBox;
             var showRestore = winState != FormWindowState.Normal;
-            var showSize = sizableBorder && winState != FormWindowState.Minimized
-                            && winState != FormWindowState.Maximized;
-            if (!showMin)
+            var showSize = sizableBorder && (
+                winState != FormWindowState.Minimized || winState != FormWindowState.Maximized);
+            _ = !showMin
+                ? Windows.EnableMenuItem(hmenu, SC.SC_MINIMIZE, MF.MF_BYCOMMAND | MF.MF_GRAYED)
+                : Windows.EnableMenuItem(hmenu, SC.SC_MINIMIZE, MF.MF_BYCOMMAND | MF.MF_ENABLED);
+            _ = !showMax
+                ? Windows.EnableMenuItem(hmenu, SC.SC_MAXIMIZE, MF.MF_BYCOMMAND | MF.MF_GRAYED)
+                : Windows.EnableMenuItem(hmenu, SC.SC_MAXIMIZE, MF.MF_BYCOMMAND | MF.MF_ENABLED);
+            _ = !showClose
+                ? Windows.EnableMenuItem(hmenu, SC.SC_CLOSE, MF.MF_BYCOMMAND | MF.MF_GRAYED)
+                : Windows.EnableMenuItem(hmenu, SC.SC_CLOSE, MF.MF_BYCOMMAND | MF.MF_ENABLED);
+            _ = !showRestore
+                ? Windows.EnableMenuItem(hmenu, SC.SC_RESTORE, MF.MF_BYCOMMAND | MF.MF_GRAYED)
+                : Windows.EnableMenuItem(hmenu, SC.SC_RESTORE, MF.MF_BYCOMMAND | MF.MF_ENABLED);
+            _ = !showSize
+                ? Windows.EnableMenuItem(hmenu, SC.SC_SIZE, MF.MF_BYCOMMAND | MF.MF_GRAYED)
+                : Windows.EnableMenuItem(hmenu, SC.SC_SIZE, MF.MF_BYCOMMAND | MF.MF_ENABLED);
+        }
+
+        private static unsafe List<MENUITEMINFO> GetMenuInfo(HMENU hWnd)
+        {
+            var lst = new List<MENUITEMINFO>();
+            var count = Windows.GetMenuItemCount(hWnd);
+            for (var i = 0; i < count; i++)
             {
-                _ = NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_MINIMIZE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.GRAYED));
-            }
-            else
-            {
-                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_MINIMIZE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.ENABLED));
+                var mif = new MENUITEMINFO()
+                {
+                    MenuItemInfo = new MENUITEMINFOW()
+                    {
+                        cbSize = (uint)sizeof(MENUITEMINFOW),
+                        fMask = Windows.MIIM_STRING | Windows.MIIM_ID | Windows.MIIM_BITMAP | Windows.MIIM_DATA | Windows.MIIM_STATE,
+                    },
+                };
+                var res = Windows.GetMenuItemInfo(hWnd, (uint)i, true, &mif.MenuItemInfo);
+                if (res)
+                {
+                    ++mif.MenuItemInfo.cch;
+                    mif.Text = new string(' ', (int)mif.MenuItemInfo.cch);
+                    fixed (char* pTypeDataStr = mif.Text)
+                    {
+                        mif.MenuItemInfo.dwTypeData = (ushort*)pTypeDataStr;
+                        _ = Windows.GetMenuItemInfo(hWnd, (uint)i, true, &mif.MenuItemInfo);
+                    }
+
+                    if (mif.Text.Equals("\0"))
+                    {
+                        mif.Text = null;
+                    }
+                }
+
+                lst.Add(mif);
             }
 
-            if (!showMax)
+            return lst;
+        }
+
+        // creates a new ContextMenuStrip based on the MENUITEMINFO list.
+        private static ContextMenuStrip GetContextMenu(List<MENUITEMINFO> mENUITEMINFOs, IContainer container, Control control)
+        {
+            var result = new ContextMenuStrip(container)
             {
-                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_MAXIMIZE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.GRAYED));
-            }
-            else
+                AutoClose = true,
+            };
+            var items = new List<ToolStripItem>();
+            foreach (var mENUITEMINFO in mENUITEMINFOs)
             {
-                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_MAXIMIZE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.ENABLED));
+                if (string.IsNullOrEmpty(mENUITEMINFO.Text))
+                {
+                    var item = new ToolStripSeparator();
+                    items.Add(item);
+                }
+                else
+                {
+                    var item = new ToolStripMenuItem
+                    {
+                        Text = mENUITEMINFO.Text.Contains('\t') ? mENUITEMINFO.Text.Replace(mENUITEMINFO.Text[mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture)..], string.Empty) : mENUITEMINFO.Text,
+                        ShortcutKeyDisplayString = mENUITEMINFO.Text.Contains('\t') ? mENUITEMINFO.Text[(mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture) + 1)..] : string.Empty,
+                        ShortcutKeys = GetKeysFromString(mENUITEMINFO.Text[(mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture) + 1)..]),
+                        Enabled = mENUITEMINFO.MenuItemInfo.fState == Windows.MFS_ENABLED,
+                        Image = mENUITEMINFO.MenuItemInfo.hbmpItem != IntPtr.Zero ? GetNativeMenuItemImage(mENUITEMINFO.MenuItemInfo.hbmpItem, mENUITEMINFO.MenuItemInfo.fState == Windows.MFS_ENABLED) : null,
+                    };
+
+                    if (mENUITEMINFO.MenuItemInfo.wID is SC.SC_RESTORE
+                        or SC.SC_MOVE
+                        or SC.SC_SIZE
+                        or SC.SC_MINIMIZE
+                        or SC.SC_MAXIMIZE
+                        or SC.SC_CLOSE)
+                    {
+                        item.Click += (sender, e) =>
+                        {
+                            IntPtr result = Windows.SendMessageW((HWND)control.Handle, WM.WM_SYSCOMMAND, mENUITEMINFO.MenuItemInfo.wID, IntPtr.Zero);
+                            Debug.WriteLineIf(result != IntPtr.Zero, $"TerraFX.Interop.Windows.SendMessageW() failed with error code {result.ToInt32()}");
+                        };
+                    }
+
+                    items.Add(item);
+                }
             }
 
-            if (!showClose)
+            result.Items.AddRange(items.ToArray());
+            return result;
+        }
+
+        private static Keys GetKeysFromString(string keys)
+        {
+            var key = Keys.None;
+            if (keys.Contains("Alt"))
             {
-                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_CLOSE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.GRAYED));
-            }
-            else
-            {
-                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_CLOSE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.ENABLED));
+                key |= Keys.Alt;
+
+                // strip the key from the string.
+                keys = keys[(keys.IndexOf('+', StringComparison.InvariantCulture) + 1)..];
             }
 
-            if (!showRestore)
+            if (keys.Contains("F4"))
             {
-                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_RESTORE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.GRAYED));
-            }
-            else
-            {
-                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_RESTORE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.ENABLED));
+                key |= Keys.F4;
             }
 
-            if (!showSize)
+            return key;
+        }
+
+        private static unsafe TitleBarInfo GetTitleBarInfo(HWND hwnd)
+        {
+            var tbInfoEx = new TITLEBARINFOEX
             {
-                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_SIZE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.GRAYED));
+                cbSize = (uint)Unsafe.SizeOf<TITLEBARINFOEX>(),
+            };
+            Windows.SendMessageW(hwnd, WM.WM_GETTITLEBARINFOEX, 0u, new IntPtr(&tbInfoEx));
+            return new TitleBarInfo(tbInfoEx);
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        [SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase", Justification = "Used for P/Invokes.")]
+        private struct MENUITEMINFO
+        {
+            public MENUITEMINFOW MenuItemInfo;
+            public string Text;
+        }
+
+        private struct TitleBarInfo
+        {
+            public unsafe TitleBarInfo(TITLEBARINFOEX tbInfo)
+            {
+                this.Items = new ItemInfo[6];
+                for (var i = 0; i < this.Items.Length; i++)
+                {
+                    this.Items[i].State = (ItemState)tbInfo.rgstate[i];
+                    this.Items[i].Rect = tbInfo.rgrect[i];
+                    this.Items[i].Bounds = Rectangle.FromLTRB(
+                        this.Items[i].Rect.left,
+                        this.Items[i].Rect.top,
+                        this.Items[i].Rect.right,
+                        this.Items[i].Rect.bottom);
+                }
+
+                // replace item 0's bounds with rcTitleBar.
+                this.Items[0].Rect = tbInfo.rcTitleBar;
+                this.Items[0].Bounds = Rectangle.FromLTRB(
+                    this.Items[0].Rect.left,
+                    this.Items[0].Rect.top,
+                    this.Items[0].Rect.right,
+                    this.Items[0].Rect.bottom);
             }
-            else
+
+            [Flags]
+            internal enum ItemState : uint
             {
-                NativeMethods.EnableMenuItem(new HandleRef(this, hmenu), SYSCOMMANDS.SC_SIZE, (uint)(NativeMethods.MF.BYCOMMAND | NativeMethods.MF.ENABLED));
+                STATE_SYSTEM_FOCUSABLE = 0x00100000,
+                STATE_SYSTEM_INVISIBLE = 0x00008000,
+                STATE_SYSTEM_OFFSCREEN = 0x00010000,
+                STATE_SYSTEM_UNAVAILABLE = 0x00000001,
+                STATE_SYSTEM_PRESSED = 0x00000008,
+            }
+
+            public ItemInfo[] Items { get; set; }
+
+            internal struct ItemInfo
+            {
+                public ItemState State { get; set; }
+
+                public Rectangle Bounds { get; set; }
+
+                public RECT Rect;
             }
         }
 
         // lazily create the bitmap.
+        /*
         [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected.", Justification = "Needed to cleanup old bitmap.")]
         private void CreateBitmap(ref Bitmap bitmap, Rectangle bounds, bool enabled, bool hovered, bool isMaximize = true, bool isClicked = false)
         {
@@ -829,5 +1101,6 @@ namespace Els_kom.Controls
                 gr.DrawImage(Properties.Resources.helpglyph, new Point(18, 10));
             }
         }
+        */
     }
 }

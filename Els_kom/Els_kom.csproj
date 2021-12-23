@@ -1,8 +1,12 @@
-﻿<Project Sdk="Elskom.Sdk/1.0.0">
+﻿<Project Sdk="Elskom.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472;net5.0-windows</TargetFrameworks>
-    <!-- <TargetFramework>net472</TargetFramework> -->
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- suppress message when using the .NET Preview SDKs. -->
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+    <!-- <ElskomSdkDisableImplicitFrameworkReference>true</ElskomSdkDisableImplicitFrameworkReference> -->
+    <ApplicationHighDpiMode>true</ApplicationHighDpiMode>
     <OutputType>WinExe</OutputType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>true</Prefer32Bit>
@@ -40,9 +44,8 @@
     <Company>Els_kom org.</Company>
     <Version>1.4.9.8</Version>
     <CodeAnalysisRuleSet>..\Els_kom.ruleset</CodeAnalysisRuleSet>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <DefineConstants>TRACE</DefineConstants>
-    <DefineConstants Condition="'$(Configuration)' == 'Debug'">DEBUG;$(DefineConstants)</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GitBuildInfoAssemblyType>Els_kom_Main</GitBuildInfoAssemblyType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,31 +54,18 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json">
       <Link>stylecop.json</Link>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </AdditionalFiles>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Svg" Version="3.2.3" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Svg" Version="*-*" />
+    <!-- <PackageReference Include="TerraFX.Interop.Windows" Version="10.0.20348-rc2.1430792277" /> -->
+    <PackageReference Include="TerraFX.Interop.Windows" Version="*-*" />
+    <PackageReference Remove="Microsoft.CodeAnalysis.ResxSourceGenerator" />
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
-  <Target Name="GitBuildInfo" BeforeTargets="PrepareForBuild">
-    <GitBuildInfoTask OutputPath="$(ProjectDir)\Properties\GitAssemblyInfo.cs" AssemblyType="Els_kom.Els_kom_Main" IsGeneric="false" />
-  </Target>
-  <!--
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

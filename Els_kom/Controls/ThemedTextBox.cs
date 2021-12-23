@@ -7,6 +7,7 @@ namespace Els_kom.Controls
 {
     using System.Drawing;
     using System.Windows.Forms;
+    using TerraFX.Interop.Windows;
     using Els_kom;
 
     internal class ThemedTextBox : TextBox
@@ -36,13 +37,13 @@ namespace Els_kom.Controls
             base.Dispose(disposing);
         }
 
-        private void DrawBackground(Graphics g)
+        private unsafe void DrawBackground(Graphics g)
         {
-            NativeMethods.MARGINS margins = default;
-            _ = NativeMethods.DwmExtendFrameIntoClientArea(this.Handle, ref margins);
+            MARGINS margins = default;
+            _ = Windows.DwmExtendFrameIntoClientArea((HWND)this.Handle, &margins);
 
             // hopefully this is correct.
-            var boarderRect = new Rectangle(0, 0, margins.rightWidth, margins.bottomHeight);
+            var boarderRect = new Rectangle(0, 0, margins.cxRightWidth, margins.cyBottomHeight);
             if (boarderRect.Width > 0 && boarderRect.Height > 0)
             {
                 using var pen1 = new Pen(ShareXResources.Theme.BorderColor);
