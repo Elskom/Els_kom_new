@@ -1,0 +1,10 @@
+﻿<Project>
+
+  <ItemGroup>
+    <PackageReference Include="Svg" Version="*-*" />
+    <!-- <PackageReference Include="TerraFX.Interop.Windows" Version="10.0.20348-rc2.1430792277" /> -->
+    <PackageReference Include="TerraFX.Interop.Windows" Version="*-*" />
+    <PackageReference Remove="Microsoft.CodeAnalysis.ResxSourceGenerator" />
+  </ItemGroup>
+
+</Project>

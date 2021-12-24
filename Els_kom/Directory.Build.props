@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project>
+﻿<Project>
 
   <PropertyGroup>
     <!--
@@ -9,6 +8,51 @@
     <ImportDirectoryBuildProps>false</ImportDirectoryBuildProps>
     <BaseIntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</BaseIntermediateOutputPath>
     <IntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- suppress message when using the .NET Preview SDKs. -->
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+    <!-- <ElskomSdkDisableImplicitFrameworkReference>true</ElskomSdkDisableImplicitFrameworkReference> -->
+    <ApplicationHighDpiMode>true</ApplicationHighDpiMode>
+    <OutputType>WinExe</OutputType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Els_kom</RootNamespace>
+    <AssemblyName>Els_kom</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <NoStdLib>False</NoStdLib>
+    <UseWindowsForms>true</UseWindowsForms>
+    <IsPackable>false</IsPackable>
+    <DebugType>embedded</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\$(Configuration)\</OutputPath>
+    <ErrorReport>none</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <!-- <TreatWarningsAsErrors>false</TreatWarningsAsErrors> -->
+    <LangVersion>latest</LangVersion>
+    <DebugSymbols>true</DebugSymbols>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <StartAction>Project</StartAction>
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <StartupObject>Els_kom.Els_kom_Main</StartupObject>
+    <ApplicationIcon>Resources\els_kom.ico</ApplicationIcon>
+    <ApplicationManifest>Resources\els_kom.manifest</ApplicationManifest>
+    <AssemblyTitle>Els_kom</AssemblyTitle>
+    <AssemblyVersion>1.4.9.8</AssemblyVersion>
+    <AssemblyInformationalVersion>1.4.9.8</AssemblyInformationalVersion>
+    <FileVersion>1.4.9.8</FileVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Copyright>Copyright © 2014-2021</Copyright>
+    <Company>Els_kom org.</Company>
+    <Version>1.4.9.8</Version>
+    <CodeAnalysisRuleSet>..\Els_kom.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GitBuildInfoAssemblyType>Els_kom_Main</GitBuildInfoAssemblyType>
   </PropertyGroup>
 
 </Project>
