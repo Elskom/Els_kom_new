@@ -6,40 +6,29 @@
     tell Microsoft.Common.props not to import Directory.Build.props again
     -->
     <ImportDirectoryBuildProps>false</ImportDirectoryBuildProps>
-    <BaseIntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</BaseIntermediateOutputPath>
-    <IntermediateOutputPath>..\obj\$(Configuration)\$(ProjectName)</IntermediateOutputPath>
     <TargetFramework>net6.0-windows</TargetFramework>
+    <BaseIntermediateOutputPath>..\obj\$(Configuration)\$(MSBuildProjectName)</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>..\obj\$(Configuration)\$(MSBuildProjectName)</IntermediateOutputPath>
+    <OutputPath>..\bin\$(Configuration)\</OutputPath>
     <ImplicitUsings>enable</ImplicitUsings>
     <!-- suppress message when using the .NET Preview SDKs. -->
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
-    <!-- <ElskomSdkDisableImplicitFrameworkReference>true</ElskomSdkDisableImplicitFrameworkReference> -->
-    <ApplicationHighDpiMode>true</ApplicationHighDpiMode>
     <OutputType>WinExe</OutputType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>true</Prefer32Bit>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Els_kom</RootNamespace>
     <AssemblyName>Els_kom</AssemblyName>
-    <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
-    <DelaySign>False</DelaySign>
-    <NoStdLib>False</NoStdLib>
     <UseWindowsForms>true</UseWindowsForms>
     <IsPackable>false</IsPackable>
     <DebugType>embedded</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\$(Configuration)\</OutputPath>
     <ErrorReport>none</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <!-- <TreatWarningsAsErrors>false</TreatWarningsAsErrors> -->
+    <WarningLevel>5</WarningLevel>
     <LangVersion>latest</LangVersion>
     <DebugSymbols>true</DebugSymbols>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <StartAction>Project</StartAction>
-    <BaseAddress>4194304</BaseAddress>
-    <RegisterForComInterop>False</RegisterForComInterop>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <StartupObject>Els_kom.Els_kom_Main</StartupObject>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <ApplicationIcon>Resources\els_kom.ico</ApplicationIcon>
     <ApplicationManifest>Resources\els_kom.manifest</ApplicationManifest>
     <AssemblyTitle>Els_kom</AssemblyTitle>
@@ -52,7 +41,6 @@
     <Version>1.4.9.8</Version>
     <CodeAnalysisRuleSet>..\Els_kom.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <GitBuildInfoAssemblyType>Els_kom_Main</GitBuildInfoAssemblyType>
   </PropertyGroup>
 
 </Project>

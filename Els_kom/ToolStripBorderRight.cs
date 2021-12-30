@@ -3,26 +3,22 @@
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
-namespace Els_kom
+namespace Els_kom;
+
+internal class ToolStripBorderRight : ToolStrip
 {
-    using System.Drawing;
-    using System.Windows.Forms;
+    public bool DrawCustomBorder { get; set; } = true;
 
-    internal class ToolStripBorderRight : ToolStrip
+    protected override void OnPaint(PaintEventArgs e)
     {
-        public bool DrawCustomBorder { get; set; } = true;
-
-        protected override void OnPaint(PaintEventArgs e)
+        base.OnPaint(e);
+        if (this.DrawCustomBorder)
         {
-            base.OnPaint(e);
-            if (this.DrawCustomBorder)
-            {
-                using var pen = new Pen(ProfessionalColors.SeparatorDark);
-                e.Graphics.DrawLine(pen, new Point(this.ClientSize.Width - 1, 0), new Point(this.ClientSize.Width - 1, this.ClientSize.Height - 1));
-            }
+            using var pen = new Pen(ProfessionalColors.SeparatorDark);
+            e.Graphics.DrawLine(pen, new Point(this.ClientSize.Width - 1, 0), new Point(this.ClientSize.Width - 1, this.ClientSize.Height - 1));
         }
-
-        protected override void OnPaintBackground(PaintEventArgs e)
-            => base.OnPaintBackground(e);
     }
+
+    protected override void OnPaintBackground(PaintEventArgs e)
+        => base.OnPaintBackground(e);
 }

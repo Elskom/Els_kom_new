@@ -3,122 +3,118 @@
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
-namespace Els_kom
+namespace Els_kom;
+
+internal class ShareXTheme
 {
-    using System.Collections.Generic;
-    using System.Drawing;
+    public string Name { get; set; }
 
-    internal class ShareXTheme
-    {
-        public string Name { get; set; }
+    public Color BackgroundColor { get; set; }
 
-        public Color BackgroundColor { get; set; }
+    public Color LightBackgroundColor { get; set; }
 
-        public Color LightBackgroundColor { get; set; }
+    public Color DarkBackgroundColor { get; set; }
 
-        public Color DarkBackgroundColor { get; set; }
+    public Color TextColor { get; set; }
 
-        public Color TextColor { get; set; }
+    public Color BorderColor { get; set; }
 
-        public Color BorderColor { get; set; }
+    public Color CheckerColor { get; set; }
 
-        public Color CheckerColor { get; set; }
+    public Color CheckerColor2 { get; set; }
 
-        public Color CheckerColor2 { get; set; }
+    public int CheckerSize { get; set; } = 15;
 
-        public int CheckerSize { get; set; } = 15;
+    public Color LinkColor { get; set; }
 
-        public Color LinkColor { get; set; }
+    public Color MenuHighlightColor { get; set; }
 
-        public Color MenuHighlightColor { get; set; }
+    public Color MenuHighlightBorderColor { get; set; }
 
-        public Color MenuHighlightBorderColor { get; set; }
+    public Color MenuBorderColor { get; set; }
 
-        public Color MenuBorderColor { get; set; }
+    public Color MenuCheckBackgroundColor { get; set; }
 
-        public Color MenuCheckBackgroundColor { get; set; }
+    public Color SeparatorLightColor { get; set; }
 
-        public Color SeparatorLightColor { get; set; }
+    public Color SeparatorDarkColor { get; set; }
 
-        public Color SeparatorDarkColor { get; set; }
+    public static ShareXTheme GetDarkTheme()
+        => new()
+        {
+            Name = "Dark",
+            BackgroundColor = Color.FromArgb(42, 47, 56),
+            LightBackgroundColor = Color.FromArgb(52, 57, 65),
+            DarkBackgroundColor = Color.FromArgb(28, 32, 38),
+            TextColor = Color.FromArgb(235, 235, 235),
+            BorderColor = Color.FromArgb(28, 32, 38),
+            CheckerColor = Color.FromArgb(60, 60, 60),
+            CheckerColor2 = Color.FromArgb(50, 50, 50),
+            CheckerSize = 15,
+            LinkColor = Color.FromArgb(166, 212, 255),
+            MenuHighlightColor = Color.FromArgb(30, 34, 40),
+            MenuHighlightBorderColor = Color.FromArgb(116, 129, 152),
+            MenuBorderColor = Color.FromArgb(22, 26, 31),
+            MenuCheckBackgroundColor = Color.FromArgb(56, 64, 75),
+            SeparatorLightColor = Color.FromArgb(56, 64, 75),
+            SeparatorDarkColor = Color.FromArgb(22, 26, 31),
+        };
 
-        public static ShareXTheme GetDarkTheme()
-            => new()
-            {
-                Name = "Dark",
-                BackgroundColor = Color.FromArgb(42, 47, 56),
-                LightBackgroundColor = Color.FromArgb(52, 57, 65),
-                DarkBackgroundColor = Color.FromArgb(28, 32, 38),
-                TextColor = Color.FromArgb(235, 235, 235),
-                BorderColor = Color.FromArgb(28, 32, 38),
-                CheckerColor = Color.FromArgb(60, 60, 60),
-                CheckerColor2 = Color.FromArgb(50, 50, 50),
-                CheckerSize = 15,
-                LinkColor = Color.FromArgb(166, 212, 255),
-                MenuHighlightColor = Color.FromArgb(30, 34, 40),
-                MenuHighlightBorderColor = Color.FromArgb(116, 129, 152),
-                MenuBorderColor = Color.FromArgb(22, 26, 31),
-                MenuCheckBackgroundColor = Color.FromArgb(56, 64, 75),
-                SeparatorLightColor = Color.FromArgb(56, 64, 75),
-                SeparatorDarkColor = Color.FromArgb(22, 26, 31),
-            };
+    public static ShareXTheme GetLightTheme()
+        => new()
+        {
+            Name = "Light",
+            BackgroundColor = Color.FromArgb(242, 242, 242),
+            LightBackgroundColor = Color.FromArgb(247, 247, 247),
+            DarkBackgroundColor = Color.FromArgb(235, 235, 235),
+            TextColor = Color.FromArgb(69, 69, 69),
+            BorderColor = Color.FromArgb(201, 201, 201),
+            CheckerColor = Color.FromArgb(60, 60, 60),
+            CheckerColor2 = Color.FromArgb(50, 50, 50),
+            CheckerSize = 15,
+            LinkColor = Color.FromArgb(166, 212, 255),
+            MenuHighlightColor = Color.FromArgb(247, 247, 247),
+            MenuHighlightBorderColor = Color.FromArgb(96, 143, 226),
+            MenuBorderColor = Color.FromArgb(201, 201, 201),
+            MenuCheckBackgroundColor = Color.FromArgb(225, 233, 244),
+            SeparatorLightColor = Color.FromArgb(253, 253, 253),
+            SeparatorDarkColor = Color.FromArgb(189, 189, 189),
+        };
 
-        public static ShareXTheme GetLightTheme()
-            => new()
-            {
-                Name = "Light",
-                BackgroundColor = Color.FromArgb(242, 242, 242),
-                LightBackgroundColor = Color.FromArgb(247, 247, 247),
-                DarkBackgroundColor = Color.FromArgb(235, 235, 235),
-                TextColor = Color.FromArgb(69, 69, 69),
-                BorderColor = Color.FromArgb(201, 201, 201),
-                CheckerColor = Color.FromArgb(60, 60, 60),
-                CheckerColor2 = Color.FromArgb(50, 50, 50),
-                CheckerSize = 15,
-                LinkColor = Color.FromArgb(166, 212, 255),
-                MenuHighlightColor = Color.FromArgb(247, 247, 247),
-                MenuHighlightBorderColor = Color.FromArgb(96, 143, 226),
-                MenuBorderColor = Color.FromArgb(201, 201, 201),
-                MenuCheckBackgroundColor = Color.FromArgb(225, 233, 244),
-                SeparatorLightColor = Color.FromArgb(253, 253, 253),
-                SeparatorDarkColor = Color.FromArgb(189, 189, 189),
-            };
+    public static ShareXTheme GetPinkTheme()
+        => new()
+        {
+            Name = "Pink",
+            BackgroundColor = Color.HotPink,
+            LightBackgroundColor = Color.LightPink,
 
-        public static ShareXTheme GetPinkTheme()
-            => new()
-            {
-                Name = "Pink",
-                BackgroundColor = Color.HotPink,
-                LightBackgroundColor = Color.LightPink,
+            // DarkBackgroundColor = Color.DarkPink,
+            TextColor = Color.Black,
 
-                // DarkBackgroundColor = Color.DarkPink,
-                TextColor = Color.Black,
+            // BorderColor = Color.DarkPink,
+            // CheckerColor = ???
+            // CheckerColor2 = ???
+            CheckerSize = 15,
 
-                // BorderColor = Color.DarkPink,
-                // CheckerColor = ???
-                // CheckerColor2 = ???
-                CheckerSize = 15,
+            // LinkColor = ???
+            MenuHighlightColor = Color.LightPink,
 
-                // LinkColor = ???
-                MenuHighlightColor = Color.LightPink,
+            // MenuHighlightBorderColor = ???,
+            // MenuBorderColor = Color.DarkPink,
+            // MenuCheckBackgroundColor = ???,
+            // SeparatorLightColor = ???,
+            // SeparatorDarkColor = ???,
+        };
 
-                // MenuHighlightBorderColor = ???,
-                // MenuBorderColor = Color.DarkPink,
-                // MenuCheckBackgroundColor = ???,
-                // SeparatorLightColor = ???,
-                // SeparatorDarkColor = ???,
-            };
+    public static ShareXTheme GetPurpleTheme()
+        => new()
+        {
+            Name = "Purple",
+        };
 
-        public static ShareXTheme GetPurpleTheme()
-            => new()
-            {
-                Name = "Purple",
-            };
+    public static List<ShareXTheme> GetPresets()
+        => new() { GetDarkTheme(), GetLightTheme(), GetPinkTheme(), GetPurpleTheme() };
 
-        public static List<ShareXTheme> GetPresets()
-            => new() { GetDarkTheme(), GetLightTheme(), GetPinkTheme(), GetPurpleTheme() };
-
-        public override string ToString()
-            => this.Name;
-    }
+    public override string ToString()
+        => this.Name;
 }

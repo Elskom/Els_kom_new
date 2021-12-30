@@ -5,14 +5,7 @@
 
 namespace Els_kom.Forms
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.IO;
-    using System.Linq;
     using System.Text;
-    using System.Threading;
-    using System.Windows.Forms;
     using System.Xml.Linq;
     using System.Xml.XPath;
     using Els_kom.Controls;
@@ -138,18 +131,18 @@ namespace Els_kom.Forms
                     }
                 }
 
-                var komplugins = Els_kom_Main.ServiceProvider.GetRequiredService<GenericPluginLoader>().LoadPlugins<IKomPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                var komplugins = FormsApplication.ServiceProvider.GetRequiredService<GenericPluginLoader>().LoadPlugins<IKomPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
                 KOMManager.Komplugins.AddRange(komplugins);
-                var callbackplugins = Els_kom_Main.ServiceProvider.GetRequiredService<GenericPluginLoader>().LoadPlugins<ICallbackPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                var callbackplugins = FormsApplication.ServiceProvider.GetRequiredService<GenericPluginLoader>().LoadPlugins<ICallbackPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
                 KOMManager.Callbackplugins.AddRange(callbackplugins);
-                var encryptionplugins = Els_kom_Main.ServiceProvider.GetRequiredService<GenericPluginLoader>().LoadPlugins<IEncryptionPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                var encryptionplugins = FormsApplication.ServiceProvider.GetRequiredService<GenericPluginLoader>().LoadPlugins<IEncryptionPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
                 KOMManager.Encryptionplugins.AddRange(encryptionplugins);
-                if (!GitInformation.GetAssemblyInstance(typeof(Els_kom_Main))?.IsMain ?? false)
+                if (!GitInformation.GetAssemblyInstance(typeof(FormsApplication))?.IsMain ?? false)
                 {
                     _ = MessageManager.ShowInfo("This branch is not the main branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into main.", "Info!", Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
                 }
 
-                if (GitInformation.GetAssemblyInstance(typeof(Els_kom_Main))?.IsDirty ?? false)
+                if (GitInformation.GetAssemblyInstance(typeof(FormsApplication))?.IsDirty ?? false)
                 {
                     var resp = MessageBox.Show("This build was compiled with Uncommitted changes. As a result, this build might be unstable. Are you sure you want to run this build to test some changes to the code?", "Info!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     if (resp == DialogResult.No)
@@ -167,7 +160,7 @@ namespace Els_kom.Forms
                 pluginTypes.AddRange(KOMManager.Callbackplugins.Select((x) => x.GetType()));
                 pluginTypes.AddRange(KOMManager.Komplugins.Select((x) => x.GetType()));
                 pluginTypes.AddRange(KOMManager.Encryptionplugins.Select((x) => x.GetType()));
-                var pluginUpdateCheck = Els_kom_Main.ServiceProvider.GetRequiredService<PluginUpdateCheck>();
+                var pluginUpdateCheck = FormsApplication.ServiceProvider.GetRequiredService<PluginUpdateCheck>();
 
                 // discard results.
                 _ = pluginUpdateCheck.CheckForUpdates(SettingsFile.SettingsJson.Sources, pluginTypes);

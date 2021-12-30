@@ -3,17 +3,14 @@
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
-namespace Els_kom
+namespace Els_kom;
+
+internal class ToolStripRoundedEdgeRenderer : ToolStripProfessionalRenderer
 {
-    using System.Windows.Forms;
+    public ToolStripRoundedEdgeRenderer()
+        => this.RoundedEdges = false;
 
-    internal class ToolStripRoundedEdgeRenderer : ToolStripProfessionalRenderer
-    {
-        public ToolStripRoundedEdgeRenderer()
-            => this.RoundedEdges = false;
-
-        public ToolStripRoundedEdgeRenderer(ProfessionalColorTable professionalColorTable)
-            : base(professionalColorTable)
-            => this.RoundedEdges = false;
-    }
+    public ToolStripRoundedEdgeRenderer(ProfessionalColorTable professionalColorTable)
+        : base(professionalColorTable)
+        => this.RoundedEdges = false;
 }

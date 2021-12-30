@@ -5,9 +5,6 @@
 
 namespace Els_kom.Forms
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Windows.Forms;
     using Els_kom.Controls;
 
     internal partial class SettingsForm : /*Form*/ThemedForm
