@@ -10,7 +10,7 @@ namespace Els_kom.Forms
 
     internal partial class AboutForm : /*Form*/ThemedForm
     {
-        internal AboutForm()
+        public AboutForm()
             => this.InitializeComponent();
 
         internal static int Label1 { get; private set; }

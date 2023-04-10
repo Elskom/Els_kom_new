@@ -13,7 +13,7 @@ namespace Els_kom.Forms
         private bool pluginChanges;
         private int saveToZip;
 
-        internal PluginsForm()
+        public PluginsForm()
             => this.InitializeComponent();
 
         private void PluginsForm_Load(object sender, EventArgs e)

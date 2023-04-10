@@ -25,7 +25,7 @@ namespace Els_kom.Forms
         private int showintaskbarTempvalue2;
         private string elsDirTemp = string.Empty;
 
-        internal MainForm()
+        public MainForm()
         {
             this.InitializeComponent();
             this.SuspendLayout();

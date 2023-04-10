@@ -15,7 +15,7 @@ namespace Els_kom.Forms
         private int label5 = -1;
         private int label8 = -1;
 
-        internal SettingsForm()
+        public SettingsForm()
             => this.InitializeComponent();
 
         internal static int Label9 { get; private set; }
