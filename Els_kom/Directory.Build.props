@@ -24,7 +24,7 @@
     <DebugType>embedded</DebugType>
     <Optimize>false</Optimize>
     <ErrorReport>none</ErrorReport>
-    <WarningLevel>5</WarningLevel>
+    <WarningLevel>9999</WarningLevel>
     <LangVersion>latest</LangVersion>
     <DebugSymbols>true</DebugSymbols>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
@@ -36,11 +36,12 @@
     <AssemblyInformationalVersion>1.4.9.8</AssemblyInformationalVersion>
     <FileVersion>1.4.9.8</FileVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Copyright>Copyright © 2014-2021</Copyright>
+    <Copyright>Copyright © 2014-2023</Copyright>
     <Company>Els_kom org.</Company>
     <Version>1.4.9.8</Version>
     <CodeAnalysisRuleSet>..\Els_kom.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GitBuildInfoAssemblyType>FormsApplication</GitBuildInfoAssemblyType>
   </PropertyGroup>
 
 </Project>

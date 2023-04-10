@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2021, Els_kom org.
+// Copyright (c) 2014-2023, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -6,6 +6,7 @@
 namespace Els_kom.Forms
 {
     using Els_kom.Controls;
+    using Els_kom.Themes;
 
     internal partial class SettingsForm : /*Form*/ThemedForm
     {
@@ -348,7 +349,7 @@ namespace Els_kom.Forms
                     textBox.Select(0, 0);
                 }
             };
-            ShareXResources.ApplyDarkThemeToControl(textBox);
+            ApplicationResources.ApplyTheme(textBox);
             this.ListView2.Controls.Add(textBox);
             this.ActiveControl = textBox;
         }

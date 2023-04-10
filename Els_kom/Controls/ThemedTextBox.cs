@@ -1,11 +1,11 @@
-﻿// Copyright (c) 2014-2021, Els_kom org.
+﻿// Copyright (c) 2014-2023, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
 
 namespace Els_kom.Controls;
 
-using Els_kom;
+using Els_kom.Themes;
 using TerraFX.Interop.Windows;
 
 internal class ThemedTextBox : TextBox
@@ -44,7 +44,7 @@ internal class ThemedTextBox : TextBox
         var boarderRect = new Rectangle(0, 0, margins.cxRightWidth, margins.cyBottomHeight);
         if (boarderRect.Width > 0 && boarderRect.Height > 0)
         {
-            using var pen1 = new Pen(ShareXResources.Theme.BorderColor);
+            using var pen1 = new Pen(ApplicationResources.Theme.BorderColor);
             g.DrawRectangle(pen1, boarderRect);
         }
 

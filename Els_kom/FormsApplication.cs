@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2014-2021, Els_kom org.
+﻿// Copyright (c) 2014-2023, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -7,6 +7,7 @@ namespace Els_kom;
 
 using System.Drawing.Imaging;
 using Els_kom.Forms;
+using Els_kom.Themes;
 using Microsoft.Extensions.DependencyInjection;
 
 internal static class FormsApplication
@@ -29,6 +30,12 @@ internal static class FormsApplication
         }
         else
         {
+            ApplicationResources.Icon = () => Icons.FormIcon;
+            ApplicationResources.Logo = () => Icons.FormImage;
+
+            // Apartment must be set to Unknown first.
+            Thread.CurrentThread.SetApartmentState(ApartmentState.Unknown);
+            Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
             ApplicationConfiguration.Initialize();
             using var mainForm = new MainForm();
             Application.Run(mainForm);
@@ -64,6 +71,10 @@ internal static class FormsApplication
     private static ServiceProvider ConfigureServices()
         => new ServiceCollection()
         .AddSingleton<HttpClient>()
+        .AddTransient<AboutForm>()
+        .AddTransient<SettingsForm>()
+        .AddTransient<PluginsForm>()
+        .AddTransient<GameSelectionForm>()
         .AddGenericPluginLoader()
         .AddPluginUpdateCheck()
         .BuildServiceProvider();

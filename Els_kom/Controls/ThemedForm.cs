@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2014-2021, Els_kom org.
+﻿// Copyright (c) 2014-2023, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Els_kom.Themes;
 using TerraFX.Interop.Windows;
 
 internal class ThemedForm : Form
@@ -81,9 +82,9 @@ internal class ThemedForm : Form
         this.Activated += this.ThemedForm_Activated;
         this.Deactivate += this.ThemedForm_Deactivate;
         */
-        if (ShareXResources.Theme != ShareXTheme.GetPresets()[0])
+        if (ApplicationResources.Theme != Theme.GetPresets()[0])
         {
-            ShareXResources.Theme = ShareXTheme.GetPresets()[0];
+            ApplicationResources.Theme = Theme.GetPresets()[0];
         }
 
         // create state bitmaps.
@@ -303,7 +304,7 @@ internal class ThemedForm : Form
             {
                 var tbInfo = GetTitleBarInfo((HWND)m.HWnd);
                 using var graphics = Graphics.FromHwnd(m.HWnd);
-                using var pen = new Pen(ShareXResources.Theme.BorderColor);
+                using var pen = new Pen(ApplicationResources.Theme.BorderColor);
 
                 // draw on the "Title Bar".
                 // for some reason I cant see it though on Windows 11.
@@ -530,7 +531,7 @@ internal class ThemedForm : Form
         // }
         if (!this.DesignMode)
         {
-            ShareXResources.ApplyTheme(this, !this.DesignMode);
+            ApplicationResources.ApplyTheme(this, !this.DesignMode);
 
             // is null so we need to create one.
             // get the system's menu and copy the data to a ContextMenuStrip.
@@ -543,7 +544,7 @@ internal class ThemedForm : Form
             // this.systemMenuStrip.Closed += this.SystemMenuStrip_Closed;
 
             // theme this dark or whatever colors the theme is.
-            ShareXResources.ApplyDarkThemeToControl(this.systemMenuStrip);
+            ApplicationResources.ApplyTheme(this.systemMenuStrip);
         }
     }
 

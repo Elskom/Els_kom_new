@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2021, Els_kom org.
+// Copyright (c) 2014-2023, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -9,6 +9,7 @@ namespace Els_kom.Forms
     using System.Xml.Linq;
     using System.Xml.XPath;
     using Els_kom.Controls;
+    using Els_kom.Themes;
     using Microsoft.Extensions.DependencyInjection;
     using Svg;
     using TerraFX.Interop.Windows;
@@ -35,7 +36,7 @@ namespace Els_kom.Forms
                 ContextMenuStrip = this.contextMenuStrip1,
             };
             notifyIcon.MouseClick += new MouseEventHandler(this.NotifyIcon_MouseClick);
-            ShareXResources.ApplyDarkThemeToControl(this.contextMenuStrip1);
+            ApplicationResources.ApplyTheme(this.contextMenuStrip1);
             this.ResumeLayout(false);
         }
 
@@ -94,10 +95,10 @@ namespace Els_kom.Forms
             this.Hide();
 
             // var textColor = Color.FromArgb((int)Windows.GetThemeSysColor(Windows.GetWindowTheme((HWND)this.Handle), Windows.TMT_WINDOWTEXT));
-            this.packToolStripMenuItem.Image = ConvertSVGTo16x16Image(Properties.Resources.archive, ShareXResources.Theme.TextColor);
-            this.unpackToolStripMenuItem.Image = ConvertSVGTo16x16Image(Properties.Resources.unarchive, ShareXResources.Theme.TextColor);
-            this.testModsToolStripMenuItem.Image = ConvertSVGTo16x16Image(Properties.Resources.vial_solid, ShareXResources.Theme.TextColor);
-            this.launcherToolStripMenuItem.Image = ConvertSVGTo16x16Image(Properties.Resources.launch, ShareXResources.Theme.TextColor);
+            this.packToolStripMenuItem.ConvertSVGTo16x16Image(Properties.Resources.archive, ApplicationResources.Theme.TextColor);
+            this.unpackToolStripMenuItem.ConvertSVGTo16x16Image(Properties.Resources.unarchive, ApplicationResources.Theme.TextColor);
+            this.testModsToolStripMenuItem.ConvertSVGTo16x16Image(Properties.Resources.vial_solid, ApplicationResources.Theme.TextColor);
+            this.launcherToolStripMenuItem.ConvertSVGTo16x16Image(Properties.Resources.launch, ApplicationResources.Theme.TextColor);
             this.exitToolStripMenuItem.Image = GetNativeMenuItemImage(HBMMENU.HBMMENU_POPUP_CLOSE, true);
             var closing = false;
             if (!Directory.Exists(Application.StartupPath + "\\koms"))
@@ -565,23 +566,6 @@ namespace Els_kom.Forms
             this.launcherToolStripMenuItem.Enabled = enabled;
             this.Label2.Text = status;
             notifyIcon.Text = notifyiconstate;
-        }
-
-        private static Image ConvertSVGTo16x16Image(byte[] svgData, Color color)
-        {
-            var svgString = Encoding.UTF8.GetString(svgData);
-            var root = XElement.Parse(svgString);
-            var colors = root.XPathSelectElements("//*[@fill]");
-            foreach (var node in colors)
-            {
-                node.Attribute("fill").Value = color.ToHexString();
-            }
-
-            svgString = root.ToString();
-            var svgDoc = SvgDocument.FromSvg<SvgDocument>(svgString);
-            svgDoc.FillRule = SvgFillRule.EvenOdd;
-            var image = svgDoc.Draw(16, 16);
-            return image;
         }
     }
 }

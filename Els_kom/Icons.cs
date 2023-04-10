@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2021, Els_kom org.
+// Copyright (c) 2014-2023, Els_kom org.
 // https://github.com/Elskom/
 // All rights reserved.
 // license: MIT, see LICENSE for more details.
@@ -6,15 +6,12 @@
 namespace Els_kom;
 
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Resources;
 
 /// <summary>
 /// Els_kom Icon Resource Class.
 /// </summary>
 internal static class Icons
 {
-
     /// <summary>
     /// Gets the form icon from the project's resources.
     /// </summary>
@@ -28,9 +25,9 @@ internal static class Icons
             var iconVal = SettingsFile.SettingsJson.WindowIcon;
             var retIcon = iconVal switch
             {
-                1 => Properties.Resources.VP_Trans, // (Icon)resourceMan.GetObject("VP_Trans", resourceCulture),
-                2 => Properties.Resources.YR, // (Icon)resourceMan.GetObject("YR", resourceCulture),
-                _ => Properties.Resources.els_kom, // (Icon)resourceMan.GetObject("els_kom", resourceCulture),
+                1 => Properties.Resources.VP_Trans,
+                2 => Properties.Resources.YR,
+                _ => Properties.Resources.els_kom,
             };
             return retIcon;
         }
@@ -63,12 +60,7 @@ internal static class Icons
     /// from their website.
     /// </value>
     public static Image VoidElsLogo
-    {
-        get
-        {
-            return Properties.Resources.voidels_logo;
-        }
-    }
+        => Properties.Resources.voidels_logo;
 
     /// <summary>
     /// Gets the Elsword official logo based on the logo
@@ -79,12 +71,7 @@ internal static class Icons
     /// from x2.exe.
     /// </value>
     public static Image ElsLogo
-    {
-        get
-        {
-            return Properties.Resources.els_logo;
-        }
-    }
+        => Properties.Resources.els_logo;
 
     /// <summary>
     /// Checks if 2 icons are Equal.
@@ -98,18 +85,22 @@ internal static class Icons
         using (var bitmap1 = icon1?.ToBitmap())
         using (var bitmap2 = icon2?.ToBitmap())
         {
-            if ((bitmap1 == null || bitmap2 == null) && !(bitmap1 == null && bitmap2 == null))
+            if (bitmap1 is null && bitmap2 is null)
+            {
+                result = true;
+            }
+            else if (bitmap1 is null || bitmap2 is null)
             {
                 result = false;
             }
-            else if (bitmap1?.Size == bitmap2?.Size)
+            else if (bitmap1.Size == bitmap2.Size)
             {
-                for (var y = 0; y < bitmap1?.Height; y++)
+                for (var y = 0; y < bitmap1.Height; y++)
                 {
                     for (var x = 0; x < bitmap1.Width; x++)
                     {
-                        var col1 = bitmap1.GetPixel(x, y);
-                        var col2 = bitmap2.GetPixel(x, y);
+                        var col1 = bitmap1?.GetPixel(x, y);
+                        var col2 = bitmap2?.GetPixel(x, y);
                         if (!col1.Equals(col2))
                         {
                             result = false;
