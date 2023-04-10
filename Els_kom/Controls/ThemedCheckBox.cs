@@ -21,7 +21,7 @@ internal class ThemedCheckBox : Control
     private readonly Pen borderPen;
     private bool isChecked;
     private bool isHover;
-    private string text;
+    private string? text;
 
     public ThemedCheckBox()
     {
@@ -47,7 +47,7 @@ internal class ThemedCheckBox : Control
         this.Font = new Font("Arial", 8);
     }
 
-    public event EventHandler CheckedChanged;
+    public event EventHandler? CheckedChanged;
 
     [DefaultValue(false)]
     public bool Checked
@@ -66,14 +66,10 @@ internal class ThemedCheckBox : Control
 
     public override string Text
     {
-        get => this.text;
+        get => this.text!;
         set
         {
-            if (value == null)
-            {
-                value = string.Empty;
-            }
-
+            value ??= string.Empty;
             if (this.text != value)
             {
                 this.text = value;

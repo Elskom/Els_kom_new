@@ -17,14 +17,14 @@ internal class ToolStripDarkRenderer : ToolStripCustomRenderer
     protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
     {
         // e.TextColor = Color.FromArgb((int)Windows.GetThemeSysColor(Windows.GetWindowTheme((HWND)e.ToolStrip.FindForm().Handle), Windows.TMT_WINDOWTEXT));
-        e.TextColor = ApplicationResources.Theme.TextColor;
+        e.TextColor = ApplicationResources.Theme!.TextColor;
         base.OnRenderItemText(e);
     }
 
     protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
     {
         // e.ArrowColor = Color.FromArgb((int)Windows.GetThemeSysColor(Windows.GetWindowTheme((HWND)e.Item.Owner.FindForm().Handle), Windows.TMT_WINDOWTEXT));
-        e.ArrowColor = ApplicationResources.Theme.TextColor;
+        e.ArrowColor = ApplicationResources.Theme!.TextColor;
         base.OnRenderArrow(e);
     }
 }

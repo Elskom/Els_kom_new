@@ -27,7 +27,7 @@ internal class ThemedForm : Form
     private bool active;
     private bool mouseDown;
     */
-    private ContextMenuStrip systemMenuStrip;
+    private ContextMenuStrip? systemMenuStrip;
     private bool active;
 
     // private bool menuShown;
@@ -281,7 +281,7 @@ internal class ThemedForm : Form
             }
         }
 
-        return null;
+        return null!;
     }
 
     protected override unsafe void WndProc(ref Message m)
@@ -295,7 +295,7 @@ internal class ThemedForm : Form
             /* To handle right click in NC area. */
             || m.Msg is WM.WM_CONTEXTMENU)
         {
-            this.systemMenuStrip.Show(Windows.GET_X_LPARAM(m.LParam), Windows.GET_Y_LPARAM(m.LParam));
+            this.systemMenuStrip?.Show(Windows.GET_X_LPARAM(m.LParam), Windows.GET_Y_LPARAM(m.LParam));
             return;
         }
         else if (m.Msg is WM.WM_NCPAINT)
@@ -304,7 +304,7 @@ internal class ThemedForm : Form
             {
                 var tbInfo = GetTitleBarInfo((HWND)m.HWnd);
                 using var graphics = Graphics.FromHwnd(m.HWnd);
-                using var pen = new Pen(ApplicationResources.Theme.BorderColor);
+                using var pen = new Pen(ApplicationResources.Theme!.BorderColor);
 
                 // draw on the "Title Bar".
                 // for some reason I cant see it though on Windows 11.
@@ -341,7 +341,7 @@ internal class ThemedForm : Form
     {
         if (disposing)
         {
-            this.systemMenuStrip.Dispose();
+            this.systemMenuStrip?.Dispose();
             this.Components?.Dispose();
 
             // this.minimizeBitmap?.Dispose();
@@ -360,6 +360,120 @@ internal class ThemedForm : Form
         }
 
         base.Dispose(disposing);
+    }
+
+    private static unsafe List<MENUITEMINFO> GetMenuInfo(HMENU hWnd)
+    {
+        var lst = new List<MENUITEMINFO>();
+        var count = Windows.GetMenuItemCount(hWnd);
+        for (var i = 0; i < count; i++)
+        {
+            var mif = new MENUITEMINFO()
+            {
+                MenuItemInfo = new MENUITEMINFOW()
+                {
+                    cbSize = (uint)sizeof(MENUITEMINFOW),
+                    fMask = Windows.MIIM_STRING | Windows.MIIM_ID | Windows.MIIM_BITMAP | Windows.MIIM_DATA | Windows.MIIM_STATE,
+                },
+            };
+            var res = Windows.GetMenuItemInfo(hWnd, (uint)i, true, &mif.MenuItemInfo);
+            if (res)
+            {
+                ++mif.MenuItemInfo.cch;
+                mif.Text = new string(' ', (int)mif.MenuItemInfo.cch);
+                fixed (char* pTypeDataStr = mif.Text)
+                {
+                    mif.MenuItemInfo.dwTypeData = (ushort*)pTypeDataStr;
+                    _ = Windows.GetMenuItemInfo(hWnd, (uint)i, true, &mif.MenuItemInfo);
+                }
+
+                if (mif.Text.Equals("\0"))
+                {
+                    mif.Text = null!;
+                }
+            }
+
+            lst.Add(mif);
+        }
+
+        return lst;
+    }
+
+    // creates a new ContextMenuStrip based on the MENUITEMINFO list.
+    private static ContextMenuStrip GetContextMenu(List<MENUITEMINFO> mENUITEMINFOs, IContainer container, Control control)
+    {
+        var result = new ContextMenuStrip(container)
+        {
+            AutoClose = true,
+        };
+        var items = new List<ToolStripItem>();
+        foreach (var mENUITEMINFO in mENUITEMINFOs)
+        {
+            if (string.IsNullOrEmpty(mENUITEMINFO.Text))
+            {
+                var item = new ToolStripSeparator();
+                items.Add(item);
+            }
+            else
+            {
+                var item = new ToolStripMenuItem
+                {
+                    Text = mENUITEMINFO.Text.Contains('\t') ? mENUITEMINFO.Text.Replace(mENUITEMINFO.Text[mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture)..], string.Empty) : mENUITEMINFO.Text,
+                    ShortcutKeyDisplayString = mENUITEMINFO.Text.Contains('\t') ? mENUITEMINFO.Text[(mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture) + 1)..] : string.Empty,
+                    ShortcutKeys = GetKeysFromString(mENUITEMINFO.Text[(mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture) + 1)..]),
+                    Enabled = mENUITEMINFO.MenuItemInfo.fState == Windows.MFS_ENABLED,
+                    Image = mENUITEMINFO.MenuItemInfo.hbmpItem != IntPtr.Zero ? GetNativeMenuItemImage(mENUITEMINFO.MenuItemInfo.hbmpItem, mENUITEMINFO.MenuItemInfo.fState == Windows.MFS_ENABLED) : null,
+                };
+
+                if (mENUITEMINFO.MenuItemInfo.wID is SC.SC_RESTORE
+                    or SC.SC_MOVE
+                    or SC.SC_SIZE
+                    or SC.SC_MINIMIZE
+                    or SC.SC_MAXIMIZE
+                    or SC.SC_CLOSE)
+                {
+                    item.Click += (sender, e) =>
+                    {
+                        IntPtr result = Windows.SendMessageW((HWND)control.Handle, WM.WM_SYSCOMMAND, mENUITEMINFO.MenuItemInfo.wID, IntPtr.Zero);
+                        Debug.WriteLineIf(result != IntPtr.Zero, $"TerraFX.Interop.Windows.SendMessageW() failed with error code {result.ToInt32()}");
+                    };
+                }
+
+                items.Add(item);
+            }
+        }
+
+        result.Items.AddRange(items.ToArray());
+        return result;
+    }
+
+    private static Keys GetKeysFromString(string keys)
+    {
+        var key = Keys.None;
+        if (keys.Contains("Alt"))
+        {
+            key |= Keys.Alt;
+
+            // strip the key from the string.
+            keys = keys[(keys.IndexOf('+', StringComparison.InvariantCulture) + 1)..];
+        }
+
+        if (keys.Contains("F4"))
+        {
+            key |= Keys.F4;
+        }
+
+        return key;
+    }
+
+    private static unsafe TitleBarInfo GetTitleBarInfo(HWND hwnd)
+    {
+        var tbInfoEx = new TITLEBARINFOEX
+        {
+            cbSize = (uint)Unsafe.SizeOf<TITLEBARINFOEX>(),
+        };
+        Windows.SendMessageW(hwnd, WM.WM_GETTITLEBARINFOEX, 0u, new IntPtr(&tbInfoEx));
+        return new TitleBarInfo(tbInfoEx);
     }
 
     /*
@@ -519,7 +633,7 @@ internal class ThemedForm : Form
     }
     */
 
-    private void ThemedForm_Load(object sender, EventArgs e)
+    private void ThemedForm_Load(object? sender, EventArgs e)
     {
         // this.FormBorderStyle = FormBorderStyle.None;
         // foreach (Control control in this.Controls)
@@ -841,120 +955,6 @@ internal class ThemedForm : Form
         _ = !showSize
             ? Windows.EnableMenuItem(hmenu, SC.SC_SIZE, MF.MF_BYCOMMAND | MF.MF_GRAYED)
             : Windows.EnableMenuItem(hmenu, SC.SC_SIZE, MF.MF_BYCOMMAND | MF.MF_ENABLED);
-    }
-
-    private static unsafe List<MENUITEMINFO> GetMenuInfo(HMENU hWnd)
-    {
-        var lst = new List<MENUITEMINFO>();
-        var count = Windows.GetMenuItemCount(hWnd);
-        for (var i = 0; i < count; i++)
-        {
-            var mif = new MENUITEMINFO()
-            {
-                MenuItemInfo = new MENUITEMINFOW()
-                {
-                    cbSize = (uint)sizeof(MENUITEMINFOW),
-                    fMask = Windows.MIIM_STRING | Windows.MIIM_ID | Windows.MIIM_BITMAP | Windows.MIIM_DATA | Windows.MIIM_STATE,
-                },
-            };
-            var res = Windows.GetMenuItemInfo(hWnd, (uint)i, true, &mif.MenuItemInfo);
-            if (res)
-            {
-                ++mif.MenuItemInfo.cch;
-                mif.Text = new string(' ', (int)mif.MenuItemInfo.cch);
-                fixed (char* pTypeDataStr = mif.Text)
-                {
-                    mif.MenuItemInfo.dwTypeData = (ushort*)pTypeDataStr;
-                    _ = Windows.GetMenuItemInfo(hWnd, (uint)i, true, &mif.MenuItemInfo);
-                }
-
-                if (mif.Text.Equals("\0"))
-                {
-                    mif.Text = null;
-                }
-            }
-
-            lst.Add(mif);
-        }
-
-        return lst;
-    }
-
-    // creates a new ContextMenuStrip based on the MENUITEMINFO list.
-    private static ContextMenuStrip GetContextMenu(List<MENUITEMINFO> mENUITEMINFOs, IContainer container, Control control)
-    {
-        var result = new ContextMenuStrip(container)
-        {
-            AutoClose = true,
-        };
-        var items = new List<ToolStripItem>();
-        foreach (var mENUITEMINFO in mENUITEMINFOs)
-        {
-            if (string.IsNullOrEmpty(mENUITEMINFO.Text))
-            {
-                var item = new ToolStripSeparator();
-                items.Add(item);
-            }
-            else
-            {
-                var item = new ToolStripMenuItem
-                {
-                    Text = mENUITEMINFO.Text.Contains('\t') ? mENUITEMINFO.Text.Replace(mENUITEMINFO.Text[mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture)..], string.Empty) : mENUITEMINFO.Text,
-                    ShortcutKeyDisplayString = mENUITEMINFO.Text.Contains('\t') ? mENUITEMINFO.Text[(mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture) + 1)..] : string.Empty,
-                    ShortcutKeys = GetKeysFromString(mENUITEMINFO.Text[(mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture) + 1)..]),
-                    Enabled = mENUITEMINFO.MenuItemInfo.fState == Windows.MFS_ENABLED,
-                    Image = mENUITEMINFO.MenuItemInfo.hbmpItem != IntPtr.Zero ? GetNativeMenuItemImage(mENUITEMINFO.MenuItemInfo.hbmpItem, mENUITEMINFO.MenuItemInfo.fState == Windows.MFS_ENABLED) : null,
-                };
-
-                if (mENUITEMINFO.MenuItemInfo.wID is SC.SC_RESTORE
-                    or SC.SC_MOVE
-                    or SC.SC_SIZE
-                    or SC.SC_MINIMIZE
-                    or SC.SC_MAXIMIZE
-                    or SC.SC_CLOSE)
-                {
-                    item.Click += (sender, e) =>
-                    {
-                        IntPtr result = Windows.SendMessageW((HWND)control.Handle, WM.WM_SYSCOMMAND, mENUITEMINFO.MenuItemInfo.wID, IntPtr.Zero);
-                        Debug.WriteLineIf(result != IntPtr.Zero, $"TerraFX.Interop.Windows.SendMessageW() failed with error code {result.ToInt32()}");
-                    };
-                }
-
-                items.Add(item);
-            }
-        }
-
-        result.Items.AddRange(items.ToArray());
-        return result;
-    }
-
-    private static Keys GetKeysFromString(string keys)
-    {
-        var key = Keys.None;
-        if (keys.Contains("Alt"))
-        {
-            key |= Keys.Alt;
-
-            // strip the key from the string.
-            keys = keys[(keys.IndexOf('+', StringComparison.InvariantCulture) + 1)..];
-        }
-
-        if (keys.Contains("F4"))
-        {
-            key |= Keys.F4;
-        }
-
-        return key;
-    }
-
-    private static unsafe TitleBarInfo GetTitleBarInfo(HWND hwnd)
-    {
-        var tbInfoEx = new TITLEBARINFOEX
-        {
-            cbSize = (uint)Unsafe.SizeOf<TITLEBARINFOEX>(),
-        };
-        Windows.SendMessageW(hwnd, WM.WM_GETTITLEBARINFOEX, 0u, new IntPtr(&tbInfoEx));
-        return new TitleBarInfo(tbInfoEx);
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]

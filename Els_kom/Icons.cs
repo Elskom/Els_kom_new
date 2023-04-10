@@ -22,14 +22,14 @@ internal static class Icons
     {
         get
         {
-            var iconVal = SettingsFile.SettingsJson.WindowIcon;
+            var iconVal = SettingsFile.SettingsJson!.WindowIcon;
             var retIcon = iconVal switch
             {
                 1 => Properties.Resources.VP_Trans,
                 2 => Properties.Resources.YR,
                 _ => Properties.Resources.els_kom,
             };
-            return retIcon;
+            return retIcon!;
         }
     }
 
@@ -60,7 +60,7 @@ internal static class Icons
     /// from their website.
     /// </value>
     public static Image VoidElsLogo
-        => Properties.Resources.voidels_logo;
+        => Properties.Resources.voidels_logo!;
 
     /// <summary>
     /// Gets the Elsword official logo based on the logo
@@ -71,7 +71,7 @@ internal static class Icons
     /// from x2.exe.
     /// </value>
     public static Image ElsLogo
-        => Properties.Resources.els_logo;
+        => Properties.Resources.els_logo!;
 
     /// <summary>
     /// Checks if 2 icons are Equal.
@@ -95,9 +95,9 @@ internal static class Icons
             }
             else if (bitmap1.Size == bitmap2.Size)
             {
-                for (var y = 0; y < bitmap1.Height; y++)
+                for (var y = 0; y < bitmap1?.Height; y++)
                 {
-                    for (var x = 0; x < bitmap1.Width; x++)
+                    for (var x = 0; x < bitmap1?.Width; x++)
                     {
                         var col1 = bitmap1?.GetPixel(x, y);
                         var col2 = bitmap2?.GetPixel(x, y);

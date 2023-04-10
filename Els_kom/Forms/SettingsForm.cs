@@ -22,7 +22,7 @@ namespace Els_kom.Forms
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
-            this.curvalue4 = SettingsFile.SettingsJson.SaveToZip;
+            this.curvalue4 = SettingsFile.SettingsJson!.SaveToZip;
             var sourceEntries = new List<ListViewItem>();
             Array.ForEach(
                 SettingsFile.SettingsJson.Sources,
@@ -210,7 +210,7 @@ namespace Els_kom.Forms
         private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Label9 = 0;
-            if (!string.Equals(this.TextBox1.Text, SettingsFile.SettingsJson.ElsDir, StringComparison.Ordinal))
+            if (!string.Equals(this.TextBox1.Text, SettingsFile.SettingsJson!.ElsDir, StringComparison.Ordinal))
             {
                 if (this.TextBox1.Text.Length > 0)
                 {

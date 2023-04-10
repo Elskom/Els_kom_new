@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 internal static class FormsApplication
 {
-    internal static ServiceProvider ServiceProvider { get; private set; }
+    internal static ServiceProvider? ServiceProvider { get; private set; }
 
     internal static int Initialize(ReadOnlySpan<string> args)
     {
@@ -37,20 +37,19 @@ internal static class FormsApplication
             Thread.CurrentThread.SetApartmentState(ApartmentState.Unknown);
             Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
             ApplicationConfiguration.Initialize();
-            using var mainForm = new MainForm();
-            Application.Run(mainForm);
+            Application.Run(ServiceProvider.GetRequiredService<MainForm>());
         }
 
         return 0;
     }
 
-    private static void PluginUpdateCheck_MessageEvent(object sender, MessageEventArgs e)
-        => _ = MessageManager.ShowInfo(e.Text, e.Caption, Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
+    private static void PluginUpdateCheck_MessageEvent(object? sender, MessageEventArgs e)
+        => _ = MessageManager.ShowInfo(e.Text, e.Caption, Convert.ToBoolean(SettingsFile.SettingsJson!.UseNotifications));
 
-    private static void KOMManager_MessageEvent(object sender, MessageEventArgs e)
-        => _ = MessageManager.ShowError(e.Text, e.Caption, Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
+    private static void KOMManager_MessageEvent(object? sender, MessageEventArgs e)
+        => _ = MessageManager.ShowError(e.Text, e.Caption, Convert.ToBoolean(SettingsFile.SettingsJson!.UseNotifications));
 
-    private static void MiniDump_DumpMessage(object sender, MessageEventArgs e)
+    private static void MiniDump_DumpMessage(object? sender, MessageEventArgs e)
     {
         _ = MessageManager.ShowError(e.Text, e.Caption, false);
         if (!e.Text.StartsWith("Mini-dumping failed with Code: "))
@@ -65,12 +64,13 @@ internal static class FormsApplication
         }
     }
 
-    private static void GenericPluginLoader_PluginLoaderMessage(object sender, MessageEventArgs e)
-        => _ = MessageManager.ShowError(e.Text, e.Caption, Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
+    private static void GenericPluginLoader_PluginLoaderMessage(object? sender, MessageEventArgs e)
+        => _ = MessageManager.ShowError(e.Text, e.Caption, Convert.ToBoolean(SettingsFile.SettingsJson!.UseNotifications));
 
     private static ServiceProvider ConfigureServices()
         => new ServiceCollection()
         .AddSingleton<HttpClient>()
+        .AddTransient<MainForm>()
         .AddTransient<AboutForm>()
         .AddTransient<SettingsForm>()
         .AddTransient<PluginsForm>()

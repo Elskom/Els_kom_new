@@ -37,16 +37,16 @@ internal class ThemedListView : ListView
     protected internal void FillLastColumn()
         => this.FillColumn();
 
-    private void ThemedListView_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
+    private void ThemedListView_DrawColumnHeader(object? sender, DrawListViewColumnHeaderEventArgs e)
     {
-        using (Brush brush = new SolidBrush(ApplicationResources.Theme.BackgroundColor))
+        using (Brush brush = new SolidBrush(ApplicationResources.Theme!.BackgroundColor))
         {
             e.Graphics.FillRectangle(brush, e.Bounds);
         }
 
         TextRenderer.DrawText(
             e.Graphics,
-            e.Header.Text,
+            e.Header!.Text,
             e.Font,
             e.Bounds.LocationOffset(2, 0).SizeOffset(-4, 0),
             ApplicationResources.Theme.TextColor,
@@ -61,7 +61,7 @@ internal class ThemedListView : ListView
         }
     }
 
-    private void ThemedListView_DrawItem(object sender, DrawListViewItemEventArgs e)
+    private void ThemedListView_DrawItem(object? sender, DrawListViewItemEventArgs e)
     {
         this.FillRectangle(e.Item, e.Bounds, e.Graphics);
         TextRenderer.DrawText(
@@ -69,20 +69,20 @@ internal class ThemedListView : ListView
             e.Item.Text,
             e.Item.Font,
             e.Bounds.LocationOffset(2, 0).SizeOffset(-4, 0),
-            ApplicationResources.Theme.TextColor,
+            ApplicationResources.Theme!.TextColor,
             TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
         this.DrawGrid(e.Bounds, e.Bounds, e.Graphics);
     }
 
-    private void ThemedListView_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+    private void ThemedListView_DrawSubItem(object? sender, DrawListViewSubItemEventArgs e)
     {
-        this.FillRectangle(e.Item, e.Bounds, e.Graphics);
+        this.FillRectangle(e.Item!, e.Bounds, e.Graphics);
         TextRenderer.DrawText(
             e.Graphics,
-            e.SubItem.Text,
+            e.SubItem!.Text,
             e.SubItem.Font,
             e.Bounds.LocationOffset(2, 0).SizeOffset(-4, 0),
-            ApplicationResources.Theme.TextColor,
+            ApplicationResources.Theme!.TextColor,
             TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
         this.DrawGrid(e.SubItem.Bounds, e.Bounds, e.Graphics);
     }
@@ -91,12 +91,12 @@ internal class ThemedListView : ListView
     {
         if (this.SelectedItems.Contains(item))
         {
-            using Brush brush = new SolidBrush(ApplicationResources.Theme.MenuHighlightColor);
+            using Brush brush = new SolidBrush(ApplicationResources.Theme!.MenuHighlightColor);
             graphics.FillRectangle(brush, rectangle);
         }
         else
         {
-            using Brush brush = new SolidBrush(ApplicationResources.Theme.LightBackgroundColor);
+            using Brush brush = new SolidBrush(ApplicationResources.Theme!.LightBackgroundColor);
             graphics.FillRectangle(brush, rectangle);
         }
     }

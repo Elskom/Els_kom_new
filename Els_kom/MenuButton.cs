@@ -10,7 +10,7 @@ using System.ComponentModel;
 internal class MenuButton : Button
 {
     [DefaultValue(null)]
-    public ContextMenuStrip Menu { get; set; }
+    public ContextMenuStrip? Menu { get; set; }
 
     [DefaultValue(false)]
     public bool ShowMenuUnderCursor { get; set; }

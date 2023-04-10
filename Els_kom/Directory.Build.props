@@ -11,6 +11,7 @@
     <IntermediateOutputPath>..\obj\$(Configuration)\$(MSBuildProjectName)</IntermediateOutputPath>
     <OutputPath>..\bin\$(Configuration)\</OutputPath>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <!-- suppress message when using the .NET Preview SDKs. -->
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
     <OutputType>WinExe</OutputType>

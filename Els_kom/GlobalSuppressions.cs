@@ -10,3 +10,4 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "The assembly must have a '_' in it's name.", Scope = "namespace", Target = "~N:Els_kom")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "The assembly must have a '_' in it's name.", Scope = "namespace", Target = "~N:Els_kom.Controls")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "The assembly must have a '_' in it's name.", Scope = "namespace", Target = "~N:Els_kom.Forms")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "The assembly must have a '_' in it's name.", Scope = "namespace", Target = "~N:Els_kom.Themes")]

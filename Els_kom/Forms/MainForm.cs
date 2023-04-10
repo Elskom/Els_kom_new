@@ -5,20 +5,19 @@
 
 namespace Els_kom.Forms
 {
-    using System.Text;
-    using System.Xml.Linq;
-    using System.Xml.XPath;
+    using System.Diagnostics.CodeAnalysis;
     using Els_kom.Controls;
     using Els_kom.Themes;
     using Microsoft.Extensions.DependencyInjection;
-    using Svg;
     using TerraFX.Interop.Windows;
 
     internal partial class MainForm : /*Form*/ThemedForm
     {
-        private static NotifyIcon notifyIcon;
-        private Form aboutfrm;
-        private Form settingsfrm;
+        private static NotifyIcon? notifyIcon;
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Automatically disposed of by DependencyInjection.")]
+        private Form? aboutfrm;
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "Automatically disposed of by DependencyInjection.")]
+        private Form? settingsfrm;
         private string elsDir = string.Empty;
         private int showintaskbarValue;
         private int showintaskbarValue2;
@@ -79,7 +78,7 @@ namespace Els_kom.Forms
             if (!AbleToClose() && !MiniDumpAttribute.ForceClose)
             {
                 cancel = true;
-                _ = MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
+                _ = MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(SettingsFile.SettingsJson!.UseNotifications));
             }
 
             if (!cancel)
@@ -95,10 +94,10 @@ namespace Els_kom.Forms
             this.Hide();
 
             // var textColor = Color.FromArgb((int)Windows.GetThemeSysColor(Windows.GetWindowTheme((HWND)this.Handle), Windows.TMT_WINDOWTEXT));
-            this.packToolStripMenuItem.ConvertSVGTo16x16Image(Properties.Resources.archive, ApplicationResources.Theme.TextColor);
-            this.unpackToolStripMenuItem.ConvertSVGTo16x16Image(Properties.Resources.unarchive, ApplicationResources.Theme.TextColor);
-            this.testModsToolStripMenuItem.ConvertSVGTo16x16Image(Properties.Resources.vial_solid, ApplicationResources.Theme.TextColor);
-            this.launcherToolStripMenuItem.ConvertSVGTo16x16Image(Properties.Resources.launch, ApplicationResources.Theme.TextColor);
+            this.packToolStripMenuItem.ConvertSVGTo16x16Image(Properties.Resources.archive!, ApplicationResources.Theme!.TextColor);
+            this.unpackToolStripMenuItem.ConvertSVGTo16x16Image(Properties.Resources.unarchive!, ApplicationResources.Theme!.TextColor);
+            this.testModsToolStripMenuItem.ConvertSVGTo16x16Image(Properties.Resources.vial_solid!, ApplicationResources.Theme!.TextColor);
+            this.launcherToolStripMenuItem.ConvertSVGTo16x16Image(Properties.Resources.launch!, ApplicationResources.Theme!.TextColor);
             this.exitToolStripMenuItem.Image = GetNativeMenuItemImage(HBMMENU.HBMMENU_POPUP_CLOSE, true);
             var closing = false;
             if (!Directory.Exists(Application.StartupPath + "\\koms"))
@@ -113,8 +112,8 @@ namespace Els_kom.Forms
             }
             else
             {
-                SettingsFile.SettingsJson = SettingsFile.SettingsJson.ReopenFile();
-                this.elsDir = SettingsFile.SettingsJson.ElsDir;
+                SettingsFile.SettingsJson = SettingsFile.SettingsJson!.ReopenFile();
+                this.elsDir = SettingsFile.SettingsJson!.ElsDir;
                 if (this.elsDir.Length < 1)
                 {
                     _ = MessageManager.ShowInfo(SettingsFile.SettingsPath, "Debug!", false);
@@ -123,20 +122,17 @@ namespace Els_kom.Forms
                     // avoids an issue where more than 1 settings form can be opened at the same time.
                     if (this.settingsfrm == null && this.aboutfrm == null)
                     {
-                        using (this.settingsfrm = new SettingsForm())
-                        {
-                            _ = this.settingsfrm.ShowDialog();
-                        }
-
-                        this.settingsfrm = null;
+                        this.settingsfrm = FormsApplication.ServiceProvider!.GetRequiredService<SettingsForm>();
+                        _ = this.settingsfrm.ShowDialog();
+                        this.settingsfrm = null!;
                     }
                 }
 
-                var komplugins = FormsApplication.ServiceProvider.GetRequiredService<GenericPluginLoader>().LoadPlugins<IKomPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                var komplugins = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>().LoadPlugins<IKomPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
                 KOMManager.Komplugins.AddRange(komplugins);
-                var callbackplugins = FormsApplication.ServiceProvider.GetRequiredService<GenericPluginLoader>().LoadPlugins<ICallbackPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                var callbackplugins = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>().LoadPlugins<ICallbackPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
                 KOMManager.Callbackplugins.AddRange(callbackplugins);
-                var encryptionplugins = FormsApplication.ServiceProvider.GetRequiredService<GenericPluginLoader>().LoadPlugins<IEncryptionPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                var encryptionplugins = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>().LoadPlugins<IEncryptionPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
                 KOMManager.Encryptionplugins.AddRange(encryptionplugins);
                 if (!GitInformation.GetAssemblyInstance(typeof(FormsApplication))?.IsMain ?? false)
                 {
@@ -155,18 +151,18 @@ namespace Els_kom.Forms
 
             if (!closing)
             {
-                notifyIcon.Icon = this.Icon;
-                notifyIcon.Text = this.Text;
+                notifyIcon!.Icon = this.Icon;
+                notifyIcon!.Text = this.Text;
                 var pluginTypes = new List<Type>();
                 pluginTypes.AddRange(KOMManager.Callbackplugins.Select((x) => x.GetType()));
                 pluginTypes.AddRange(KOMManager.Komplugins.Select((x) => x.GetType()));
                 pluginTypes.AddRange(KOMManager.Encryptionplugins.Select((x) => x.GetType()));
-                var pluginUpdateCheck = FormsApplication.ServiceProvider.GetRequiredService<PluginUpdateCheck>();
+                var pluginUpdateCheck = FormsApplication.ServiceProvider!.GetRequiredService<PluginUpdateCheck>();
 
                 // discard results.
-                _ = pluginUpdateCheck.CheckForUpdates(SettingsFile.SettingsJson.Sources, pluginTypes);
+                _ = pluginUpdateCheck.CheckForUpdates(SettingsFile.SettingsJson!.Sources, pluginTypes);
                 _ = pluginUpdateCheck.ShowMessage;
-                notifyIcon.Visible = true;
+                notifyIcon!.Visible = true;
                 this.Show();
                 this.Activate();
             }
@@ -219,12 +215,9 @@ namespace Els_kom.Forms
             // prevent from having multiple about forms opening at the same time in case as well.
             if (this.aboutfrm == null && this.settingsfrm == null)
             {
-                using (this.aboutfrm = new AboutForm())
-                {
-                   _ = this.aboutfrm.ShowDialog();
-                }
-
-                this.aboutfrm = null;
+                this.aboutfrm = FormsApplication.ServiceProvider!.GetRequiredService<AboutForm>();
+                _ = this.aboutfrm.ShowDialog();
+                this.aboutfrm = null!;
             }
         }
 
@@ -266,12 +259,9 @@ namespace Els_kom.Forms
             // avoids an issue where more than 1 settings form can be opened at the same time.
             if (this.settingsfrm == null && this.aboutfrm == null)
             {
-                using (this.settingsfrm = new SettingsForm())
-                {
-                    _ = this.settingsfrm.ShowDialog();
-                }
-
-                this.settingsfrm = null;
+                this.settingsfrm = FormsApplication.ServiceProvider!.GetRequiredService<SettingsForm>();
+                _ = this.settingsfrm.ShowDialog();
+                this.settingsfrm = null!;
             }
         }
 
@@ -287,7 +277,7 @@ namespace Els_kom.Forms
             if (!AbleToClose())
             {
                 cancel = true;
-                _ = MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
+                _ = MessageManager.ShowInfo("Cannot close Els_kom while packing, unpacking, testing mods, or updating the game.", "Info!", Convert.ToBoolean(SettingsFile.SettingsJson!.UseNotifications));
             }
 
             if (!cancel)
@@ -341,11 +331,11 @@ namespace Els_kom.Forms
             this.packingTmr.Enabled = true;
         }
 
-        private void MessageManager_Notification(object sender, NotificationEventArgs e)
+        private void MessageManager_Notification(object? sender, NotificationEventArgs e)
         {
             if (e.UseNotifications)
             {
-                notifyIcon.ShowBalloonTip(e.TimeOut, e.Title, e.Text, (ToolTipIcon)e.Icon);
+                notifyIcon!.ShowBalloonTip(e.TimeOut, e.Title, e.Text, (ToolTipIcon)e.Icon);
             }
             else
             {
@@ -358,7 +348,7 @@ namespace Els_kom.Forms
             }
         }
 
-        private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
+        private void NotifyIcon_MouseClick(object? sender, MouseEventArgs e)
         {
             if (AboutForm.Label1 == 1 || SettingsForm.Label9 == 1)
             {
@@ -380,7 +370,7 @@ namespace Els_kom.Forms
                             this.WindowState = FormWindowState.Minimized;
                         }
                     }
-                    else if (notifyIcon.Visible)
+                    else if (notifyIcon!.Visible)
                     {
                         if (this.WindowState == FormWindowState.Minimized)
                         {
@@ -482,15 +472,15 @@ namespace Els_kom.Forms
 
         private void CheckSettings(object sender, EventArgs e)
         {
-            this.showintaskbarTempvalue = SettingsFile.SettingsJson.IconWhileElsNotRunning;
-            this.showintaskbarTempvalue2 = SettingsFile.SettingsJson.IconWhileElsRunning;
-            this.elsDirTemp = SettingsFile.SettingsJson.ElsDir;
+            this.showintaskbarTempvalue = SettingsFile.SettingsJson!.IconWhileElsNotRunning;
+            this.showintaskbarTempvalue2 = SettingsFile.SettingsJson!.IconWhileElsRunning;
+            this.elsDirTemp = SettingsFile.SettingsJson!.ElsDir;
             if (!Icons.IconEquals(this.Icon, Icons.FormIcon))
             {
                 this.Icon = Icons.FormIcon;
             }
 
-            if (notifyIcon.Icon == null || !Icons.IconEquals(notifyIcon.Icon, this.Icon))
+            if (notifyIcon!.Icon == null || !Icons.IconEquals(notifyIcon.Icon, this.Icon))
             {
                 notifyIcon.Icon = this.Icon;
             }
@@ -527,7 +517,7 @@ namespace Els_kom.Forms
                 case 0:
                 {
                     // Taskbar only!!!
-                    notifyIcon.Visible = false;
+                    notifyIcon!.Visible = false;
                     this.ShowInTaskbar = true;
                     break;
                 }
@@ -535,7 +525,7 @@ namespace Els_kom.Forms
                 case 1:
                 {
                     // Tray only!!!
-                    notifyIcon.Visible = true;
+                    notifyIcon!.Visible = true;
                     this.ShowInTaskbar = false;
                     break;
                 }
@@ -543,7 +533,7 @@ namespace Els_kom.Forms
                 case 2:
                 {
                     // Both!!!
-                    notifyIcon.Visible = true;
+                    notifyIcon!.Visible = true;
                     this.ShowInTaskbar = true;
                     break;
                 }
@@ -565,7 +555,7 @@ namespace Els_kom.Forms
             this.testModsToolStripMenuItem.Enabled = enabled;
             this.launcherToolStripMenuItem.Enabled = enabled;
             this.Label2.Text = status;
-            notifyIcon.Text = notifyiconstate;
+            notifyIcon!.Text = notifyiconstate;
         }
     }
 }

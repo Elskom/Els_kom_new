@@ -44,7 +44,7 @@ internal class ThemedTextBox : TextBox
         var boarderRect = new Rectangle(0, 0, margins.cxRightWidth, margins.cyBottomHeight);
         if (boarderRect.Width > 0 && boarderRect.Height > 0)
         {
-            using var pen1 = new Pen(ApplicationResources.Theme.BorderColor);
+            using var pen1 = new Pen(ApplicationResources.Theme!.BorderColor);
             g.DrawRectangle(pen1, boarderRect);
         }
 

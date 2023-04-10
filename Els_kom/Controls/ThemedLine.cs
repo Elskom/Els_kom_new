@@ -18,8 +18,8 @@ internal class ThemedLine : Control
     protected override void OnPaint(PaintEventArgs e)
     {
         base.OnPaint(e);
-        using var pen1 = new Pen(ApplicationResources.Theme.SeparatorDarkColor);
-        using var pen2 = new Pen(ApplicationResources.Theme.SeparatorLightColor);
+        using var pen1 = new Pen(ApplicationResources.Theme!.SeparatorDarkColor);
+        using var pen2 = new Pen(ApplicationResources.Theme!.SeparatorLightColor);
         e.Graphics.DrawLine(/*Pens.Gray*/pen1, 0, this.Location.X, this.Width, this.Location.X);
         e.Graphics.DrawLine(/*Pens.White*/pen2, 0, this.Location.X + 1, this.Width, this.Location.X + 1);
     }

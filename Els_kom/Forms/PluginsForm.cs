@@ -18,13 +18,13 @@ namespace Els_kom.Forms
 
         private void PluginsForm_Load(object sender, EventArgs e)
         {
-            this.saveToZip = SettingsFile.SettingsJson.SaveToZip;
+            this.saveToZip = SettingsFile.SettingsJson!.SaveToZip;
             var pluginTypes = new List<Type>();
             pluginTypes.AddRange(KOMManager.Callbackplugins.Select((x) => x.GetType()));
             pluginTypes.AddRange(KOMManager.Komplugins.Select((x) => x.GetType()));
 
             // update the list if there were new sources added during the program execution.
-            _ = FormsApplication.ServiceProvider.GetRequiredService<PluginUpdateCheck>().CheckForUpdates(
+            _ = FormsApplication.ServiceProvider!.GetRequiredService<PluginUpdateCheck>().CheckForUpdates(
                 SettingsFile.SettingsJson.Sources,
                 pluginTypes);
         }
@@ -33,7 +33,7 @@ namespace Els_kom.Forms
         {
             if (this.ListView1.SelectedItems.Count > 0)
             {
-                var pluginUpdateCheck = FormsApplication.ServiceProvider.GetRequiredService<PluginUpdateCheck>();
+                var pluginUpdateCheck = FormsApplication.ServiceProvider!.GetRequiredService<PluginUpdateCheck>();
                 var pluginUpdataDatas = pluginUpdateCheck.PluginUpdateDatas;
 
                 // install only the selected plugin.
@@ -55,8 +55,8 @@ namespace Els_kom.Forms
         {
             if (this.pluginChanges)
             {
-                _ = MessageManager.ShowInfo("A plugin was installed, uninstalled or updated. All plugins are about to be reloaded.", "Info!", Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
-                var genericPluginLoader = FormsApplication.ServiceProvider.GetRequiredService<GenericPluginLoader>();
+                _ = MessageManager.ShowInfo("A plugin was installed, uninstalled or updated. All plugins are about to be reloaded.", "Info!", Convert.ToBoolean(SettingsFile.SettingsJson!.UseNotifications));
+                var genericPluginLoader = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>();
                 genericPluginLoader.UnloadPlugins();
                 KOMManager.Komplugins.Clear();
                 KOMManager.Komplugins.AddRange(
@@ -86,7 +86,7 @@ namespace Els_kom.Forms
             {
                 if (!this.ListView1.SelectedItems[0].SubItems[2].Text.Equals(string.Empty, StringComparison.Ordinal))
                 {
-                    var pluginUpdateCheck = FormsApplication.ServiceProvider.GetRequiredService<PluginUpdateCheck>();
+                    var pluginUpdateCheck = FormsApplication.ServiceProvider!.GetRequiredService<PluginUpdateCheck>();
                     var pluginUpdataDatas = pluginUpdateCheck.PluginUpdateDatas;
 
                     // uninstall only the selected plugin.
@@ -107,7 +107,7 @@ namespace Els_kom.Forms
                     _ = MessageManager.ShowInfo(
                         "The selected plugin is not installed, or the plugin was installed and this program was not restarted yet to know that it was.",
                         "Info!",
-                        Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
+                        Convert.ToBoolean(SettingsFile.SettingsJson!.UseNotifications));
                 }
             }
         }
