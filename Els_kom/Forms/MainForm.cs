@@ -114,6 +114,12 @@ namespace Els_kom.Forms
             {
                 SettingsFile.SettingsJson = SettingsFile.SettingsJson!.ReopenFile();
                 this.elsDir = SettingsFile.SettingsJson!.ElsDir;
+                var komplugins = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>().LoadPlugins<IKomPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                KOMManager.Komplugins.AddRange(komplugins);
+                var callbackplugins = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>().LoadPlugins<ICallbackPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                KOMManager.Callbackplugins.AddRange(callbackplugins);
+                var encryptionplugins = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>().LoadPlugins<IEncryptionPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
+                KOMManager.Encryptionplugins.AddRange(encryptionplugins);
                 if (this.elsDir.Length < 1)
                 {
                     _ = MessageManager.ShowInfo(SettingsFile.SettingsPath, "Debug!", false);
@@ -128,12 +134,6 @@ namespace Els_kom.Forms
                     }
                 }
 
-                var komplugins = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>().LoadPlugins<IKomPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
-                KOMManager.Komplugins.AddRange(komplugins);
-                var callbackplugins = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>().LoadPlugins<ICallbackPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
-                KOMManager.Callbackplugins.AddRange(callbackplugins);
-                var encryptionplugins = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>().LoadPlugins<IEncryptionPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
-                KOMManager.Encryptionplugins.AddRange(encryptionplugins);
                 if (!GitInformation.GetAssemblyInstance(typeof(FormsApplication))?.IsMain ?? false)
                 {
                     _ = MessageManager.ShowInfo("This branch is not the main branch, meaning this is a feature branch to test changes. When finished please pull request them for the possibility of them getting merged into main.", "Info!", Convert.ToBoolean(SettingsFile.SettingsJson.UseNotifications));
