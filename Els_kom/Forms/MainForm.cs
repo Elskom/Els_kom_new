@@ -122,7 +122,6 @@ namespace Els_kom.Forms
                 KOMManager.Encryptionplugins.AddRange(encryptionplugins);
                 if (this.elsDir.Length < 1)
                 {
-                    _ = MessageManager.ShowInfo(SettingsFile.SettingsPath, "Debug!", false);
                     _ = MessageManager.ShowInfo($"Welcome to Els_kom.{Environment.NewLine}Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops.{Environment.NewLine}Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!", false);
 
                     // avoids an issue where more than 1 settings form can be opened at the same time.
@@ -332,21 +331,23 @@ namespace Els_kom.Forms
         }
 
         private void MessageManager_Notification(object? sender, NotificationEventArgs e)
-        {
-            if (e.UseNotifications)
+            => this.Invoke(() =>
             {
-                notifyIcon!.ShowBalloonTip(e.TimeOut, e.Title, e.Text, (ToolTipIcon)e.Icon);
-            }
-            else
-            {
-                MessageBox.Show(
-                    FromHandle(this.Handle),
-                    e.Text,
-                    e.Title,
-                    (MessageBoxButtons)e.MessageBoxButtons,
-                    (MessageBoxIcon)e.MessageBoxIcon);
-            }
-        }
+                if (e.UseNotifications)
+                {
+                    notifyIcon!.ShowBalloonTip(e.TimeOut, e.Title, e.Text, (ToolTipIcon)e.Icon);
+                    e.Result = (int)DialogResult.OK;
+                }
+                else
+                {
+                    e.Result = (int)MessageBox.Show(
+                        FromHandle(this.Handle),
+                        e.Text,
+                        e.Title,
+                        (MessageBoxButtons)e.MessageBoxButtons,
+                        (MessageBoxIcon)e.MessageBoxIcon);
+                }
+            });
 
         private void NotifyIcon_MouseClick(object? sender, MouseEventArgs e)
         {
