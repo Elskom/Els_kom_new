@@ -4,6 +4,6 @@
     "rollForward": "latestFeature"
   },
   "msbuild-sdks": {
-    "Elskom.Sdk": "6.0.3"
+    "Elskom.Sdk": "6.0.4"
   }
 }
