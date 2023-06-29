@@ -43,13 +43,13 @@ internal static class FormsApplication
         return 0;
     }
 
-    private static void PluginUpdateCheck_MessageEvent(object? sender, MessageEventArgs e)
+    private static void PluginUpdateCheck_MessageEvent(object? sender, ref MessageEventArgs e)
         => _ = MessageManager.ShowInfo(e.Text, e.Caption, Convert.ToBoolean(SettingsFile.SettingsJson!.UseNotifications));
 
-    private static void KOMManager_MessageEvent(object? sender, MessageEventArgs e)
+    private static void KOMManager_MessageEvent(object? sender, ref MessageEventArgs e)
         => _ = MessageManager.ShowError(e.Text, e.Caption, Convert.ToBoolean(SettingsFile.SettingsJson!.UseNotifications));
 
-    private static void MiniDump_DumpMessage(object? sender, MessageEventArgs e)
+    private static void MiniDump_DumpMessage(object? sender, ref MessageEventArgs e)
     {
         _ = MessageManager.ShowError(e.Text, e.Caption, false);
         if (!e.Text.StartsWith("Mini-dumping failed with Code: "))
@@ -64,7 +64,7 @@ internal static class FormsApplication
         }
     }
 
-    private static void GenericPluginLoader_PluginLoaderMessage(object? sender, MessageEventArgs e)
+    private static void GenericPluginLoader_PluginLoaderMessage(object? sender, ref MessageEventArgs e)
         => _ = MessageManager.ShowError(e.Text, e.Caption, Convert.ToBoolean(SettingsFile.SettingsJson!.UseNotifications));
 
     private static ServiceProvider ConfigureServices()

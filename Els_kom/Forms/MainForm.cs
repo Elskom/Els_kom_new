@@ -330,8 +330,8 @@ namespace Els_kom.Forms
             this.packingTmr.Enabled = true;
         }
 
-        private void MessageManager_Notification(object? sender, NotificationEventArgs e)
-            => this.Invoke(() =>
+        private void MessageManager_Notification(object? sender, ref NotificationEventArgs e)
+            => this.Invoke((ref NotificationEventArgs e) =>
             {
                 if (e.UseNotifications)
                 {
