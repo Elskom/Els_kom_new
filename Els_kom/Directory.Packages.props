@@ -4,6 +4,7 @@
     <PackageReference Include="Svg" Version="*-*" />
     <!-- <PackageReference Include="TerraFX.Interop.Windows" Version="10.0.20348-rc2.1430792277" /> -->
     <PackageReference Include="TerraFX.Interop.Windows" Version="*-*" />
+    <PackageReference Include="Microsoft.Diagnostics.NETCore.Client" Version="*-*" />
     <PackageReference Include="runtime.osx.10.10-x64.CoreCompat.System.Drawing" Version="*-*" ExcludeAssets="all" />
     <PackageReference Include="System.ObjectModel" Version="*-*" ExcludeAssets="all" />
     <PackageReference Include="System.Runtime" Version="*-*" ExcludeAssets="all" />

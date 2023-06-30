@@ -8,6 +8,7 @@ namespace Els_kom;
 using System.Drawing.Imaging;
 using Els_kom.Forms;
 using Els_kom.Themes;
+using Microsoft.Diagnostics.NETCore.Client;
 using Microsoft.Extensions.DependencyInjection;
 
 internal static class FormsApplication
@@ -16,6 +17,7 @@ internal static class FormsApplication
 
     internal static int Initialize(ReadOnlySpan<string> args)
     {
+        MiniDumpAttribute.Dump += MiniDump_Dump;
         MiniDumpAttribute.DumpMessage += MiniDump_DumpMessage;
         GitInformation.ApplyAssemblyAttributes(typeof(FormsApplication).Assembly);
         KOMManager.MessageEvent += KOMManager_MessageEvent;
@@ -48,6 +50,23 @@ internal static class FormsApplication
 
     private static void KOMManager_MessageEvent(object? sender, ref MessageEventArgs e)
         => _ = MessageManager.ShowError(e.Text, e.Caption, Convert.ToBoolean(SettingsFile.SettingsJson!.UseNotifications));
+
+    private static void MiniDump_Dump(object? sender, ref MiniDumpEventArgs e)
+    {
+        var diagnosticsClient = new DiagnosticsClient(e.ProcessId);
+        try
+        {
+            diagnosticsClient.WriteDump(
+                (DumpType)MiniDumpAttribute.CurrentInstance!.DumpType,
+                MiniDumpAttribute.CurrentInstance!.DumpFileName);
+            e.Success = true;
+        }
+        catch (ServerErrorException ex)
+        {
+            e.ErrorMessage = ex.Message;
+            e.Success = false;
+        }
+    }
 
     private static void MiniDump_DumpMessage(object? sender, ref MessageEventArgs e)
     {
