@@ -331,23 +331,27 @@ namespace Els_kom.Forms
         }
 
         private void MessageManager_Notification(object? sender, ref NotificationEventArgs e)
-            => this.Invoke((ref NotificationEventArgs e) =>
+        {
+            var e_copy = e;
+            this.Invoke(() =>
             {
-                if (e.UseNotifications)
+                if (e_copy.UseNotifications)
                 {
-                    notifyIcon!.ShowBalloonTip(e.TimeOut, e.Title, e.Text, (ToolTipIcon)e.Icon);
-                    e.Result = (int)DialogResult.OK;
+                    notifyIcon!.ShowBalloonTip(e_copy.TimeOut, e_copy.Title, e_copy.Text, (ToolTipIcon)e_copy.Icon);
+                    e_copy.Result = (int)DialogResult.OK;
                 }
                 else
                 {
-                    e.Result = (int)MessageBox.Show(
+                    e_copy.Result = (int)MessageBox.Show(
                         FromHandle(this.Handle),
-                        e.Text,
-                        e.Title,
-                        (MessageBoxButtons)e.MessageBoxButtons,
-                        (MessageBoxIcon)e.MessageBoxIcon);
+                        e_copy.Text,
+                        e_copy.Title,
+                        (MessageBoxButtons)e_copy.MessageBoxButtons,
+                        (MessageBoxIcon)e_copy.MessageBoxIcon);
                 }
             });
+            e.Result = e_copy.Result;
+        }
 
         private void NotifyIcon_MouseClick(object? sender, MouseEventArgs e)
         {
