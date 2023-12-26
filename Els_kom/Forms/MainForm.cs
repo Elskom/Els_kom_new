@@ -115,11 +115,11 @@ namespace Els_kom.Forms
                 SettingsFile.SettingsJson = SettingsFile.SettingsJson!.ReopenFile();
                 this.elsDir = SettingsFile.SettingsJson!.ElsDir;
                 var komplugins = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>().LoadPlugins<IKomPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
-                KOMManager.Komplugins.AddRange(komplugins);
+                ((List<IKomPlugin>)KOMManager.Komplugins).AddRange(komplugins);
                 var callbackplugins = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>().LoadPlugins<ICallbackPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
-                KOMManager.Callbackplugins.AddRange(callbackplugins);
+                ((List<ICallbackPlugin>)KOMManager.Callbackplugins).AddRange(callbackplugins);
                 var encryptionplugins = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>().LoadPlugins<IEncryptionPlugin>("plugins", Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip));
-                KOMManager.Encryptionplugins.AddRange(encryptionplugins);
+                ((List<IEncryptionPlugin>)KOMManager.Encryptionplugins).AddRange(encryptionplugins);
                 if (this.elsDir.Length < 1)
                 {
                     _ = MessageManager.ShowInfo($"Welcome to Els_kom.{Environment.NewLine}Now your fist step is to Configure Els_kom to the path that you have installed Elsword to and then you can Use the test Mods and the executing of the Launcher features. It will only take less than 1~3 minutes tops.{Environment.NewLine}Also if you encounter any bugs or other things take a look at the Issue Tracker.", "Welcome!", false);
@@ -330,7 +330,7 @@ namespace Els_kom.Forms
             this.packingTmr.Enabled = true;
         }
 
-        private void MessageManager_Notification(object? sender, ref NotificationEventArgs e)
+        private void MessageManager_Notification(object? sender, NotificationEventArgs e)
         {
             var e_copy = e;
             this.Invoke(() =>
@@ -480,7 +480,7 @@ namespace Els_kom.Forms
             this.showintaskbarTempvalue = SettingsFile.SettingsJson!.IconWhileElsNotRunning;
             this.showintaskbarTempvalue2 = SettingsFile.SettingsJson!.IconWhileElsRunning;
             this.elsDirTemp = SettingsFile.SettingsJson!.ElsDir;
-            if (!Icons.IconEquals(this.Icon, Icons.FormIcon))
+            if (!Icons.IconEquals(this.Icon!, Icons.FormIcon))
             {
                 this.Icon = Icons.FormIcon;
             }

@@ -19,7 +19,7 @@ jobs:
     - name: Install latest .NET 7 SDK
       uses: Elskom/setup-latest-dotnet@main
       with:
-        SDK_VERSION: '7.0.202'
+        SDK_VERSION: '8.0.100'
         RUNTIME_VERSIONS: ''
 
     - name: Install Elskom workload

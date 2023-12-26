@@ -6,7 +6,7 @@
     tell Microsoft.Common.props not to import Directory.Build.props again
     -->
     <ImportDirectoryBuildProps>false</ImportDirectoryBuildProps>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <BaseIntermediateOutputPath>..\obj\$(Configuration)\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <IntermediateOutputPath>..\obj\$(Configuration)\$(MSBuildProjectName)</IntermediateOutputPath>
     <OutputPath>..\bin\$(Configuration)\</OutputPath>

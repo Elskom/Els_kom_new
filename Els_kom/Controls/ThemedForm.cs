@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using Els_kom.Themes;
 using TerraFX.Interop.Windows;
 
@@ -362,7 +363,7 @@ internal class ThemedForm : Form
         base.Dispose(disposing);
     }
 
-    private static unsafe List<MENUITEMINFO> GetMenuInfo(HMENU hWnd)
+    private unsafe List<MENUITEMINFO> GetMenuInfo(HMENU hWnd)
     {
         var lst = new List<MENUITEMINFO>();
         var count = Windows.GetMenuItemCount(hWnd);
@@ -387,10 +388,12 @@ internal class ThemedForm : Form
                     _ = Windows.GetMenuItemInfo(hWnd, (uint)i, true, &mif.MenuItemInfo);
                 }
 
-                if (mif.Text.Equals("\0"))
+                if (mif.Text.Equals("\0", StringComparison.Ordinal))
                 {
                     mif.Text = null!;
                 }
+
+                mif.Form = this;
             }
 
             lst.Add(mif);
@@ -400,57 +403,20 @@ internal class ThemedForm : Form
     }
 
     // creates a new ContextMenuStrip based on the MENUITEMINFO list.
-    private static ContextMenuStrip GetContextMenu(List<MENUITEMINFO> mENUITEMINFOs, IContainer container, Control control)
+    private static ContextMenuStrip GetContextMenu(List<MENUITEMINFO> mENUITEMINFOs, IContainer container)
     {
         var result = new ContextMenuStrip(container)
         {
             AutoClose = true,
         };
-        var items = new List<ToolStripItem>();
-        foreach (var mENUITEMINFO in mENUITEMINFOs)
-        {
-            if (string.IsNullOrEmpty(mENUITEMINFO.Text))
-            {
-                var item = new ToolStripSeparator();
-                items.Add(item);
-            }
-            else
-            {
-                var item = new ToolStripMenuItem
-                {
-                    Text = mENUITEMINFO.Text.Contains('\t') ? mENUITEMINFO.Text.Replace(mENUITEMINFO.Text[mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture)..], string.Empty) : mENUITEMINFO.Text,
-                    ShortcutKeyDisplayString = mENUITEMINFO.Text.Contains('\t') ? mENUITEMINFO.Text[(mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture) + 1)..] : string.Empty,
-                    ShortcutKeys = GetKeysFromString(mENUITEMINFO.Text[(mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture) + 1)..]),
-                    Enabled = mENUITEMINFO.MenuItemInfo.fState == Windows.MFS_ENABLED,
-                    Image = mENUITEMINFO.MenuItemInfo.hbmpItem != IntPtr.Zero ? GetNativeMenuItemImage(mENUITEMINFO.MenuItemInfo.hbmpItem, mENUITEMINFO.MenuItemInfo.fState == Windows.MFS_ENABLED) : null,
-                };
-
-                if (mENUITEMINFO.MenuItemInfo.wID is SC.SC_RESTORE
-                    or SC.SC_MOVE
-                    or SC.SC_SIZE
-                    or SC.SC_MINIMIZE
-                    or SC.SC_MAXIMIZE
-                    or SC.SC_CLOSE)
-                {
-                    item.Click += (sender, e) =>
-                    {
-                        IntPtr result = Windows.SendMessageW((HWND)control.Handle, WM.WM_SYSCOMMAND, mENUITEMINFO.MenuItemInfo.wID, IntPtr.Zero);
-                        Debug.WriteLineIf(result != IntPtr.Zero, $"TerraFX.Interop.Windows.SendMessageW() failed with error code {result.ToInt32()}");
-                    };
-                }
-
-                items.Add(item);
-            }
-        }
-
-        result.Items.AddRange(items.ToArray());
+        result.Items.AddRange(mENUITEMINFOs.Select(i => (ToolStripItem)i).ToArray());
         return result;
     }
 
     private static Keys GetKeysFromString(string keys)
     {
         var key = Keys.None;
-        if (keys.Contains("Alt"))
+        if (keys.Contains("Alt", StringComparison.Ordinal))
         {
             key |= Keys.Alt;
 
@@ -458,7 +424,7 @@ internal class ThemedForm : Form
             keys = keys[(keys.IndexOf('+', StringComparison.InvariantCulture) + 1)..];
         }
 
-        if (keys.Contains("F4"))
+        if (keys.Contains("F4", StringComparison.Ordinal))
         {
             key |= Keys.F4;
         }
@@ -651,8 +617,8 @@ internal class ThemedForm : Form
             // get the system's menu and copy the data to a ContextMenuStrip.
             var hmenu = Windows.GetSystemMenu((HWND)this.Handle, false);
             this.AdjustSystemMenu(hmenu);
-            var mENUITEMINFOs = GetMenuInfo(hmenu);
-            this.systemMenuStrip = GetContextMenu(mENUITEMINFOs, this.Components, this);
+            var mENUITEMINFOs = this.GetMenuInfo(hmenu);
+            this.systemMenuStrip = GetContextMenu(mENUITEMINFOs, this.Components);
 
             // this.systemMenuStrip.Opened += this.SystemMenuStrip_Opened;
             // this.systemMenuStrip.Closed += this.SystemMenuStrip_Closed;
@@ -938,23 +904,12 @@ internal class ThemedForm : Form
         var showMax = this.MaximizeBox && winState != FormWindowState.Maximized;
         var showClose = this.ControlBox;
         var showRestore = winState != FormWindowState.Normal;
-        var showSize = sizableBorder && (
-            winState != FormWindowState.Minimized || winState != FormWindowState.Maximized);
-        _ = !showMin
-            ? Windows.EnableMenuItem(hmenu, SC.SC_MINIMIZE, MF.MF_BYCOMMAND | MF.MF_GRAYED)
-            : Windows.EnableMenuItem(hmenu, SC.SC_MINIMIZE, MF.MF_BYCOMMAND | MF.MF_ENABLED);
-        _ = !showMax
-            ? Windows.EnableMenuItem(hmenu, SC.SC_MAXIMIZE, MF.MF_BYCOMMAND | MF.MF_GRAYED)
-            : Windows.EnableMenuItem(hmenu, SC.SC_MAXIMIZE, MF.MF_BYCOMMAND | MF.MF_ENABLED);
-        _ = !showClose
-            ? Windows.EnableMenuItem(hmenu, SC.SC_CLOSE, MF.MF_BYCOMMAND | MF.MF_GRAYED)
-            : Windows.EnableMenuItem(hmenu, SC.SC_CLOSE, MF.MF_BYCOMMAND | MF.MF_ENABLED);
-        _ = !showRestore
-            ? Windows.EnableMenuItem(hmenu, SC.SC_RESTORE, MF.MF_BYCOMMAND | MF.MF_GRAYED)
-            : Windows.EnableMenuItem(hmenu, SC.SC_RESTORE, MF.MF_BYCOMMAND | MF.MF_ENABLED);
-        _ = !showSize
-            ? Windows.EnableMenuItem(hmenu, SC.SC_SIZE, MF.MF_BYCOMMAND | MF.MF_GRAYED)
-            : Windows.EnableMenuItem(hmenu, SC.SC_SIZE, MF.MF_BYCOMMAND | MF.MF_ENABLED);
+        var showSize = sizableBorder && winState == FormWindowState.Normal;
+        _ = Windows.EnableMenuItem(hmenu, SC.SC_MINIMIZE, (uint)(MF.MF_BYCOMMAND | (!showMin ? MF.MF_GRAYED : MF.MF_ENABLED)));
+        _ = Windows.EnableMenuItem(hmenu, SC.SC_MAXIMIZE, (uint)(MF.MF_BYCOMMAND | (!showMax ? MF.MF_GRAYED : MF.MF_ENABLED)));
+        _ = Windows.EnableMenuItem(hmenu, SC.SC_CLOSE, (uint)(MF.MF_BYCOMMAND | (!showClose ? MF.MF_GRAYED : MF.MF_ENABLED)));
+        _ = Windows.EnableMenuItem(hmenu, SC.SC_RESTORE, (uint)(MF.MF_BYCOMMAND | (!showRestore ? MF.MF_GRAYED : MF.MF_ENABLED)));
+        _ = Windows.EnableMenuItem(hmenu, SC.SC_SIZE, (uint)(MF.MF_BYCOMMAND | (!showSize ? MF.MF_GRAYED : MF.MF_ENABLED)));
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
@@ -963,6 +918,45 @@ internal class ThemedForm : Form
     {
         public MENUITEMINFOW MenuItemInfo;
         public string Text;
+        public ThemedForm Form;
+
+        public static explicit operator ToolStripItem(MENUITEMINFO mENUITEMINFO)
+        {
+            var item = string.IsNullOrEmpty(mENUITEMINFO.Text)
+                ? new ToolStripSeparator()
+                : (ToolStripItem)new ToolStripMenuItem
+                {
+                    Text = GetDisplayText(mENUITEMINFO),
+                    ShortcutKeyDisplayString = GetShortcutKeyDisplayString(mENUITEMINFO),
+                    ShortcutKeys = GetKeysFromString(mENUITEMINFO.Text[(mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture) + 1)..]),
+                    Enabled = mENUITEMINFO.MenuItemInfo.fState == Windows.MFS_ENABLED,
+                    Image = GetNativeSystemMenuItemImage(mENUITEMINFO),
+                };
+            if ((mENUITEMINFO.MenuItemInfo.wID is SC.SC_RESTORE
+                or SC.SC_MOVE
+                or SC.SC_SIZE
+                or SC.SC_MINIMIZE
+                or SC.SC_MAXIMIZE
+                or SC.SC_CLOSE) && !string.IsNullOrEmpty(item.Text)) // Ensure menu separators are filtered out!!!
+            {
+                item.Click += (sender, e) =>
+                {
+                    IntPtr result = Windows.SendMessageW((HWND)mENUITEMINFO.Form.Handle, WM.WM_SYSCOMMAND, mENUITEMINFO.MenuItemInfo.wID, IntPtr.Zero);
+                    Debug.WriteLineIf(result != IntPtr.Zero, $"TerraFX.Interop.Windows.SendMessageW() failed with error code {result.ToInt32()}");
+                };
+            }
+
+            return item;
+        }
+
+        private static Image? GetNativeSystemMenuItemImage(MENUITEMINFO mENUITEMINFO)
+            => mENUITEMINFO.MenuItemInfo.hbmpItem != IntPtr.Zero ? GetNativeMenuItemImage(mENUITEMINFO.MenuItemInfo.hbmpItem, mENUITEMINFO.MenuItemInfo.fState == Windows.MFS_ENABLED) : null;
+
+        private static string GetShortcutKeyDisplayString(MENUITEMINFO mENUITEMINFO)
+            => mENUITEMINFO.Text.Contains('\t', StringComparison.Ordinal) ? mENUITEMINFO.Text[(mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture) + 1)..] : string.Empty;
+
+        private static string GetDisplayText(MENUITEMINFO mENUITEMINFO)
+            => mENUITEMINFO.Text.Contains('\t', StringComparison.Ordinal) ? mENUITEMINFO.Text.Replace(mENUITEMINFO.Text[mENUITEMINFO.Text.IndexOf('\t', StringComparison.InvariantCulture)..], string.Empty, StringComparison.InvariantCulture) : mENUITEMINFO.Text;
     }
 
     private struct TitleBarInfo

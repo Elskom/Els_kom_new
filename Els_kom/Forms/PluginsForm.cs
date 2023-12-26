@@ -59,17 +59,17 @@ namespace Els_kom.Forms
                 var genericPluginLoader = FormsApplication.ServiceProvider!.GetRequiredService<GenericPluginLoader>();
                 genericPluginLoader.UnloadPlugins();
                 KOMManager.Komplugins.Clear();
-                KOMManager.Komplugins.AddRange(
+                ((List<IKomPlugin>)KOMManager.Komplugins).AddRange(
                     genericPluginLoader.LoadPlugins<IKomPlugin>(
                         "plugins",
                         Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip)));
                 KOMManager.Callbackplugins.Clear();
-                KOMManager.Callbackplugins.AddRange(
+                ((List<ICallbackPlugin>)KOMManager.Callbackplugins).AddRange(
                     genericPluginLoader.LoadPlugins<ICallbackPlugin>(
                         "plugins",
                         Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip)));
                 KOMManager.Encryptionplugins.Clear();
-                KOMManager.Encryptionplugins.AddRange(
+                ((List<IEncryptionPlugin>)KOMManager.Encryptionplugins).AddRange(
                     genericPluginLoader.LoadPlugins<IEncryptionPlugin>(
                         "plugins",
                         Convert.ToBoolean(SettingsFile.SettingsJson.SaveToZip)));

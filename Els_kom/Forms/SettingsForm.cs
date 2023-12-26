@@ -42,7 +42,7 @@ namespace Els_kom.Forms
             this.label8 = SettingsFile.SettingsJson.WindowIcon;
             this.CheckBox1.Checked = Convert.ToBoolean(this.curvalue4);
             var entries = new List<ListViewItem>();
-            KOMManager.Callbackplugins.ForEach(
+            ((List<ICallbackPlugin>)KOMManager.Callbackplugins).ForEach(
                 (x) => entries.Add(
                     new ListViewItem(
                         new string[]
@@ -50,7 +50,7 @@ namespace Els_kom.Forms
                             x.PluginName,
                         },
                         -1)));
-            KOMManager.Komplugins.ForEach(
+            ((List<IKomPlugin>)KOMManager.Komplugins).ForEach(
                 (x) => entries.Add(
                     new ListViewItem(
                         new string[]
