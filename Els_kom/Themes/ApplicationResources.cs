@@ -259,7 +259,7 @@ internal static class ApplicationResources
             const string themeName = "DarkMode_Explorer";
             fixed (char* szExplorer = themeName)
             {
-                _ = Windows.SetWindowTheme((HWND)hwnd, (ushort*)szExplorer, null);
+                _ = Windows.SetWindowTheme((HWND)hwnd, szExplorer, null);
             }
         }
         else

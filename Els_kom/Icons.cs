@@ -95,12 +95,12 @@ internal static class Icons
             }
             else if (bitmap1.Size == bitmap2.Size)
             {
-                for (var y = 0; y < bitmap1?.Height; y++)
+                for (var y = 0; y < bitmap1.Height; y++)
                 {
-                    for (var x = 0; x < bitmap1?.Width; x++)
+                    for (var x = 0; x < bitmap1.Width; x++)
                     {
-                        var col1 = bitmap1?.GetPixel(x, y);
-                        var col2 = bitmap2?.GetPixel(x, y);
+                        var col1 = bitmap1.GetPixel(x, y);
+                        var col2 = bitmap2.GetPixel(x, y);
                         if (!col1.Equals(col2))
                         {
                             result = false;

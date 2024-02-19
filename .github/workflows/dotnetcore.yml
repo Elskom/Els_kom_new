@@ -16,10 +16,10 @@ jobs:
     steps:
     - uses: actions/checkout@main
 
-    - name: Install latest .NET 7 SDK
+    - name: Install latest .NET 8 SDK
       uses: Elskom/setup-latest-dotnet@main
       with:
-        SDK_VERSION: '8.0.100'
+        SDK_VERSION: '8.0.200'
         RUNTIME_VERSIONS: ''
 
     - name: Install Elskom workload

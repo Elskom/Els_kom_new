@@ -71,12 +71,12 @@ internal static class FormsApplication
     private static void MiniDump_DumpMessage(object? sender, MessageEventArgs e)
     {
         _ = MessageManager.ShowError(e.Text, e.Caption, false);
-        if (!e.Text.StartsWith("Mini-dumping failed with Code: "))
+        if (!e.Text.StartsWith("Mini-dumping failed with Code: ", StringComparison.Ordinal))
         {
             // save screenshot of crash.
             using (var screenshot = ScreenShots.MakeScreenShot())
             {
-                screenshot.Save(SettingsFile.MiniDumpPath.Replace(".mdmp", ".png"), ImageFormat.Png);
+                screenshot.Save(SettingsFile.MiniDumpPath.Replace(".mdmp", ".png", StringComparison.OrdinalIgnoreCase), ImageFormat.Png);
             }
 
             Environment.Exit(1);

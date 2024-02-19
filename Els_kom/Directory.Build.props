@@ -15,7 +15,7 @@
     <!-- suppress message when using the .NET Preview SDKs. -->
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
     <OutputType>WinExe</OutputType>
-    <Prefer32Bit>true</Prefer32Bit>
+    <!-- <Prefer32Bit>true</Prefer32Bit> -->
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Els_kom</RootNamespace>
     <AssemblyName>Els_kom</AssemblyName>
@@ -43,6 +43,8 @@
     <CodeAnalysisRuleSet>..\Els_kom.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GitBuildInfoAssemblyType>FormsApplication</GitBuildInfoAssemblyType>
+    <!-- This is annoying as fuck as well. -->
+    <GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
   </PropertyGroup>
 
 </Project>

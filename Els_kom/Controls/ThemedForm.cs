@@ -384,7 +384,7 @@ internal class ThemedForm : Form
                 mif.Text = new string(' ', (int)mif.MenuItemInfo.cch);
                 fixed (char* pTypeDataStr = mif.Text)
                 {
-                    mif.MenuItemInfo.dwTypeData = (ushort*)pTypeDataStr;
+                    mif.MenuItemInfo.dwTypeData = pTypeDataStr;
                     _ = Windows.GetMenuItemInfo(hWnd, (uint)i, true, &mif.MenuItemInfo);
                 }
 
