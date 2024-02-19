@@ -37,7 +37,7 @@
     <AssemblyInformationalVersion>1.4.9.8</AssemblyInformationalVersion>
     <FileVersion>1.4.9.8</FileVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Copyright>Copyright © 2014-2023</Copyright>
+    <Copyright>Copyright © 2014-2024</Copyright>
     <Company>Els_kom org.</Company>
     <Version>1.4.9.8</Version>
     <CodeAnalysisRuleSet>..\Els_kom.ruleset</CodeAnalysisRuleSet>
